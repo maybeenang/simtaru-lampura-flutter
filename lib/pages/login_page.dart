@@ -10,6 +10,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
@@ -36,10 +37,12 @@ class LoginPage extends StatelessWidget {
                   const TextFiledCommon(),
                   const SizedBox(height: 10),
                   const TextFieldPassword(),
+                  const SizedBox(height: 10),
                   Container(
                     alignment: Alignment.centerRight,
                     child: TextButton(
                         onPressed: () {},
+                        style: AppStyles.textButtonStyle,
                         child: const Text(
                           "Lupa Password?",
                           style: TextStyle(
@@ -53,6 +56,23 @@ class LoginPage extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {},
                     child: const Text("Masuk", style: AppStyles.textButton),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Belum punya akun? "),
+                      TextButton(
+                          onPressed: () {},
+                          style: AppStyles.textButtonStyle,
+                          child: const Text(
+                            "Daftar",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 16,
+                            ),
+                          )),
+                    ],
                   )
                 ],
               ),

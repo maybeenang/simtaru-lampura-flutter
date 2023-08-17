@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/constants/colors.dart';
 
 class AppStyles {
   AppStyles._();
@@ -35,7 +36,22 @@ class AppStyles {
   static const InputDecoration inputDecoration = InputDecoration(
     contentPadding: EdgeInsets.all(10),
     border: OutlineInputBorder(
+      borderSide: BorderSide(color: AppColors.secondaryColor, width: 1.5),
       borderRadius: BorderRadius.all(Radius.circular(3)),
     ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: AppColors.secondaryColor, width: 1.5),
+      borderRadius: BorderRadius.all(Radius.circular(3)),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: AppColors.primaryColor, width: 2.0),
+      borderRadius: BorderRadius.all(Radius.circular(3)),
+    ),
+  );
+
+  static const ButtonStyle textButtonStyle = ButtonStyle(
+    padding: MaterialStatePropertyAll(EdgeInsets.all(0)),
+    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    minimumSize: MaterialStatePropertyAll(Size.zero),
   );
 }
