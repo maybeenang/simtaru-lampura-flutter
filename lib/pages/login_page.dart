@@ -3,6 +3,7 @@ import 'package:flutter_map_simtaru/components/textfield_common.dart';
 import 'package:flutter_map_simtaru/components/textfield_password.dart';
 import 'package:flutter_map_simtaru/constants/image.dart';
 import 'package:flutter_map_simtaru/styles/styles.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -34,7 +35,7 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  const TextFiledCommon(),
+                  const TextFiledCommon(labelText: "NIP"),
                   const SizedBox(height: 10),
                   const TextFieldPassword(),
                   const SizedBox(height: 10),
@@ -61,9 +62,16 @@ class LoginPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Belum punya akun? "),
+                      const Text(
+                        "Belum punya akun? ",
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.go('/register');
+                          },
                           style: AppStyles.textButtonStyle,
                           child: const Text(
                             "Daftar",
