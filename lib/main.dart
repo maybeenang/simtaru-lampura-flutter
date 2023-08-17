@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/pages/home_page.dart';
 import 'package:flutter_map_simtaru/pages/login_page.dart';
 import 'package:flutter_map_simtaru/pages/register_page.dart';
 import 'package:flutter_map_simtaru/styles/styles.dart';
@@ -16,6 +17,10 @@ final GoRouter _route = GoRouter(routes: <RouteBase>[
   GoRoute(
     path: '/register',
     builder: (context, state) => const RegisterPage(),
+  ),
+  GoRoute(
+    path: '/home',
+    builder: (context, state) => HomePage(),
   )
 ]);
 
