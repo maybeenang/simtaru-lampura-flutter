@@ -22,7 +22,7 @@ class AppStyles {
   static ElevatedButtonThemeData elevatedButtonThemeData =
       ElevatedButtonThemeData(
     style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+      backgroundColor: MaterialStateProperty.all<Color>(AppColors.primaryColor),
       minimumSize:
           MaterialStateProperty.all<Size>(const Size(double.infinity, 50)),
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(

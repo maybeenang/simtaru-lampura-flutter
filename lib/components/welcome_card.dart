@@ -7,9 +7,9 @@ class WelcomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Card(
-          color: AppColors.whiteColor,
+          color: AppColors.primaryColor,
           child: Container(
             padding: const EdgeInsets.all(20),
             width: double.infinity,
@@ -19,6 +19,7 @@ class WelcomeCard extends StatelessWidget {
                 Text(
                   "Selamat Datang",
                   style: TextStyle(
+                    color: AppColors.whiteColor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -27,6 +28,7 @@ class WelcomeCard extends StatelessWidget {
                 Text(
                   "Sistem Informasi Tata Ruang Kabupaten Lampung Utara",
                   style: TextStyle(
+                    color: AppColors.whiteColor,
                     fontSize: 14,
                   ),
                 ),

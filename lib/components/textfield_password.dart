@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/constants/colors.dart';
 import 'package:flutter_map_simtaru/styles/styles.dart';
 
 class TextFieldPassword extends StatelessWidget {
@@ -9,6 +10,8 @@ class TextFieldPassword extends StatelessWidget {
     return TextField(
       obscureText: true,
       decoration: AppStyles.inputDecoration.copyWith(
+        filled: true,
+        fillColor: AppColors.whiteColor,
         labelText: "Password",
       ),
     );

@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           toolbarHeight: 100,
           title: const Text("Dashboard"),
-          backgroundColor: AppColors.secondaryColor,
+          backgroundColor: AppColors.primaryColor,
           titleTextStyle: const TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
         drawer: const DrawerApp(),
         body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Container(
-            color: AppColors.secondaryColor,
+            color: AppColors.primaryColor,
             child: Container(
                 width: double.infinity,
                 height: 20,
@@ -46,17 +46,43 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: const Text(
+              "Overview",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             width: double.infinity,
             child: Wrap(
-              alignment: WrapAlignment.spaceBetween,
+              alignment: WrapAlignment.center,
               children: [
-                StatusCard(),
-                StatusCard(),
-                StatusCard(),
+                StatusCard(label: "Total Pengajuan"),
+                StatusCard(label: "Pengajuan Disetujui"),
+                StatusCard(label: "Pengajuan Diproses"),
+                StatusCard(label: "Pengajuan Ditolak"),
               ],
             ),
           ),
+          const SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: const Text(
+              "Menu",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
           Wrap(
             children: [
               MenuItem(
@@ -65,11 +91,11 @@ class HomePage extends StatelessWidget {
               ),
               MenuItem(
                 label: "Peta",
-                icon: "Pengajuan",
+                icon: "Peta",
               ),
               MenuItem(
                 label: "Informasi",
-                icon: "Pengajuan",
+                icon: "Informasi",
               ),
             ],
           )

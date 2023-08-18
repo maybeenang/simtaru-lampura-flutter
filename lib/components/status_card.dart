@@ -2,31 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 
 class StatusCard extends StatelessWidget {
-  const StatusCard({super.key});
+  StatusCard({super.key, required this.label});
+
+  final String label;
+
+  final Map<String, Color> colorMapping = {
+    "Total Pengajuan": Color(0xFF0891b2),
+    "Pengajuan Disetujui": Color(0xFF10b981),
+    "Pengajuan Diproses": Color(0xFFCA9804),
+    "Pengajuan Ditolak": Color(0xFFe11d48),
+  };
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppColors.whiteColor,
+      color: colorMapping[label],
       child: Container(
-        padding: const EdgeInsets.all(20),
-        width: MediaQuery.of(context).size.width / 2.21,
-        child: const Row(
+        padding: const EdgeInsets.all(15),
+        width: MediaQuery.of(context).size.width / 2.4,
+        child: Row(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "0",
                   style: TextStyle(
+                    color: AppColors.whiteColor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
-                  "Total Pengajuan",
-                  style: TextStyle(
+                  label,
+                  style: const TextStyle(
+                    color: AppColors.whiteColor,
                     fontSize: 14,
                   ),
                 ),

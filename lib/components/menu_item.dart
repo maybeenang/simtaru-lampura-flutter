@@ -8,9 +8,9 @@ class MenuItem extends StatelessWidget {
   final String icon;
 
   final Map<String, IconData> iconMapping = {
-    "Pengajuan": Icons.add,
-    "Verifikasi Lapangan": Icons.verified,
-    "Seluruh Pengajuan": Icons.list,
+    "Pengajuan": Icons.note_add,
+    "Peta": Icons.location_on,
+    "Informasi": Icons.info,
   };
 
   @override

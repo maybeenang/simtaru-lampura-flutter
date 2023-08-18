@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/constants/colors.dart';
 import 'package:flutter_map_simtaru/styles/styles.dart';
 
 class TextFiledCommon extends StatelessWidget {
@@ -10,6 +11,8 @@ class TextFiledCommon extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
         decoration: AppStyles.inputDecoration.copyWith(
+      filled: true,
+      fillColor: AppColors.whiteColor,
       labelText: labelText,
     ));
   }

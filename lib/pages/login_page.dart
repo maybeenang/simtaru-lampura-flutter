@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/components/textfield_common.dart';
 import 'package:flutter_map_simtaru/components/textfield_password.dart';
+import 'package:flutter_map_simtaru/constants/colors.dart';
 import 'package:flutter_map_simtaru/constants/image.dart';
 import 'package:flutter_map_simtaru/styles/styles.dart';
 import 'package:go_router/go_router.dart';
@@ -47,7 +48,7 @@ class LoginPage extends StatelessWidget {
                         child: const Text(
                           "Lupa Password?",
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: AppColors.primaryColor,
                             fontSize: 16,
                           ),
                           textAlign: TextAlign.right,
@@ -78,7 +79,7 @@ class LoginPage extends StatelessWidget {
                           child: const Text(
                             "Daftar",
                             style: TextStyle(
-                              color: Colors.blue,
+                              color: AppColors.primaryColor,
                               fontSize: 16,
                             ),
                           )),
