@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/constants/colors.dart';
 import 'package:flutter_map_simtaru/pages/home_page.dart';
 import 'package:flutter_map_simtaru/pages/login_page.dart';
 import 'package:flutter_map_simtaru/pages/register_page.dart';
@@ -32,6 +33,7 @@ class App extends StatelessWidget {
     return MaterialApp.router(
       theme: ThemeData(
         elevatedButtonTheme: AppStyles.elevatedButtonThemeData,
+        scaffoldBackgroundColor: AppColors.bgColor,
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
