@@ -9,7 +9,7 @@ class StatusCard extends StatelessWidget {
   final Map<String, Color> colorMapping = {
     "Total Pengajuan": Color(0xFF0891b2),
     "Pengajuan Disetujui": Color(0xFF10b981),
-    "Pengajuan Diproses": Color(0xFFCA9804),
+    "Pengajuan Diproses": Color(0xFFFF8800),
     "Pengajuan Ditolak": Color(0xFFe11d48),
   };
 

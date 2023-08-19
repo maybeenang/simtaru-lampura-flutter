@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/components/button_call_toaction.dart';
+import 'package:flutter_map_simtaru/components/carousel_berita_card.dart';
 import 'package:flutter_map_simtaru/components/carousel_welcome_card.dart';
 import 'package:flutter_map_simtaru/components/custom_appbar.dart';
 import 'package:flutter_map_simtaru/components/custom_safe_area.dart';
 import 'package:flutter_map_simtaru/components/drawer.dart';
-import 'package:flutter_map_simtaru/components/menu_item.dart';
 import 'package:flutter_map_simtaru/components/status_card.dart';
+import 'package:flutter_map_simtaru/components/subheader.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,7 +29,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CustomAppBar(),
+              const CustomAppBar(),
               Stack(
                 children: [
                   Container(
@@ -40,18 +42,10 @@ class _HomePageState extends State<HomePage> {
                   const CaroueselWelcomeCard(),
                 ],
               ),
-              const SizedBox(height: 10),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: const Text(
-                  "Overview",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+              const SizedBox(height: 20),
+              const ButtonCallToAction(),
+              const SizedBox(height: 20),
+              const SubHeader(labelText: "Overview"),
               const SizedBox(height: 10),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -66,35 +60,10 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+              const SizedBox(height: 20),
+              const SubHeader(labelText: "Berita"),
               const SizedBox(height: 10),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: const Text(
-                  "Menu",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Wrap(
-                children: [
-                  MenuItem(
-                    label: "Pengajuan",
-                    icon: "Pengajuan",
-                  ),
-                  MenuItem(
-                    label: "Peta",
-                    icon: "Peta",
-                  ),
-                  MenuItem(
-                    label: "Informasi",
-                    icon: "Informasi",
-                  ),
-                ],
-              ),
+              const CarouselBerita(),
               const SizedBox(height: 200)
             ],
           ),
