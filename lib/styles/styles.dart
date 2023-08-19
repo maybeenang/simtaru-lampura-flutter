@@ -19,6 +19,17 @@ class AppStyles {
     color: Colors.white,
   );
 
+  static const appBarTheme = AppBarTheme(
+    backgroundColor: AppColors.primaryColor,
+    elevation: 0,
+    iconTheme: IconThemeData(color: AppColors.whiteColor),
+    titleTextStyle: TextStyle(
+      color: AppColors.whiteColor,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+  );
+
   static ElevatedButtonThemeData elevatedButtonThemeData =
       ElevatedButtonThemeData(
     style: ButtonStyle(

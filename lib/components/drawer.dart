@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DrawerApp extends StatelessWidget {
   const DrawerApp({super.key});
@@ -28,6 +29,12 @@ class DrawerApp extends StatelessWidget {
               title: Text("Seluruh Pengajuan"),
               onTap: () {
                 Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text("Keluar"),
+              onTap: () {
+                context.go('/login');
               },
             ),
           ],

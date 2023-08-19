@@ -57,7 +57,7 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      context.go('/home');
+                      context.go('/');
                     },
                     child: const Text("Masuk", style: AppStyles.textButton),
                   ),

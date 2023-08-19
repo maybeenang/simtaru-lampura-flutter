@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 import 'package:flutter_map_simtaru/pages/home_page.dart';
+import 'package:flutter_map_simtaru/pages/informasi_page.dart';
 import 'package:flutter_map_simtaru/pages/login_page.dart';
+import 'package:flutter_map_simtaru/pages/pengajuan_page.dart';
+import 'package:flutter_map_simtaru/pages/peta_page.dart';
 import 'package:flutter_map_simtaru/pages/register_page.dart';
 import 'package:flutter_map_simtaru/styles/styles.dart';
 import 'package:go_router/go_router.dart';
@@ -11,18 +14,28 @@ void main() {
 }
 
 final GoRouter _route = GoRouter(routes: <RouteBase>[
+  GoRoute(path: '/', builder: (context, state) => HomePage(), routes: [
+    GoRoute(
+      path: 'pengajuan',
+      builder: (context, state) => const PengajuanPage(),
+    ),
+    GoRoute(
+      path: 'peta',
+      builder: (context, state) => const PetaPage(),
+    ),
+    GoRoute(
+      path: 'informasi',
+      builder: (context, state) => const InformasiPage(),
+    ),
+  ]),
   GoRoute(
-    path: '/',
+    path: '/login',
     builder: (context, state) => const LoginPage(),
   ),
   GoRoute(
     path: '/register',
     builder: (context, state) => const RegisterPage(),
   ),
-  GoRoute(
-    path: '/home',
-    builder: (context, state) => HomePage(),
-  )
 ]);
 
 class App extends StatelessWidget {
@@ -34,6 +47,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         elevatedButtonTheme: AppStyles.elevatedButtonThemeData,
         scaffoldBackgroundColor: AppColors.bgColor,
+        appBarTheme: AppStyles.appBarTheme,
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,

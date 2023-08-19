@@ -9,7 +9,7 @@ class WelcomeCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Card(
-          color: AppColors.primaryColor,
+          color: AppColors.secondaryColor,
           child: Container(
             padding: const EdgeInsets.all(20),
             width: double.infinity,
