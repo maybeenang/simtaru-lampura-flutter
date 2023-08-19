@@ -17,9 +17,9 @@ class BeritaCard extends StatelessWidget {
             height: 150,
             fit: BoxFit.cover,
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -51,7 +51,7 @@ class BeritaCard extends StatelessWidget {
           ),
           SizedBox(height: 5),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
               maxLines: 1,
@@ -64,7 +64,7 @@ class BeritaCard extends StatelessWidget {
           ),
           SizedBox(height: 5),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. dsfsdfs fdsf sd fsd fsdfsdf sdf sdf sf sfds",
               maxLines: 2,
