@@ -49,12 +49,16 @@ class CustomLineChart extends StatelessWidget {
                   ),
                   titlesData: FlTitlesData(
                     bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(showTitles: true),
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: getBottomTitles,
+                        interval: 1,
+                      ),
                     ),
-                    rightTitles: AxisTitles(
+                    rightTitles: const AxisTitles(
                       sideTitles: SideTitles(showTitles: false),
                     ),
-                    topTitles: AxisTitles(
+                    topTitles: const AxisTitles(
                       sideTitles: SideTitles(showTitles: false),
                     ),
                     leftTitles: AxisTitles(
@@ -88,6 +92,57 @@ class CustomLineChart extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget getBottomTitles(double value, TitleMeta meta) {
+    const textStyle = TextStyle(
+      color: Colors.black,
+      fontSize: 12,
+    );
+
+    Widget text;
+    switch (value.toInt()) {
+      case 1:
+        text = const Text(
+          '2018',
+          style: textStyle,
+        );
+        break;
+      case 2:
+        text = const Text(
+          '2019',
+          style: textStyle,
+        );
+        break;
+      case 3:
+        text = const Text(
+          '2020',
+          style: textStyle,
+        );
+        break;
+      case 4:
+        text = const Text(
+          '2021',
+          style: textStyle,
+        );
+        break;
+      case 5:
+        text = const Text(
+          '2022',
+          style: textStyle,
+        );
+        break;
+      default:
+        text = const Text(
+          '',
+          style: textStyle,
+        );
+    }
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      space: 1,
+      child: text,
     );
   }
 }

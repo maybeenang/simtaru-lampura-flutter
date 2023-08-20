@@ -4,9 +4,11 @@ class LineData {
   List<IndividualBar> barData = [];
   void getData() {
     barData = [
-      IndividualBar(1, 20),
-      IndividualBar(2, 12),
-      IndividualBar(3, 36),
+      IndividualBar(1, 56),
+      IndividualBar(2, 123),
+      IndividualBar(3, 87),
+      IndividualBar(4, 23),
+      IndividualBar(5, 90),
     ];
   }
 }
