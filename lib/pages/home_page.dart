@@ -3,6 +3,8 @@ import 'package:flutter_map_simtaru/components/button_call_toaction.dart';
 import 'package:flutter_map_simtaru/components/carousel_berita_card.dart';
 import 'package:flutter_map_simtaru/components/carousel_welcome_card.dart';
 import 'package:flutter_map_simtaru/components/custom_appbar.dart';
+import 'package:flutter_map_simtaru/components/custom_bar_chart.dart';
+import 'package:flutter_map_simtaru/components/custom_line_chart.dart';
 import 'package:flutter_map_simtaru/components/custom_safe_area.dart';
 import 'package:flutter_map_simtaru/components/drawer.dart';
 import 'package:flutter_map_simtaru/components/status_card.dart';
@@ -10,7 +12,7 @@ import 'package:flutter_map_simtaru/components/subheader.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -34,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Container(
                     color: AppColors.primaryColor,
-                    child: Container(
+                    child: const SizedBox(
                       width: double.infinity,
                       height: 100,
                     ),
@@ -60,6 +62,10 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+              const SizedBox(height: 20),
+              const CustomBarChart(),
+              const SizedBox(height: 20),
+              const CustomLineChart(),
               const SizedBox(height: 20),
               const SubHeader(labelText: "Berita"),
               const SizedBox(height: 10),

@@ -61,7 +61,7 @@ class RegisterPage extends StatelessWidget {
                         ),
                         TextButton(
                             onPressed: () {
-                              context.go('/');
+                              context.go('/login');
                             },
                             style: AppStyles.textButtonStyle,
                             child: const Text(

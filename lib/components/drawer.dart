@@ -20,19 +20,19 @@ class DrawerApp extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text("Verifikasi Lapangan"),
+              title: const Text("Verifikasi Lapangan"),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              title: Text("Seluruh Pengajuan"),
+              title: const Text("Seluruh Pengajuan"),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              title: Text("Keluar"),
+              title: const Text("Keluar"),
               onTap: () {
                 context.go('/login');
               },

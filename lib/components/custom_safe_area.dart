@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 
 class CustomSafeArea extends StatelessWidget {
-  CustomSafeArea(
+  const CustomSafeArea(
       {super.key, required this.child, this.color = AppColors.primaryColor});
 
   final Widget child;

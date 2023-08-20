@@ -14,7 +14,7 @@ void main() {
 }
 
 final GoRouter _route = GoRouter(routes: <RouteBase>[
-  GoRoute(path: '/', builder: (context, state) => HomePage(), routes: [
+  GoRoute(path: '/', builder: (context, state) => const HomePage(), routes: [
     GoRoute(
       path: 'pengajuan',
       builder: (context, state) => const PengajuanPage(),
