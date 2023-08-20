@@ -30,7 +30,7 @@ final GoRouter _route = GoRouter(routes: <RouteBase>[
   ]),
   GoRoute(
     path: '/login',
-    builder: (context, state) => const LoginPage(),
+    builder: (context, state) => LoginPage(),
   ),
   GoRoute(
     path: '/register',

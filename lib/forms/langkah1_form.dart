@@ -6,18 +6,20 @@ class Langkah1Form extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        TextFiledCommon(labelText: "Nama Lengkap"),
-        SizedBox(height: 10),
-        TextFiledCommon(labelText: "Tempat, Tanggal Lahir"),
-        SizedBox(height: 10),
-        TextFiledCommon(labelText: "Alamat"),
-        SizedBox(height: 10),
-        TextFiledCommon(labelText: "No. HP"),
-        SizedBox(height: 10),
-        TextFiledCommon(labelText: "Pekerjaan"),
-      ],
+    return const Form(
+      child: Column(
+        children: [
+          TextFiledCommon(labelText: "Nama Lengkap"),
+          SizedBox(height: 10),
+          TextFiledCommon(labelText: "Tempat, Tanggal Lahir"),
+          SizedBox(height: 10),
+          TextFiledCommon(labelText: "Alamat"),
+          SizedBox(height: 10),
+          TextFiledCommon(labelText: "No. HP"),
+          SizedBox(height: 10),
+          TextFiledCommon(labelText: "Pekerjaan"),
+        ],
+      ),
     );
   }
 }

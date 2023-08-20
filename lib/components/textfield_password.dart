@@ -7,7 +7,13 @@ class TextFieldPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Password tidak boleh kosong';
+        }
+        return null;
+      },
       obscureText: true,
       decoration: AppStyles.inputDecoration.copyWith(
         filled: true,

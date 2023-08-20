@@ -9,11 +9,18 @@ class TextFiledCommon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-        decoration: AppStyles.inputDecoration.copyWith(
-      filled: true,
-      fillColor: AppColors.whiteColor,
-      labelText: labelText,
-    ));
+    return TextFormField(
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return '$labelText tidak boleh kosong';
+        }
+        return null;
+      },
+      decoration: AppStyles.inputDecoration.copyWith(
+        filled: true,
+        fillColor: AppColors.whiteColor,
+        labelText: labelText,
+      ),
+    );
   }
 }
