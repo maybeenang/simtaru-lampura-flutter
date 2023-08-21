@@ -73,7 +73,8 @@ class _Langkah4FormState extends State<Langkah4Form>
             children: [
               TileLayer(
                 urlTemplate:
-                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    "https://api.mapbox.com/styles/v1/maybeenang/clllbru1i010u01qpb3jifdvd/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWF5YmVlbmFuZyIsImEiOiJjbGxjMTZlZmcwYWc1M2hwMmZodG55cG82In0.DGMjw3n5JXe-RygdN0hHuQ",
+                fallbackUrl: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 subdomains: const ['a', 'b', 'c'],
               ),
               MarkerLayer(markers: markers.map((e) => e).toList())

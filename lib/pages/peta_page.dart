@@ -13,7 +13,6 @@ import 'package:flutter/foundation.dart';
 import 'dart:ui' as dartui;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
-import 'dart:typed_data';
 
 final isLoading = StateProvider.autoDispose<bool>((ref) => false);
 
@@ -25,7 +24,8 @@ class PetaPage extends ConsumerStatefulWidget {
   _PetaPageState createState() => _PetaPageState();
 }
 
-class _PetaPageState extends ConsumerState<PetaPage> {
+class _PetaPageState extends ConsumerState<PetaPage>
+    with TickerProviderStateMixin {
   final _random = Random();
   double doubleInRange(num start, num end) =>
       _random.nextDouble() * (end - start) + start;
@@ -81,42 +81,47 @@ class _PetaPageState extends ConsumerState<PetaPage> {
                   print(
                       "anjy $x, $y  $point $pt  tile ${tile!.x} ${tile!.y} ${tile!.z}");
 
-                  if (tile != null) {
-                    for (var feature in tile.features) {
-                      var polygonList = feature.geometry;
+                  for (var feature in tile.features) {
+                    var polygonList = feature.geometry;
 
-                      if (feature.type != 1) {
-                        if (geoJSON.isGeoPointInPoly(pt, polygonList,
-                            size: tileSize)) {
-                          infoText =
-                              "${feature.tags['NAME']}, ${feature.tags['COUNTY']} tapped";
-                          print("$infoText");
-                          print("source IS ${feature.tags['source']}");
+                    if (feature.type != 1) {
+                      if (geoJSON.isGeoPointInPoly(pt, polygonList,
+                          size: tileSize)) {
+                        infoText =
+                            "${feature.tags['NAME']}, ${feature.tags['COUNTY']} tapped";
+                        // print("$infoText");
+                        // print("source IS ${feature.tags['source']}");
 
-                          highlightedIndex = await GeoJSON().createIndex(null,
-                              geoJsonMap: feature.tags['source'], tolerance: 0);
+                        highlightedIndex = await GeoJSON().createIndex(null,
+                            geoJsonMap: feature.tags['source'], tolerance: 0);
 
-                          if (feature.tags.containsKey('NAME')) {
-                            featureSelected =
-                                "${feature.tags['NAME']}_${feature.tags['COUNTY']}";
-                          }
+                        if (feature.tags.containsKey('NAME')) {
+                          featureSelected =
+                              "${feature.tags['NAME']}_${feature.tags['COUNTY']}";
                         }
+
+                        _animatedMapMove(point, 11.5);
                       }
                     }
-                    if (featureSelected != null) {
-                      print("Tapped $infoText $featureSelected");
-                    }
                   }
+                  if (featureSelected != null) {
+                    print("Tapped $infoText $featureSelected");
+                  }
+
                   setState(() {});
                 },
                 center: LatLng(-4.838455515616654, 104.89554453973685),
                 zoom: 10.0,
+                maxZoom: 18.45,
               ),
               children: [
                 TileLayer(
                   urlTemplate:
-                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                  subdomains: ['a', 'b', 'c'],
+                      "https://api.mapbox.com/styles/v1/maybeenang/clllbru1i010u01qpb3jifdvd/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWF5YmVlbmFuZyIsImEiOiJjbGxjMTZlZmcwYWc1M2hwMmZodG55cG82In0.DGMjw3n5JXe-RygdN0hHuQ",
+                  fallbackUrl:
+                      'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  subdomains: const ['a', 'b', 'c'],
+                  userAgentPackageName: 'simtaru.lampura.com',
                 ),
                 GeoJSONWidget(
                   drawClusters: false,
@@ -209,6 +214,53 @@ class _PetaPageState extends ConsumerState<PetaPage> {
               ],
             ),
     );
+  }
+
+  void _animatedMapMove(LatLng destLocation, double destZoom) {
+    final latTween = Tween<double>(
+      begin: mapController.center.latitude,
+      end: destLocation.latitude,
+    );
+
+    final lngTween = Tween<double>(
+      begin: mapController.center.longitude,
+      end: destLocation.longitude,
+    );
+
+    final zoomTween = Tween<double>(
+      begin: mapController.zoom,
+      end: destZoom,
+    );
+
+    final rotationTween = Tween<double>(
+      begin: mapController.rotation,
+      end: 0.0,
+    );
+
+    final controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+
+    final Animation<double> animation =
+        CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
+
+    controller.addListener(() {
+      mapController.move(
+          LatLng(latTween.evaluate(animation), lngTween.evaluate(animation)),
+          zoomTween.evaluate(animation));
+      mapController.rotate(rotationTween.evaluate(animation));
+    });
+
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.dispose();
+      } else if (status == AnimationStatus.dismissed) {
+        controller.dispose();
+      }
+    });
+
+    controller.forward();
   }
 }
 
