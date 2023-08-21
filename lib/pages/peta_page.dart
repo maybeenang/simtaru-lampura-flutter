@@ -7,6 +7,7 @@ import 'package:flutter_map_simtaru/geojson/geojson/geojson.dart';
 import 'package:flutter_map_simtaru/geojson/geojson/geojson_options.dart';
 import 'package:flutter_map_simtaru/geojson/geojson/geojson_widget.dart';
 import 'package:flutter_map_simtaru/geojson/geojson/index.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:ui' as dartui;
@@ -14,14 +15,17 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
 import 'dart:typed_data';
 
-class PetaPage extends StatefulWidget {
-  const PetaPage({super.key});
+final isLoading = StateProvider.autoDispose<bool>((ref) => false);
+
+class PetaPage extends ConsumerStatefulWidget {
+  const PetaPage({Key? key}) : super(key: key);
 
   @override
-  State<PetaPage> createState() => _PetaPageState();
+  // ignore: library_private_types_in_public_api
+  _PetaPageState createState() => _PetaPageState();
 }
 
-class _PetaPageState extends State<PetaPage> {
+class _PetaPageState extends ConsumerState<PetaPage> {
   final _random = Random();
   double doubleInRange(num start, num end) =>
       _random.nextDouble() * (end - start) + start;
@@ -35,165 +39,175 @@ class _PetaPageState extends State<PetaPage> {
   String? featureSelected;
 
   GeoJSON geoJSON = GeoJSON();
-  // VectorTileIndex vectorTileIndex = VectorTileIndex();
 
   @override
   void initState() {
-    //vectorTileIndex = GeoJSONVT({},GeoJSONVTOptions());
     super.initState();
+    ref.read(isLoading);
     mapController = MapController();
     CustomImages().loadPlane();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      geoJsonIndex = await geoJSON.createIndex('assets/json/testing2.json',
-          tileSize: tileSize, keepSource: true, buffer: 32);
-      setState(() {});
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async {
+        ref.read(isLoading.notifier).state = false;
+        geoJsonIndex = await geoJSON.createIndex('assets/json/testing2.json',
+            tileSize: tileSize, keepSource: true, buffer: 32);
+        ref.read(isLoading.notifier).state = true;
+        setState(() {});
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final loading = ref.watch(isLoading);
+
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      child: FlutterMap(
-        mapController: mapController,
-        options: MapOptions(
-          onTap: (tapPosition, point) async {
-            featureSelected = null;
-            var pt = const Epsg3857()
-                .latLngToPoint(point, mapController.zoom.floorToDouble());
-            var x = (pt.x / tileSize).floor();
-            var y = (pt.y / tileSize).floor();
-            var tile = geoJsonIndex.getTile(mapController.zoom.floor(), x, y);
-            print("$x, $y  $point $pt  tile ${tile!.x} ${tile!.y} ${tile!.z}");
+      child: !loading
+          ? const Center(child: CircularProgressIndicator())
+          : FlutterMap(
+              mapController: mapController,
+              options: MapOptions(
+                onTap: (tapPosition, point) async {
+                  featureSelected = null;
+                  var pt = const Epsg3857()
+                      .latLngToPoint(point, mapController.zoom.floorToDouble());
+                  var x = (pt.x / tileSize).floor();
+                  var y = (pt.y / tileSize).floor();
+                  var tile =
+                      geoJsonIndex.getTile(mapController.zoom.floor(), x, y);
+                  print(
+                      "anjy $x, $y  $point $pt  tile ${tile!.x} ${tile!.y} ${tile!.z}");
 
-            if (tile != null) {
-              for (var feature in tile.features) {
-                var polygonList = feature.geometry;
+                  if (tile != null) {
+                    for (var feature in tile.features) {
+                      var polygonList = feature.geometry;
 
-                if (feature.type != 1) {
-                  if (geoJSON.isGeoPointInPoly(pt, polygonList,
-                      size: tileSize)) {
-                    infoText =
-                        "${feature.tags['NAME']}, ${feature.tags['COUNTY']} tapped";
-                    print("$infoText");
-                    print("source IS ${feature.tags['source']}");
+                      if (feature.type != 1) {
+                        if (geoJSON.isGeoPointInPoly(pt, polygonList,
+                            size: tileSize)) {
+                          infoText =
+                              "${feature.tags['NAME']}, ${feature.tags['COUNTY']} tapped";
+                          print("$infoText");
+                          print("source IS ${feature.tags['source']}");
 
-                    highlightedIndex = await GeoJSON().createIndex(null,
-                        geoJsonMap: feature.tags['source'], tolerance: 0);
+                          highlightedIndex = await GeoJSON().createIndex(null,
+                              geoJsonMap: feature.tags['source'], tolerance: 0);
 
-                    if (feature.tags.containsKey('NAME')) {
-                      featureSelected =
-                          "${feature.tags['NAME']}_${feature.tags['COUNTY']}";
+                          if (feature.tags.containsKey('NAME')) {
+                            featureSelected =
+                                "${feature.tags['NAME']}_${feature.tags['COUNTY']}";
+                          }
+                        }
+                      }
+                    }
+                    if (featureSelected != null) {
+                      print("Tapped $infoText $featureSelected");
                     }
                   }
-                }
-              }
-              if (featureSelected != null) {
-                print("Tapped $infoText $featureSelected");
-              }
-            }
-            setState(() {});
-          },
-          center: LatLng(-4.838455515616654, 104.89554453973685),
-          zoom: 10.0,
-        ),
-        children: [
-          TileLayer(
-            urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            subdomains: ['a', 'b', 'c'],
-          ),
-          GeoJSONWidget(
-            drawClusters: false,
-            drawFeatures: true,
-            index: geoJsonIndex,
-            noSlice: false,
-            options: GeoJSONOptions(
-                featuresHaveSameStyle: false,
-                overallStyleFunc: (TileFeature feature) {
-                  var paint = Paint()
-                    ..style = PaintingStyle.fill
-                    ..color = Colors.blue
-                    ..strokeWidth = 5
-                    ..isAntiAlias = true;
-                  if (feature.type == 3) {
-                    // lineString
-                    paint.style = PaintingStyle.fill;
-                  }
-                  return paint;
+                  setState(() {});
                 },
-                polygonStyle: (feature) {
-                  var paint = Paint()
-                    ..style = PaintingStyle.fill
-                    ..color = Colors.red
-                    ..strokeWidth = 3
-                    ..isAntiAlias = true;
+                center: LatLng(-4.838455515616654, 104.89554453973685),
+                zoom: 10.0,
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate:
+                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                  subdomains: ['a', 'b', 'c'],
+                ),
+                GeoJSONWidget(
+                  drawClusters: false,
+                  drawFeatures: true,
+                  index: geoJsonIndex,
+                  noSlice: false,
+                  options: GeoJSONOptions(
+                      featuresHaveSameStyle: false,
+                      overallStyleFunc: (TileFeature feature) {
+                        var paint = Paint()
+                          ..style = PaintingStyle.fill
+                          ..color = Colors.blue
+                          ..strokeWidth = 5
+                          ..isAntiAlias = true;
+                        if (feature.type == 3) {
+                          // lineString
+                          paint.style = PaintingStyle.fill;
+                        }
+                        return paint;
+                      },
+                      polygonStyle: (feature) {
+                        var paint = Paint()
+                          ..style = PaintingStyle.fill
+                          ..color = Colors.red
+                          ..strokeWidth = 3
+                          ..isAntiAlias = true;
 
-                  paint.color = Colors.yellow.withOpacity(0.5);
+                        paint.color = Colors.yellow.withOpacity(0.5);
 
-                  paint.isAntiAlias = false;
+                        paint.isAntiAlias = false;
 
-                  return paint;
-                }),
-          ),
-          GeoJSONWidget(
-            drawClusters: false,
-            drawFeatures: true,
-            index: geoJsonIndex,
-            noSlice: false,
-            options: GeoJSONOptions(
-                featuresHaveSameStyle: false,
-                overallStyleFunc: (TileFeature feature) {
-                  var paint = Paint()
-                    ..style = PaintingStyle.fill
-                    ..color = Colors.blue
-                    ..strokeWidth = 5
-                    ..isAntiAlias = true;
-                  if (feature.type == 3) {
-                    // lineString
-                    paint.style = PaintingStyle.fill;
-                  }
-                  return paint;
-                },
-                polygonStyle: (feature) {
-                  var paint = Paint()
-                    ..style = PaintingStyle.stroke
-                    ..color = Colors.red
-                    ..strokeWidth = 3
-                    ..isAntiAlias = true;
+                        return paint;
+                      }),
+                ),
+                GeoJSONWidget(
+                  drawClusters: false,
+                  drawFeatures: true,
+                  index: geoJsonIndex,
+                  noSlice: false,
+                  options: GeoJSONOptions(
+                      featuresHaveSameStyle: false,
+                      overallStyleFunc: (TileFeature feature) {
+                        var paint = Paint()
+                          ..style = PaintingStyle.fill
+                          ..color = Colors.blue
+                          ..strokeWidth = 5
+                          ..isAntiAlias = true;
+                        if (feature.type == 3) {
+                          // lineString
+                          paint.style = PaintingStyle.fill;
+                        }
+                        return paint;
+                      },
+                      polygonStyle: (feature) {
+                        var paint = Paint()
+                          ..style = PaintingStyle.stroke
+                          ..color = Colors.red
+                          ..strokeWidth = 3
+                          ..isAntiAlias = true;
 
-                  paint.color = Colors.black.withOpacity(0.5);
+                        paint.color = Colors.black.withOpacity(0.5);
 
-                  paint.isAntiAlias = false;
+                        paint.isAntiAlias = false;
 
-                  return paint;
-                }),
-          ),
-          GeoJSONWidget(
-            index: highlightedIndex,
-            drawFeatures: true,
-            options: GeoJSONOptions(polygonStyle: (feature) {
-              return Paint()
-                ..style = PaintingStyle.fill
-                ..color = Colors.red.withOpacity(0.5)
-                ..strokeWidth = 8
-                ..isAntiAlias = true;
-            }),
-          ),
-          GeoJSONWidget(
-            index: highlightedIndex,
-            drawFeatures: true,
-            options: GeoJSONOptions(polygonStyle: (feature) {
-              return Paint()
-                ..style = PaintingStyle.stroke
-                ..color = Colors.purple.withOpacity(0.5)
-                ..strokeWidth = 5
-                ..isAntiAlias = true;
-            }),
-          ),
-        ],
-      ),
+                        return paint;
+                      }),
+                ),
+                GeoJSONWidget(
+                  index: highlightedIndex,
+                  drawFeatures: true,
+                  options: GeoJSONOptions(polygonStyle: (feature) {
+                    return Paint()
+                      ..style = PaintingStyle.fill
+                      ..color = Colors.red.withOpacity(0.5)
+                      ..strokeWidth = 8
+                      ..isAntiAlias = true;
+                  }),
+                ),
+                GeoJSONWidget(
+                  index: highlightedIndex,
+                  drawFeatures: true,
+                  options: GeoJSONOptions(polygonStyle: (feature) {
+                    return Paint()
+                      ..style = PaintingStyle.stroke
+                      ..color = Colors.purple.withOpacity(0.5)
+                      ..strokeWidth = 5
+                      ..isAntiAlias = true;
+                  }),
+                ),
+              ],
+            ),
     );
   }
 }
