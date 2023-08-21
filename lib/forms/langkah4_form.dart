@@ -47,7 +47,7 @@ class _Langkah4FormState extends State<Langkah4Form>
           child: FlutterMap(
             mapController: mapController,
             options: MapOptions(
-              center: const LatLng(-4.838455515616654, 104.89554453973685),
+              center: LatLng(-4.838455515616654, 104.89554453973685),
               zoom: 13.0,
               onTap: (tapPosition, point) {
                 setState(() {
@@ -111,7 +111,7 @@ class _Langkah4FormState extends State<Langkah4Form>
 
     final controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 1000),
     );
 
     final Animation<double> animation =
