@@ -40,6 +40,11 @@ class RootWidget extends ConsumerWidget {
               icon: Icon(Icons.home_outlined),
               label: 'Beranda',
             ),
+            // NavigationDestination(
+            //   selectedIcon: Icon(Icons.note, color: AppColors.whiteColor),
+            //   icon: Icon(Icons.note_outlined),
+            //   label: 'Pengajuan',
+            // ),
             NavigationDestination(
               selectedIcon: Icon(Icons.map, color: AppColors.whiteColor),
               icon: Icon(Icons.map_outlined),

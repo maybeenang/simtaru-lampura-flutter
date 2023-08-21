@@ -12,11 +12,16 @@ import "index.dart";
 import '../tile/tile_state.dart' hide Coords;
 import 'dart:developer' as dev;
 
-
 class GeoJSON {
-  Future<GeoJSONVT> createIndex(String? jsonString, { GeoJSONVTOptions? options, num tileSize = 256, geoJsonMap, keepSource = false, buffer = 32, tolerance = 0 }) async  {
+  Future<GeoJSONVT> createIndex(String? jsonString,
+      {GeoJSONVTOptions? options,
+      num tileSize = 256,
+      geoJsonMap,
+      keepSource = false,
+      buffer = 32,
+      tolerance = 0}) async {
     Map geoMap;
-    if(geoJsonMap != null) {
+    if (geoJsonMap != null) {
       geoMap = geoJsonMap;
     } else {
       geoMap = jsonDecode(await rootBundle.loadString(jsonString!));
@@ -25,20 +30,20 @@ class GeoJSON {
     //var json = jsonDecode(await rootBundle.loadString(jsonString));
 
     options ??= GeoJSONVTOptions(
-          debug : 0,
-          buffer : buffer,
-          maxZoom: 22,
-          indexMaxZoom: 22,
-          indexMaxPoints: 10000000,
-          keepSource: keepSource,
-          tolerance : tolerance, // 1 is probably ok, 2+ may be odd if you have adjacent polys lined up and gets simplified
-          extent: tileSize.toInt());
-    
+        debug: 0,
+        buffer: buffer,
+        maxZoom: 22,
+        indexMaxZoom: 22,
+        indexMaxPoints: 10000000,
+        keepSource: keepSource,
+        tolerance:
+            tolerance, // 1 is probably ok, 2+ may be odd if you have adjacent polys lined up and gets simplified
+        extent: tileSize.toInt());
+
     GeoJSONVT geoJsonIndex = GeoJSONVT(geoMap, options);
 
     return geoJsonIndex;
   }
-
 
   // https://stackoverflow.com/questions/22521982/check-if-point-is-inside-a-polygon
   bool isGeoPointInPoly(CustomPoint pt, List polygonList, {size = 256.0}) {
@@ -54,70 +59,89 @@ class GeoJSON {
     var inside = false;
     for (var polygon in polygonList) {
       for (int i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-
         var xi = polygon[i][lat];
         var yi = polygon[i][lon];
         var xj = polygon[j][lat];
         var yj = polygon[j][lon];
 
-        var intersect = ((yi > ay) != (yj > ay))
-            && (ax < (xj - xi) * (ay - yi) / (yj - yi) + xi);
+        var intersect = ((yi > ay) != (yj > ay)) &&
+            (ax < (xj - xi) * (ay - yi) / (yj - yi) + xi);
         if (intersect) inside = !inside;
       }
 
-      if(inside) return true;
+      if (inside) return true;
     }
 
     return inside;
   }
 
   // experimental, not sure this still works. rework to use with canvas, not widgets ???
-  Widget getClusters(FlutterMapState mapState, index, stream, markerFunc, CustomPoint<double> size) {
-
+  Widget getClusters(FlutterMapState mapState, index, stream, markerFunc,
+      CustomPoint<double> size) {
     List<Positioned> markers = [];
 
     var clusterZoom = 2;
-    var clusterFactor = pow(2,clusterZoom);
+    var clusterFactor = pow(2, clusterZoom);
 
     var tileState = TileState(mapState, size);
-    var clusterPixels = size.x / clusterFactor; /// how much do we want to split the tilesize into, 32 = 8 chunks by 8
+    var clusterPixels = size.x.toDouble() / clusterFactor;
 
-    if(index != null) {
+    /// how much do we want to split the tilesize into, 32 = 8 chunks by 8
 
-      tileState.loopOverTiles( (i,j, pos, matrix) {
-
-        for( var clusterTileX = 0; clusterTileX < clusterFactor ; clusterTileX++) {
-
-          for( var clusterTileY = 0; clusterTileY < clusterFactor ; clusterTileY++) {
-
+    if (index != null) {
+      tileState.loopOverTiles((i, j, pos, matrix) {
+        for (var clusterTileX = 0;
+            clusterTileX < clusterFactor;
+            clusterTileX++) {
+          for (var clusterTileY = 0;
+              clusterTileY < clusterFactor;
+              clusterTileY++) {
             var innerTileFeatures = index.getTile(
-                tileState.getTileZoom().toInt() + clusterZoom, i * clusterFactor + clusterTileX, j * clusterFactor + clusterTileY);
+                tileState.getTileZoom().toInt() + clusterZoom,
+                i * clusterFactor + clusterTileX,
+                j * clusterFactor + clusterTileY);
 
-            if(innerTileFeatures != null && innerTileFeatures.features.length > 0) {
-
+            if (innerTileFeatures != null &&
+                innerTileFeatures.features.length > 0) {
               var count = innerTileFeatures.features.length;
 
-              var bMin = transformPoint(innerTileFeatures.minX,innerTileFeatures.minY,size.x,1 << tileState.getTileZoom().toInt() + clusterZoom,innerTileFeatures.x,innerTileFeatures.y);
-              var bMax = transformPoint(innerTileFeatures.maxX,innerTileFeatures.maxY,size.x,1 << tileState.getTileZoom().toInt() + clusterZoom,innerTileFeatures.x,innerTileFeatures.y);
+              var bMin = transformPoint(
+                  innerTileFeatures.minX,
+                  innerTileFeatures.minY,
+                  size.x,
+                  1 << tileState.getTileZoom().toInt() + clusterZoom,
+                  innerTileFeatures.x,
+                  innerTileFeatures.y);
+              var bMax = transformPoint(
+                  innerTileFeatures.maxX,
+                  innerTileFeatures.maxY,
+                  size.x,
+                  1 << tileState.getTileZoom().toInt() + clusterZoom,
+                  innerTileFeatures.x,
+                  innerTileFeatures.y);
 
               var bbX = ((bMax[0] - bMin[0]) / 2 + bMin[0]);
               var bbY = ((bMax[1] - bMin[1]) / 2 + bMin[1]);
 
+              if (count > 1) {
+                var tp = MatrixUtils.transformPoint(
+                    matrix,
+                    Offset(
+                        (clusterTileX * clusterPixels + bbX / clusterFactor)
+                            .toDouble(),
+                        (clusterTileY * clusterPixels + bbY / clusterFactor)
+                            .toDouble()));
 
-              if(count > 1) {
-                var tp = MatrixUtils.transformPoint(matrix,
-                    Offset((clusterTileX * clusterPixels + bbX / clusterFactor).toDouble(), (clusterTileY * clusterPixels + bbY / clusterFactor).toDouble()));
-
-                markers.add(
-                    Positioned(
-                        width: 35,
-                        height: 35,
-                        left: tp.dx, // + zoomTileX*32,
-                        top: tp.dy, // +zoomTileY*32,
-                        child: Transform.rotate(
-                          alignment: FractionalOffset.center,
-                          angle: -mapState.rotationRad,
-                          child: markerFunc == null ? FittedBox(
+                markers.add(Positioned(
+                    width: 35,
+                    height: 35,
+                    left: tp.dx, // + zoomTileX*32,
+                    top: tp.dy, // +zoomTileY*32,
+                    child: Transform.rotate(
+                      alignment: FractionalOffset.center,
+                      angle: -mapState.rotationRad,
+                      child: markerFunc == null
+                          ? FittedBox(
                               fit: BoxFit.contain,
                               //child: Text("$count ", style: const TextStyle(fontSize: 10))
                               child: Container(
@@ -132,14 +156,13 @@ class GeoJSON {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    Text("$count ", style: const TextStyle(fontSize: 50)),
+                                    Text("$count ",
+                                        style: const TextStyle(fontSize: 50)),
                                   ],
                                 ),
-                              )
-                          ) :  markerFunc( innerTileFeatures, count ),
-                        )
-                    )
-                );
+                              ))
+                          : markerFunc(innerTileFeatures, count),
+                    )));
               }
             }
           }
@@ -150,52 +173,72 @@ class GeoJSON {
     return Stack(children: markers);
   }
 
-  Widget getClustersOnTile(tile, index, matrix, FlutterMapState mapState, size, clusterFunc, markerWidgetFunc) {
-
+  Widget getClustersOnTile(tile, index, matrix, FlutterMapState mapState, size,
+      clusterFunc, markerWidgetFunc) {
     List<Positioned> markers = [];
 
     var clusterZoom = 1;
-    var clusterFactor = pow(2,clusterZoom);
+    var clusterFactor = pow(2, clusterZoom);
 
     var tileState = TileState(mapState, size);
-    var clusterPixels = size.x / clusterFactor; /// how much do we want to split the tilesize into, 32 = 8 chunks by 8
+    var clusterPixels = size.x / clusterFactor;
 
-    if(index != null) {
+    /// how much do we want to split the tilesize into, 32 = 8 chunks by 8
 
+    if (index != null) {
       //tileState.loopOverTiles( (i,j, pos, matrix) {
 
-        for( var clusterTileX = 0; clusterTileX < clusterFactor ; clusterTileX++) {
+      for (var clusterTileX = 0; clusterTileX < clusterFactor; clusterTileX++) {
+        for (var clusterTileY = 0;
+            clusterTileY < clusterFactor;
+            clusterTileY++) {
+          var innerTileFeatures = index.getTile(
+              tileState.getTileZoom().toInt() + clusterZoom,
+              tile.x * clusterFactor + clusterTileX,
+              tile.y * clusterFactor + clusterTileY);
 
-          for( var clusterTileY = 0; clusterTileY < clusterFactor ; clusterTileY++) {
+          if (innerTileFeatures != null &&
+              innerTileFeatures.features.length > 0) {
+            var count = innerTileFeatures.features.length;
 
-            var innerTileFeatures = index.getTile(
-                tileState.getTileZoom().toInt() + clusterZoom, tile.x * clusterFactor + clusterTileX, tile.y * clusterFactor + clusterTileY);
+            var bMin = transformPoint(
+                innerTileFeatures.minX,
+                innerTileFeatures.minY,
+                size.x,
+                1 << tileState.getTileZoom().toInt() + clusterZoom,
+                innerTileFeatures.x,
+                innerTileFeatures.y);
+            var bMax = transformPoint(
+                innerTileFeatures.maxX,
+                innerTileFeatures.maxY,
+                size.x,
+                1 << tileState.getTileZoom().toInt() + clusterZoom,
+                innerTileFeatures.x,
+                innerTileFeatures.y);
 
-            if(innerTileFeatures != null && innerTileFeatures.features.length > 0) {
+            var bbX = ((bMax[0] - bMin[0]) / 2 + bMin[0]);
+            var bbY = ((bMax[1] - bMin[1]) / 2 + bMin[1]);
 
-              var count = innerTileFeatures.features.length;
+            var tp = MatrixUtils.transformPoint(
+                matrix,
+                Offset(
+                    (clusterTileX * clusterPixels + bbX / clusterFactor)
+                        .toDouble(),
+                    (clusterTileY * clusterPixels + bbY / clusterFactor)
+                        .toDouble()));
 
-              var bMin = transformPoint(innerTileFeatures.minX,innerTileFeatures.minY,size.x,1 << tileState.getTileZoom().toInt() + clusterZoom,innerTileFeatures.x,innerTileFeatures.y);
-              var bMax = transformPoint(innerTileFeatures.maxX,innerTileFeatures.maxY,size.x,1 << tileState.getTileZoom().toInt() + clusterZoom,innerTileFeatures.x,innerTileFeatures.y);
-
-              var bbX = ((bMax[0] - bMin[0]) / 2 + bMin[0]);
-              var bbY = ((bMax[1] - bMin[1]) / 2 + bMin[1]);
-
-
-              var tp = MatrixUtils.transformPoint(matrix,
-                  Offset((clusterTileX * clusterPixels + bbX / clusterFactor).toDouble(), (clusterTileY * clusterPixels + bbY / clusterFactor).toDouble()));
-
-              markers.add(
-                  Positioned(
-                      width: 35,
-                      height: 35,
-                      left: tp.dx, // + zoomTileX*32,
-                      top: tp.dy, // +zoomTileY*32,
-                      child: Transform.rotate(
-                        alignment: FractionalOffset.center,
-                        angle: -mapState.rotationRad,
-                        child: count == 1 ? markerWidgetFunc(innerTileFeatures.features[0]) :
-                          clusterFunc == null ? FittedBox(
+            markers.add(Positioned(
+                width: 35,
+                height: 35,
+                left: tp.dx, // + zoomTileX*32,
+                top: tp.dy, // +zoomTileY*32,
+                child: Transform.rotate(
+                  alignment: FractionalOffset.center,
+                  angle: -mapState.rotationRad,
+                  child: count == 1
+                      ? markerWidgetFunc(innerTileFeatures.features[0])
+                      : clusterFunc == null
+                          ? FittedBox(
                               fit: BoxFit.contain,
                               //child: Text("$count ", style: const TextStyle(fontSize: 10))
                               child: Container(
@@ -210,21 +253,19 @@ class GeoJSON {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    Text("$count ", style: const TextStyle(fontSize: 50)),
+                                    Text("$count ",
+                                        style: const TextStyle(fontSize: 50)),
                                   ],
                                 ),
-                              )
-                          ) :  clusterFunc(),
-                      )
-                  )
-              );
-            }
+                              ))
+                          : clusterFunc(),
+                )));
           }
         }
+      }
       //});
     }
 
     return Stack(children: markers);
   }
-
 }

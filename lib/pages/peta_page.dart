@@ -29,14 +29,14 @@ class _PetaPageState extends State<PetaPage> {
 
   late final MapController mapController;
   late GeoJSONVT geoJsonIndex = GeoJSONVT({}, GeoJSONVTOptions(buffer: 32));
-  late GeoJSONVT? highlightedIndex =
-      GeoJSONVT({}, GeoJSONVTOptions(buffer: 32));
+  GeoJSONVT? highlightedIndex = GeoJSONVT({}, GeoJSONVTOptions(buffer: 32));
   var infoText = 'No Info';
-  var tileSize = 256.0;
+  var tileSize = 256;
   var tilePointCheckZoom = 14;
+  String? featureSelected;
 
   GeoJSON geoJSON = GeoJSON();
-  VectorTileIndex vectorTileIndex = VectorTileIndex();
+  // VectorTileIndex vectorTileIndex = VectorTileIndex();
 
   @override
   void initState() {
@@ -46,22 +46,11 @@ class _PetaPageState extends State<PetaPage> {
     CustomImages().loadPlane();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      //var geoPointMap = TestData().getSamplePointGeoJSON(100);
-      //geoJsonIndex = await geoJSON.createIndex(null, tileSize: tileSize, geoJsonMap: geoPointMap);
-      //geoJsonIndex = await geoJSON.createIndex('assets/test.json', tileSize: 256);
-      geoJsonIndex = await geoJSON.createIndex('assets/json/data.json',
+      geoJsonIndex = await geoJSON.createIndex('assets/json/testing2.json',
           tileSize: tileSize, keepSource: true, buffer: 32);
-      //geoJsonIndex = await geoJSON.createIndex('assets/us_test.json', tileSize: tileSize);
-      //geoJsonIndex = await geoJSON.createIndex('assets/ids.json', tileSize: tileSize);
-      //geoJsonIndex = await geoJSON.createIndex('assets/polygon_hole.json', tileSize: 256);
-      //geoJsonIndex = await geoJSON.createIndex('assets/general.json', tileSize: 256);
-      //geoJsonIndex = await geoJSON.createIndex('assets/uk.json', tileSize: 256);
-      //geoJsonIndex = await geoJSON.createIndex('assets/earthquake.geojson', tileSize: 256);
       setState(() {});
     });
   }
-
-  String? featureSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +58,47 @@ class _PetaPageState extends State<PetaPage> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: FlutterMap(
+        mapController: mapController,
         options: MapOptions(
+          onTap: (tapPosition, point) async {
+            featureSelected = null;
+            var pt = const Epsg3857()
+                .latLngToPoint(point, mapController.zoom.floorToDouble());
+            var x = (pt.x / tileSize).floor();
+            var y = (pt.y / tileSize).floor();
+            var tile = geoJsonIndex.getTile(mapController.zoom.floor(), x, y);
+            print("$x, $y  $point $pt  tile ${tile!.x} ${tile!.y} ${tile!.z}");
+
+            if (tile != null) {
+              for (var feature in tile.features) {
+                var polygonList = feature.geometry;
+
+                if (feature.type != 1) {
+                  if (geoJSON.isGeoPointInPoly(pt, polygonList,
+                      size: tileSize)) {
+                    infoText =
+                        "${feature.tags['NAME']}, ${feature.tags['COUNTY']} tapped";
+                    print("$infoText");
+                    print("source IS ${feature.tags['source']}");
+
+                    highlightedIndex = await GeoJSON().createIndex(null,
+                        geoJsonMap: feature.tags['source'], tolerance: 0);
+
+                    if (feature.tags.containsKey('NAME')) {
+                      featureSelected =
+                          "${feature.tags['NAME']}_${feature.tags['COUNTY']}";
+                    }
+                  }
+                }
+              }
+              if (featureSelected != null) {
+                print("Tapped $infoText $featureSelected");
+              }
+            }
+            setState(() {});
+          },
           center: LatLng(-4.838455515616654, 104.89554453973685),
-          zoom: 13.0,
+          zoom: 10.0,
         ),
         children: [
           TileLayer(
@@ -82,52 +109,75 @@ class _PetaPageState extends State<PetaPage> {
             drawClusters: false,
             drawFeatures: true,
             index: geoJsonIndex,
+            noSlice: false,
             options: GeoJSONOptions(
-              featuresHaveSameStyle: false,
-              overallStyleFunc: (TileFeature feature) {
-                var paint = Paint()
-                  ..style = PaintingStyle.stroke
-                  ..color = Colors.blue
-                  ..strokeWidth = 5
-                  ..isAntiAlias = false;
-                if (feature.type == 3) {
-                  // lineString
-                  paint.style = PaintingStyle.fill;
-                }
-                return paint;
-              },
-              pointWidgetFunc: (TileFeature feature) {
-                //return const Text("Point!", style: TextStyle(fontSize: 10));
-                return const Icon(Icons.airplanemode_on);
-              },
-              pointStyle: (TileFeature feature) {
-                return Paint();
-              },
-              pointFunc: (TileFeature feature, Canvas canvas) {
-                if (CustomImages.imageLoaded) {
-                  canvas.drawImage(
-                      CustomImages.plane, const Offset(0.0, 0.0), Paint());
-                }
-              },
+                featuresHaveSameStyle: false,
+                overallStyleFunc: (TileFeature feature) {
+                  var paint = Paint()
+                    ..style = PaintingStyle.fill
+                    ..color = Colors.blue
+                    ..strokeWidth = 5
+                    ..isAntiAlias = false;
+                  if (feature.type == 3) {
+                    // lineString
+                    paint.style = PaintingStyle.fill;
+                  }
+                  return paint;
+                },
+                polygonStyle: (feature) {
+                  var paint = Paint()
+                    ..style = PaintingStyle.fill
+                    ..color = Colors.red
+                    ..strokeWidth = 3
+                    ..isAntiAlias = false;
 
-              ///clusterFunc: () { return Text("Cluster"); },
-              ///lineStringFunc: () { if(CustomImages.imageLoaded) return CustomImages.plane;}
-              lineStringStyle: (feature) {
-                return Paint()
-                  ..style = PaintingStyle.stroke
-                  ..color = Colors.red
-                  ..strokeWidth = 2
-                  ..isAntiAlias = true;
-              },
-            ),
+                  paint.color = Colors.yellow;
+
+                  paint.isAntiAlias = false;
+
+                  return paint;
+                }),
+          ),
+          GeoJSONWidget(
+            drawClusters: false,
+            drawFeatures: true,
+            index: geoJsonIndex,
+            noSlice: false,
+            options: GeoJSONOptions(
+                featuresHaveSameStyle: false,
+                overallStyleFunc: (TileFeature feature) {
+                  var paint = Paint()
+                    ..style = PaintingStyle.fill
+                    ..color = Colors.blue
+                    ..strokeWidth = 5
+                    ..isAntiAlias = false;
+                  if (feature.type == 3) {
+                    // lineString
+                    paint.style = PaintingStyle.fill;
+                  }
+                  return paint;
+                },
+                polygonStyle: (feature) {
+                  var paint = Paint()
+                    ..style = PaintingStyle.stroke
+                    ..color = Colors.red
+                    ..strokeWidth = 3
+                    ..isAntiAlias = false;
+
+                  paint.color = Colors.black;
+
+                  paint.isAntiAlias = false;
+
+                  return paint;
+                }),
           ),
           GeoJSONWidget(
             index: highlightedIndex,
             drawFeatures: true,
             options: GeoJSONOptions(polygonStyle: (feature) {
               return Paint()
-                ..style = PaintingStyle.stroke
-                ..color = Colors.yellow
+                ..style = PaintingStyle.fill
+                ..color = Colors.red
                 ..strokeWidth = 8
                 ..isAntiAlias = true;
             }),
