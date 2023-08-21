@@ -7,7 +7,6 @@ import 'package:flutter_map_simtaru/geojson/geojson/geojson.dart';
 import 'package:flutter_map_simtaru/geojson/geojson/geojson_options.dart';
 import 'package:flutter_map_simtaru/geojson/geojson/geojson_widget.dart';
 import 'package:flutter_map_simtaru/geojson/geojson/index.dart';
-import 'package:flutter_map_simtaru/geojson/vector_tile/vector_tile.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:ui' as dartui;
@@ -117,7 +116,7 @@ class _PetaPageState extends State<PetaPage> {
                     ..style = PaintingStyle.fill
                     ..color = Colors.blue
                     ..strokeWidth = 5
-                    ..isAntiAlias = false;
+                    ..isAntiAlias = true;
                   if (feature.type == 3) {
                     // lineString
                     paint.style = PaintingStyle.fill;
@@ -129,9 +128,9 @@ class _PetaPageState extends State<PetaPage> {
                     ..style = PaintingStyle.fill
                     ..color = Colors.red
                     ..strokeWidth = 3
-                    ..isAntiAlias = false;
+                    ..isAntiAlias = true;
 
-                  paint.color = Colors.yellow;
+                  paint.color = Colors.yellow.withOpacity(0.5);
 
                   paint.isAntiAlias = false;
 
@@ -150,7 +149,7 @@ class _PetaPageState extends State<PetaPage> {
                     ..style = PaintingStyle.fill
                     ..color = Colors.blue
                     ..strokeWidth = 5
-                    ..isAntiAlias = false;
+                    ..isAntiAlias = true;
                   if (feature.type == 3) {
                     // lineString
                     paint.style = PaintingStyle.fill;
@@ -162,9 +161,9 @@ class _PetaPageState extends State<PetaPage> {
                     ..style = PaintingStyle.stroke
                     ..color = Colors.red
                     ..strokeWidth = 3
-                    ..isAntiAlias = false;
+                    ..isAntiAlias = true;
 
-                  paint.color = Colors.black;
+                  paint.color = Colors.black.withOpacity(0.5);
 
                   paint.isAntiAlias = false;
 
@@ -177,7 +176,7 @@ class _PetaPageState extends State<PetaPage> {
             options: GeoJSONOptions(polygonStyle: (feature) {
               return Paint()
                 ..style = PaintingStyle.fill
-                ..color = Colors.red
+                ..color = Colors.red.withOpacity(0.5)
                 ..strokeWidth = 8
                 ..isAntiAlias = true;
             }),
@@ -188,7 +187,7 @@ class _PetaPageState extends State<PetaPage> {
             options: GeoJSONOptions(polygonStyle: (feature) {
               return Paint()
                 ..style = PaintingStyle.stroke
-                ..color = Colors.purple
+                ..color = Colors.purple.withOpacity(0.5)
                 ..strokeWidth = 5
                 ..isAntiAlias = true;
             }),
