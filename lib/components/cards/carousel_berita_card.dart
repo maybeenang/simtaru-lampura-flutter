@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/components/berita_card.dart';
+import 'package:flutter_map_simtaru/components/cards/berita_card.dart';
 
 class CarouselBerita extends StatefulWidget {
   const CarouselBerita({super.key});

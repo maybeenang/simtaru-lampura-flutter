@@ -15,88 +15,103 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Center(
-        child: Form(
-          key: loginFormKey,
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Flexible(
-                  child: SizedBox(
-                height: 100,
-              )),
-              Image.asset(Images.logo),
-              const SizedBox(height: 50),
-              const Text(
-                "Masuk",
-                style: AppStyles.title,
-              ),
-              const Text(
-                "Masukan NIP dan Password untuk melanjutkan",
-                style: AppStyles.subtitle,
-              ),
-              const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    const TextFiledCommon(labelText: "NIP"),
-                    const SizedBox(height: 10),
-                    const TextFieldPassword(),
-                    const SizedBox(height: 10),
-                    Container(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                          onPressed: () {},
-                          style: AppStyles.textButtonStyle,
-                          child: const Text(
-                            "Lupa Password?",
-                            style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontSize: 16,
-                            ),
-                            textAlign: TextAlign.right,
-                          )),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (loginFormKey.currentState!.validate()) {
-                          context.go('/');
-                        }
-                      },
-                      child: const Text("Masuk", style: AppStyles.textButton),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Image(
+              image: const AssetImage(Images.bgPeta),
+              height: 200,
+              fit: BoxFit.cover,
+              color: AppColors.primaryColor.withOpacity(0.5),
+            ),
+          ),
+          Center(
+            child: Form(
+              key: loginFormKey,
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Flexible(
+                      child: SizedBox(
+                    height: 100,
+                  )),
+                  Image.asset(Images.logo),
+                  const SizedBox(height: 50),
+                  const Text(
+                    "Masuk",
+                    style: AppStyles.title,
+                  ),
+                  const Text(
+                    "Masukan NIP dan Password untuk melanjutkan",
+                    style: AppStyles.subtitle,
+                  ),
+                  const SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
                       children: [
-                        const Text(
-                          "Belum punya akun? ",
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
+                        const TextFiledCommon(labelText: "NIP"),
+                        const SizedBox(height: 10),
+                        const TextFieldPassword(),
+                        const SizedBox(height: 10),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                              onPressed: () {},
+                              style: AppStyles.textButtonStyle,
+                              child: const Text(
+                                "Lupa Password?",
+                                style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.right,
+                              )),
                         ),
-                        TextButton(
-                            onPressed: () {
-                              context.go('/register');
-                            },
-                            style: AppStyles.textButtonStyle,
-                            child: const Text(
-                              "Daftar",
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (loginFormKey.currentState!.validate()) {
+                              context.go('/');
+                            }
+                          },
+                          child:
+                              const Text("Masuk", style: AppStyles.textButton),
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              "Belum punya akun? ",
                               style: TextStyle(
-                                color: AppColors.primaryColor,
                                 fontSize: 16,
                               ),
-                            )),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                context.go('/register');
+                              },
+                              style: AppStyles.textButtonStyle,
+                              child: const Text(
+                                "Daftar",
+                                style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
                       ],
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

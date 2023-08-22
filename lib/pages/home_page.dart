@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/components/button_call_toaction.dart';
-import 'package:flutter_map_simtaru/components/carousel_berita_card.dart';
-import 'package:flutter_map_simtaru/components/carousel_welcome_card.dart';
+import 'package:flutter_map_simtaru/components/cards/carousel_berita_card.dart';
+import 'package:flutter_map_simtaru/components/cards/carousel_welcome_card.dart';
+import 'package:flutter_map_simtaru/components/cards/status_card.dart';
 import 'package:flutter_map_simtaru/components/custom_appbar.dart';
 import 'package:flutter_map_simtaru/components/custom_bar_chart.dart';
 import 'package:flutter_map_simtaru/components/custom_line_chart.dart';
-import 'package:flutter_map_simtaru/components/status_card.dart';
 import 'package:flutter_map_simtaru/components/subheader.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
           ),
           const SizedBox(height: 20),
           const ButtonCallToAction(),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
           const SubHeader(labelText: "Overview"),
           const SizedBox(height: 10),
           Container(

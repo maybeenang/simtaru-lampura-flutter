@@ -13,16 +13,38 @@ class StatusCard extends StatelessWidget {
     "Pengajuan Ditolak": const Color(0xFFe11d48),
   };
 
+  final Map<String, IconData> iconMapping = {
+    "Total Pengajuan": Icons.assignment_sharp,
+    "Pengajuan Disetujui": Icons.check_circle_outline,
+    "Pengajuan Diproses": Icons.pending_outlined,
+    "Pengajuan Ditolak": Icons.cancel_outlined,
+  };
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: colorMapping[label],
-      child: Container(
-        padding: const EdgeInsets.all(15),
-        width: MediaQuery.of(context).size.width / 2.4,
-        child: Row(
-          children: [
-            Column(
+    return Container(
+      height: 100,
+      width: MediaQuery.of(context).size.width / 2.4,
+      margin: const EdgeInsets.all(5),
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: colorMapping[label],
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: Icon(
+              iconMapping[label],
+              color: Colors.black.withOpacity(0.1),
+              size: 150,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(15),
+            width: MediaQuery.of(context).size.width / 2.4,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
@@ -43,8 +65,8 @@ class StatusCard extends StatelessWidget {
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

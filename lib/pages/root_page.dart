@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/components/custom_safe_area.dart';
 import 'package:flutter_map_simtaru/components/drawer.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/pages/berita_page.dart';
 import 'package:flutter_map_simtaru/pages/home_page.dart';
 import 'package:flutter_map_simtaru/pages/overviewpengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/peta_page.dart';
@@ -24,6 +25,7 @@ class RootWidget extends ConsumerWidget {
             HomePage(),
             OverviewPengajuanPage(),
             PetaPage(),
+            BeritaPage(),
             Center(
               child: Text("Profil"),
             ),
@@ -51,6 +53,11 @@ class RootWidget extends ConsumerWidget {
               selectedIcon: Icon(Icons.map, color: AppColors.whiteColor),
               icon: Icon(Icons.map_outlined),
               label: 'Peta',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.newspaper, color: AppColors.whiteColor),
+              icon: Icon(Icons.newspaper_outlined),
+              label: 'Berita',
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.person, color: AppColors.whiteColor),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/components/carousel_pengajuan_card.dart';
+import 'package:flutter_map_simtaru/components/cards/carousel_pengajuan_card.dart';
 import 'package:flutter_map_simtaru/components/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/components/item_pengajuan.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';

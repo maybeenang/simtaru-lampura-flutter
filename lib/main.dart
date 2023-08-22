@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/pages/detail_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/login_page.dart';
 import 'package:flutter_map_simtaru/pages/pengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/register_page.dart';
@@ -17,6 +18,10 @@ final GoRouter _route = GoRouter(routes: <RouteBase>[
     GoRoute(
       path: 'pengajuan',
       builder: (context, state) => const PengajuanPage(),
+    ),
+    GoRoute(
+      path: 'detail_pengajuan',
+      builder: (context, state) => const DetailPengajuanPage(),
     ),
   ]),
   GoRoute(
