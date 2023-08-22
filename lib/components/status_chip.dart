@@ -7,19 +7,16 @@ class StatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
-        vertical: 5,
+        vertical: 10,
       ),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.primaryColor,
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.only(bottomRight: Radius.circular(10)),
       ),
       child: const Text(
-        "Upload Scan Surat Hasil Rekomendasi",
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
+        "Verifikasi Lapangan",
         style: TextStyle(
           color: AppColors.whiteColor,
         ),

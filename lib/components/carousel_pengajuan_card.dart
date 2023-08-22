@@ -31,7 +31,7 @@ class _CarouselPengajuanCardState extends State<CarouselPengajuanCard> {
           carouselController: buttonCarouselController,
           options: CarouselOptions(
             height: 150,
-            viewportFraction: 0.85,
+            viewportFraction: 0.9,
             enableInfiniteScroll: false,
             scrollDirection: Axis.horizontal,
             onPageChanged: (index, reason) {

@@ -28,7 +28,7 @@ class OverviewPengajuanPage extends StatelessWidget {
           const SizedBox(height: 20),
           ListView.separated(
             shrinkWrap: true,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             itemCount: 5,
             physics: const NeverScrollableScrollPhysics(),
             separatorBuilder: (context, index) {

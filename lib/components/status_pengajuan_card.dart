@@ -23,41 +23,50 @@ class StatusPengajuanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
+      clipBehavior: Clip.antiAlias,
       color: colorMapping[label],
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: Icon(
+              iconMapping[label],
+              color: Colors.black.withOpacity(0.1),
+              size: 200,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(20),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "0",
-                  style: TextStyle(
-                    color: AppColors.whiteColor,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  label,
-                  style: const TextStyle(
-                    color: AppColors.whiteColor,
-                    fontSize: 24,
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "0",
+                      style: TextStyle(
+                        color: AppColors.whiteColor,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      label,
+                      style: const TextStyle(
+                        color: AppColors.whiteColor,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            Icon(
-              iconMapping[label],
-              color: AppColors.whiteColor,
-              size: 50,
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

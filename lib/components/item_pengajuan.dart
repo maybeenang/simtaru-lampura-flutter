@@ -8,40 +8,50 @@ class ItemPengajuan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 15,
-      ),
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Elang Permadani",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                width: 150,
-                child: Text(
-                  "Bangunan Rumah dan Praktek Mandiri Keperawatan",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Text("12 Mei 2022"),
-            ],
+          Container(
+            child: StatusChip(),
           ),
-          StatusChip(),
+          Container(
+            padding: const EdgeInsets.fromLTRB(
+              20,
+              5,
+              10,
+              15,
+            ),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  child: Text(
+                    "Elang Permadani",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  child: Text(
+                    "Bangunan Rumah dan Praktek Mandiri Keperawatan",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text("12 Mei 2022"),
+              ],
+            ),
+          ),
         ],
       ),
     );
