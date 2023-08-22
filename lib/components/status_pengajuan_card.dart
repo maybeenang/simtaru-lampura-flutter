@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 
-class StatusCard extends StatelessWidget {
-  StatusCard({super.key, required this.label});
+class StatusPengajuanCard extends StatelessWidget {
+  StatusPengajuanCard({super.key, required this.label});
 
   final String label;
 
@@ -13,23 +13,31 @@ class StatusCard extends StatelessWidget {
     "Pengajuan Ditolak": const Color(0xFFe11d48),
   };
 
+  final Map<String, IconData> iconMapping = {
+    "Total Pengajuan": Icons.assignment_sharp,
+    "Pengajuan Disetujui": Icons.check_circle_outline,
+    "Pengajuan Diproses": Icons.pending_outlined,
+    "Pengajuan Ditolak": Icons.cancel_outlined,
+  };
+
   @override
   Widget build(BuildContext context) {
     return Card(
       color: colorMapping[label],
       child: Container(
-        padding: const EdgeInsets.all(15),
-        width: MediaQuery.of(context).size.width / 2.4,
+        padding: const EdgeInsets.all(20),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
                   "0",
                   style: TextStyle(
                     color: AppColors.whiteColor,
-                    fontSize: 20,
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -38,11 +46,16 @@ class StatusCard extends StatelessWidget {
                   label,
                   style: const TextStyle(
                     color: AppColors.whiteColor,
-                    fontSize: 14,
+                    fontSize: 24,
                   ),
                 ),
               ],
             ),
+            Icon(
+              iconMapping[label],
+              color: AppColors.whiteColor,
+              size: 50,
+            )
           ],
         ),
       ),

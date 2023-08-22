@@ -3,6 +3,7 @@ import 'package:flutter_map_simtaru/components/custom_safe_area.dart';
 import 'package:flutter_map_simtaru/components/drawer.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 import 'package:flutter_map_simtaru/pages/home_page.dart';
+import 'package:flutter_map_simtaru/pages/overviewpengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/peta_page.dart';
 import 'package:flutter_map_simtaru/states/providers/index_screen_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +22,7 @@ class RootWidget extends ConsumerWidget {
           index: currIndex.index,
           children: const <Widget>[
             HomePage(),
+            OverviewPengajuanPage(),
             PetaPage(),
             Center(
               child: Text("Profil"),
@@ -40,11 +42,11 @@ class RootWidget extends ConsumerWidget {
               icon: Icon(Icons.home_outlined),
               label: 'Beranda',
             ),
-            // NavigationDestination(
-            //   selectedIcon: Icon(Icons.note, color: AppColors.whiteColor),
-            //   icon: Icon(Icons.note_outlined),
-            //   label: 'Pengajuan',
-            // ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.note, color: AppColors.whiteColor),
+              icon: Icon(Icons.note_outlined),
+              label: 'Pengajuan',
+            ),
             NavigationDestination(
               selectedIcon: Icon(Icons.map, color: AppColors.whiteColor),
               icon: Icon(Icons.map_outlined),
