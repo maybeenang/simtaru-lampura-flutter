@@ -13,26 +13,32 @@ void main() {
   runApp(const ProviderScope(child: App()));
 }
 
-final GoRouter _route = GoRouter(routes: <RouteBase>[
-  GoRoute(path: '/', builder: (context, state) => const RootWidget(), routes: [
+final GoRouter _route = GoRouter(
+  routes: <RouteBase>[
     GoRoute(
-      path: 'pengajuan',
-      builder: (context, state) => const PengajuanPage(),
+        path: '/',
+        builder: (context, state) => const RootWidget(),
+        routes: [
+          GoRoute(
+            path: 'pengajuan',
+            builder: (context, state) => const PengajuanPage(),
+          ),
+          GoRoute(
+            path: 'detail_pengajuan',
+            builder: (context, state) => const DetailPengajuanPage(),
+          ),
+        ]),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => LoginPage(),
     ),
     GoRoute(
-      path: 'detail_pengajuan',
-      builder: (context, state) => const DetailPengajuanPage(),
+      path: '/register',
+      builder: (context, state) => const RegisterPage(),
     ),
-  ]),
-  GoRoute(
-    path: '/login',
-    builder: (context, state) => LoginPage(),
-  ),
-  GoRoute(
-    path: '/register',
-    builder: (context, state) => const RegisterPage(),
-  ),
-]);
+  ],
+  initialLocation: '/login',
+);
 
 class App extends StatelessWidget {
   const App({super.key});

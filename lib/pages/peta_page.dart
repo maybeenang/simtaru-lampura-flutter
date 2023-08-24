@@ -117,9 +117,7 @@ class _PetaPageState extends ConsumerState<PetaPage>
               children: [
                 TileLayer(
                   urlTemplate:
-                      "https://api.mapbox.com/styles/v1/maybeenang/clllbru1i010u01qpb3jifdvd/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWF5YmVlbmFuZyIsImEiOiJjbGxjMTZlZmcwYWc1M2hwMmZodG55cG82In0.DGMjw3n5JXe-RygdN0hHuQ",
-                  fallbackUrl:
-                      'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
                   subdomains: const ['a', 'b', 'c'],
                   userAgentPackageName: 'simtaru.lampura.com',
                 ),

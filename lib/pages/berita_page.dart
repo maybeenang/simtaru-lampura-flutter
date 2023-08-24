@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/components/custom_appbar_fitur.dart';
 
 class BeritaPage extends StatelessWidget {
   const BeritaPage({super.key});
@@ -8,14 +9,7 @@ class BeritaPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(height: 20),
-          const Text(
-            "Berita",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          const CustomAppBarFitur(title: "Berita"),
           const SizedBox(height: 20),
           const Text(
             "Berita Terbaru",

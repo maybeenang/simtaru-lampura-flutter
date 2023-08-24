@@ -36,7 +36,7 @@ class ItemPengajuan extends StatelessWidget {
                 children: [
                   SizedBox(
                     child: Text(
-                      "Elang Permadani",
+                      "John Doe",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
