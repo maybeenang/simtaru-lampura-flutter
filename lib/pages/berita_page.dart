@@ -37,7 +37,7 @@ class BeritaPage extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 10),
-                Row(
+                const Row(
                   children: [
                     const Icon(
                       Icons.calendar_today,

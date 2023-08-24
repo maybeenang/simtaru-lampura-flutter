@@ -17,18 +17,19 @@ void main() {
 final GoRouter _route = GoRouter(
   routes: <RouteBase>[
     GoRoute(
-        path: '/',
-        builder: (context, state) => const RootWidget(),
-        routes: [
-          GoRoute(
-            path: 'pengajuan',
-            builder: (context, state) => const PengajuanPage(),
-          ),
-          GoRoute(
-            path: 'detail_pengajuan',
-            builder: (context, state) => const DetailPengajuanPage(),
-          ),
-        ]),
+      path: '/',
+      builder: (context, state) => const RootWidget(),
+      routes: [
+        GoRoute(
+          path: 'pengajuan',
+          builder: (context, state) => const PengajuanPage(),
+        ),
+        GoRoute(
+          path: 'detail_pengajuan',
+          builder: (context, state) => const DetailPengajuanPage(),
+        ),
+      ],
+    ),
     GoRoute(
       path: '/login',
       builder: (context, state) => LoginPage(),

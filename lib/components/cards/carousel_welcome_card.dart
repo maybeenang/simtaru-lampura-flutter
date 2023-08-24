@@ -33,11 +33,6 @@ class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
             height: 200,
             viewportFraction: 1,
             enableInfiniteScroll: false,
-            autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 5),
-            autoPlayAnimationDuration: const Duration(milliseconds: 800),
-            autoPlayCurve: Curves.fastOutSlowIn,
-            scrollDirection: Axis.horizontal,
             onPageChanged: (index, reason) {
               setState(
                 () {
