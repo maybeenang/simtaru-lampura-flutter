@@ -9,6 +9,7 @@ import 'package:flutter_map_simtaru/styles/styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+// main activity
 void main() {
   runApp(const ProviderScope(child: App()));
 }
