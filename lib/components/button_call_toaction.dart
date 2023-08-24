@@ -15,15 +15,6 @@ class ButtonCallToAction extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.primaryColor,
             borderRadius: BorderRadius.circular(7),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0xFF073FA5),
-                spreadRadius: 1,
-                blurRadius: 0,
-                offset: Offset(4, 4),
-                blurStyle: BlurStyle.inner,
-              ),
-            ],
           ),
           padding: const EdgeInsets.all(20),
           child: const Row(

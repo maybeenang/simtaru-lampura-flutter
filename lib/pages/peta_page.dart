@@ -7,6 +7,8 @@ import 'package:flutter_map_simtaru/geojson/geojson/geojson.dart';
 import 'package:flutter_map_simtaru/geojson/geojson/geojson_options.dart';
 import 'package:flutter_map_simtaru/geojson/geojson/geojson_widget.dart';
 import 'package:flutter_map_simtaru/geojson/geojson/index.dart';
+import 'package:flutter_map_simtaru/states/providers/index_screen_provider.dart';
+import 'package:flutter_map_simtaru/states/providers/loading_peta_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/foundation.dart';
@@ -14,7 +16,7 @@ import 'dart:ui' as dartui;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
 
-final isLoading = StateProvider.autoDispose<bool>((ref) => false);
+final isLoadingPetaProvider = StateProvider.autoDispose<bool>((ref) => false);
 
 class PetaPage extends ConsumerStatefulWidget {
   const PetaPage({Key? key}) : super(key: key);
@@ -43,24 +45,25 @@ class _PetaPageState extends ConsumerState<PetaPage>
   @override
   void initState() {
     super.initState();
-    ref.read(isLoading);
     mapController = MapController();
-    CustomImages().loadPlane();
 
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) async {
-        ref.read(isLoading.notifier).state = false;
-        geoJsonIndex = await geoJSON.createIndex('assets/json/testing2.json',
-            tileSize: tileSize, keepSource: true, buffer: 32);
-        ref.read(isLoading.notifier).state = true;
-        setState(() {});
-      },
-    );
+    CustomImages().loadPlane();
   }
 
   @override
   Widget build(BuildContext context) {
-    final loading = ref.watch(isLoading);
+    final loading = ref.watch(isLoadingPetaProvider);
+    final currIndex = ref.watch(indexScreenProvider).index;
+
+    if (currIndex == 2 && !loading) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) async {
+          geoJsonIndex = await geoJSON.createIndex('assets/json/testing2.json',
+              tileSize: tileSize, keepSource: true, buffer: 32);
+          ref.read(isLoadingPetaProvider.notifier).state = true;
+        },
+      );
+    }
 
     return SizedBox(
       width: MediaQuery.of(context).size.width,
@@ -149,8 +152,6 @@ class _PetaPageState extends ConsumerState<PetaPage>
 
                         paint.color = Colors.yellow.withOpacity(0.5);
 
-                        paint.isAntiAlias = false;
-
                         return paint;
                       }),
                 ),
@@ -181,8 +182,6 @@ class _PetaPageState extends ConsumerState<PetaPage>
                           ..isAntiAlias = true;
 
                         paint.color = Colors.black.withOpacity(0.5);
-
-                        paint.isAntiAlias = false;
 
                         return paint;
                       }),

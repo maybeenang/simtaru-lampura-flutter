@@ -32,7 +32,7 @@ class SubHeader extends ConsumerWidget {
             },
             style: AppStyles.textButtonStyle,
             child: const Text(
-              "Selngkapnya",
+              "Selengkapnya",
               style: TextStyle(
                 color: AppColors.primaryColor,
                 fontSize: 16,

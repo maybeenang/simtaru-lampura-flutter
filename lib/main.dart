@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/constants/image.dart';
 import 'package:flutter_map_simtaru/pages/detail_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/login_page.dart';
 import 'package:flutter_map_simtaru/pages/pengajuan_page.dart';
@@ -45,6 +46,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    precacheImage(const AssetImage(Images.bgPeta), context);
+    precacheImage(const AssetImage(Images.logo), context);
     return MaterialApp.router(
       theme: ThemeData(
         primaryColor: AppColors.primaryColor,
