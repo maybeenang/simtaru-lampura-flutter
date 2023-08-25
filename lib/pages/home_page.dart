@@ -20,50 +20,53 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const CustomAppBar(),
-          Stack(
-            children: [
-              Container(
-                color: AppColors.primaryColor,
-                child: const SizedBox(
-                  width: double.infinity,
-                  height: 100,
-                ),
-              ),
-              const CaroueselWelcomeCard(),
-            ],
-          ),
-          const SizedBox(height: 20),
-          const ButtonCallToAction(),
-          const SizedBox(height: 30),
-          const SubHeader(labelText: "Overview"),
-          const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            width: double.infinity,
-            child: Wrap(
-              alignment: WrapAlignment.center,
+      child: Container(
+        color: AppColors.bgColor,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const CustomAppBar(),
+            Stack(
               children: [
-                StatusCard(label: "Total Pengajuan"),
-                StatusCard(label: "Pengajuan Disetujui"),
-                StatusCard(label: "Pengajuan Diproses"),
-                StatusCard(label: "Pengajuan Ditolak"),
+                Container(
+                  color: AppColors.primaryColor,
+                  child: const SizedBox(
+                    width: double.infinity,
+                    height: 100,
+                  ),
+                ),
+                const CaroueselWelcomeCard(),
               ],
             ),
-          ),
-          const SizedBox(height: 20),
-          const CustomBarChart(),
-          const SizedBox(height: 5),
-          const CustomLineChart(),
-          const SizedBox(height: 20),
-          const SubHeader(labelText: "Berita"),
-          const SizedBox(height: 10),
-          const CarouselBerita(),
-          const SizedBox(height: 50),
-        ],
+            const SizedBox(height: 20),
+            const ButtonCallToAction(),
+            const SizedBox(height: 30),
+            const SubHeader(labelText: "Overview"),
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              width: double.infinity,
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                children: [
+                  StatusCard(label: "Total Pengajuan"),
+                  StatusCard(label: "Pengajuan Disetujui"),
+                  StatusCard(label: "Pengajuan Diproses"),
+                  StatusCard(label: "Pengajuan Ditolak"),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            const CustomBarChart(),
+            const SizedBox(height: 5),
+            const CustomLineChart(),
+            const SizedBox(height: 20),
+            const SubHeader(labelText: "Berita"),
+            const SizedBox(height: 10),
+            const CarouselBerita(),
+            const SizedBox(height: 50),
+          ],
+        ),
       ),
     );
   }

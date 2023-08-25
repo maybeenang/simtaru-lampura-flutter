@@ -18,7 +18,7 @@ final GoRouter _route = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: '/',
-      builder: (context, state) => const RootWidget(),
+      builder: (context, state) => RootWidget(),
       routes: [
         GoRoute(
           path: 'pengajuan',

@@ -7,6 +7,6 @@ class AppColors {
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color blackColor = Color(0xFF000000);
   static const Color greyColor = Color(0xFF8C8C8C);
-  static const Color borderColor = Color.fromARGB(255, 220, 220, 220);
+  static const Color borderColor = Color(0xFFDCDCDC);
   static const Color actionColor = Color(0xFFCFFD5E);
 }
