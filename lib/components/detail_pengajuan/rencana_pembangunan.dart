@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/components/detail_pengajuan/minimap_koordinat.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 
 class RencanaPembangunan extends StatelessWidget {
@@ -30,7 +31,9 @@ class RencanaPembangunan extends StatelessWidget {
           ),
           Text(
             "Dusun Cendrawasih RT/RK 002/001, Desa Semuli Jaya, Kecamatan Abung Semuli, Kabupaten Lampung Utara",
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(
+              fontSize: 16,
+            ),
           ),
           SizedBox(height: 10),
           Text(
@@ -77,6 +80,17 @@ class RencanaPembangunan extends StatelessWidget {
             "Tanah Milik An. Subekti",
             style: TextStyle(fontSize: 16),
           ),
+          SizedBox(height: 10),
+          Text(
+            "Titik Koordinat",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          Text(
+            "-4.655018,104.738142",
+            style: TextStyle(fontSize: 16),
+          ),
+          SizedBox(height: 10),
+          MinimapKoordinat(),
         ],
       ),
     );

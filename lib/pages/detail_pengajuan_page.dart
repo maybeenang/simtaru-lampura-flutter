@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/components/detail_pengajuan/biodata_pemohon.dart';
 import 'package:flutter_map_simtaru/components/detail_pengajuan/rencana_pembangunan.dart';
+import 'package:flutter_map_simtaru/components/detail_pengajuan/rincian_dokumen.dart';
 import 'package:flutter_map_simtaru/components/detail_pengajuan/rincian_pengajuan.dart';
 
 class DetailPengajuanPage extends StatelessWidget {
@@ -22,6 +23,8 @@ class DetailPengajuanPage extends StatelessWidget {
               RincianPengajuan(),
               SizedBox(height: 10),
               RencanaPembangunan(),
+              SizedBox(height: 10),
+              RincianDokumen(),
             ],
           ),
         ),
