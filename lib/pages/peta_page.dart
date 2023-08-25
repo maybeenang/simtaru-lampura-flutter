@@ -8,7 +8,6 @@ import 'package:flutter_map_simtaru/geojson/geojson/geojson_options.dart';
 import 'package:flutter_map_simtaru/geojson/geojson/geojson_widget.dart';
 import 'package:flutter_map_simtaru/geojson/geojson/index.dart';
 import 'package:flutter_map_simtaru/states/providers/index_screen_provider.dart';
-import 'package:flutter_map_simtaru/states/providers/loading_peta_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/foundation.dart';

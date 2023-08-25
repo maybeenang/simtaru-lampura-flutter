@@ -1,51 +1,10 @@
-import 'package:accordion/accordion.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/components/pengajuan_accordion_section.dart';
-import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/components/detail_pengajuan/biodata_pemohon.dart';
+import 'package:flutter_map_simtaru/components/detail_pengajuan/rencana_pembangunan.dart';
+import 'package:flutter_map_simtaru/components/detail_pengajuan/rincian_pengajuan.dart';
 
 class DetailPengajuanPage extends StatelessWidget {
   const DetailPengajuanPage({super.key});
-
-  List<AccordionSection> _buildAccordionSection() {
-    return [
-      AccordionSection(
-        contentBorderRadius: 3,
-        isOpen: true,
-        header: const Text(
-          "Biodata Pemohon",
-          style: TextStyle(color: AppColors.whiteColor),
-        ),
-        content: PengajuanTableSection(),
-      ),
-      AccordionSection(
-        contentBorderRadius: 3,
-        isOpen: true,
-        header: const Text(
-          "Biodata Pemohon",
-          style: TextStyle(color: AppColors.whiteColor),
-        ),
-        content: PengajuanTableSection(),
-      ),
-      AccordionSection(
-        contentBorderRadius: 3,
-        isOpen: true,
-        header: const Text(
-          "Biodata Pemohon",
-          style: TextStyle(color: AppColors.whiteColor),
-        ),
-        content: PengajuanTableSection(),
-      ),
-      AccordionSection(
-        contentBorderRadius: 3,
-        isOpen: true,
-        header: const Text(
-          "Biodata Pemohon",
-          style: TextStyle(color: AppColors.whiteColor),
-        ),
-        content: PengajuanTableSection(),
-      ),
-    ];
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +12,18 @@ class DetailPengajuanPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Detail Pengajuan"),
       ),
-      body: SingleChildScrollView(
-        child: Accordion(
-          openAndCloseAnimation: false,
-          headerBackgroundColor: AppColors.primaryColor,
-          headerBorderRadius: 3,
-          children: [
-            ..._buildAccordionSection(),
-          ],
+      body: const SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              BiodataPemohon(),
+              SizedBox(height: 10),
+              RincianPengajuan(),
+              SizedBox(height: 10),
+              RencanaPembangunan(),
+            ],
+          ),
         ),
       ),
     );
