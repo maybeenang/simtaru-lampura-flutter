@@ -11,6 +11,7 @@ class BiodataPemohon extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
+        border: Border.all(color: AppColors.borderColor),
         borderRadius: BorderRadius.circular(5),
       ),
       child: const Column(

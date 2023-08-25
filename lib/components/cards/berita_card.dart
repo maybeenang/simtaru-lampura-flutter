@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/constants/colors.dart';
 
 class BeritaCard extends StatelessWidget {
   const BeritaCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
+    return Container(
       clipBehavior: Clip.antiAlias,
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      child: Column(
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.borderColor),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image(

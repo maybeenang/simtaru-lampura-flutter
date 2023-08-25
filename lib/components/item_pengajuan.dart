@@ -15,6 +15,7 @@ class ItemPengajuan extends StatelessWidget {
       child: Container(
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
+          border: Border.all(color: AppColors.borderColor),
           color: AppColors.whiteColor,
           borderRadius: BorderRadius.circular(10),
         ),

@@ -10,6 +10,7 @@ class RincianDokumen extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       width: double.infinity,
       decoration: BoxDecoration(
+        border: Border.all(color: AppColors.borderColor),
         color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(5),
       ),

@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/bar_graph/line_data.dart';
+import 'package:flutter_map_simtaru/constants/colors.dart';
 
 class CustomLineChart extends StatelessWidget {
   const CustomLineChart({super.key});
@@ -15,6 +16,7 @@ class CustomLineChart extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
+          border: Border.all(color: AppColors.borderColor),
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),

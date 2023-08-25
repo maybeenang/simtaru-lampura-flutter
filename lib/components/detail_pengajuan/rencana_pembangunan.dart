@@ -11,6 +11,7 @@ class RencanaPembangunan extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
+        border: Border.all(color: AppColors.borderColor),
         color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(5),
       ),
