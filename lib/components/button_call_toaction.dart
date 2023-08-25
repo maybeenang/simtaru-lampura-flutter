@@ -10,7 +10,7 @@ class ButtonCallToAction extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: GestureDetector(
-        onTap: () => context.go('/pengajuan'),
+        onTap: () => context.push('/pengajuan'),
         child: Container(
           decoration: BoxDecoration(
             color: AppColors.primaryColor,
