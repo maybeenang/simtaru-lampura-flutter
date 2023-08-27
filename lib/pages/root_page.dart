@@ -103,6 +103,7 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
           onItemSelected: (value) {
             ref.read(indexScreenProvider.notifier).onIndexChange(value);
           },
+          hideNavigationBarWhenKeyboardShows: true,
           controller: controllerNavbar,
           decoration: NavBarDecoration(
             borderRadius: BorderRadius.circular(10.0),

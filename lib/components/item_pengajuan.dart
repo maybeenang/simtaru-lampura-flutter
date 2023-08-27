@@ -15,7 +15,7 @@ class ItemPengajuan extends StatelessWidget {
           Future.delayed(
             const Duration(milliseconds: 300),
             () {
-              context.go('/detail_pengajuan');
+              context.push('/detail_pengajuan');
             },
           );
         },

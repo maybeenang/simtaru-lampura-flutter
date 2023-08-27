@@ -13,7 +13,7 @@ class ButtonCallToAction extends StatelessWidget {
         child: InkWell(
           onTap: () => {
             Future.delayed(const Duration(milliseconds: 300), () {
-              context.go('/pengajuan');
+              context.push('/pengajuan');
             }),
           },
           child: Ink(
