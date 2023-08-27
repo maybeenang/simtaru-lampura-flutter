@@ -38,7 +38,7 @@ class AppStyles {
           MaterialStateProperty.all<Size>(const Size(double.infinity, 50)),
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(3),
+          borderRadius: BorderRadius.circular(50),
         ),
       ),
     ),
@@ -48,15 +48,15 @@ class AppStyles {
     contentPadding: EdgeInsets.all(10),
     border: OutlineInputBorder(
       borderSide: BorderSide(color: AppColors.secondaryColor, width: 1.5),
-      borderRadius: BorderRadius.all(Radius.circular(3)),
+      borderRadius: BorderRadius.all(Radius.circular(5)),
     ),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(color: AppColors.secondaryColor, width: 1.5),
-      borderRadius: BorderRadius.all(Radius.circular(3)),
+      borderRadius: BorderRadius.all(Radius.circular(5)),
     ),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(color: AppColors.primaryColor, width: 2.0),
-      borderRadius: BorderRadius.all(Radius.circular(3)),
+      borderRadius: BorderRadius.all(Radius.circular(5)),
     ),
   );
 

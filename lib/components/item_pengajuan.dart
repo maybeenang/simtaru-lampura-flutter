@@ -8,57 +8,66 @@ class ItemPengajuan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.go('/detail_pengajuan');
-      },
-      child: Container(
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.borderColor),
-          color: AppColors.whiteColor,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              child: StatusChip(),
+    return Material(
+      child: InkWell(
+        splashColor: AppColors.greyColor.withOpacity(0.5),
+        onTap: () {
+          Future.delayed(
+            const Duration(milliseconds: 300),
+            () {
+              context.go('/detail_pengajuan');
+            },
+          );
+        },
+        child: Ink(
+          child: Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.borderColor),
+              borderRadius: BorderRadius.circular(10),
             ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(
-                20,
-                5,
-                10,
-                15,
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    child: Text(
-                      "John Doe",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  child: StatusChip(),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(
+                    20,
+                    5,
+                    10,
+                    15,
+                  ),
+                  child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        child: Text(
+                          "John Doe",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        child: Text(
+                          "Bangunan Rumah dan Praktek Mandiri Keperawatan",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text("12 Mei 2022"),
+                    ],
                   ),
-                  SizedBox(
-                    child: Text(
-                      "Bangunan Rumah dan Praktek Mandiri Keperawatan",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text("12 Mei 2022"),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

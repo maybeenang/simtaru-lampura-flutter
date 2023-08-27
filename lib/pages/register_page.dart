@@ -58,7 +58,7 @@ class RegisterPage extends StatelessWidget {
                           const TextFieldPassword(),
                           const SizedBox(height: 10),
                           const TextFieldPassword(),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 30),
                           ElevatedButton(
                             onPressed: () {
                               context.go('/login');

@@ -9,44 +9,50 @@ class ButtonCallToAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: GestureDetector(
-        onTap: () => context.push('/pengajuan'),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.primaryColor,
-            borderRadius: BorderRadius.circular(7),
-          ),
-          padding: const EdgeInsets.all(20),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Pengajuan",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.whiteColor,
+      child: Material(
+        child: InkWell(
+          onTap: () => {
+            Future.delayed(const Duration(milliseconds: 300), () {
+              context.go('/pengajuan');
+            }),
+          },
+          child: Ink(
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(7),
+            ),
+            padding: const EdgeInsets.all(20),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Pengajuan",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.whiteColor,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    "Buat pengajuan baru",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.whiteColor,
+                    SizedBox(height: 5),
+                    Text(
+                      "Buat pengajuan baru",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.whiteColor,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Icon(
-                Icons.arrow_right_alt,
-                size: 40,
-                color: AppColors.whiteColor,
-              ),
-            ],
+                  ],
+                ),
+                Icon(
+                  Icons.arrow_right_alt,
+                  size: 40,
+                  color: AppColors.whiteColor,
+                ),
+              ],
+            ),
           ),
         ),
       ),

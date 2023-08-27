@@ -41,16 +41,21 @@ class OverviewPengajuanPage extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: const TextFiledCommon(labelText: "Cari Pengajuan"),
                   ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: const Icon(
-                      Icons.search,
-                      color: AppColors.whiteColor,
+                  Material(
+                    child: InkWell(
+                      onTap: () {},
+                      child: Ink(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ],

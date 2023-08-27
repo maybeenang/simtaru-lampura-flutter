@@ -10,6 +10,11 @@ import 'package:flutter_map_simtaru/states/providers/index_screen_provider.dart'
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
+// final PersistentTabController _controllerNavbar = PersistentTabController();
+final controllerNavbarProvider = StateProvider<PersistentTabController>((ref) {
+  return PersistentTabController();
+});
+
 // ignore: must_be_immutable
 class RootWidget extends ConsumerStatefulWidget {
   const RootWidget({super.key});
@@ -80,17 +85,15 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
     ];
   }
 
-  late PersistentTabController _controller;
-
   @override
   void initState() {
     super.initState();
-    _controller = PersistentTabController();
   }
 
   @override
   Widget build(BuildContext context) {
     var currIndex = ref.watch(indexScreenProvider);
+    var controllerNavbar = ref.watch(controllerNavbarProvider);
 
     return CustomSafeArea(
       child: Scaffold(
@@ -100,7 +103,7 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
           onItemSelected: (value) {
             ref.read(indexScreenProvider.notifier).onIndexChange(value);
           },
-          controller: _controller,
+          controller: controllerNavbar,
           decoration: NavBarDecoration(
             borderRadius: BorderRadius.circular(10.0),
             colorBehindNavBar: AppColors.bgColor,
