@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 import 'package:flutter_map_simtaru/constants/image.dart';
+import 'package:flutter_map_simtaru/pages/detail_berita_page.dart';
 import 'package:flutter_map_simtaru/pages/detail_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/login_page.dart';
 import 'package:flutter_map_simtaru/pages/pengajuan_page.dart';
@@ -56,6 +57,29 @@ final GoRouter _route = GoRouter(
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 const begin = Offset(0.0, 1.0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
+
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
+
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+            );
+          },
+        ),
+        GoRoute(
+          path: 'detail_berita',
+          pageBuilder: (context, state) {
+            return CustomTransitionPage(
+              child: const DetailBeritaPage(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0.0);
                 const end = Offset.zero;
                 const curve = Curves.ease;
 

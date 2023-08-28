@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/components/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/components/custom_safe_area.dart';
+import 'package:flutter_map_simtaru/components/item_pengajuan.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,7 +15,35 @@ class SearchPengajuanPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const CustomAppBarFitur(title: "Pengajuan"),
+              Container(
+                color: AppColors.primaryColor,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 20,
+                ),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        context.pop();
+                      },
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: AppColors.whiteColor,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    const Text(
+                      "Pengajuan",
+                      style: TextStyle(
+                        color: AppColors.whiteColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Stack(
                 children: [
                   Container(
@@ -78,12 +106,17 @@ class SearchPengajuanPage extends StatelessWidget {
                   itemCount: 8,
                   itemBuilder: (context, index) {
                     return Material(
+                      borderRadius: BorderRadius.circular(50),
                       color: Colors.transparent,
                       child: InkWell(
+                        onTap: () {},
                         child: Ink(
                           decoration: BoxDecoration(
-                            color: AppColors.primaryColor,
+                            color: index == 0
+                                ? AppColors.primaryColor
+                                : AppColors.whiteColor,
                             border: Border.all(
+                              width: 2,
                               color: AppColors.primaryColor,
                             ),
                             borderRadius: BorderRadius.circular(50),
@@ -95,9 +128,11 @@ class SearchPengajuanPage extends StatelessWidget {
                           child: Container(
                             alignment: Alignment.center,
                             child: Text(
-                              "Pen ${index + 1}",
-                              style: const TextStyle(
-                                color: AppColors.whiteColor,
+                              "Kat ${index + 1}",
+                              style: TextStyle(
+                                color: index == 0
+                                    ? AppColors.whiteColor
+                                    : AppColors.primaryColor,
                               ),
                             ),
                           ),
@@ -116,7 +151,19 @@ class SearchPengajuanPage extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Divider(),
-              )
+              ),
+              ListView.separated(
+                padding: const EdgeInsetsDirectional.all(10),
+                itemBuilder: (context, index) {
+                  return ItemPengajuan();
+                },
+                separatorBuilder: (context, index) {
+                  return const SizedBox(height: 10);
+                },
+                itemCount: 5,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+              ),
             ],
           ),
         ),

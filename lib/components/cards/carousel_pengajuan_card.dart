@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/components/cards/status_pengajuan_card.dart';
-import 'package:flutter_map_simtaru/constants/colors.dart';
 
 class CarouselPengajuanCard extends StatefulWidget {
   const CarouselPengajuanCard({super.key});
