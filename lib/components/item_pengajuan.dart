@@ -29,9 +29,7 @@ class ItemPengajuan extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  child: StatusChip(),
-                ),
+                const StatusChip(),
                 Container(
                   padding: const EdgeInsets.fromLTRB(
                     20,

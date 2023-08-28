@@ -16,7 +16,11 @@ class OverviewPengajuanPage extends StatelessWidget {
         width: double.infinity,
         child: Column(
           children: [
-            const CustomAppBarFitur(title: "Pengajuan"),
+            const CustomAppBarFitur(
+              title: "Pengajuan",
+              bgColor: AppColors.primaryColor,
+              labelColor: AppColors.whiteColor,
+            ),
             Stack(
               children: [
                 Container(

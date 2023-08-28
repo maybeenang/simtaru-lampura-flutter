@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/constants/colors.dart';
 
 class CustomAppBarFitur extends StatelessWidget {
-  const CustomAppBarFitur({super.key, required this.title});
+  const CustomAppBarFitur(
+      {super.key,
+      required this.title,
+      required this.bgColor,
+      required this.labelColor});
 
   final String title;
+  final Color bgColor;
+  final Color labelColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.primaryColor,
+      color: bgColor,
       padding: const EdgeInsets.all(20),
       child: Row(
         children: [
           Text(
             title,
-            style: const TextStyle(
-              color: AppColors.whiteColor,
+            style: TextStyle(
+              color: labelColor,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),

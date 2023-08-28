@@ -3,7 +3,6 @@ extension JSList<T> on List<T> {
   static final _sizeValues = Expando<num>();
   static final _endValues = Expando<num>();
 
-
   num get start => _startValues[this] ?? 0;
   set start(num x) => _startValues[this] = x;
 
@@ -12,7 +11,6 @@ extension JSList<T> on List<T> {
 
   num get end => _endValues[this] ?? 0;
   set end(num x) => _endValues[this] = x;
-
 }
 
 enum FeatureType {
@@ -28,15 +26,17 @@ enum FeatureType {
   GeometryCollection, // not really a feature type, but helps here...
 }
 
-
-
 class TileFeature {
   List geometry;
   int type;
   Map tags;
   String? id;
 
-  TileFeature({this.geometry = const [], required this.type, this.tags = const {}, this.id});
+  TileFeature(
+      {this.geometry = const [],
+      required this.type,
+      this.tags = const {},
+      this.id});
 
   @override
   String toString() {
@@ -65,9 +65,9 @@ class Feature {
     "L": FeatureType.LineString,
     "LineString": FeatureType.LineString,
     "linestring": FeatureType.LineString,
-    "ML" : FeatureType.MultiLineString,
-    "MultiLineString" : FeatureType.MultiLineString,
-    "multilinestring" : FeatureType.MultiLineString,
+    "ML": FeatureType.MultiLineString,
+    "MultiLineString": FeatureType.MultiLineString,
+    "multilinestring": FeatureType.MultiLineString,
     "P": FeatureType.Polygon,
     "Polygon": FeatureType.Polygon,
     "polygon": FeatureType.Polygon,
@@ -81,18 +81,24 @@ class Feature {
     "FeatureCollection": FeatureType.FeatureCollection,
     "featurecollection": FeatureType.FeatureCollection,
     "GC": FeatureType.GeometryCollection,
-    "GeometryCollection": FeatureType.GeometryCollection, // bit naught, not really a feature type..
+    "GeometryCollection": FeatureType
+        .GeometryCollection, // bit naught, not really a feature type..
     "geometrycollection": FeatureType.GeometryCollection,
   };
 
-  Feature({ this.geometry = const [], this.id, this.type = FeatureType.Feature, this.tags,
-    this.minX = double.infinity, this.maxX = -double.infinity, this.minY = double.infinity, this.maxY = -double.infinity});
+  Feature(
+      {this.geometry = const [],
+      this.id,
+      this.type = FeatureType.Feature,
+      this.tags,
+      this.minX = double.infinity,
+      this.maxX = -double.infinity,
+      this.minY = double.infinity,
+      this.maxY = -double.infinity});
 
   static FeatureType stringToFeatureType(String type) {
     FeatureType fullType = typeLookup[type];
-    if(fullType == null) {
-      fullType = typeLookup[type.toLowerCase()];
-    }
+    fullType ??= typeLookup[type.toLowerCase()];
     return fullType;
   }
 
@@ -100,10 +106,10 @@ class Feature {
     'type': 't',
     'coordinates': 'c',
     'properties': 'pr',
-    'FeatureCollection' : 'FC',
+    'FeatureCollection': 'FC',
     'feature': 'f',
     'Feature': 'F',
-    'features' : 'fs',
+    'features': 'fs',
     'geometry': 'g',
     'geometries': 'gs',
   };
@@ -133,9 +139,13 @@ class SimpTile {
   num maxX = -1;
   num maxY = 0;
 
-  SimpTile(this.features, this.z, tx, ty) { x = tx; y = ty; }
+  SimpTile(this.features, this.z, tx, ty) {
+    x = tx;
+    y = ty;
+  }
 
-  @override String toString() {
+  @override
+  String toString() {
     return "SimpTile:    numPoints: $numPoints numSimplified: $numSimplified numFeatures: $numFeatures source: $source xyz $x,$y,$z transformed: $transformed minX: $minX minY $minY maxX: $maxX maxY: $maxY features: $features";
   }
 }
@@ -149,13 +159,23 @@ class GeoJSONVTOptions {
   int buffer; // tile buffer on each side
   bool lineMetrics; // whether to calculate line metrics
   String? promoteId; // name of a feature property to be promoted to feature.id
-  bool generateId; // whether to generate feature ids. Cannot be used with promoteId
+  bool
+      generateId; // whether to generate feature ids. Cannot be used with promoteId
   int debug; // logging level (0, 1 or 2)
   bool shortKeys;
   bool keepSource;
 
-  GeoJSONVTOptions({this.maxZoom = 14, this.indexMaxZoom = 5, this.indexMaxPoints = 100000,
-    this.tolerance = 3, this.extent = 4096, this.buffer = 64, this.lineMetrics = false, this.promoteId = null,
-    this.generateId = false, this.debug = 2, this.shortKeys = false, this.keepSource = false
-  });
+  GeoJSONVTOptions(
+      {this.maxZoom = 14,
+      this.indexMaxZoom = 5,
+      this.indexMaxPoints = 100000,
+      this.tolerance = 3,
+      this.extent = 4096,
+      this.buffer = 64,
+      this.lineMetrics = false,
+      this.promoteId = null,
+      this.generateId = false,
+      this.debug = 2,
+      this.shortKeys = false,
+      this.keepSource = false});
 }

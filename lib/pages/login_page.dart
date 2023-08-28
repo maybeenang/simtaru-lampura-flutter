@@ -16,6 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final loginFormKey = GlobalKey<FormState>();
 
+  // ignore: prefer_typing_uninitialized_variables
   var currentBackPressTime;
 
   Future<bool> _onWillPop(BuildContext context) async {

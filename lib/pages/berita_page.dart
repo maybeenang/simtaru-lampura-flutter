@@ -13,17 +13,21 @@ class BeritaPage extends StatelessWidget {
         color: AppColors.bgColor,
         child: Column(
           children: [
-            const CustomAppBarFitur(title: "Berita"),
-            const SizedBox(height: 20),
+            const CustomAppBarFitur(
+              title: "Berita",
+              bgColor: AppColors.bgColor,
+              labelColor: AppColors.blackColor,
+            ),
+            const SizedBox(height: 10),
             ListView.separated(
               itemBuilder: (context, index) {
-                return BeritaItemCard();
+                return const BeritaItemCard();
               },
               separatorBuilder: (context, index) {
                 return Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   height: 20,
-                  child: Divider(),
+                  child: const Divider(),
                 );
               },
               itemCount: 10,

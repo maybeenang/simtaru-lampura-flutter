@@ -12,8 +12,6 @@ class CarouselPengajuanCard extends StatefulWidget {
 class _CarouselPengajuanCardState extends State<CarouselPengajuanCard> {
   final CarouselController buttonCarouselController = CarouselController();
 
-  int _currentCarousel = 0;
-
   final List<Widget> welcomeCards = [
     StatusPengajuanCard(label: "Total Pengajuan"),
     StatusPengajuanCard(label: "Pengajuan Disetujui"),
@@ -35,9 +33,7 @@ class _CarouselPengajuanCardState extends State<CarouselPengajuanCard> {
             scrollDirection: Axis.horizontal,
             onPageChanged: (index, reason) {
               setState(
-                () {
-                  _currentCarousel = index;
-                },
+                () {},
               );
             },
           ),

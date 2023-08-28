@@ -155,7 +155,7 @@ class SearchPengajuanPage extends StatelessWidget {
               ListView.separated(
                 padding: const EdgeInsetsDirectional.all(10),
                 itemBuilder: (context, index) {
-                  return ItemPengajuan();
+                  return const ItemPengajuan();
                 },
                 separatorBuilder: (context, index) {
                   return const SizedBox(height: 10);

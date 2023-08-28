@@ -6,6 +6,7 @@ import 'package:flutter_map_simtaru/pages/berita_page.dart';
 import 'package:flutter_map_simtaru/pages/home_page.dart';
 import 'package:flutter_map_simtaru/pages/overviewpengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/peta_page.dart';
+import 'package:flutter_map_simtaru/pages/profil_page.dart';
 import 'package:flutter_map_simtaru/states/providers/index_screen_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -36,9 +37,7 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
       const OverviewPengajuanPage(),
       const PetaPage(),
       const BeritaPage(),
-      const Center(
-        child: Text("Profil"),
-      ),
+      const ProfilPage(),
     ];
   }
 
@@ -83,7 +82,7 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
         icon: currIndex.index == 4
             ? const Icon(Icons.person)
             : const Icon(Icons.person_outline),
-        title: ("Profile"),
+        title: ("Profil"),
         activeColorPrimary: AppColors.primaryColor,
         inactiveColorPrimary: AppColors.greyColor,
       ),
