@@ -11,8 +11,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 // final PersistentTabController _controllerNavbar = PersistentTabController();
-final controllerNavbarProvider = StateProvider<PersistentTabController>((ref) {
+final controllerNavbarProvider =
+    StateProvider.autoDispose<PersistentTabController>((ref) {
   return PersistentTabController();
+});
+
+final hideNavbarProvider = StateProvider.autoDispose<bool>((ref) {
+  return false;
 });
 
 // ignore: must_be_immutable
@@ -94,6 +99,7 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
   Widget build(BuildContext context) {
     var currIndex = ref.watch(indexScreenProvider);
     var controllerNavbar = ref.watch(controllerNavbarProvider);
+    var hideNavbar = ref.watch(hideNavbarProvider);
 
     return CustomSafeArea(
       child: Scaffold(
@@ -103,7 +109,7 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
           onItemSelected: (value) {
             ref.read(indexScreenProvider.notifier).onIndexChange(value);
           },
-          hideNavigationBarWhenKeyboardShows: true,
+          hideNavigationBar: hideNavbar,
           controller: controllerNavbar,
           decoration: NavBarDecoration(
             borderRadius: BorderRadius.circular(10.0),

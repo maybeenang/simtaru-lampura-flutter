@@ -6,6 +6,7 @@ import 'package:flutter_map_simtaru/pages/login_page.dart';
 import 'package:flutter_map_simtaru/pages/pengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/register_page.dart';
 import 'package:flutter_map_simtaru/pages/root_page.dart';
+import 'package:flutter_map_simtaru/pages/search_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/styles/styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -42,6 +43,10 @@ final GoRouter _route = GoRouter(
               },
             );
           },
+        ),
+        GoRoute(
+          path: 'search_pengajuan',
+          builder: (context, state) => const SearchPengajuanPage(),
         ),
         GoRoute(
           path: 'detail_pengajuan',

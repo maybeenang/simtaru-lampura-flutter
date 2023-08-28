@@ -43,15 +43,15 @@ class RegisterPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         children: [
-                          const TextFiledCommon(
+                          TextFiledCommon(
                             labelText: "NIK",
                           ),
                           const SizedBox(height: 10),
-                          const TextFiledCommon(
+                          TextFiledCommon(
                             labelText: "Nama Lengkap",
                           ),
                           const SizedBox(height: 10),
-                          const TextFiledCommon(
+                          TextFiledCommon(
                             labelText: "Email",
                           ),
                           const SizedBox(height: 10),

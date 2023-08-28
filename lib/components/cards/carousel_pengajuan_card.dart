@@ -43,26 +43,6 @@ class _CarouselPengajuanCardState extends State<CarouselPengajuanCard> {
             },
           ),
         ),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: welcomeCards.map(
-            (e) {
-              final int index = welcomeCards.indexOf(e);
-              return Container(
-                width: 10,
-                height: 10,
-                margin: const EdgeInsets.symmetric(horizontal: 2),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _currentCarousel == index
-                      ? AppColors.primaryColor
-                      : AppColors.greyColor,
-                ),
-              );
-            },
-          ).toList(),
-        ),
       ],
     );
   }
