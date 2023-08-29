@@ -60,7 +60,7 @@ class StatusCard extends StatelessWidget {
                   label,
                   style: const TextStyle(
                     color: AppColors.whiteColor,
-                    fontSize: 14,
+                    fontSize: 12,
                   ),
                 ),
               ],

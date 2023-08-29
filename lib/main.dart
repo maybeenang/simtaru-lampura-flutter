@@ -184,6 +184,7 @@ class App extends StatelessWidget {
         elevatedButtonTheme: AppStyles.elevatedButtonThemeData,
         scaffoldBackgroundColor: AppColors.bgColor,
         appBarTheme: AppStyles.appBarTheme,
+        fontFamily: 'Poppins',
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,

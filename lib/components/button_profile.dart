@@ -17,6 +17,7 @@ class ButtonProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
         child: Ink(
