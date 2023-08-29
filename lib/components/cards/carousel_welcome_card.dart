@@ -13,7 +13,7 @@ class CaroueselWelcomeCard extends StatefulWidget {
 class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
   final CarouselController buttonCarouselController = CarouselController();
 
-  int _currentCarousel = 0;
+  late int _currentCarousel;
 
   final List<Widget> welcomeCards = const [
     WelcomeCard(),
@@ -21,6 +21,13 @@ class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
     WelcomeCard(),
     WelcomeCard(),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _currentCarousel = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +61,7 @@ class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
                 margin: const EdgeInsets.symmetric(horizontal: 2),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: _currentCarousel == index
+                  color: index == _currentCarousel
                       ? AppColors.primaryColor
                       : AppColors.greyColor,
                 ),

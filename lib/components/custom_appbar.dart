@@ -9,19 +9,9 @@ class CustomAppBar extends StatelessWidget {
     return Container(
       color: AppColors.primaryColor,
       padding: const EdgeInsets.all(20),
-      child: Row(
+      child: const Row(
         children: [
-          GestureDetector(
-            onTap: () {
-              Scaffold.of(context).openDrawer();
-            },
-            child: const Icon(
-              Icons.menu,
-              color: AppColors.whiteColor,
-            ),
-          ),
-          const SizedBox(width: 20),
-          const Text(
+          Text(
             "Dashoard",
             style: TextStyle(
               color: AppColors.whiteColor,

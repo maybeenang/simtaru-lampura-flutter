@@ -79,34 +79,43 @@ class OverviewPengajuanPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             const CarouselPengajuanCard(),
+            const SizedBox(height: 20),
             // Container(
+            //   alignment: Alignment.centerRight,
+            //   padding: const EdgeInsets.symmetric(horizontal: 10),
             //   width: double.infinity,
-            //   padding: const EdgeInsets.all(10),
-            //   child: Row(
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Material(
-            //         child: InkWell(
-            //           onTap: () {},
-            //           child: Ink(
-            //             width: 50,
-            //             height: 50,
-            //             decoration: BoxDecoration(
-            //               color: AppColors.primaryColor,
-            //               borderRadius: BorderRadius.circular(5),
+            //   child: Material(
+            //     child: InkWell(
+            //       onTap: () {},
+            //       child: Ink(
+            //         width: 200,
+            //         padding: const EdgeInsets.symmetric(
+            //           horizontal: 20,
+            //           vertical: 10,
+            //         ),
+            //         decoration: BoxDecoration(
+            //           color: AppColors.primaryColor,
+            //           borderRadius: BorderRadius.circular(50),
+            //         ),
+            //         child: const Row(
+            //           mainAxisAlignment: MainAxisAlignment.start,
+            //           children: [
+            //             Icon(
+            //               Icons.add,
+            //               color: AppColors.whiteColor,
             //             ),
-            //             child: const Icon(
-            //               Icons.search,
-            //               color: Colors.white,
+            //             SizedBox(width: 10),
+            //             Text(
+            //               "Tambah Pengajuan",
+            //               style: TextStyle(color: AppColors.whiteColor),
             //             ),
-            //           ),
+            //           ],
             //         ),
             //       ),
-            //     ],
+            //     ),
             //   ),
             // ),
-            const SizedBox(height: 20),
+            // const SizedBox(height: 20),
             ListView.separated(
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(horizontal: 10),

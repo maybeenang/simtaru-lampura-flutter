@@ -106,7 +106,6 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
 
     return CustomSafeArea(
       child: Scaffold(
-        drawer: const DrawerApp(),
         body: PersistentTabView(
           context,
           onItemSelected: (value) {
