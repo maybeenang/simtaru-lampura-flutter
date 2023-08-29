@@ -62,63 +62,7 @@ class ProfilPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  const SizedBox(
-                    width: double.infinity,
-                    child: Text(
-                      "Akun",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AppColors.borderColor),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.person),
-                            const SizedBox(width: 10),
-                            const Text("Nama Lengkap"),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            const Icon(Icons.email),
-                            const SizedBox(width: 10),
-                            const Text("Email"),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            const Icon(Icons.phone),
-                            const SizedBox(width: 10),
-                            const Text("Nomor Telepon"),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            const Icon(Icons.location_on),
-                            const SizedBox(width: 10),
-                            const Text("Alamat"),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
                   const SizedBox(
                     width: double.infinity,
                     child: Text(
@@ -138,26 +82,96 @@ class ProfilPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: AppColors.borderColor),
                     ),
-                    child: Column(
+                    child: const Column(
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.lock),
-                            const SizedBox(width: 10),
-                            const Text("Ubah Password"),
+                            Icon(Icons.person),
+                            SizedBox(width: 10),
+                            Text("Edit Profil"),
                           ],
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(height: 10),
+                        Divider(),
+                        SizedBox(height: 10),
                         Row(
                           children: [
-                            const Icon(Icons.logout),
-                            const SizedBox(width: 10),
-                            const Text("Keluar"),
+                            Icon(Icons.lock),
+                            SizedBox(width: 10),
+                            Text("Ganti Password"),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Divider(),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Icon(Icons.logout, color: AppColors.redColor),
+                            SizedBox(width: 10),
+                            Text(
+                              "Keluar",
+                              style: TextStyle(
+                                color: AppColors.redColor,
+                              ),
+                            ),
                           ],
                         ),
                       ],
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  const SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      "Admin",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteColor,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppColors.borderColor),
+                    ),
+                    child: const Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.people),
+                            SizedBox(width: 10),
+                            Text("Kelola User"),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Divider(),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Icon(Icons.engineering),
+                            SizedBox(width: 10),
+                            Text("Kelola Admin"),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Divider(),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Icon(Icons.rebase_edit),
+                            SizedBox(width: 10),
+                            Text("Ubah Status"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 80)
                 ],
               ),
             )

@@ -60,12 +60,16 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
         inactiveColorPrimary: AppColors.greyColor,
       ),
       PersistentBottomNavBarItem(
+        iconSize: 40,
         icon: currIndex.index == 2
             ? const Icon(
-                Icons.map,
+                Icons.public,
                 color: AppColors.whiteColor,
               )
-            : const Icon(Icons.map_outlined, color: AppColors.whiteColor),
+            : const Icon(
+                Icons.public_outlined,
+                color: AppColors.whiteColor,
+              ),
         title: (" "),
         activeColorPrimary: AppColors.primaryColor,
         inactiveColorPrimary: AppColors.greyColor,

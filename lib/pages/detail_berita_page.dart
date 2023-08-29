@@ -15,7 +15,7 @@ class DetailBeritaPage extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              color: AppColors.primaryColor,
+              color: AppColors.bgColor,
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
                 vertical: 20,
@@ -28,14 +28,14 @@ class DetailBeritaPage extends StatelessWidget {
                     },
                     child: const Icon(
                       Icons.arrow_back,
-                      color: AppColors.whiteColor,
+                      color: AppColors.blackColor,
                     ),
                   ),
                   const SizedBox(width: 20),
                   const Text(
                     "Berita",
                     style: TextStyle(
-                      color: AppColors.whiteColor,
+                      color: AppColors.blackColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
