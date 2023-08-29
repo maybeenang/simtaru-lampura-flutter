@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         children: [
-                          const TextFiledCommon(labelText: "NIP"),
+                          const TextFiledCommon(labelText: "NIK"),
                           const SizedBox(height: 10),
                           const TextFieldPassword(),
                           const SizedBox(height: 10),

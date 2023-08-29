@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/components/custom_safe_area.dart';
-import 'package:flutter_map_simtaru/components/drawer.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 import 'package:flutter_map_simtaru/pages/berita_page.dart';
 import 'package:flutter_map_simtaru/pages/home_page.dart';

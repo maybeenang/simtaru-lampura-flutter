@@ -3,6 +3,7 @@ import 'package:flutter_map_simtaru/constants/colors.dart';
 import 'package:flutter_map_simtaru/constants/image.dart';
 import 'package:flutter_map_simtaru/pages/detail_berita_page.dart';
 import 'package:flutter_map_simtaru/pages/detail_pengajuan_page.dart';
+import 'package:flutter_map_simtaru/pages/edit_profile_page.dart';
 import 'package:flutter_map_simtaru/pages/login_page.dart';
 import 'package:flutter_map_simtaru/pages/pengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/register_page.dart';
@@ -77,6 +78,29 @@ final GoRouter _route = GoRouter(
           pageBuilder: (context, state) {
             return CustomTransitionPage(
               child: const DetailBeritaPage(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
+
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
+
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+            );
+          },
+        ),
+        GoRoute(
+          path: 'edit_profile',
+          pageBuilder: (context, state) {
+            return CustomTransitionPage(
+              child: const EditProfilePage(),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 const begin = Offset(1.0, 0.0);

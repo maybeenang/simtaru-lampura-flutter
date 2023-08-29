@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/components/button_profile.dart';
+import 'package:flutter_map_simtaru/components/cards/profile_card.dart';
 import 'package:flutter_map_simtaru/components/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/states/providers/index_screen_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class ProfilPage extends StatelessWidget {
+class ProfilPage extends ConsumerWidget {
   const ProfilPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SingleChildScrollView(
       child: Container(
         color: AppColors.bgColor,
@@ -22,46 +27,7 @@ class ProfilPage extends StatelessWidget {
               padding: const EdgeInsetsDirectional.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AppColors.borderColor),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: AppColors.blackColor,
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "John Doe",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "johndoe@email.com",
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
+                  const ProfileCard(),
                   const SizedBox(height: 20),
                   const SizedBox(
                     width: double.infinity,
@@ -75,46 +41,54 @@ class ProfilPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Container(
-                    padding: const EdgeInsets.all(20),
                     width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
                       color: AppColors.whiteColor,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: AppColors.borderColor),
                     ),
-                    child: const Column(
+                    child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Icon(Icons.person),
-                            SizedBox(width: 10),
-                            Text("Edit Profil"),
-                          ],
+                        ButtonProfile(
+                          label: "Edit Profil",
+                          icon: Icons.edit,
+                          onTap: () {
+                            Future.delayed(
+                              const Duration(milliseconds: 300),
+                              () {
+                                context.push('/edit_profile');
+                              },
+                            );
+                          },
                         ),
-                        SizedBox(height: 10),
-                        Divider(),
-                        SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Icon(Icons.lock),
-                            SizedBox(width: 10),
-                            Text("Ganti Password"),
-                          ],
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Divider(),
                         ),
-                        SizedBox(height: 10),
-                        Divider(),
-                        SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Icon(Icons.logout, color: AppColors.redColor),
-                            SizedBox(width: 10),
-                            Text(
-                              "Keluar",
-                              style: TextStyle(
-                                color: AppColors.redColor,
-                              ),
-                            ),
-                          ],
+                        const ButtonProfile(
+                          label: "Ganti Password",
+                          icon: Icons.lock,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Divider(),
+                        ),
+                        ButtonProfile(
+                          label: "Logout",
+                          icon: Icons.logout,
+                          color: AppColors.redColor,
+                          onTap: () {
+                            Future.delayed(
+                              const Duration(milliseconds: 500),
+                              () {
+                                context.go('/login');
+                                ref
+                                    .read(indexScreenProvider.notifier)
+                                    .onIndexChange(0);
+                              },
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -132,8 +106,8 @@ class ProfilPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Container(
-                    padding: const EdgeInsets.all(20),
                     width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
                       color: AppColors.whiteColor,
                       borderRadius: BorderRadius.circular(10),
@@ -141,32 +115,25 @@ class ProfilPage extends StatelessWidget {
                     ),
                     child: const Column(
                       children: [
-                        Row(
-                          children: [
-                            Icon(Icons.people),
-                            SizedBox(width: 10),
-                            Text("Kelola User"),
-                          ],
+                        ButtonProfile(
+                          label: "Kelola User",
+                          icon: Icons.group,
                         ),
-                        SizedBox(height: 10),
-                        Divider(),
-                        SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Icon(Icons.engineering),
-                            SizedBox(width: 10),
-                            Text("Kelola Admin"),
-                          ],
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Divider(),
                         ),
-                        SizedBox(height: 10),
-                        Divider(),
-                        SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Icon(Icons.rebase_edit),
-                            SizedBox(width: 10),
-                            Text("Ubah Status"),
-                          ],
+                        ButtonProfile(
+                          label: "Kelola Pengajuan",
+                          icon: Icons.list_alt,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Divider(),
+                        ),
+                        ButtonProfile(
+                          label: "Kelola Berita",
+                          icon: Icons.newspaper,
                         ),
                       ],
                     ),
