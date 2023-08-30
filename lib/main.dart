@@ -5,6 +5,7 @@ import 'package:flutter_map_simtaru/pages/detail_berita_page.dart';
 import 'package:flutter_map_simtaru/pages/detail_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/edit_profile_page.dart';
 import 'package:flutter_map_simtaru/pages/login_page.dart';
+import 'package:flutter_map_simtaru/pages/onboarding_page.dart';
 import 'package:flutter_map_simtaru/pages/pengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/register_page.dart';
 import 'package:flutter_map_simtaru/pages/root_page.dart';
@@ -167,8 +168,12 @@ final GoRouter _route = GoRouter(
         );
       },
     ),
+    GoRoute(
+      path: '/on_boarding',
+      builder: (context, state) => OnBoardingPage(),
+    )
   ],
-  initialLocation: '/login',
+  initialLocation: '/on_boarding',
 );
 
 class App extends StatelessWidget {

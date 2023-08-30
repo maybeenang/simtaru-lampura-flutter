@@ -35,6 +35,7 @@ class EditProfileForm extends StatelessWidget {
           child: Column(
             children: [
               TextFormField(
+                readOnly: true,
                 initialValue: "1234567890123456",
                 decoration: const InputDecoration(
                   labelText: "NIK/No. KTP",
