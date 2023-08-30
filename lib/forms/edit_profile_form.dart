@@ -21,7 +21,7 @@ class EditProfileForm extends StatelessWidget {
           "Ganti Foto",
           style: TextStyle(
             color: AppColors.primaryColor,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
         const SizedBox(height: 20),
@@ -99,7 +99,8 @@ class EditProfileForm extends StatelessWidget {
           onPressed: () {},
           child: const Text(
             "Simpan",
-            style: TextStyle(color: AppColors.whiteColor),
+            style: TextStyle(
+                color: AppColors.whiteColor, fontWeight: FontWeight.w700),
           ),
         )
       ],

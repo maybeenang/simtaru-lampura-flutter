@@ -9,6 +9,8 @@ class ItemPengajuan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      elevation: 1,
+      borderRadius: BorderRadius.circular(10),
       child: InkWell(
         splashColor: AppColors.greyColor.withOpacity(0.5),
         onTap: () {

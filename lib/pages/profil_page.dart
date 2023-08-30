@@ -34,103 +34,107 @@ class ProfilPage extends ConsumerWidget {
                     child: Text(
                       "Pengaturan",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         fontSize: 16,
                       ),
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                      color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AppColors.borderColor),
-                    ),
-                    child: Column(
-                      children: [
-                        ButtonProfile(
-                          label: "Edit Profil",
-                          icon: Icons.edit,
-                          onTap: () {
-                            Future.delayed(
-                              const Duration(milliseconds: 300),
-                              () {
-                                context.push('/edit_profile');
-                              },
-                            );
-                          },
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Divider(),
-                        ),
-                        const ButtonProfile(
-                          label: "Ganti Password",
-                          icon: Icons.lock,
-                          // onTap: () {
-                          //   showModalBottomSheet(
-                          //       context: context,
-                          //       useRootNavigator: true,
-                          //       builder: (context) {
-                          //         return Column(
-                          //           mainAxisSize: MainAxisSize.min,
-                          //           children: <Widget>[
-                          //             ListTile(
-                          //               leading: new Icon(Icons.photo),
-                          //               title: new Text('Photo'),
-                          //               onTap: () {
-                          //                 Navigator.pop(context);
-                          //               },
-                          //             ),
-                          //             ListTile(
-                          //               leading: new Icon(Icons.music_note),
-                          //               title: new Text('Music'),
-                          //               onTap: () {
-                          //                 Navigator.pop(context);
-                          //               },
-                          //             ),
-                          //             ListTile(
-                          //               leading: new Icon(Icons.videocam),
-                          //               title: new Text('Video'),
-                          //               onTap: () {
-                          //                 Navigator.pop(context);
-                          //               },
-                          //             ),
-                          //             ListTile(
-                          //               leading: new Icon(Icons.share),
-                          //               title: new Text('Share'),
-                          //               onTap: () {
-                          //                 Navigator.pop(context);
-                          //               },
-                          //             ),
-                          //           ],
-                          //         );
-                          //       });
-                          // },
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Divider(),
-                        ),
-                        ButtonProfile(
-                          label: "Logout",
-                          icon: Icons.logout,
-                          color: AppColors.redColor,
-                          onTap: () {
-                            Future.delayed(
-                              const Duration(milliseconds: 500),
-                              () {
-                                context.go('/login');
-                                ref
-                                    .read(indexScreenProvider.notifier)
-                                    .onIndexChange(0);
-                              },
-                            );
-                          },
-                        ),
-                      ],
+                  Material(
+                    elevation: 1,
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: AppColors.whiteColor,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: AppColors.borderColor),
+                      ),
+                      child: Column(
+                        children: [
+                          ButtonProfile(
+                            label: "Edit Profil",
+                            icon: Icons.edit,
+                            onTap: () {
+                              Future.delayed(
+                                const Duration(milliseconds: 300),
+                                () {
+                                  context.push('/edit_profile');
+                                },
+                              );
+                            },
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Divider(),
+                          ),
+                          const ButtonProfile(
+                            label: "Ganti Password",
+                            icon: Icons.lock,
+                            // onTap: () {
+                            //   showModalBottomSheet(
+                            //       context: context,
+                            //       useRootNavigator: true,
+                            //       builder: (context) {
+                            //         return Column(
+                            //           mainAxisSize: MainAxisSize.min,
+                            //           children: <Widget>[
+                            //             ListTile(
+                            //               leading: new Icon(Icons.photo),
+                            //               title: new Text('Photo'),
+                            //               onTap: () {
+                            //                 Navigator.pop(context);
+                            //               },
+                            //             ),
+                            //             ListTile(
+                            //               leading: new Icon(Icons.music_note),
+                            //               title: new Text('Music'),
+                            //               onTap: () {
+                            //                 Navigator.pop(context);
+                            //               },
+                            //             ),
+                            //             ListTile(
+                            //               leading: new Icon(Icons.videocam),
+                            //               title: new Text('Video'),
+                            //               onTap: () {
+                            //                 Navigator.pop(context);
+                            //               },
+                            //             ),
+                            //             ListTile(
+                            //               leading: new Icon(Icons.share),
+                            //               title: new Text('Share'),
+                            //               onTap: () {
+                            //                 Navigator.pop(context);
+                            //               },
+                            //             ),
+                            //           ],
+                            //         );
+                            //       });
+                            // },
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Divider(),
+                          ),
+                          ButtonProfile(
+                            label: "Logout",
+                            icon: Icons.logout,
+                            color: AppColors.redColor,
+                            onTap: () {
+                              Future.delayed(
+                                const Duration(milliseconds: 500),
+                                () {
+                                  context.go('/login');
+                                  ref
+                                      .read(indexScreenProvider.notifier)
+                                      .onIndexChange(0);
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -139,43 +143,47 @@ class ProfilPage extends ConsumerWidget {
                     child: Text(
                       "Admin",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         fontSize: 16,
                       ),
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                      color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AppColors.borderColor),
-                    ),
-                    child: const Column(
-                      children: [
-                        ButtonProfile(
-                          label: "Kelola User",
-                          icon: Icons.group,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Divider(),
-                        ),
-                        ButtonProfile(
-                          label: "Kelola Pengajuan",
-                          icon: Icons.list_alt,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Divider(),
-                        ),
-                        ButtonProfile(
-                          label: "Kelola Berita",
-                          icon: Icons.newspaper,
-                        ),
-                      ],
+                  Material(
+                    elevation: 1,
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: AppColors.whiteColor,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: AppColors.borderColor),
+                      ),
+                      child: const Column(
+                        children: [
+                          ButtonProfile(
+                            label: "Kelola User",
+                            icon: Icons.group,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Divider(),
+                          ),
+                          ButtonProfile(
+                            label: "Kelola Pengajuan",
+                            icon: Icons.list_alt,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Divider(),
+                          ),
+                          ButtonProfile(
+                            label: "Kelola Berita",
+                            icon: Icons.newspaper,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 80)

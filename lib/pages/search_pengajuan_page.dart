@@ -4,8 +4,15 @@ import 'package:flutter_map_simtaru/components/item_pengajuan.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 import 'package:go_router/go_router.dart';
 
-class SearchPengajuanPage extends StatelessWidget {
+class SearchPengajuanPage extends StatefulWidget {
   const SearchPengajuanPage({super.key});
+
+  @override
+  State<SearchPengajuanPage> createState() => _SearchPengajuanPageState();
+}
+
+class _SearchPengajuanPageState extends State<SearchPengajuanPage> {
+  int _value = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -103,42 +110,63 @@ class SearchPengajuanPage extends StatelessWidget {
                 child: ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   scrollDirection: Axis.horizontal,
-                  itemCount: 8,
+                  itemCount: 5,
                   itemBuilder: (context, index) {
-                    return Material(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {},
-                        child: Ink(
-                          decoration: BoxDecoration(
-                            color: index == 0
-                                ? AppColors.primaryColor
-                                : AppColors.whiteColor,
-                            border: Border.all(
-                              width: 2,
-                              color: AppColors.primaryColor,
-                            ),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 10,
-                          ),
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Kat ${index + 1}",
-                              style: TextStyle(
-                                color: index == 0
-                                    ? AppColors.whiteColor
-                                    : AppColors.primaryColor,
-                              ),
-                            ),
-                          ),
-                        ),
+                    return ChoiceChip(
+                      label: Text('Item ${index + 1} '),
+                      selectedColor: AppColors.primaryColor,
+                      labelStyle: TextStyle(
+                        color: _value == index
+                            ? AppColors.whiteColor
+                            : AppColors.greyColor,
                       ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      showCheckmark: false,
+                      selected: _value == index,
+                      onSelected: (bool selected) {
+                        setState(
+                          () {
+                            _value = (selected ? index : null)!;
+                          },
+                        );
+                      },
                     );
+                    // return Material(
+                    //   borderRadius: BorderRadius.circular(50),
+                    //   color: Colors.transparent,
+                    //   child: InkWell(
+                    //     onTap: () {},
+                    //     child: Ink(
+                    //       decoration: BoxDecoration(
+                    //         color: index == 0
+                    //             ? AppColors.primaryColor
+                    //             : AppColors.whiteColor,
+                    //         border: Border.all(
+                    //           width: 2,
+                    //           color: AppColors.primaryColor,
+                    //         ),
+                    //         borderRadius: BorderRadius.circular(50),
+                    //       ),
+                    //       padding: const EdgeInsets.symmetric(
+                    //         horizontal: 20,
+                    //         vertical: 10,
+                    //       ),
+                    //       child: Container(
+                    //         alignment: Alignment.center,
+                    //         child: Text(
+                    //           "Kat ${index + 1}",
+                    //           style: TextStyle(
+                    //             color: index == 0
+                    //                 ? AppColors.whiteColor
+                    //                 : AppColors.primaryColor,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // );
                   },
                   separatorBuilder: (context, index) {
                     return const SizedBox(width: 10);

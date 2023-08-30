@@ -45,6 +45,7 @@ class StatusCard extends StatelessWidget {
             padding: const EdgeInsets.all(15),
             width: MediaQuery.of(context).size.width / 2.4,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
@@ -60,6 +61,7 @@ class StatusCard extends StatelessWidget {
                   label,
                   style: const TextStyle(
                     color: AppColors.whiteColor,
+                    fontWeight: FontWeight.w600,
                     fontSize: 12,
                   ),
                 ),

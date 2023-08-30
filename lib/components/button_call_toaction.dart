@@ -10,6 +10,8 @@ class ButtonCallToAction extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Material(
+        elevation: 2,
+        borderRadius: BorderRadius.circular(10),
         child: InkWell(
           onTap: () => {
             Future.delayed(const Duration(milliseconds: 300), () {
@@ -32,7 +34,7 @@ class ButtonCallToAction extends StatelessWidget {
                       "Pengajuan",
                       style: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         color: AppColors.whiteColor,
                       ),
                     ),
@@ -41,6 +43,7 @@ class ButtonCallToAction extends StatelessWidget {
                       "Buat pengajuan baru",
                       style: TextStyle(
                         fontSize: 14,
+                        fontWeight: FontWeight.w400,
                         color: AppColors.whiteColor,
                       ),
                     ),

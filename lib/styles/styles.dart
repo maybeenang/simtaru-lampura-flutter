@@ -6,7 +6,7 @@ class AppStyles {
 
   static const TextStyle title = TextStyle(
     fontSize: 24,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w600,
   );
 
   static const TextStyle subtitle = TextStyle(
@@ -15,7 +15,7 @@ class AppStyles {
 
   static const TextStyle textButton = TextStyle(
     fontSize: 18,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w700,
     color: Colors.white,
   );
 

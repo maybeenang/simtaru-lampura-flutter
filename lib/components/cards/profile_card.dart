@@ -8,6 +8,8 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      elevation: 1,
+      borderRadius: BorderRadius.circular(10),
       child: InkWell(
         onTap: () {
           Future.delayed(
@@ -43,7 +45,7 @@ class ProfileCard extends StatelessWidget {
                     "John Doe",
                     style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   Text(

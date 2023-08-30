@@ -23,7 +23,7 @@ class StatusPengajuanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
+      elevation: 1,
       clipBehavior: Clip.antiAlias,
       color: colorMapping[label],
       child: Stack(

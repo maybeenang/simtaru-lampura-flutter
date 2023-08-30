@@ -26,83 +26,87 @@ class CustomBarChart extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.borderColor),
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          children: [
-            const SizedBox(
-              width: double.infinity,
-              child: Text(
-                "Grafik Pengajuan Perbulan",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+      child: Material(
+        elevation: 1,
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.borderColor),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
+              const SizedBox(
+                width: double.infinity,
+                child: Text(
+                  "Grafik Pengajuan Perbulan",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            AspectRatio(
-              aspectRatio: 2,
-              child: BarChart(
-                BarChartData(
-                  maxY: data.barData.map((data) => data.y).toList().reduce(
-                      (value, element) => value > element ? value : element),
-                  minY: 0,
-                  borderData: FlBorderData(
+              const SizedBox(height: 20),
+              AspectRatio(
+                aspectRatio: 2,
+                child: BarChart(
+                  BarChartData(
+                    maxY: data.barData.map((data) => data.y).toList().reduce(
+                        (value, element) => value > element ? value : element),
+                    minY: 0,
+                    borderData: FlBorderData(
+                        show: true,
+                        border: const Border(
+                          left: BorderSide.none,
+                          bottom: BorderSide.none,
+                          right: BorderSide.none,
+                          top: BorderSide.none,
+                        )),
+                    gridData:
+                        const FlGridData(show: true, drawVerticalLine: false),
+                    alignment: BarChartAlignment.spaceAround,
+                    titlesData: FlTitlesData(
                       show: true,
-                      border: const Border(
-                        left: BorderSide.none,
-                        bottom: BorderSide.none,
-                        right: BorderSide.none,
-                        top: BorderSide.none,
-                      )),
-                  gridData:
-                      const FlGridData(show: true, drawVerticalLine: false),
-                  alignment: BarChartAlignment.spaceAround,
-                  titlesData: FlTitlesData(
-                    show: true,
-                    rightTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    topTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                          showTitles: true, getTitlesWidget: getBottomTitles),
-                    ),
-                    leftTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: 25,
-                        getTitlesWidget: getLeftTitles,
+                      rightTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      topTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                            showTitles: true, getTitlesWidget: getBottomTitles),
+                      ),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 25,
+                          getTitlesWidget: getLeftTitles,
+                        ),
                       ),
                     ),
+                    barGroups: data.barData
+                        .map(
+                          (data) => BarChartGroupData(
+                            x: data.x,
+                            barRods: [
+                              BarChartRodData(
+                                toY: data.y,
+                                color: Colors.blue,
+                                width: 10,
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ],
+                          ),
+                        )
+                        .toList(),
                   ),
-                  barGroups: data.barData
-                      .map(
-                        (data) => BarChartGroupData(
-                          x: data.x,
-                          barRods: [
-                            BarChartRodData(
-                              toY: data.y,
-                              color: Colors.blue,
-                              width: 10,
-                              borderRadius: BorderRadius.circular(2),
-                            ),
-                          ],
-                        ),
-                      )
-                      .toList(),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

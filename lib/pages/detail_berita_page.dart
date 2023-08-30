@@ -62,7 +62,7 @@ class DetailBeritaPage extends StatelessWidget {
                   Text(
                     "Lorem ipsum dolor sit amet, consecte tur adipiscing elit",
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       fontSize: 18,
                       height: 1,
                     ),
