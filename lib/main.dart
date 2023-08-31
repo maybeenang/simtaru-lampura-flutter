@@ -1,4 +1,3 @@
-// Import
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 import 'package:flutter_map_simtaru/constants/image.dart';
