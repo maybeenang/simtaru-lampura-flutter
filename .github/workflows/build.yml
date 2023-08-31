@@ -9,7 +9,7 @@ on:
             - main
 env:
   PROPERTIES_PATH: "./android/key.properties"
-  STORE_PATH: "./android/app/key.jks"
+  STORE_PATH: "./android/apps/key.jks"
 jobs:
     build:
         name: "build"
@@ -29,12 +29,12 @@ jobs:
             - run: echo storePassword=${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
             - run: echo keyAlias=${{ secrets.KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
             - run: echo storeFile=${{env.STORE_PATH}} >> ${{env.PROPERTIES_PATH}}
-            - run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > ./android/app/key.jks
-            - run: flutter pub get
-            - run: flutter build apk --release
-            - name: Push to Releases
-              uses: ncipollo/release-action@v1
-              with: 
-                artifacts: "build/app/outputs/apk/release/*"
-                tag: v0.0.${{github.run_number}}
-                token: ${{secrets.TOKEN}}
+            - run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > ./android/appd/key.jks
+            # - run: flutter pub get
+            # - run: flutter build apk --release
+            # - name: Push to Releases
+            #   uses: ncipollo/release-action@v1
+            #   with: 
+            #     artifacts: "build/app/outputs/apk/release/*"
+            #     tag: v0.0.${{github.run_number}}
+            #     token: ${{secrets.TOKEN}}
