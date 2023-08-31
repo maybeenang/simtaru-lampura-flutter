@@ -1,0 +1,33 @@
+name: CI CD Build apk
+
+on: 
+    pull_request:
+        branches: 
+            - main
+    push: 
+        branches: 
+            - main
+jobs:
+    build:
+        name: "build"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-java@v1
+              with:
+                  java_version: '12.x'
+            - uses: subosito/flutter-action@v2
+              with:
+                channel: 'stable'
+            - run: flutter --version
+            - run: flutter pub get
+            - run: flutter build apk --release
+            - name: Push to Releases
+              uses: ncipollo/release-action@v1
+              with: 
+                artifacts: "build/app/outputs/apk/release/*"
+                tag: v0.0.${{github.run_number}}
+                token: ${{secrets.TOKEN}}
+
+    
+
