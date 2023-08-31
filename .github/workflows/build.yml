@@ -9,7 +9,7 @@ on:
             - main
 env:
   PROPERTIES_PATH: "./android/key.properties"
-  STORE_PATH: "./android/key.properties"
+  STORE_PATH: "./android/key.jks"
 jobs:
     build:
         name: "build"
