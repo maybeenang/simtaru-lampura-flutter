@@ -1,9 +1,6 @@
 name: CI CD Build apk
 
-on: 
-    pull_request:
-        branches: 
-            - main
+on:
     push: 
         branches: 
             - main
