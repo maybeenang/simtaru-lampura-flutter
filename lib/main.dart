@@ -49,7 +49,18 @@ final GoRouter _route = GoRouter(
         ),
         GoRoute(
           path: 'search_pengajuan',
-          builder: (context, state) => const SearchPengajuanPage(),
+          pageBuilder: (context, state) {
+            return CustomTransitionPage(
+              child: const SearchPengajuanPage(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
+            );
+          },
         ),
         GoRoute(
           path: 'detail_pengajuan',

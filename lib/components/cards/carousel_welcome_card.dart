@@ -20,6 +20,9 @@ class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
     WelcomeCard(),
     WelcomeCard(),
     WelcomeCard(),
+    WelcomeCard(),
+    WelcomeCard(),
+    WelcomeCard(),
   ];
 
   @override

@@ -65,4 +65,10 @@ class AppStyles {
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
     minimumSize: MaterialStatePropertyAll(Size.zero),
   );
+
+  static BoxShadow boxShadowStyle = BoxShadow(
+    color: AppColors.borderColor.withOpacity(0.9),
+    blurRadius: 10,
+    offset: const Offset(0, 4),
+  );
 }
