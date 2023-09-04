@@ -31,9 +31,10 @@ class StatusPengajuanCard extends StatelessWidget {
         color: colorMapping[label],
         boxShadow: [
           BoxShadow(
-            color: colorMapping[label]!.withOpacity(0.3),
-            blurRadius: 5,
-            offset: const Offset(0, 5),
+            color: colorMapping[label]!.withOpacity(0.5),
+            blurRadius: 10,
+            spreadRadius: 1,
+            offset: const Offset(0, 2),
           ),
         ],
       ),

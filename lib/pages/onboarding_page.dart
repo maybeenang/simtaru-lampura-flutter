@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/constants/double.dart';
+import 'package:flutter_map_simtaru/constants/image.dart';
 import 'package:flutter_map_simtaru/models/onboard.dart';
+import 'package:flutter_map_simtaru/styles/styles.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -54,67 +57,95 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       titleTextStyle: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700),
       bodyTextStyle: bodyStyle,
       bodyPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-      imagePadding: EdgeInsets.all(20),
-      imageFlex: 5,
-      bodyFlex: 2,
+      imagePadding: EdgeInsets.all(30),
+      imageFlex: 2,
+      bodyFlex: 1,
     );
 
-    return IntroductionScreen(
-      key: introKey,
-      globalBackgroundColor: AppColors.bgColor,
-      allowImplicitScrolling: true,
-      showSkipButton: true,
-      skipOrBackFlex: 0,
-      nextFlex: 0,
-      showBackButton: false,
-      pages: _dataOnboarding.map(
-        (e) {
-          return PageViewModel(
-            title: e.title,
-            body: e.description,
-            decoration: pageDecoration,
-            image: SvgPicture.asset(e.image),
-          );
-        },
-      ).toList(),
-      dotsDecorator: const DotsDecorator(
-        size: Size(10.0, 10.0),
-        color: Color(0xFFBDBDBD),
-        activeSize: Size(22.0, 10.0),
-        activeShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height * 0.2,
+          decoration: const BoxDecoration(
+            color: AppColors.bgColor,
+          ),
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Container(
+            width: 100,
+            child: const Image(
+              image: AssetImage(Images.logo),
+            ),
+          ),
         ),
-      ),
-      dotsContainerDecorator: const ShapeDecoration(
-        color: AppColors.whiteColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        Expanded(
+          child: IntroductionScreen(
+            key: introKey,
+            globalBackgroundColor: AppColors.bgColor,
+            allowImplicitScrolling: true,
+            showSkipButton: true,
+            skipOrBackFlex: 0,
+            nextFlex: 0,
+            showBackButton: false,
+            pages: _dataOnboarding.map(
+              (e) {
+                return PageViewModel(
+                  title: e.title,
+                  body: e.description,
+                  decoration: pageDecoration,
+                  image: SvgPicture.asset(e.image),
+                );
+              },
+            ).toList(),
+            dotsDecorator: const DotsDecorator(
+              size: Size(10.0, 10.0),
+              color: Color(0xFFBDBDBD),
+              activeSize: Size(22.0, 10.0),
+              activeShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25.0)),
+              ),
+            ),
+            dotsContainerDecorator: ShapeDecoration(
+              color: AppColors.whiteColor,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    AppDouble.borderRadius,
+                  ),
+                ),
+              ),
+              shadows: [
+                AppStyles.boxShadowStyle,
+              ],
+            ),
+            onDone: () => _onIntroEnd(context),
+            onSkip: () => _onIntroEnd(context),
+            back: const Icon(Icons.arrow_back),
+            skip: const Text(
+              'Lewati',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: AppColors.primaryColor,
+              ),
+            ),
+            done: const Text(
+              'Mulai',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: AppColors.primaryColor,
+              ),
+            ),
+            next: const Icon(
+              Icons.arrow_forward,
+              color: AppColors.primaryColor,
+            ),
+            curve: Curves.fastLinearToSlowEaseIn,
+            controlsMargin: const EdgeInsets.all(16),
+          ),
         ),
-      ),
-      onDone: () => _onIntroEnd(context),
-      onSkip: () => _onIntroEnd(context), // You can override onSkip callback
-      //rtl: true, // Display as right-to-left
-      back: const Icon(Icons.arrow_back),
-      skip: const Text(
-        'Lewati',
-        style: TextStyle(
-          fontWeight: FontWeight.w600,
-          color: AppColors.primaryColor,
-        ),
-      ),
-      done: const Text(
-        'Mulai',
-        style: TextStyle(
-          fontWeight: FontWeight.w600,
-          color: AppColors.primaryColor,
-        ),
-      ),
-      next: const Icon(
-        Icons.arrow_forward,
-        color: AppColors.primaryColor,
-      ),
-      curve: Curves.fastLinearToSlowEaseIn,
-      controlsMargin: const EdgeInsets.all(16),
+      ],
     );
   }
 }

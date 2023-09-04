@@ -6,7 +6,7 @@ class AppStyles {
 
   static const TextStyle title = TextStyle(
     fontSize: 24,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.bold,
   );
 
   static const TextStyle subtitle = TextStyle(
@@ -45,18 +45,21 @@ class AppStyles {
   );
 
   static const InputDecoration inputDecoration = InputDecoration(
-    contentPadding: EdgeInsets.all(10),
+    filled: true,
+    fillColor: AppColors.whiteColor,
+    hintStyle: TextStyle(color: AppColors.greyColor),
+    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
     border: OutlineInputBorder(
-      borderSide: BorderSide(color: AppColors.secondaryColor, width: 1.5),
-      borderRadius: BorderRadius.all(Radius.circular(5)),
+      borderSide: BorderSide(color: AppColors.borderColor, width: 1.5),
+      borderRadius: BorderRadius.all(Radius.circular(50)),
     ),
     enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: AppColors.secondaryColor, width: 1.5),
-      borderRadius: BorderRadius.all(Radius.circular(5)),
+      borderSide: BorderSide(color: AppColors.borderColor, width: 1.5),
+      borderRadius: BorderRadius.all(Radius.circular(50)),
     ),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(color: AppColors.primaryColor, width: 2.0),
-      borderRadius: BorderRadius.all(Radius.circular(5)),
+      borderRadius: BorderRadius.all(Radius.circular(50)),
     ),
   );
 

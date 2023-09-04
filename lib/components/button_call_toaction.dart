@@ -12,15 +12,16 @@ class ButtonCallToAction extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
       child: Container(
         decoration: BoxDecoration(
-            color: AppColors.actionColor,
-            borderRadius: BorderRadius.circular(50),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.actionColor.withOpacity(0.5),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ]),
+          color: AppColors.actionColor,
+          borderRadius: BorderRadius.circular(50),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.actionColor.withOpacity(0.5),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
         child: Material(
           borderRadius: BorderRadius.circular(50),
           clipBehavior: Clip.antiAlias,

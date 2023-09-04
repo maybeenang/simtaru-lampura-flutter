@@ -17,7 +17,6 @@ class BeritaPage extends StatelessWidget {
             bgColor: AppColors.bgColor,
             labelColor: AppColors.blackColor,
           ),
-          const SizedBox(height: 10),
           ListView.separated(
             itemBuilder: (context, index) {
               return const BeritaItemCard();
@@ -26,7 +25,6 @@ class BeritaPage extends StatelessWidget {
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 height: 20,
-                child: const Divider(),
               );
             },
             itemCount: 10,

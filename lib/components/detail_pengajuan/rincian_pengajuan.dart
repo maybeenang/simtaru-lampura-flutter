@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/constants/double.dart';
+import 'package:flutter_map_simtaru/styles/styles.dart';
 
 class RincianPengajuan extends StatelessWidget {
   const RincianPengajuan({super.key});
@@ -8,11 +10,13 @@ class RincianPengajuan extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(AppDouble.paddingInside),
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.borderColor),
         color: AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(AppDouble.borderRadius),
+        boxShadow: [
+          AppStyles.boxShadowStyle,
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +28,9 @@ class RincianPengajuan extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Divider(),
+          const Divider(
+            color: AppColors.borderColor,
+          ),
           const Text(
             "Status",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),

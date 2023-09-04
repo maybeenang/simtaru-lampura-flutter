@@ -8,17 +8,17 @@ class Langkah3Form extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        TextFiledCommon(labelText: "Letak tanah"),
+        TextFieldCommon(labelText: "Letak tanah"),
         SizedBox(height: 10),
-        TextFiledCommon(labelText: "Rencana penggunaan tanah"),
+        TextFieldCommon(labelText: "Rencana penggunaan tanah"),
         SizedBox(height: 10),
-        TextFiledCommon(labelText: "Batas sebelah utara"),
+        TextFieldCommon(labelText: "Batas sebelah utara"),
         SizedBox(height: 10),
-        TextFiledCommon(labelText: "Batas sebelah timur"),
+        TextFieldCommon(labelText: "Batas sebelah timur"),
         SizedBox(height: 10),
-        TextFiledCommon(labelText: "Batas sebelah selatan"),
+        TextFieldCommon(labelText: "Batas sebelah selatan"),
         SizedBox(height: 10),
-        TextFiledCommon(labelText: "Batas sebelah barat"),
+        TextFieldCommon(labelText: "Batas sebelah barat"),
       ],
     );
   }

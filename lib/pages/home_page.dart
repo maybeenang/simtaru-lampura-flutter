@@ -6,6 +6,7 @@ import 'package:flutter_map_simtaru/components/cards/status_card.dart';
 import 'package:flutter_map_simtaru/components/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/components/custom_bar_chart.dart';
 import 'package:flutter_map_simtaru/components/custom_line_chart.dart';
+import 'package:flutter_map_simtaru/components/notif_badge.dart';
 import 'package:flutter_map_simtaru/components/subheader.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 
@@ -25,10 +26,28 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const CustomAppBarFitur(
-              title: "Dashboard",
-              bgColor: AppColors.primaryColor,
-              labelColor: AppColors.whiteColor,
+            Container(
+              color: AppColors.primaryColor,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const CustomAppBarFitur(
+                    title: "Dashboard",
+                    bgColor: AppColors.primaryColor,
+                    labelColor: AppColors.whiteColor,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const NotifBadge(),
+                  )
+                ],
+              ),
             ),
             Stack(
               children: [
@@ -64,7 +83,7 @@ class _HomePageState extends State<HomePage> {
             const CustomBarChart(),
             const SizedBox(height: 10),
             const CustomLineChart(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
             const SubHeader(labelText: "Berita"),
             const SizedBox(height: 10),
             const CarouselBerita(),

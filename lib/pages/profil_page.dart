@@ -3,7 +3,9 @@ import 'package:flutter_map_simtaru/components/button_profile.dart';
 import 'package:flutter_map_simtaru/components/cards/profile_card.dart';
 import 'package:flutter_map_simtaru/components/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/constants/double.dart';
 import 'package:flutter_map_simtaru/states/providers/index_screen_provider.dart';
+import 'package:flutter_map_simtaru/styles/styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,7 +26,9 @@ class ProfilPage extends ConsumerWidget {
             ),
             const SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsetsDirectional.symmetric(horizontal: 20),
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppDouble.paddingOutside,
+              ),
               child: Column(
                 children: [
                   const ProfileCard(),
@@ -40,61 +44,63 @@ class ProfilPage extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Material(
-                    elevation: 1,
-                    borderRadius: BorderRadius.circular(10),
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: AppColors.borderColor),
-                      ),
-                      child: Column(
-                        children: [
-                          ButtonProfile(
-                            label: "Edit Profil",
-                            icon: Icons.edit,
-                            onTap: () {
-                              Future.delayed(
-                                const Duration(milliseconds: 300),
-                                () {
-                                  context.push('/edit_profile');
-                                },
-                              );
-                            },
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteColor,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        AppStyles.boxShadowStyle,
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        ButtonProfile(
+                          label: "Edit Profil",
+                          icon: Icons.edit,
+                          onTap: () {
+                            Future.delayed(
+                              const Duration(milliseconds: 300),
+                              () {
+                                context.push('/edit_profile');
+                              },
+                            );
+                          },
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Divider(
+                            color: AppColors.borderColor,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: Divider(),
+                        ),
+                        const ButtonProfile(
+                          label: "Ganti Password",
+                          icon: Icons.lock,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Divider(
+                            color: AppColors.borderColor,
                           ),
-                          const ButtonProfile(
-                            label: "Ganti Password",
-                            icon: Icons.lock,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: Divider(),
-                          ),
-                          ButtonProfile(
-                            label: "Logout",
-                            icon: Icons.logout,
-                            color: AppColors.redColor,
-                            onTap: () {
-                              Future.delayed(
-                                const Duration(milliseconds: 500),
-                                () {
-                                  context.go('/login');
-                                  ref
-                                      .read(indexScreenProvider.notifier)
-                                      .onIndexChange(0);
-                                },
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                        ),
+                        ButtonProfile(
+                          label: "Logout",
+                          icon: Icons.logout,
+                          color: AppColors.redColor,
+                          onTap: () {
+                            Future.delayed(
+                              const Duration(milliseconds: 500),
+                              () {
+                                context.go('/login');
+                                ref
+                                    .read(indexScreenProvider.notifier)
+                                    .onIndexChange(0);
+                              },
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -109,41 +115,43 @@ class ProfilPage extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Material(
-                    elevation: 1,
-                    borderRadius: BorderRadius.circular(10),
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: AppColors.borderColor),
-                      ),
-                      child: const Column(
-                        children: [
-                          ButtonProfile(
-                            label: "Kelola User",
-                            icon: Icons.group,
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteColor,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        AppStyles.boxShadowStyle,
+                      ],
+                    ),
+                    child: const Column(
+                      children: [
+                        ButtonProfile(
+                          label: "Kelola User",
+                          icon: Icons.group,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Divider(
+                            color: AppColors.borderColor,
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: Divider(),
+                        ),
+                        ButtonProfile(
+                          label: "Kelola Pengajuan",
+                          icon: Icons.list_alt,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Divider(
+                            color: AppColors.borderColor,
                           ),
-                          ButtonProfile(
-                            label: "Kelola Pengajuan",
-                            icon: Icons.list_alt,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: Divider(),
-                          ),
-                          ButtonProfile(
-                            label: "Kelola Berita",
-                            icon: Icons.newspaper,
-                          ),
-                        ],
-                      ),
+                        ),
+                        ButtonProfile(
+                          label: "Kelola Berita",
+                          icon: Icons.newspaper,
+                        ),
+                      ],
                     ),
                   ),
                 ],

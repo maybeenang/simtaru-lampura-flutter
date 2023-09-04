@@ -18,7 +18,7 @@ class CustomBarChart extends StatelessWidget {
       mei: 30,
       jun: 12,
       jul: 20,
-      agu: 98,
+      agu: 100,
       sep: 58,
       okt: 23,
       nov: 76,

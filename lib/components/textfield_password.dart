@@ -19,6 +19,10 @@ class TextFieldPassword extends StatelessWidget {
         filled: true,
         fillColor: AppColors.whiteColor,
         labelText: "Password",
+        labelStyle: const TextStyle(
+          color: AppColors.greyColor,
+          fontSize: 14,
+        ),
       ),
     );
   }

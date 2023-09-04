@@ -9,15 +9,15 @@ class Langkah1Form extends StatelessWidget {
     return const Form(
       child: Column(
         children: [
-          TextFiledCommon(labelText: "Nama Lengkap"),
+          TextFieldCommon(labelText: "Nama Lengkap"),
           SizedBox(height: 10),
-          TextFiledCommon(labelText: "Tempat, Tanggal Lahir"),
+          TextFieldCommon(labelText: "Tempat, Tanggal Lahir"),
           SizedBox(height: 10),
-          TextFiledCommon(labelText: "Alamat"),
+          TextFieldCommon(labelText: "Alamat"),
           SizedBox(height: 10),
-          TextFiledCommon(labelText: "No. HP"),
+          TextFieldCommon(labelText: "No. HP"),
           SizedBox(height: 10),
-          TextFiledCommon(labelText: "Pekerjaan"),
+          TextFieldCommon(labelText: "Pekerjaan"),
         ],
       ),
     );

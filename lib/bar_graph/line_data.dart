@@ -5,10 +5,10 @@ class LineData {
   void getData() {
     barData = [
       IndividualBar(1, 56),
-      IndividualBar(2, 123),
+      IndividualBar(2, 15),
       IndividualBar(3, 87),
       IndividualBar(4, 23),
-      IndividualBar(5, 90),
+      IndividualBar(5, 100),
     ];
   }
 }

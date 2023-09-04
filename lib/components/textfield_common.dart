@@ -4,8 +4,8 @@ import 'package:flutter_map_simtaru/pages/root_page.dart';
 import 'package:flutter_map_simtaru/styles/styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TextFiledCommon extends ConsumerWidget {
-  const TextFiledCommon({super.key, required this.labelText, this.focusNode});
+class TextFieldCommon extends ConsumerWidget {
+  const TextFieldCommon({super.key, required this.labelText, this.focusNode});
 
   final String labelText;
   final FocusNode? focusNode;
@@ -28,6 +28,10 @@ class TextFiledCommon extends ConsumerWidget {
         filled: true,
         fillColor: AppColors.whiteColor,
         labelText: labelText,
+        labelStyle: const TextStyle(
+          color: AppColors.greyColor,
+          fontSize: 14,
+        ),
       ),
     );
   }

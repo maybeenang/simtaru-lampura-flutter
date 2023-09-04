@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/styles/styles.dart';
 
 class EditProfileForm extends StatelessWidget {
   const EditProfileForm({super.key});
@@ -30,7 +31,9 @@ class EditProfileForm extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.whiteColor,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: AppColors.borderColor),
+            boxShadow: [
+              AppStyles.boxShadowStyle,
+            ],
           ),
           child: Column(
             children: [
