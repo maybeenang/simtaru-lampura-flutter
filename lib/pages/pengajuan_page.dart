@@ -60,6 +60,7 @@ class _PengajuanPageState extends State<PengajuanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 2,
         title: const Text(
           "Pengajuan",
           style: TextStyle(

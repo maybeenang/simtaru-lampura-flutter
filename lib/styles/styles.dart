@@ -74,4 +74,10 @@ class AppStyles {
     blurRadius: 10,
     offset: const Offset(0, 4),
   );
+
+  static BoxShadow appBarBoxShadowStyle = BoxShadow(
+    color: AppColors.primaryColor.withOpacity(0.5),
+    blurRadius: 10,
+    offset: const Offset(0, 5),
+  );
 }

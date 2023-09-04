@@ -10,6 +10,7 @@ class DetailBeritaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomSafeArea(
+      color: AppColors.bgColor,
       child: Scaffold(
           body: SingleChildScrollView(
         child: Column(
