@@ -10,6 +10,7 @@ class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomSafeArea(
+      color: AppColors.bgColor,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Padding(

@@ -60,10 +60,18 @@ class _PengajuanPageState extends State<PengajuanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Pengajuan"),
+        elevation: 2,
+        title: const Text(
+          "Pengajuan",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamily: "Poppins",
+          ),
+        ),
       ),
       body: Theme(
         data: ThemeData(
+          fontFamily: "Poppins",
           colorScheme: ColorScheme.fromSwatch(
             primarySwatch: Colors.blue,
           ),

@@ -2,6 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/bar_graph/bar_data.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/constants/double.dart';
+import 'package:flutter_map_simtaru/styles/styles.dart';
 
 class CustomBarChart extends StatelessWidget {
   const CustomBarChart({super.key});
@@ -16,7 +18,7 @@ class CustomBarChart extends StatelessWidget {
       mei: 30,
       jun: 12,
       jul: 20,
-      agu: 98,
+      agu: 100,
       sep: 58,
       okt: 23,
       nov: 76,
@@ -25,88 +27,86 @@ class CustomBarChart extends StatelessWidget {
     data.initializeBarData();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Material(
-        elevation: 1,
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.borderColor),
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            children: [
-              const SizedBox(
-                width: double.infinity,
-                child: Text(
-                  "Grafik Pengajuan Perbulan",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(AppDouble.borderRadius),
+          boxShadow: [
+            AppStyles.boxShadowStyle,
+          ],
+        ),
+        child: Column(
+          children: [
+            const SizedBox(
+              width: double.infinity,
+              child: Text(
+                "Grafik Pengajuan Perbulan",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(height: 20),
-              AspectRatio(
-                aspectRatio: 2,
-                child: BarChart(
-                  BarChartData(
-                    maxY: data.barData.map((data) => data.y).toList().reduce(
-                        (value, element) => value > element ? value : element),
-                    minY: 0,
-                    borderData: FlBorderData(
-                        show: true,
-                        border: const Border(
-                          left: BorderSide.none,
-                          bottom: BorderSide.none,
-                          right: BorderSide.none,
-                          top: BorderSide.none,
-                        )),
-                    gridData:
-                        const FlGridData(show: true, drawVerticalLine: false),
-                    alignment: BarChartAlignment.spaceAround,
-                    titlesData: FlTitlesData(
+            ),
+            const SizedBox(height: 20),
+            AspectRatio(
+              aspectRatio: 2,
+              child: BarChart(
+                BarChartData(
+                  maxY: data.barData.map((data) => data.y).toList().reduce(
+                      (value, element) => value > element ? value : element),
+                  minY: 0,
+                  borderData: FlBorderData(
                       show: true,
-                      rightTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      topTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                            showTitles: true, getTitlesWidget: getBottomTitles),
-                      ),
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 25,
-                          getTitlesWidget: getLeftTitles,
-                        ),
+                      border: const Border(
+                        left: BorderSide.none,
+                        bottom: BorderSide.none,
+                        right: BorderSide.none,
+                        top: BorderSide.none,
+                      )),
+                  gridData:
+                      const FlGridData(show: true, drawVerticalLine: false),
+                  alignment: BarChartAlignment.spaceAround,
+                  titlesData: FlTitlesData(
+                    show: true,
+                    rightTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+                    topTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                          showTitles: true, getTitlesWidget: getBottomTitles),
+                    ),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 25,
+                        getTitlesWidget: getLeftTitles,
                       ),
                     ),
-                    barGroups: data.barData
-                        .map(
-                          (data) => BarChartGroupData(
-                            x: data.x,
-                            barRods: [
-                              BarChartRodData(
-                                toY: data.y,
-                                color: Colors.blue,
-                                width: 10,
-                                borderRadius: BorderRadius.circular(2),
-                              ),
-                            ],
-                          ),
-                        )
-                        .toList(),
                   ),
+                  barGroups: data.barData
+                      .map(
+                        (data) => BarChartGroupData(
+                          x: data.x,
+                          barRods: [
+                            BarChartRodData(
+                              toY: data.y,
+                              color: AppColors.secondaryColor,
+                              width: 10,
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          ],
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

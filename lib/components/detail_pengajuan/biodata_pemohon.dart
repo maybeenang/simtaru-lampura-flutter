@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/constants/double.dart';
+import 'package:flutter_map_simtaru/styles/styles.dart';
 
 class BiodataPemohon extends StatelessWidget {
   const BiodataPemohon({super.key});
@@ -7,12 +9,14 @@ class BiodataPemohon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(AppDouble.paddingInside),
       width: double.infinity,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
-        border: Border.all(color: AppColors.borderColor),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(AppDouble.borderRadius),
+        boxShadow: [
+          AppStyles.boxShadowStyle,
+        ],
       ),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +28,9 @@ class BiodataPemohon extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Divider(),
+          Divider(
+            color: AppColors.borderColor,
+          ),
           Text(
             "Nama",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),

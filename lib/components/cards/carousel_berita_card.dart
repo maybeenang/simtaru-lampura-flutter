@@ -22,7 +22,7 @@ class _CarouselBeritaState extends State<CarouselBerita> {
       carouselController: buttonCarouselController,
       options: CarouselOptions(
         height: 280,
-        viewportFraction: 0.85,
+        viewportFraction: 0.95,
         enableInfiniteScroll: false,
         scrollDirection: Axis.horizontal,
         padEnds: true,

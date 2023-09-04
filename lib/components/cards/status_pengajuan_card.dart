@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/constants/double.dart';
 
 class StatusPengajuanCard extends StatelessWidget {
   StatusPengajuanCard({super.key, required this.label});
@@ -7,10 +8,10 @@ class StatusPengajuanCard extends StatelessWidget {
   final String label;
 
   final Map<String, Color> colorMapping = {
-    "Total Pengajuan": const Color(0xFF06b6d4),
-    "Pengajuan Disetujui": const Color(0xFF10b981),
-    "Pengajuan Diproses": const Color(0xFFFF8800),
-    "Pengajuan Ditolak": const Color(0xFFe11d48),
+    "Total Pengajuan": const Color(0xFF5b99e9),
+    "Pengajuan Disetujui": const Color(0xFF98cc5f),
+    "Pengajuan Diproses": const Color(0xFFfac44b),
+    "Pengajuan Ditolak": const Color(0xFFe44d5c),
   };
 
   final Map<String, IconData> iconMapping = {
@@ -22,10 +23,21 @@ class StatusPengajuanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 1,
+    return Container(
       clipBehavior: Clip.antiAlias,
-      color: colorMapping[label],
+      margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppDouble.borderRadius),
+        color: colorMapping[label],
+        boxShadow: [
+          BoxShadow(
+            color: colorMapping[label]!.withOpacity(0.5),
+            blurRadius: 10,
+            spreadRadius: 1,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       child: Stack(
         children: [
           Align(

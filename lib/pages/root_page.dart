@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/components/custom_safe_area.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/constants/double.dart';
 import 'package:flutter_map_simtaru/pages/berita_page.dart';
 import 'package:flutter_map_simtaru/pages/home_page.dart';
 import 'package:flutter_map_simtaru/pages/overviewpengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/peta_page.dart';
 import 'package:flutter_map_simtaru/pages/profil_page.dart';
 import 'package:flutter_map_simtaru/states/providers/index_screen_provider.dart';
+import 'package:flutter_map_simtaru/styles/styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -44,7 +46,7 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
     return [
       PersistentBottomNavBarItem(
         icon: currIndex.index == 0
-            ? const Icon(Icons.home)
+            ? const Icon(Icons.home_rounded)
             : const Icon(Icons.home_outlined),
         title: ("Beranda"),
         activeColorPrimary: AppColors.primaryColor,
@@ -113,8 +115,11 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
           hideNavigationBar: hideNavbar,
           controller: controllerNavbar,
           decoration: NavBarDecoration(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(AppDouble.borderRadius),
             colorBehindNavBar: AppColors.bgColor,
+            boxShadow: [
+              AppStyles.boxShadowStyle,
+            ],
           ),
           popAllScreensOnTapOfSelectedTab: true,
           popActionScreens: PopActionScreensType.all,

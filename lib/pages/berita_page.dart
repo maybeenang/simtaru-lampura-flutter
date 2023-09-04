@@ -14,10 +14,10 @@ class BeritaPage extends StatelessWidget {
         children: [
           const CustomAppBarFitur(
             title: "Berita",
-            bgColor: AppColors.bgColor,
-            labelColor: AppColors.blackColor,
+            bgColor: AppColors.primaryColor,
+            labelColor: AppColors.whiteColor,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           ListView.separated(
             itemBuilder: (context, index) {
               return const BeritaItemCard();
@@ -26,7 +26,6 @@ class BeritaPage extends StatelessWidget {
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 height: 20,
-                child: const Divider(),
               );
             },
             itemCount: 10,

@@ -3,9 +3,10 @@ import 'package:flutter_map_simtaru/components/button_call_toaction.dart';
 import 'package:flutter_map_simtaru/components/cards/carousel_berita_card.dart';
 import 'package:flutter_map_simtaru/components/cards/carousel_welcome_card.dart';
 import 'package:flutter_map_simtaru/components/cards/status_card.dart';
-import 'package:flutter_map_simtaru/components/custom_appbar.dart';
+import 'package:flutter_map_simtaru/components/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/components/custom_bar_chart.dart';
 import 'package:flutter_map_simtaru/components/custom_line_chart.dart';
+import 'package:flutter_map_simtaru/components/notif_badge.dart';
 import 'package:flutter_map_simtaru/components/subheader.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
 
@@ -25,7 +26,29 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const CustomAppBar(),
+            Container(
+              color: AppColors.primaryColor,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const CustomAppBarFitur(
+                    title: "Dashboard",
+                    bgColor: AppColors.primaryColor,
+                    labelColor: AppColors.whiteColor,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(right: 10),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const NotifBadge(),
+                  )
+                ],
+              ),
+            ),
             Stack(
               children: [
                 Container(
@@ -44,7 +67,7 @@ class _HomePageState extends State<HomePage> {
             const SubHeader(labelText: "Overview"),
             const SizedBox(height: 10),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
               child: Wrap(
                 alignment: WrapAlignment.center,
@@ -58,9 +81,9 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 20),
             const CustomBarChart(),
-            const SizedBox(height: 5),
+            const SizedBox(height: 10),
             const CustomLineChart(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
             const SubHeader(labelText: "Berita"),
             const SizedBox(height: 10),
             const CarouselBerita(),

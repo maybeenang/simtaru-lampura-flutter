@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/components/custom_safe_area.dart';
 import 'package:flutter_map_simtaru/components/item_pengajuan.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/styles/styles.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchPengajuanPage extends StatefulWidget {
@@ -62,26 +63,24 @@ class _SearchPengajuanPageState extends State<SearchPengajuanPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Material(
-                      elevation: 3,
-                      color: Colors.transparent,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.whiteColor,
+                        borderRadius: BorderRadius.circular(50),
+                        boxShadow: [
+                          AppStyles.boxShadowStyle,
+                        ],
+                      ),
                       child: TextField(
                         autofocus: true,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: AppColors.whiteColor,
                           hintText: "Cari berdasarkan nama",
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 10,
-                          ),
+                          contentPadding: const EdgeInsets.all(10),
                           prefixIcon: const Icon(Icons.search),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(50),
                             borderSide: BorderSide.none,
                           ),
                         ),

@@ -8,17 +8,17 @@ class Langkah2Form extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        TextFiledCommon(labelText: "No. Identitas"),
+        TextFieldCommon(labelText: "No. Identitas"),
         SizedBox(height: 10),
-        TextFiledCommon(labelText: "Bertindak atas nama"),
+        TextFieldCommon(labelText: "Bertindak atas nama"),
         SizedBox(height: 10),
-        TextFiledCommon(labelText: "Penggunaan tanah saat dimohon"),
+        TextFieldCommon(labelText: "Penggunaan tanah saat dimohon"),
         SizedBox(height: 10),
-        TextFiledCommon(labelText: "Luas tanah seluruhnya m2"),
+        TextFieldCommon(labelText: "Luas tanah seluruhnya m2"),
         SizedBox(height: 10),
-        TextFiledCommon(labelText: "Luas tanah yang dimohon m2"),
+        TextFieldCommon(labelText: "Luas tanah yang dimohon m2"),
         SizedBox(height: 10),
-        TextFiledCommon(labelText: "Bukti penguasaan tanah"),
+        TextFieldCommon(labelText: "Bukti penguasaan tanah"),
       ],
     );
   }

@@ -2,6 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/bar_graph/line_data.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/constants/double.dart';
+import 'package:flutter_map_simtaru/styles/styles.dart';
 
 class CustomLineChart extends StatelessWidget {
   const CustomLineChart({super.key});
@@ -12,93 +14,105 @@ class CustomLineChart extends StatelessWidget {
     lineData.getData();
 
     return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Material(
-        elevation: 1,
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.borderColor),
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            children: [
-              const SizedBox(
-                width: double.infinity,
-                child: Text(
-                  "Grafik Pengajuan Petahun",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(AppDouble.borderRadius),
+          boxShadow: [
+            AppStyles.boxShadowStyle,
+          ],
+        ),
+        child: Column(
+          children: [
+            const SizedBox(
+              width: double.infinity,
+              child: Text(
+                "Grafik Pengajuan Petahun",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+            ),
+            const SizedBox(height: 20),
+            AspectRatio(
+              aspectRatio: 2,
+              child: LineChart(
+                LineChartData(
+                  maxY: lineData.barData.map((data) => data.y).toList().reduce(
+                      (value, element) => value > element ? value : element),
+                  minY: 0,
+                  borderData: FlBorderData(
+                    show: true,
+                    border: const Border(
+                      left: BorderSide.none,
+                      bottom: BorderSide.none,
+                      right: BorderSide.none,
+                      top: BorderSide.none,
+                    ),
+                  ),
+                  gridData: const FlGridData(
+                    drawVerticalLine: false,
+                  ),
+                  titlesData: FlTitlesData(
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: getBottomTitles,
+                        interval: 1,
+                      ),
+                    ),
+                    rightTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+                    topTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 25,
+                        getTitlesWidget: (value, meta) {
+                          return Text(
+                            value.toInt().toString(),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.black,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  lineBarsData: [
+                    LineChartBarData(
+                      color: AppColors.secondaryColor,
+                      isCurved: true,
+                      barWidth: 3,
+                      belowBarData: BarAreaData(
+                        show: true,
+                        color: AppColors.secondaryColor.withOpacity(0.1),
+                      ),
+                      dotData: FlDotData(
+                        getDotPainter: (p0, p1, p2, p3) {
+                          return FlDotCirclePainter(
+                            color: AppColors.primaryColor,
+                            strokeWidth: 2,
+                            strokeColor: Colors.white,
+                            radius: 5,
+                          );
+                        },
+                      ),
+                      spots: lineData.barData
+                          .map(
+                            (point) => FlSpot(point.x.toDouble(), point.y),
+                          )
+                          .toList(),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 20),
-              AspectRatio(
-                aspectRatio: 2,
-                child: LineChart(
-                  LineChartData(
-                    maxY: lineData.barData
-                        .map((data) => data.y)
-                        .toList()
-                        .reduce((value, element) =>
-                            value > element ? value : element),
-                    minY: 0,
-                    borderData: FlBorderData(
-                      show: true,
-                      border: const Border(
-                        left: BorderSide.none,
-                        bottom: BorderSide.none,
-                        right: BorderSide.none,
-                        top: BorderSide.none,
-                      ),
-                    ),
-                    gridData: const FlGridData(
-                      drawVerticalLine: false,
-                    ),
-                    titlesData: FlTitlesData(
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          getTitlesWidget: getBottomTitles,
-                          interval: 1,
-                        ),
-                      ),
-                      rightTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      topTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 25,
-                          getTitlesWidget: (value, meta) {
-                            return Text(
-                              value.toInt().toString(),
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    lineBarsData: [
-                      LineChartBarData(
-                        spots: lineData.barData
-                            .map(
-                              (point) => FlSpot(point.x.toDouble(), point.y),
-                            )
-                            .toList(),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
