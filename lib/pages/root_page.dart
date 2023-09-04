@@ -46,7 +46,7 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
     return [
       PersistentBottomNavBarItem(
         icon: currIndex.index == 0
-            ? const Icon(Icons.home)
+            ? const Icon(Icons.home_rounded)
             : const Icon(Icons.home_outlined),
         title: ("Beranda"),
         activeColorPrimary: AppColors.primaryColor,

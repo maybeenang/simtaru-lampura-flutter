@@ -38,8 +38,8 @@ class _HomePageState extends State<HomePage> {
                     labelColor: AppColors.whiteColor,
                   ),
                   Container(
-                    margin: const EdgeInsets.only(left: 10),
-                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.only(right: 10),
+                    clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
                       color: AppColors.primaryColor,
                       borderRadius: BorderRadius.circular(10),

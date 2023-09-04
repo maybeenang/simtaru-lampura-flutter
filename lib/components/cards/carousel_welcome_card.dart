@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/components/cards/welcome_card.dart';
+import 'package:flutter_map_simtaru/constants/image.dart';
 
 class CaroueselWelcomeCard extends StatefulWidget {
   const CaroueselWelcomeCard({super.key});
@@ -16,13 +17,9 @@ class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
   late int _currentCarousel;
 
   final List<Widget> _welcomeCards = const [
-    WelcomeCard(),
-    WelcomeCard(),
-    WelcomeCard(),
-    WelcomeCard(),
-    WelcomeCard(),
-    WelcomeCard(),
-    WelcomeCard(),
+    WelcomeCard(image: Images.welcome3),
+    WelcomeCard(image: Images.welcome1),
+    WelcomeCard(image: Images.welcome2),
   ];
 
   @override
@@ -52,8 +49,16 @@ class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
           ),
         ),
         DotsIndicator(
-            dotsCount: _welcomeCards.length,
-            position: _currentCarousel.toDouble()),
+          dotsCount: _welcomeCards.length,
+          position: _currentCarousel.toDouble(),
+          decorator: DotsDecorator(
+            activeColor: Colors.blue,
+            activeSize: const Size.square(8.0),
+            activeShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+          ),
+        ),
       ],
     );
   }

@@ -136,8 +136,8 @@ class ProfilPage extends ConsumerWidget {
                         child: const Column(
                           children: [
                             ButtonProfile(
-                              label: "Kelola User",
-                              icon: Icons.group,
+                              label: "Seluruh Pengajuan",
+                              icon: Icons.assignment_rounded,
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -146,8 +146,108 @@ class ProfilPage extends ConsumerWidget {
                               ),
                             ),
                             ButtonProfile(
-                              label: "Kelola Pengajuan",
-                              icon: Icons.list_alt,
+                              label: "Pengajuan Ditolak",
+                              icon: Icons.assignment_late_outlined,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Divider(
+                                color: AppColors.borderColor,
+                              ),
+                            ),
+                            ButtonProfile(
+                              label: "Surat Rekomendasi",
+                              icon: Icons.assignment_add,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Divider(
+                                color: AppColors.borderColor,
+                              ),
+                            ),
+                            ButtonProfile(
+                              label: "Upload Scan Surat",
+                              icon: Icons.assignment_turned_in_outlined,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Divider(
+                                color: AppColors.borderColor,
+                              ),
+                            ),
+                            ButtonProfile(
+                              label: "Penerbitan Surat",
+                              icon: Icons.assignment_returned_outlined,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Divider(
+                                color: AppColors.borderColor,
+                              ),
+                            ),
+                            ButtonProfile(
+                              label: "Penomoran Surat",
+                              icon: Icons.assignment_outlined,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Divider(
+                                color: AppColors.borderColor,
+                              ),
+                            ),
+                            ButtonProfile(
+                              label: "Persetujuan TKPRD",
+                              icon: Icons.assignment_ind_outlined,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Divider(
+                                color: AppColors.borderColor,
+                              ),
+                            ),
+                            ButtonProfile(
+                              label: "Persetujuan PUPR",
+                              icon: Icons.assignment_ind_outlined,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Divider(
+                                color: AppColors.borderColor,
+                              ),
+                            ),
+                            ButtonProfile(
+                              label: "Verifikasi Lapangan",
+                              icon: Icons.add_location_alt_outlined,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Divider(
+                                color: AppColors.borderColor,
+                              ),
+                            ),
+                            ButtonProfile(
+                              label: "Verifikasi Berkas",
+                              icon: Icons.file_open_outlined,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Divider(
+                                color: AppColors.borderColor,
+                              ),
+                            ),
+                            ButtonProfile(
+                              label: "Revisi Berkas",
+                              icon: Icons.file_copy_outlined,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Divider(
+                                color: AppColors.borderColor,
+                              ),
+                            ),
+                            ButtonProfile(
+                              label: "Kelola User",
+                              icon: Icons.group,
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -168,7 +268,7 @@ class ProfilPage extends ConsumerWidget {
               ],
             ),
             const SizedBox(
-              height: 200,
+              height: 50,
             ),
           ],
         ),

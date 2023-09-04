@@ -5,6 +5,7 @@ import 'package:flutter_map_simtaru/pages/detail_berita_page.dart';
 import 'package:flutter_map_simtaru/pages/detail_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/edit_profile_page.dart';
 import 'package:flutter_map_simtaru/pages/login_page.dart';
+import 'package:flutter_map_simtaru/pages/notif_page.dart';
 import 'package:flutter_map_simtaru/pages/onboarding_page.dart';
 import 'package:flutter_map_simtaru/pages/pengajuan_page.dart';
 import 'package:flutter_map_simtaru/pages/register_page.dart';
@@ -116,6 +117,29 @@ final GoRouter _route = GoRouter(
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 const begin = Offset(1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
+
+                var tween = Tween(begin: begin, end: end).chain(
+                  CurveTween(curve: curve),
+                );
+
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+            );
+          },
+        ),
+        GoRoute(
+          path: 'notif',
+          pageBuilder: (context, state) {
+            return CustomTransitionPage(
+              child: const NotifPage(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(0.0, 1.0);
                 const end = Offset.zero;
                 const curve = Curves.ease;
 
