@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/constants/colors.dart';
+import 'package:flutter_map_simtaru/constants/double.dart';
 
 class BeritaCard extends StatelessWidget {
   const BeritaCard({super.key});
@@ -9,11 +10,17 @@ class BeritaCard extends StatelessWidget {
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.borderColor),
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(AppDouble.borderRadius),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.borderColor.withOpacity(0.5),
+            blurRadius: 5,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
