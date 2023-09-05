@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/constants/colors.dart';
-import 'package:flutter_map_simtaru/constants/image.dart';
-import 'package:flutter_map_simtaru/pages/detail_berita_page.dart';
-import 'package:flutter_map_simtaru/pages/detail_pengajuan_page.dart';
-import 'package:flutter_map_simtaru/pages/edit_profile_page.dart';
-import 'package:flutter_map_simtaru/pages/login_page.dart';
-import 'package:flutter_map_simtaru/pages/notif_page.dart';
-import 'package:flutter_map_simtaru/pages/onboarding_page.dart';
-import 'package:flutter_map_simtaru/pages/pengajuan_page.dart';
-import 'package:flutter_map_simtaru/pages/register_page.dart';
-import 'package:flutter_map_simtaru/pages/root_page.dart';
-import 'package:flutter_map_simtaru/pages/search_pengajuan_page.dart';
-import 'package:flutter_map_simtaru/styles/styles.dart';
+import 'package:flutter_map_simtaru/data/constants/colors.dart';
+import 'package:flutter_map_simtaru/data/constants/image.dart';
+import 'package:flutter_map_simtaru/presentation/pages/login_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/onboarding_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/register_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/berita/detail_berita_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/berita/detail_pengajuan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/home/notif_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/pengajuan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/search_pengajuan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_profile_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
+import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -205,7 +205,7 @@ final GoRouter _route = GoRouter(
     ),
     GoRoute(
       path: '/on_boarding',
-      builder: (context, state) => OnBoardingPage(),
+      builder: (context, state) => const OnBoardingPage(),
     )
   ],
   initialLocation: '/on_boarding',
