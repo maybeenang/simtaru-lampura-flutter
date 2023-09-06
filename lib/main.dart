@@ -12,6 +12,7 @@ import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/search_pen
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_profile_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/animations/custom_transition_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,130 +29,48 @@ final GoRouter _route = GoRouter(
         GoRoute(
           path: 'pengajuan',
           pageBuilder: (context, state) {
-            return CustomTransitionPage(
-              child: const PengajuanPage(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                const begin = Offset(0.0, 1.0);
-                const end = Offset.zero;
-                const curve = Curves.ease;
-
-                var tween = Tween(begin: begin, end: end).chain(
-                  CurveTween(curve: curve),
-                );
-
-                return SlideTransition(
-                  position: animation.drive(tween),
-                  child: child,
-                );
-              },
+            return AppPageTransition.customTransitionPageSlidex(
+              const PengajuanPage(),
             );
           },
         ),
         GoRoute(
           path: 'search_pengajuan',
           pageBuilder: (context, state) {
-            return CustomTransitionPage(
-              child: const SearchPengajuanPage(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                return FadeTransition(
-                  opacity: animation,
-                  child: child,
-                );
-              },
+            return AppPageTransition.customTransitionPageFade(
+              const SearchPengajuanPage(),
             );
           },
         ),
         GoRoute(
           path: 'detail_pengajuan',
           pageBuilder: (context, state) {
-            return CustomTransitionPage(
-              child: const DetailPengajuanPage(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                const begin = Offset(0.0, 1.0);
-                const end = Offset.zero;
-                const curve = Curves.ease;
-
-                var tween = Tween(begin: begin, end: end).chain(
-                  CurveTween(curve: curve),
-                );
-
-                return SlideTransition(
-                  position: animation.drive(tween),
-                  child: child,
-                );
-              },
+            return AppPageTransition.customTransitionPageSlidex(
+              const DetailPengajuanPage(),
             );
           },
         ),
         GoRoute(
           path: 'detail_berita',
           pageBuilder: (context, state) {
-            return CustomTransitionPage(
-              child: const DetailBeritaPage(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                const begin = Offset(1.0, 0.0);
-                const end = Offset.zero;
-                const curve = Curves.ease;
-
-                var tween = Tween(begin: begin, end: end).chain(
-                  CurveTween(curve: curve),
-                );
-
-                return SlideTransition(
-                  position: animation.drive(tween),
-                  child: child,
-                );
-              },
+            return AppPageTransition.customTransitionPageSlidex(
+              const DetailBeritaPage(),
             );
           },
         ),
         GoRoute(
           path: 'edit_profile',
           pageBuilder: (context, state) {
-            return CustomTransitionPage(
-              child: const EditProfilePage(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                const begin = Offset(1.0, 0.0);
-                const end = Offset.zero;
-                const curve = Curves.ease;
-
-                var tween = Tween(begin: begin, end: end).chain(
-                  CurveTween(curve: curve),
-                );
-
-                return SlideTransition(
-                  position: animation.drive(tween),
-                  child: child,
-                );
-              },
+            return AppPageTransition.customTransitionPageSlidex(
+              const EditProfilePage(),
             );
           },
         ),
         GoRoute(
           path: 'notif',
           pageBuilder: (context, state) {
-            return CustomTransitionPage(
-              child: const NotifPage(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                const begin = Offset(0.0, 1.0);
-                const end = Offset.zero;
-                const curve = Curves.ease;
-
-                var tween = Tween(begin: begin, end: end).chain(
-                  CurveTween(curve: curve),
-                );
-
-                return SlideTransition(
-                  position: animation.drive(tween),
-                  child: child,
-                );
-              },
+            return AppPageTransition.customTransitionPageSlidex(
+              const NotifPage(),
             );
           },
         ),
@@ -160,46 +79,16 @@ final GoRouter _route = GoRouter(
     GoRoute(
       path: '/login',
       pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          child: const LoginPage(),
-          fullscreenDialog: true,
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0.0);
-            const end = Offset.zero;
-            const curve = Curves.ease;
-
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
-
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            );
-          },
+        return AppPageTransition.customTransitionPageSlidex(
+          const LoginPage(),
         );
       },
     ),
     GoRoute(
       path: '/register',
       pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          child: const RegisterPage(),
-          fullscreenDialog: true,
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0.0);
-            const end = Offset.zero;
-            const curve = Curves.ease;
-
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
-
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            );
-          },
+        return AppPageTransition.customTransitionPageSlidex(
+          const RegisterPage(),
         );
       },
     ),

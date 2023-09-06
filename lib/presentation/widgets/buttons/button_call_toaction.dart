@@ -13,7 +13,7 @@ class ButtonCallToAction extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.actionColor,
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(AppDouble.borderRadius),
           boxShadow: [
             BoxShadow(
               color: AppColors.actionColor.withOpacity(0.5),
