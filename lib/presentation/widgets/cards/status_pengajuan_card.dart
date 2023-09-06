@@ -70,7 +70,7 @@ class StatusPengajuanCard extends StatelessWidget {
                       label,
                       style: const TextStyle(
                         color: AppColors.whiteColor,
-                        fontSize: 24,
+                        fontSize: 16,
                       ),
                     ),
                   ],
