@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, avoid_print, unnecessary_brace_in_string_interps
+// ignore_for_file: unused_import, avoid_print, unnecessary_brace_in_string_interps, curly_braces_in_flow_control_structures
 
 library geojson_vt_dart;
 

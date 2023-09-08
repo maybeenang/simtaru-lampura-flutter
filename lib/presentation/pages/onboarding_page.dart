@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/data/constants/image.dart';
-import 'package:flutter_map_simtaru/domain/models/onboard.dart';
+import 'package:flutter_map_simtaru/domain/entity/onboard.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:go_router/go_router.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
@@ -19,7 +19,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(BuildContext context) {
-    context.go('/login');
+    const LoginRoute().go(context);
   }
 
   final List<OnBoard> _dataOnboarding = [

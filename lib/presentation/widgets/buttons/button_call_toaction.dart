@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 
 class ButtonCallToAction extends StatelessWidget {
   const ButtonCallToAction({super.key});
@@ -13,7 +13,7 @@ class ButtonCallToAction extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.actionColor,
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(AppDouble.borderRadius),
           boxShadow: [
             BoxShadow(
               color: AppColors.actionColor.withOpacity(0.5),
@@ -31,7 +31,7 @@ class ButtonCallToAction extends StatelessWidget {
               Future.delayed(
                 const Duration(milliseconds: 300),
                 () {
-                  context.push('/pengajuan');
+                  const PengajuanRoute().go(context);
                 },
               );
             },

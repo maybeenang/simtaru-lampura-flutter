@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/other/status_chip.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
-import 'package:go_router/go_router.dart';
 
 class ItemPengajuan extends StatelessWidget {
   const ItemPengajuan({super.key});
@@ -26,7 +26,7 @@ class ItemPengajuan extends StatelessWidget {
             Future.delayed(
               const Duration(milliseconds: 300),
               () {
-                context.push('/detail_pengajuan');
+                const DetailPengajuanRoute().go(context);
               },
             );
           },

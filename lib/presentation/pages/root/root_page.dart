@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/peta/peta_page.dart';
-import 'package:flutter_map_simtaru/application/providers/index_screen_provider.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/index_screen_provider.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/berita/berita_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/home/home_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/overviewpengajuan_page.dart';

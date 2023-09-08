@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah1_form.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah2_form.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah3_form.dart';
@@ -110,7 +111,7 @@ class _PengajuanPageState extends State<PengajuanPage> {
                           style: ButtonStyle(
                             elevation: MaterialStateProperty.all<double>(0),
                           ),
-                          onPressed: () => context.go('/'),
+                          onPressed: () => const RootRoute().go(context),
                           child: const Text('Selesai'),
                         ),
                       ),

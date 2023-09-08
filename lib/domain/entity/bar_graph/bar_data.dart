@@ -1,4 +1,4 @@
-import 'package:flutter_map_simtaru/domain/models/bar_graph/individual_graph.dart';
+import 'package:flutter_map_simtaru/domain/entity/bar_graph/individual_graph.dart';
 
 class BarData {
   final double jan;
