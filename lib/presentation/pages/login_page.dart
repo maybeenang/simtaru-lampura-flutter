@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
     DateTime now = DateTime.now();
 
     if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
+        now.difference(currentBackPressTime!!) > const Duration(seconds: 2)) {
       currentBackPressTime = now;
       print("Tekan sekali lagi untuk keluar");
       ScaffoldMessenger.of(context).showSnackBar(
