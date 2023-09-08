@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/auth_controller.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_profile.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/profile_card.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
-import 'package:flutter_map_simtaru/application/providers/index_screen_provider.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/index_screen_provider.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class ProfilPage extends ConsumerWidget {
   const ProfilPage({super.key});
@@ -71,7 +72,7 @@ class ProfilPage extends ConsumerWidget {
                                 Future.delayed(
                                   const Duration(milliseconds: 300),
                                   () {
-                                    context.push('/edit_profile');
+                                    const EditProfileRoute().go(context);
                                   },
                                 );
                               },
@@ -99,8 +100,10 @@ class ProfilPage extends ConsumerWidget {
                               onTap: () {
                                 Future.delayed(
                                   const Duration(milliseconds: 500),
-                                  () {
-                                    context.go('/login');
+                                  () async {
+                                    await ref
+                                        .read(authControllerProvider.notifier)
+                                        .logout();
                                     ref
                                         .read(indexScreenProvider.notifier)
                                         .onIndexChange(0);

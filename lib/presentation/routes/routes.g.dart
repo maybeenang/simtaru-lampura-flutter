@@ -7,11 +7,34 @@ part of 'routes.dart';
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
+      $splashRoute,
       $rootRoute,
       $loginRoute,
-      $registerRotue,
+      $registerRoute,
       $onBoardingRoute,
     ];
+
+RouteBase get $splashRoute => GoRouteData.$route(
+      path: '/splash',
+      factory: $SplashRouteExtension._fromState,
+    );
+
+extension $SplashRouteExtension on SplashRoute {
+  static SplashRoute _fromState(GoRouterState state) => const SplashRoute();
+
+  String get location => GoRouteData.$location(
+        '/splash',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
 
 RouteBase get $rootRoute => GoRouteData.$route(
       path: '/',
@@ -190,13 +213,13 @@ extension $LoginRouteExtension on LoginRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $registerRotue => GoRouteData.$route(
+RouteBase get $registerRoute => GoRouteData.$route(
       path: '/register',
-      factory: $RegisterRotueExtension._fromState,
+      factory: $RegisterRouteExtension._fromState,
     );
 
-extension $RegisterRotueExtension on RegisterRotue {
-  static RegisterRotue _fromState(GoRouterState state) => const RegisterRotue();
+extension $RegisterRouteExtension on RegisterRoute {
+  static RegisterRoute _fromState(GoRouterState state) => const RegisterRoute();
 
   String get location => GoRouteData.$location(
         '/register',

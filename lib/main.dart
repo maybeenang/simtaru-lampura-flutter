@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/application/utils/state_logger.dart';
+import 'package:flutter_map_simtaru/presentation/routes/router_listenable.dart';
+import 'package:flutter_map_simtaru/utils/state_logger.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/image.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
@@ -18,13 +19,18 @@ void main() {
   );
 }
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final routes =
-        GoRouter(routes: $appRoutes, initialLocation: OnBoardingRoute.path);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final refreshNotifier = ref.watch(routerListenableProvider.notifier);
+    final routes = GoRouter(
+      routes: $appRoutes,
+      initialLocation: SplashRoute.path,
+      refreshListenable: refreshNotifier,
+      redirect: refreshNotifier.redirect,
+    );
     precacheImage(const AssetImage(Images.bgPeta), context);
     precacheImage(const AssetImage(Images.logo), context);
     return MaterialApp.router(

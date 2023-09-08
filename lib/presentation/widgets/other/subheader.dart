@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
-import 'package:flutter_map_simtaru/application/providers/index_screen_provider.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/index_screen_provider.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

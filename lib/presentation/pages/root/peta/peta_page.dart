@@ -4,12 +4,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
-import 'package:flutter_map_simtaru/application/utils/geojson/geojson/classes.dart';
-import 'package:flutter_map_simtaru/application/utils/geojson/geojson/geojson.dart';
-import 'package:flutter_map_simtaru/application/utils/geojson/geojson/geojson_options.dart';
-import 'package:flutter_map_simtaru/application/utils/geojson/geojson/geojson_widget.dart';
-import 'package:flutter_map_simtaru/application/utils/geojson/geojson/index.dart';
-import 'package:flutter_map_simtaru/application/providers/index_screen_provider.dart';
+import 'package:flutter_map_simtaru/utils/geojson/geojson/classes.dart';
+import 'package:flutter_map_simtaru/utils/geojson/geojson/geojson.dart';
+import 'package:flutter_map_simtaru/utils/geojson/geojson/geojson_options.dart';
+import 'package:flutter_map_simtaru/utils/geojson/geojson/geojson_widget.dart';
+import 'package:flutter_map_simtaru/utils/geojson/geojson/index.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/index_screen_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/foundation.dart';

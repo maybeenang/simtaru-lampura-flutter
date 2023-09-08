@@ -3,19 +3,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/image.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/auth_controller.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_common.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_password.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final loginFormKey = GlobalKey<FormState>();
 
   // ignore: prefer_typing_uninitialized_variables
@@ -41,6 +43,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final rediractState = ref.watch(authControllerProvider);
+
     return WillPopScope(
       onWillPop: () {
         return _onWillPop(context);
@@ -102,14 +106,24 @@ class _LoginPageState extends State<LoginPage> {
                                 )),
                           ),
                           const SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (loginFormKey.currentState!.validate()) {
-                                context.go('/');
-                              }
-                            },
-                            child: const Text("Masuk",
-                                style: AppStyles.textButton),
+                          rediractState.when(
+                            data: (value) => ElevatedButton(
+                              onPressed: () {
+                                if (loginFormKey.currentState!.validate()) {
+                                  ref
+                                      .read(authControllerProvider.notifier)
+                                      .login("123", "123");
+                                }
+                              },
+                              child: const Text(
+                                "Masuk",
+                                style: AppStyles.textButton,
+                              ),
+                            ),
+                            error: (error, stack) => Container(),
+                            loading: () => const CircularProgressIndicator(
+                              color: AppColors.primaryColor,
+                            ),
                           ),
                           const SizedBox(height: 20),
                           Row(
@@ -123,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  context.push('/register');
+                                  const RegisterRoute().push(context);
                                 },
                                 style: AppStyles.textButtonStyle,
                                 child: const Text(

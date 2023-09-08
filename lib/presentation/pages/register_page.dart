@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/image.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_common.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_password.dart';
@@ -62,7 +63,7 @@ class RegisterPage extends StatelessWidget {
                           const SizedBox(height: 30),
                           ElevatedButton(
                             onPressed: () {
-                              context.go('/login');
+                              const LoginRoute().go(context);
                             },
                             child: const Text("Daftar",
                                 style: AppStyles.textButton),
@@ -79,7 +80,7 @@ class RegisterPage extends StatelessWidget {
                               ),
                               TextButton(
                                   onPressed: () {
-                                    context.go('/login');
+                                    const LoginRoute().go(context);
                                   },
                                   style: AppStyles.textButtonStyle,
                                   child: const Text(

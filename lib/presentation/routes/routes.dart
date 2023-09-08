@@ -3,15 +3,27 @@ import 'package:flutter_map_simtaru/presentation/pages/login_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/onboarding_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/register_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/berita/detail_berita_page.dart';
-import 'package:flutter_map_simtaru/presentation/pages/root/berita/detail_pengajuan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/detail_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/home/notif_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/search_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_profile_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/splash_page.dart';
 import 'package:go_router/go_router.dart';
 
 part 'routes.g.dart';
+
+@TypedGoRoute<SplashRoute>(path: SplashRoute.path)
+class SplashRoute extends GoRouteData {
+  const SplashRoute();
+  static const path = '/splash';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const SplashPage();
+  }
+}
 
 @TypedGoRoute<RootRoute>(
   path: RootRoute.path,
@@ -105,9 +117,9 @@ class LoginRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<RegisterRotue>(path: RegisterRotue.path)
-class RegisterRotue extends GoRouteData {
-  const RegisterRotue();
+@TypedGoRoute<RegisterRoute>(path: RegisterRoute.path)
+class RegisterRoute extends GoRouteData {
+  const RegisterRoute();
   static const path = '/register';
 
   @override

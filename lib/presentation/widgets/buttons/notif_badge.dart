@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:go_router/go_router.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 
 class NotifBadge extends StatelessWidget {
   const NotifBadge({super.key});
@@ -14,7 +14,7 @@ class NotifBadge extends StatelessWidget {
           Future.delayed(
             const Duration(milliseconds: 300),
             () {
-              context.push('/notif');
+              const NotifRoute().go(context);
             },
           );
         },

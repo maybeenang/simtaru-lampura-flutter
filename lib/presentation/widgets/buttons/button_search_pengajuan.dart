@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
-import 'package:go_router/go_router.dart';
 
 class ButtonSearchPengajuan extends StatelessWidget {
   const ButtonSearchPengajuan({super.key});
@@ -23,7 +23,7 @@ class ButtonSearchPengajuan extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              context.push('/search_pengajuan');
+              const SearchPengajaunRoute().go(context);
             },
             child: Ink(
               padding: const EdgeInsets.all(5),

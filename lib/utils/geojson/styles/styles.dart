@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print, prefer_interpolation_to_compose_strings, curly_braces_in_flow_control_structures
 
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/application/utils/geojson/geojson/geojson_options.dart';
+import 'package:flutter_map_simtaru/utils/geojson/geojson/geojson_options.dart';
 import 'dart:ui' as dartui;
 import '../geojson/classes.dart';
 
