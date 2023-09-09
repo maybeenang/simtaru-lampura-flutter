@@ -1,49 +1,48 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/image.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/auth_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_common.dart';
-import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_password.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class LoginPage extends ConsumerStatefulWidget {
-  const LoginPage({super.key});
-
+class LoginPage extends HookConsumerWidget {
+  const LoginPage({Key? key}) : super(key: key);
   @override
-  ConsumerState<LoginPage> createState() => _LoginPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authControllerProvider);
+    final loginFormKey = GlobalKey<FormState>();
 
-class _LoginPageState extends ConsumerState<LoginPage> {
-  final loginFormKey = GlobalKey<FormState>();
+    final nikController = useTextEditingController();
+    final passwordController = useTextEditingController();
+    final passwordFocusNode = useFocusNode();
+    final nikFocusNode = useFocusNode();
 
-  // ignore: prefer_typing_uninitialized_variables
-  var currentBackPressTime;
+    // ignore: prefer_typing_uninitialized_variables
+    var currentBackPressTime;
 
-  Future<bool> _onWillPop(BuildContext context) async {
-    DateTime now = DateTime.now();
+    // ignore: no_leading_underscores_for_local_identifiers
+    Future<bool> _onWillPop(BuildContext context) async {
+      DateTime now = DateTime.now();
 
-    if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime!!) > const Duration(seconds: 2)) {
-      currentBackPressTime = now;
-      print("Tekan sekali lagi untuk keluar");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Tekan sekali lagi untuk keluar"),
-        ),
-      );
-      return Future.value(false);
+      if (currentBackPressTime == null ||
+          now.difference(currentBackPressTime!!) > const Duration(seconds: 2)) {
+        currentBackPressTime = now;
+        print("Tekan sekali lagi untuk keluar");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Tekan sekali lagi untuk keluar"),
+          ),
+        );
+        return Future.value(false);
+      }
+
+      return Future.value(true);
     }
-
-    return Future.value(true);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final rediractState = ref.watch(authControllerProvider);
 
     return WillPopScope(
       onWillPop: () {
@@ -51,113 +50,158 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Stack(
-          children: [
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Image(
-                image: const AssetImage(Images.bgPeta),
-                height: 200,
-                fit: BoxFit.cover,
-                color: AppColors.primaryColor.withOpacity(0.5),
-              ),
-            ),
-            Center(
-              child: Form(
-                key: loginFormKey,
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Flexible(
-                        child: SizedBox(
-                      height: 100,
-                    )),
-                    Image.asset(Images.logo),
-                    const SizedBox(height: 50),
-                    const Text(
-                      "Masuk",
-                      style: AppStyles.title,
-                    ),
-                    const Text(
-                      "Masukan NIP dan Password untuk melanjutkan",
-                      style: AppStyles.subtitle,
-                    ),
-                    const SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        children: [
-                          const TextFieldCommon(labelText: "NIK"),
-                          const SizedBox(height: 10),
-                          const TextFieldPassword(),
-                          const SizedBox(height: 10),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                                onPressed: () {},
-                                style: AppStyles.textButtonStyle,
-                                child: const Text(
-                                  "Lupa Password?",
-                                  style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    fontSize: 16,
-                                  ),
-                                  textAlign: TextAlign.right,
-                                )),
-                          ),
-                          const SizedBox(height: 20),
-                          rediractState.when(
-                            data: (value) => ElevatedButton(
-                              onPressed: () {
-                                if (loginFormKey.currentState!.validate()) {
-                                  ref
-                                      .read(authControllerProvider.notifier)
-                                      .login("123", "123");
-                                }
-                              },
-                              child: const Text(
-                                "Masuk",
-                                style: AppStyles.textButton,
-                              ),
-                            ),
-                            error: (error, stack) => Container(),
-                            loading: () => const CircularProgressIndicator(
-                              color: AppColors.primaryColor,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Belum punya akun? ",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  const RegisterRoute().push(context);
-                                },
-                                style: AppStyles.textButtonStyle,
-                                child: const Text(
-                                  "Daftar",
-                                  style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Image(
+                  image: const AssetImage(Images.bgPeta),
+                  height: 200,
+                  fit: BoxFit.cover,
+                  color: AppColors.primaryColor.withOpacity(0.5),
                 ),
               ),
-            )
-          ],
+              Center(
+                heightFactor: 1.5,
+                child: Form(
+                  onChanged: () {
+                    loginFormKey.currentState!.validate();
+                  },
+                  key: loginFormKey,
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(Images.logo),
+                      const SizedBox(height: 50),
+                      const Text(
+                        "Masuk",
+                        style: AppStyles.title,
+                      ),
+                      const Text(
+                        "Masukan NIP dan Password untuk melanjutkan",
+                        style: AppStyles.subtitle,
+                      ),
+                      const SizedBox(height: 10),
+                      authState.maybeWhen(
+                        error: (error, stackTrace) {
+                          return SizedBox(
+                            height: 25,
+                            child: Text(
+                              "NIK atau Password salah",
+                              style: AppStyles.subtitle.copyWith(
+                                color: AppColors.redColor,
+                              ),
+                            ),
+                          );
+                        },
+                        orElse: () => const SizedBox(
+                          height: 25,
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            TextFieldCommon(
+                              labelText: "NIK",
+                              controller: nikController,
+                              keyboardType: TextInputType.number,
+                              focusNode: nikFocusNode,
+                              isNik: true,
+                            ),
+                            const SizedBox(height: 10),
+                            TextFieldCommon(
+                              labelText: "Password",
+                              controller: passwordController,
+                              isPassword: true,
+                              focusNode: passwordFocusNode,
+                              isLast: true,
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                  onPressed: () {},
+                                  style: AppStyles.textButtonStyle,
+                                  child: const Text(
+                                    "Lupa Password?",
+                                    style: TextStyle(
+                                      color: AppColors.primaryColor,
+                                      fontSize: 16,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                  )),
+                            ),
+                            const SizedBox(height: 20),
+                            ElevatedButton(
+                              onPressed: () async {
+                                if (passwordFocusNode.hasFocus ||
+                                    nikFocusNode.hasFocus) {
+                                  passwordFocusNode.unfocus();
+                                  nikFocusNode.unfocus();
+                                }
+
+                                if (loginFormKey.currentState!.validate() &&
+                                    authState.maybeWhen(
+                                      orElse: () => true,
+                                      loading: () => false,
+                                    )) {
+                                  final nik = nikController.text.toString();
+                                  final password =
+                                      passwordController.text.toString();
+                                  await ref
+                                      .read(authControllerProvider.notifier)
+                                      .login(nik, password);
+                                }
+                              },
+                              child: authState.maybeWhen(
+                                loading: () => const SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.whiteColor,
+                                  ),
+                                ),
+                                orElse: () => const Text("Masuk",
+                                    style: AppStyles.textButton),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Belum punya akun? ",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    const RegisterRoute().push(context);
+                                  },
+                                  style: AppStyles.textButtonStyle,
+                                  child: const Text(
+                                    "Daftar",
+                                    style: TextStyle(
+                                      color: AppColors.primaryColor,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

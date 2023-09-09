@@ -33,8 +33,9 @@ dependencies:
   shared_preferences:
   freezed_annotation:
   json_annotation:
-
   cupertino_icons: ^1.0.2
+  flutter_native_splash:
+  dio: ^5.3.2
 
 dev_dependencies:
   flutter_test:
@@ -75,3 +76,12 @@ flutter:
           weight: 800
         - asset: assets/fonts/Poppins-SemiBold.ttf
           weight: 600
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/splash_screen.png
+  android: true
+  ios: true
+  android_12:
+    image: assets/images/splash_screen.png
+    foreground_color: "#ffffff"

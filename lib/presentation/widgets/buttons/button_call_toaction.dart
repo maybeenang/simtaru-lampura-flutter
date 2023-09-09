@@ -11,6 +11,7 @@ class ButtonCallToAction extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
       child: Container(
+        clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: AppColors.actionColor,
           borderRadius: BorderRadius.circular(AppDouble.borderRadius),
@@ -23,7 +24,6 @@ class ButtonCallToAction extends StatelessWidget {
           ],
         ),
         child: Material(
-          borderRadius: BorderRadius.circular(50),
           clipBehavior: Clip.antiAlias,
           color: Colors.transparent,
           child: InkWell(

@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/image.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_common.dart';
-import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_password.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class RegisterPage extends StatelessWidget {
+final registerFormKey = GlobalKey<FormState>();
+
+class RegisterPage extends HookConsumerWidget {
   const RegisterPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final nikController = useTextEditingController();
+    final namaController = useTextEditingController();
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
+    final konfirmasiPasswordController = useTextEditingController();
+
     return WillPopScope(
       onWillPop: () {
         context.pop();
@@ -43,56 +52,93 @@ class RegisterPage extends StatelessWidget {
                     const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        children: [
-                          const TextFieldCommon(
-                            labelText: "NIK",
-                          ),
-                          const SizedBox(height: 10),
-                          const TextFieldCommon(
-                            labelText: "Nama Lengkap",
-                          ),
-                          const SizedBox(height: 10),
-                          const TextFieldCommon(
-                            labelText: "Email",
-                          ),
-                          const SizedBox(height: 10),
-                          const TextFieldPassword(),
-                          const SizedBox(height: 10),
-                          const TextFieldPassword(),
-                          const SizedBox(height: 30),
-                          ElevatedButton(
-                            onPressed: () {
-                              const LoginRoute().go(context);
-                            },
-                            child: const Text("Daftar",
-                                style: AppStyles.textButton),
-                          ),
-                          const SizedBox(height: 20),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Sudah punya akun? ",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
+                      child: Form(
+                        key: registerFormKey,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        child: Column(
+                          children: [
+                            TextFieldCommon(
+                              labelText: "NIK",
+                              controller: nikController,
+                              isNik: true,
+                              keyboardType: TextInputType.number,
+                            ),
+                            const SizedBox(height: 10),
+                            TextFieldCommon(
+                              labelText: "Nama Lengkap",
+                              controller: namaController,
+                            ),
+                            const SizedBox(height: 10),
+                            TextFieldCommon(
+                              labelText: "Email",
+                              controller: emailController,
+                              isEmail: true,
+                            ),
+                            const SizedBox(height: 10),
+                            TextFieldCommon(
+                              labelText: "Password",
+                              isPassword: true,
+                              controller: passwordController,
+                            ),
+                            const SizedBox(height: 10),
+                            TextFieldCommon(
+                              labelText: "Konfirmasi Password",
+                              isPassword: true,
+                              controller: konfirmasiPasswordController,
+                              isLast: true,
+                            ),
+                            const SizedBox(height: 30),
+                            ElevatedButton(
+                              onPressed: () {
+                                if (registerFormKey.currentState!.validate()) {
+                                  if (passwordController.text ==
+                                      konfirmasiPasswordController.text) {
+                                    print("NIK: ${nikController.text}");
+                                  } else {
+                                    ScaffoldMessenger.of(context)
+                                        .removeCurrentSnackBar();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          "Password tidak sama",
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }
+                              },
+                              child: const Text(
+                                "Daftar",
+                                style: AppStyles.textButton,
                               ),
-                              TextButton(
+                            ),
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Sudah punya akun? ",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                TextButton(
                                   onPressed: () {
-                                    const LoginRoute().go(context);
+                                    context.pop();
                                   },
                                   style: AppStyles.textButtonStyle,
                                   child: const Text(
                                     "Masuk",
                                     style: TextStyle(
-                                      color: Colors.blue,
+                                      color: AppColors.primaryColor,
                                       fontSize: 16,
                                     ),
-                                  )),
-                            ],
-                          )
-                        ],
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ],
