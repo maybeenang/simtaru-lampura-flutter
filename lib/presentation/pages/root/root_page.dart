@@ -9,7 +9,7 @@ import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/overviewpe
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/profil_page.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 // final PersistentTabController _controllerNavbar = PersistentTabController();

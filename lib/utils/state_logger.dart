@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class StateLogger extends ProviderObserver {
   const StateLogger();
