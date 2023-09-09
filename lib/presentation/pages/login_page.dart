@@ -8,7 +8,7 @@ import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_common.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_password.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});

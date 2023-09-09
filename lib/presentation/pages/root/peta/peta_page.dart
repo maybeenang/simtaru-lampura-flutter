@@ -10,7 +10,7 @@ import 'package:flutter_map_simtaru/utils/geojson/geojson/geojson_options.dart';
 import 'package:flutter_map_simtaru/utils/geojson/geojson/geojson_widget.dart';
 import 'package:flutter_map_simtaru/utils/geojson/geojson/index.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/index_screen_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:ui' as dartui;

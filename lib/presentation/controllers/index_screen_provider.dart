@@ -1,5 +1,6 @@
 import 'package:flutter_map_simtaru/domain/entity/index_screen.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class IndexScreenNotifier extends StateNotifier<IndexScreen> {
   IndexScreenNotifier() : super(const IndexScreen());
