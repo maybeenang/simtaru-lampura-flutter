@@ -4,11 +4,11 @@ analyzer:
   plugins:
     - custom_lint
 
-  # exclude:
+  exclude:
   #   - test/.test_coverage.dart
   #   - lib/generated_plugin_registrant.dart
   #   - lib/l10n/**
-  #   - lib/**/*.g.dart
+    - lib/**/*.g.dart
   #   - lib/**/*.freezed.dart
   #   - test/**/*.g.dart
 
