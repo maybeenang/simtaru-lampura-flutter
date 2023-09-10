@@ -57,7 +57,7 @@ class AuthController extends _$AuthController {
           final data = response.data;
           final accessToken = data['data']['original']['access_token'];
           await _sharedPreferences.setString(_sharedPrefsKey, accessToken);
-          print(accessToken);
+          // ignore: avoid_print
           final Auth auth = Auth.signedIn(
             token: accessToken,
           );

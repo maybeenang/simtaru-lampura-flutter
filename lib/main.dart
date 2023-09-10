@@ -16,9 +16,9 @@ Future main() async {
   FlutterNativeSplash.remove();
   runApp(
     const ProviderScope(
-      // observers: [
-      //   StateLogger(),
-      // ],
+      observers: [
+        StateLogger(),
+      ],
       child: App(),
     ),
   );
