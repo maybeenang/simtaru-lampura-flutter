@@ -44,22 +44,29 @@ class AuthController extends _$AuthController {
 
     final loginAttemp = await AsyncValue.guard<Auth>(
       () async {
-        final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.refresh);
-        final Response response = await dio.post(
-          uri.toString(),
-          options: Options(
-            headers: {
-              "Authorization": "Bearer $token",
-            },
-          ),
-        );
-        final data = response.data;
-        final accessToken = data['data']['original']['access_token'];
-        await _sharedPreferences.setString(_sharedPrefsKey, accessToken);
-        final Auth auth = Auth.signedIn(
-          token: accessToken,
-        );
-        return auth;
+        try {
+          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.refresh);
+          final Response response = await dio.post(
+            uri.toString(),
+            options: Options(
+              headers: {
+                "Authorization": "Bearer $token",
+              },
+            ),
+          );
+          final data = response.data;
+          final accessToken = data['data']['original']['access_token'];
+          await _sharedPreferences.setString(_sharedPrefsKey, accessToken);
+          print(accessToken);
+          final Auth auth = Auth.signedIn(
+            token: accessToken,
+          );
+          return auth;
+        } on DioException catch (e) {
+          return Auth.error(e.response?.data['message'] ?? 'Error');
+        } catch (e) {
+          return Auth.error(e.toString());
+        }
       },
     );
 
@@ -78,21 +85,27 @@ class AuthController extends _$AuthController {
     state = const AsyncValue<Auth>.loading();
     state = await AsyncValue.guard<Auth>(
       () async {
-        final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.login);
-        final Response response = await dio.post(
-          uri.toString(),
-          data: {
-            'no_ktp': nik,
-            'password': password,
-          },
-        );
-        final data = response.data;
-        final token = data['data']['original']['access_token'];
-        await _sharedPreferences.setString(_sharedPrefsKey, token);
-        final Auth auth = Auth.signedIn(
-          token: token,
-        );
-        return auth;
+        try {
+          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.login);
+          final Response response = await dio.post(
+            uri.toString(),
+            data: {
+              'no_ktp': nik,
+              'password': password,
+            },
+          );
+          final data = response.data;
+          final token = data['data']['original']['access_token'];
+          await _sharedPreferences.setString(_sharedPrefsKey, token);
+          final Auth auth = Auth.signedIn(
+            token: token,
+          );
+          return auth;
+        } on DioException catch (e) {
+          return Auth.error(e.response?.data['message'] ?? 'Error');
+        } catch (e) {
+          return Auth.error(e.toString());
+        }
       },
     );
   }
@@ -101,19 +114,29 @@ class AuthController extends _$AuthController {
     state = const AsyncValue<Auth>.loading();
     state = await AsyncValue.guard<Auth>(
       () async {
-        final token = _sharedPreferences.getString(_sharedPrefsKey);
-        final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.logout);
-        await dio.post(
-          uri.toString(),
-          options: Options(
-            headers: {
-              "Authorization": "Bearer ${token ?? ''}",
-            },
-          ),
-        );
-        await _sharedPreferences.remove(_sharedPrefsKey);
-        const Auth auth = Auth.signedOut();
-        return auth;
+        try {
+          final token = _sharedPreferences.getString(_sharedPrefsKey);
+          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.logout);
+          await dio.post(
+            uri.toString(),
+            options: Options(
+              headers: {
+                "Authorization": "Bearer ${token ?? ''}",
+              },
+            ),
+          );
+
+          await _sharedPreferences.remove(_sharedPrefsKey);
+          const Auth auth = Auth.signedOut();
+          return auth;
+        } on DioException catch (e) {
+          if (e.response!.statusCode! >= 500) {
+            return const Auth.error("Internal Server Error");
+          }
+          return Auth.error(e.response?.data['message'] ?? 'Error');
+        } catch (e) {
+          return Auth.error(e.toString());
+        }
       },
     );
   }
@@ -125,21 +148,31 @@ class AuthController extends _$AuthController {
     String password,
   ) async {
     state = const AsyncValue<Auth>.loading();
-    state = await AsyncValue.guard<Auth>(() {
-      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.register);
-      return dio.post(
-        uri.toString(),
-        data: {
-          'no_ktp': nik,
-          'name': nama,
-          'email': email,
-          'password': password,
-        },
-      ).then((value) {
-        const Auth auth = Auth.signedUp();
-        return auth;
-      });
-    });
+    state = await AsyncValue.guard<Auth>(
+      () async {
+        try {
+          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.register);
+          await dio.post(
+            uri.toString(),
+            data: {
+              'no_ktp': nik,
+              'name': nama,
+              'email': email,
+              'password': password,
+            },
+          );
+          const auth = Auth.signedUp();
+          return auth;
+        } on DioException catch (e) {
+          if (e.response!.statusCode! >= 500) {
+            return const Auth.error("Internal Server Error");
+          }
+          return Auth.error(e.response?.data['message'].toString() ?? 'Error');
+        } catch (e) {
+          return Auth.error(e.toString());
+        }
+      },
+    );
   }
 
   void _persistentRefreshLogic() {
@@ -159,6 +192,7 @@ class AuthController extends _$AuthController {
             await _sharedPreferences.remove(_sharedPrefsKey);
           },
           signedUp: (value) {},
+          error: (error) {},
         );
       },
     );

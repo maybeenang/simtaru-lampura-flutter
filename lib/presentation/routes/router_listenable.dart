@@ -18,7 +18,8 @@ class RouterListenable extends _$RouterListenable implements Listenable {
         (value) => value.map(
           signedIn: (_) => true,
           signedOut: (_) => false,
-          signedUp: (_) => true,
+          signedUp: (_) => false,
+          error: (_) => false,
         ),
       ),
     );

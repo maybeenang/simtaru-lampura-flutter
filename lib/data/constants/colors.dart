@@ -10,4 +10,5 @@ class AppColors {
   static const Color borderColor = Color(0xFFDCDCDC);
   static const Color actionColor = Color(0xFFF94C10);
   static const Color redColor = Color(0xFFE72012);
+  static const Color greenColor = Color(0xFF24B300);
 }

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/image.dart';
-import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/auth_controller.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_common.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/other/show_snackbart.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -20,6 +21,7 @@ class RegisterPage extends HookConsumerWidget {
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     final konfirmasiPasswordController = useTextEditingController();
+    final authState = ref.watch(authControllerProvider);
 
     return WillPopScope(
       onWillPop: () {
@@ -54,7 +56,9 @@ class RegisterPage extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Form(
                         key: registerFormKey,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        onChanged: () {
+                          registerFormKey.currentState!.validate();
+                        },
                         child: Column(
                           children: [
                             TextFieldCommon(
@@ -89,27 +93,42 @@ class RegisterPage extends HookConsumerWidget {
                             ),
                             const SizedBox(height: 30),
                             ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
+                                FocusScope.of(context).unfocus();
+
                                 if (registerFormKey.currentState!.validate()) {
                                   if (passwordController.text ==
                                       konfirmasiPasswordController.text) {
-                                    print("NIK: ${nikController.text}");
+                                    await ref
+                                        .read(authControllerProvider.notifier)
+                                        .register(
+                                          nikController.text,
+                                          namaController.text,
+                                          emailController.text,
+                                          passwordController.text,
+                                        );
                                   } else {
-                                    ScaffoldMessenger.of(context)
-                                        .removeCurrentSnackBar();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                          "Password tidak sama",
-                                        ),
-                                      ),
+                                    AppSnackBar.show(
+                                      context,
+                                      "Password tidak sama",
+                                      AppColors.redColor,
+                                      Icons.error_outline_rounded,
                                     );
                                   }
                                 }
                               },
-                              child: const Text(
-                                "Daftar",
-                                style: AppStyles.textButton,
+                              child: authState.maybeWhen(
+                                loading: () => const SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.whiteColor,
+                                  ),
+                                ),
+                                orElse: () => const Text(
+                                  "Daftar",
+                                  style: AppStyles.textButton,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 20),

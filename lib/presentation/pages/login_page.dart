@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/image.dart';
+import 'package:flutter_map_simtaru/domain/entity/auth.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/auth_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_common.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/other/show_snackbart.dart';
 
 class LoginPage extends HookConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -19,8 +21,6 @@ class LoginPage extends HookConsumerWidget {
 
     final nikController = useTextEditingController();
     final passwordController = useTextEditingController();
-    final passwordFocusNode = useFocusNode();
-    final nikFocusNode = useFocusNode();
 
     // ignore: prefer_typing_uninitialized_variables
     var currentBackPressTime;
@@ -32,17 +32,39 @@ class LoginPage extends HookConsumerWidget {
       if (currentBackPressTime == null ||
           now.difference(currentBackPressTime!!) > const Duration(seconds: 2)) {
         currentBackPressTime = now;
-        print("Tekan sekali lagi untuk keluar");
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Tekan sekali lagi untuk keluar"),
-          ),
+        AppSnackBar.show(
+          context,
+          "Tekan sekali lagi untuk keluar",
+          AppColors.redColor,
         );
         return Future.value(false);
       }
 
       return Future.value(true);
     }
+
+    ref.listen(
+      authControllerProvider,
+      (previous, next) {
+        next.maybeWhen(
+          orElse: () {},
+          data: (data) {
+            if (data is Error) {
+              AppSnackBar.show(
+                  context, data.message, AppColors.redColor, Icons.dangerous);
+            }
+            if (data is SignedUp) {
+              AppSnackBar.show(context, "Berhasil Mendaftar",
+                  AppColors.greenColor, Icons.check);
+            }
+          },
+          error: (error, stackTrace) {
+            AppSnackBar.show(
+                context, error.toString(), AppColors.redColor, Icons.dangerous);
+          },
+        );
+      },
+    );
 
     return WillPopScope(
       onWillPop: () {
@@ -82,23 +104,6 @@ class LoginPage extends HookConsumerWidget {
                         "Masukan NIP dan Password untuk melanjutkan",
                         style: AppStyles.subtitle,
                       ),
-                      const SizedBox(height: 10),
-                      authState.maybeWhen(
-                        error: (error, stackTrace) {
-                          return SizedBox(
-                            height: 25,
-                            child: Text(
-                              "NIK atau Password salah",
-                              style: AppStyles.subtitle.copyWith(
-                                color: AppColors.redColor,
-                              ),
-                            ),
-                          );
-                        },
-                        orElse: () => const SizedBox(
-                          height: 25,
-                        ),
-                      ),
                       const SizedBox(height: 30),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -108,7 +113,6 @@ class LoginPage extends HookConsumerWidget {
                               labelText: "NIK",
                               controller: nikController,
                               keyboardType: TextInputType.number,
-                              focusNode: nikFocusNode,
                               isNik: true,
                             ),
                             const SizedBox(height: 10),
@@ -116,7 +120,6 @@ class LoginPage extends HookConsumerWidget {
                               labelText: "Password",
                               controller: passwordController,
                               isPassword: true,
-                              focusNode: passwordFocusNode,
                               isLast: true,
                             ),
                             const SizedBox(height: 10),
@@ -137,17 +140,8 @@ class LoginPage extends HookConsumerWidget {
                             const SizedBox(height: 20),
                             ElevatedButton(
                               onPressed: () async {
-                                if (passwordFocusNode.hasFocus ||
-                                    nikFocusNode.hasFocus) {
-                                  passwordFocusNode.unfocus();
-                                  nikFocusNode.unfocus();
-                                }
-
                                 if (loginFormKey.currentState!.validate() &&
-                                    authState.maybeWhen(
-                                      orElse: () => true,
-                                      loading: () => false,
-                                    )) {
+                                    !authState.isLoading) {
                                   final nik = nikController.text.toString();
                                   final password =
                                       passwordController.text.toString();
@@ -164,8 +158,10 @@ class LoginPage extends HookConsumerWidget {
                                     color: AppColors.whiteColor,
                                   ),
                                 ),
-                                orElse: () => const Text("Masuk",
-                                    style: AppStyles.textButton),
+                                orElse: () => const Text(
+                                  "Masuk",
+                                  style: AppStyles.textButton,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 20),

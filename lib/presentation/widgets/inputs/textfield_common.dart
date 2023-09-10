@@ -33,7 +33,6 @@ class TextFieldCommon extends HookConsumerWidget {
     return TextFormField(
       keyboardType: keyboardType ?? TextInputType.text,
       controller: controller,
-      focusNode: focusNode,
       obscureText: hidePassword.value,
       textInputAction:
           isLast == true ? TextInputAction.done : TextInputAction.next,
@@ -42,8 +41,13 @@ class TextFieldCommon extends HookConsumerWidget {
           return '$labelText tidak boleh kosong';
         }
         if (isEmail == true) {
-          if (!value.contains('@')) {
+          if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
             return 'Email tidak valid';
+          }
+        }
+        if (isPassword == true) {
+          if (value.length < 8) {
+            return 'Password tidak boleh kurang dari 8 digit';
           }
         }
         if (isNik == true) {

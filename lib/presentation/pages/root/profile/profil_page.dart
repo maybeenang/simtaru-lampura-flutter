@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/domain/entity/auth.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/auth_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_profile.dart';
@@ -16,8 +15,6 @@ class ProfilPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authControllerProvider);
-
     return SingleChildScrollView(
       child: Container(
         color: AppColors.bgColor,
@@ -107,13 +104,9 @@ class ProfilPage extends ConsumerWidget {
                                     await ref
                                         .read(authControllerProvider.notifier)
                                         .logout();
-                                    authState.whenData((value) {
-                                      if (value == const Auth.signedOut()) {
-                                        ref
-                                            .read(indexScreenProvider.notifier)
-                                            .onIndexChange(0);
-                                      }
-                                    });
+                                    ref
+                                        .read(indexScreenProvider.notifier)
+                                        .onIndexChange(0);
                                   },
                                 );
                               },
