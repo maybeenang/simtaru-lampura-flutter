@@ -18,10 +18,6 @@ final controllerNavbarProvider =
   return PersistentTabController();
 });
 
-final hideNavbarProvider = StateProvider.autoDispose<bool>((ref) {
-  return false;
-});
-
 // ignore: must_be_immutable
 class RootWidget extends ConsumerStatefulWidget {
   const RootWidget({super.key});
@@ -103,7 +99,6 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
   Widget build(BuildContext context) {
     var currIndex = ref.watch(indexScreenProvider);
     var controllerNavbar = ref.watch(controllerNavbarProvider);
-    var hideNavbar = ref.watch(hideNavbarProvider);
 
     return CustomSafeArea(
       child: Scaffold(
@@ -112,7 +107,6 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
           onItemSelected: (value) {
             ref.read(indexScreenProvider.notifier).onIndexChange(value);
           },
-          hideNavigationBar: hideNavbar,
           controller: controllerNavbar,
           decoration: NavBarDecoration(
             borderRadius: BorderRadius.circular(AppDouble.borderRadius),
