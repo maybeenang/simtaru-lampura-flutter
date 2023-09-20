@@ -12,6 +12,8 @@ part 'auth_controller.g.dart';
 class AuthController extends _$AuthController {
   late SharedPreferences _sharedPreferences;
   static const _sharedPrefsKey = 'token';
+  static const _sharedPrefsNipKey = 'nip';
+  static const _sharedPrefsPasswordKey = 'password';
   final Dio dio = Dio();
 
   @override
@@ -26,16 +28,64 @@ class AuthController extends _$AuthController {
   Future<Auth> _loginRecoveryAttemp() async {
     try {
       state = const AsyncValue<Auth>.loading();
-      final token = _sharedPreferences.getString(_sharedPrefsKey);
+      final nip = _sharedPreferences.getString(_sharedPrefsNipKey);
+      final password = _sharedPreferences.getString(_sharedPrefsPasswordKey);
 
-      if (token == null) {
+      if (nip == null || password == null) {
         throw Exception('No token found');
       }
-
-      return _loginWithToken(token);
+      return _loginWithNipAndPassword(nip, password);
     } catch (e) {
       await _sharedPreferences.remove(_sharedPrefsKey);
       return const Auth.signedOut();
+    }
+  }
+
+  Future<Auth> _loginWithNipAndPassword(String nip, String password) async {
+    state = const AsyncValue<Auth>.loading();
+
+    final loginAttemp = await AsyncValue.guard<Auth>(
+      () async {
+        try {
+          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.login);
+          final Response response = await dio.post(
+            uri.toString(),
+            data: {
+              'no_ktp': nip,
+              'password': password,
+            },
+          );
+          final data = response.data;
+          final token = data['data']['original']['access_token'];
+          await _sharedPreferences.setString(_sharedPrefsKey, token);
+          await _sharedPreferences.setString(_sharedPrefsNipKey, nip);
+          await _sharedPreferences.setString(_sharedPrefsPasswordKey, password);
+          // ignore: avoid_print
+          final Auth auth = Auth.signedIn(
+            nip: nip,
+            password: password,
+            token: token,
+          );
+          return auth;
+        } on DioException catch (e) {
+          if (e.response!.statusCode! >= 500) {
+            return const Auth.error("Internal Server Error");
+          }
+          return Auth.error(e.response?.data['message'] ?? 'Error');
+        } catch (e) {
+          return Auth.error(e.toString());
+        }
+      },
+    );
+
+    if (loginAttemp is AsyncError<Auth>) {
+      await _sharedPreferences.remove(_sharedPrefsKey);
+      return const Auth.signedOut();
+    } else {
+      final accessToken = _sharedPreferences.getString(_sharedPrefsKey);
+      return Auth.signedIn(
+        token: accessToken ?? '',
+      );
     }
   }
 
@@ -100,7 +150,11 @@ class AuthController extends _$AuthController {
           final data = response.data;
           final token = data['data']['original']['access_token'];
           await _sharedPreferences.setString(_sharedPrefsKey, token);
+          await _sharedPreferences.setString(_sharedPrefsNipKey, nik);
+          await _sharedPreferences.setString(_sharedPrefsPasswordKey, password);
           final Auth auth = Auth.signedIn(
+            nip: nik,
+            password: password,
             token: token,
           );
           return auth;
@@ -133,6 +187,8 @@ class AuthController extends _$AuthController {
           );
 
           await _sharedPreferences.remove(_sharedPrefsKey);
+          await _sharedPreferences.remove(_sharedPrefsNipKey);
+          await _sharedPreferences.remove(_sharedPrefsPasswordKey);
           const Auth auth = Auth.signedOut();
           return auth;
         } on DioException catch (e) {
@@ -193,6 +249,10 @@ class AuthController extends _$AuthController {
         next.requireValue.map<void>(
           signedIn: (signedIn) async {
             await _sharedPreferences.setString(_sharedPrefsKey, signedIn.token);
+            await _sharedPreferences.setString(
+                _sharedPrefsNipKey, signedIn.nip);
+            await _sharedPreferences.setString(
+                _sharedPrefsPasswordKey, signedIn.password);
           },
           signedOut: (signedOut) async {
             await _sharedPreferences.remove(_sharedPrefsKey);

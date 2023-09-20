@@ -5,6 +5,8 @@ part 'auth.freezed.dart';
 @freezed
 class Auth with _$Auth {
   const factory Auth.signedIn({
+    @Default('') String nip,
+    @Default('') String password,
     @Default('') String token,
   }) = SignedIn;
 
