@@ -30,6 +30,7 @@ class AuthController extends _$AuthController {
       state = const AsyncValue<Auth>.loading();
       final nip = _sharedPreferences.getString(_sharedPrefsNipKey);
       final password = _sharedPreferences.getString(_sharedPrefsPasswordKey);
+      print("nip ${nip.toString()}");
 
       if (nip == null || password == null) {
         throw Exception('No token found');
@@ -84,6 +85,8 @@ class AuthController extends _$AuthController {
     } else {
       final accessToken = _sharedPreferences.getString(_sharedPrefsKey);
       return Auth.signedIn(
+        nip: nip,
+        password: password,
         token: accessToken ?? '',
       );
     }
