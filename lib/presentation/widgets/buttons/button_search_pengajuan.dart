@@ -23,7 +23,9 @@ class ButtonSearchPengajuan extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              const SearchPengajaunRoute().go(context);
+              Future.delayed(const Duration(milliseconds: 300), () {
+                const SearchPengajaunRoute().go(context);
+              });
             },
             child: Ink(
               padding: const EdgeInsets.all(5),

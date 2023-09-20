@@ -41,7 +41,7 @@ class UserController extends _$UserController {
       if (user is UserSuccess) {
         return user;
       } else {
-        return AsyncValue<User>.error("Error", StackTrace.empty).when(
+        return const AsyncValue<User>.error("Error", StackTrace.empty).when(
             data: (data) => data,
             error: (error, stackTrace) => const User.error("Terjadi Kesalahan"),
             loading: () => null);
@@ -67,6 +67,7 @@ class UserController extends _$UserController {
           final data = response.data["data"];
           final User user = User.success(UserUtils.fromJson(data));
           return user;
+          // ignore: unused_catch_clause
         } on DioException catch (e) {
           return const User.error("Terjadi kesalahan");
         } catch (e) {
