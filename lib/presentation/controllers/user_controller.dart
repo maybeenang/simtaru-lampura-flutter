@@ -41,7 +41,7 @@ class UserController extends _$UserController {
       if (user is UserSuccess) {
         return user;
       } else {
-        return AsyncValue<User>.error("Error", StackTrace.empty).when(
+        return const AsyncValue<User>.error("Error", StackTrace.empty).when(
             data: (data) => data,
             error: (error, stackTrace) => const User.error("Terjadi Kesalahan"),
             loading: () => null);

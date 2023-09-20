@@ -63,6 +63,9 @@ class AuthController extends _$AuthController {
           );
           return auth;
         } on DioException catch (e) {
+          if (e.response!.statusCode! >= 500) {
+            return const Auth.error("Internal Server Error");
+          }
           return Auth.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
           return Auth.error(e.toString());
@@ -102,6 +105,9 @@ class AuthController extends _$AuthController {
           );
           return auth;
         } on DioException catch (e) {
+          if (e.response!.statusCode! >= 500) {
+            return const Auth.error("Internal Server Error");
+          }
           return Auth.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
           return Auth.error(e.toString());
