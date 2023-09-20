@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user_utils.freezed.dart';
 part 'user_utils.g.dart';
