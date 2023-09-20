@@ -67,6 +67,7 @@ class UserController extends _$UserController {
           final data = response.data["data"];
           final User user = User.success(UserUtils.fromJson(data));
           return user;
+          // ignore: unused_catch_clause
         } on DioException catch (e) {
           return const User.error("Terjadi kesalahan");
         } catch (e) {

@@ -23,26 +23,26 @@ class StatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {},
-        child: Container(
-          height: MediaQuery.of(context).size.height / 7,
-          width: MediaQuery.of(context).size.width / 2.3,
-          margin: const EdgeInsets.all(5),
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            color: colorMapping[label],
-            borderRadius: BorderRadius.circular(AppDouble.borderRadius),
-            boxShadow: [
-              BoxShadow(
-                color: colorMapping[label]!.withOpacity(0.95),
-                blurRadius: 12.5,
-                offset: const Offset(0, 5),
-              ),
-            ],
+    return Container(
+      height: MediaQuery.of(context).size.height / 7,
+      width: MediaQuery.of(context).size.width / 2.3,
+      margin: const EdgeInsets.all(5),
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: colorMapping[label],
+        borderRadius: BorderRadius.circular(AppDouble.borderRadius),
+        boxShadow: [
+          BoxShadow(
+            color: colorMapping[label]!.withOpacity(0.95),
+            blurRadius: 12.5,
+            offset: const Offset(0, 5),
           ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {},
           child: Stack(
             children: [
               Align(
