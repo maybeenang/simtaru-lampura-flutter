@@ -202,46 +202,6 @@ class ProfilPage extends ConsumerWidget {
                                 ),
                               ),
                               ButtonProfile(
-                                label: "Penerbitan Surat",
-                                icon: Icons.assignment_returned_outlined,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Divider(
-                                  color: AppColors.borderColor,
-                                ),
-                              ),
-                              ButtonProfile(
-                                label: "Penomoran Surat",
-                                icon: Icons.assignment_outlined,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Divider(
-                                  color: AppColors.borderColor,
-                                ),
-                              ),
-                              ButtonProfile(
-                                label: "Persetujuan TKPRD",
-                                icon: Icons.assignment_ind_outlined,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Divider(
-                                  color: AppColors.borderColor,
-                                ),
-                              ),
-                              ButtonProfile(
-                                label: "Persetujuan PUPR",
-                                icon: Icons.assignment_ind_outlined,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Divider(
-                                  color: AppColors.borderColor,
-                                ),
-                              ),
-                              ButtonProfile(
                                 label: "Verifikasi Lapangan",
                                 icon: Icons.add_location_alt_outlined,
                               ),
