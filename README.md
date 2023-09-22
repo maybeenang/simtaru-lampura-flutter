@@ -1,3 +1,5 @@
+![logo](./assets/images/logo.png)
+
 # SIMTARU LAMPURA MOBILE
 
 an application built with flutter that can help you to find out the location of the lampura district government office
