@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
-import 'package:flutter_map_simtaru/presentation/widgets/items/item_pengajuan.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchPengajuanPage extends StatefulWidget {
@@ -132,40 +132,6 @@ class _SearchPengajuanPageState extends State<SearchPengajuanPage> {
                         );
                       },
                     );
-                    // return Material(
-                    //   borderRadius: BorderRadius.circular(50),
-                    //   color: Colors.transparent,
-                    //   child: InkWell(
-                    //     onTap: () {},
-                    //     child: Ink(
-                    //       decoration: BoxDecoration(
-                    //         color: index == 0
-                    //             ? AppColors.primaryColor
-                    //             : AppColors.whiteColor,
-                    //         border: Border.all(
-                    //           width: 2,
-                    //           color: AppColors.primaryColor,
-                    //         ),
-                    //         borderRadius: BorderRadius.circular(50),
-                    //       ),
-                    //       padding: const EdgeInsets.symmetric(
-                    //         horizontal: 20,
-                    //         vertical: 10,
-                    //       ),
-                    //       child: Container(
-                    //         alignment: Alignment.center,
-                    //         child: Text(
-                    //           "Kat ${index + 1}",
-                    //           style: TextStyle(
-                    //             color: index == 0
-                    //                 ? AppColors.whiteColor
-                    //                 : AppColors.primaryColor,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // );
                   },
                   separatorBuilder: (context, index) {
                     return const SizedBox(width: 10);
@@ -182,7 +148,7 @@ class _SearchPengajuanPageState extends State<SearchPengajuanPage> {
               ListView.separated(
                 padding: const EdgeInsetsDirectional.all(10),
                 itemBuilder: (context, index) {
-                  return const ItemPengajuan();
+                  return const ItemPengajuanLoading();
                 },
                 separatorBuilder: (context, index) {
                   return const SizedBox(height: 10);
