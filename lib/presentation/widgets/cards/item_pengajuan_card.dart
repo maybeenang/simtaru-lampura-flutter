@@ -34,7 +34,7 @@ class ItemPengajuanCard extends StatelessWidget {
             Future.delayed(
               const Duration(milliseconds: 300),
               () {
-                const DetailPengajuanRoute().go(context);
+                DetailPengajuanRoute(pengajuan).go(context);
               },
             );
           },

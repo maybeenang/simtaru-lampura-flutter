@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 
 class BiodataPemohon extends StatelessWidget {
-  const BiodataPemohon({super.key});
+  const BiodataPemohon({super.key, required this.pengajuan});
+
+  final Pengajuan pengajuan;
 
   @override
   Widget build(BuildContext context) {
@@ -18,71 +21,71 @@ class BiodataPemohon extends StatelessWidget {
           AppStyles.boxShadowStyle,
         ],
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Biodata Pemohon",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
-          Divider(
+          const Divider(
             color: AppColors.borderColor,
           ),
-          Text(
+          const Text(
             "Nama",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            "John Doe",
-            style: TextStyle(fontSize: 16),
+            pengajuan.nama_lengkap.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
-          SizedBox(height: 10),
-          Text(
+          const SizedBox(height: 10),
+          const Text(
             "No Identitas",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            "1871025108990006",
-            style: TextStyle(fontSize: 16),
+            pengajuan.no_identitas.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
-          SizedBox(height: 10),
-          Text(
+          const SizedBox(height: 10),
+          const Text(
             "Alamat",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            "Jl.Griya Kencana Blok K No.5 LK.II RT/RW 003/000, Kelurahan Wayhalim Permai, Kecamatan Way Halim, Kota Bandar Lampung",
-            style: TextStyle(fontSize: 16),
+            pengajuan.alamat.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
-          SizedBox(height: 10),
-          Text(
+          const SizedBox(height: 10),
+          const Text(
             "Tempat Tanggal Lahir",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            "Bandar Lampung, 11-08-1999",
-            style: TextStyle(fontSize: 16),
+            pengajuan.tempat_tanggal_lahir.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
-          SizedBox(height: 10),
-          Text(
+          const SizedBox(height: 10),
+          const Text(
             "Pekerjaan",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            "Pelajar/ Mahasiswa",
-            style: TextStyle(fontSize: 16),
+            pengajuan.pekerjaan.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
-          SizedBox(height: 10),
-          Text(
+          const SizedBox(height: 10),
+          const Text(
             "No HP",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            "081234567890",
-            style: TextStyle(fontSize: 16),
+            pengajuan.no_hp.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
         ],
       ),

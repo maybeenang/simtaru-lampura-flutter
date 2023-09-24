@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/detail_pengajuan/biodata_pemohon.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/detail_pengajuan/rencana_pembangunan.dart';
@@ -8,7 +9,9 @@ import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:go_router/go_router.dart';
 
 class DetailPengajuanPage extends StatelessWidget {
-  const DetailPengajuanPage({super.key});
+  const DetailPengajuanPage({super.key, required this.pengajuan});
+
+  final Pengajuan pengajuan;
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +52,11 @@ class DetailPengajuanPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                const BiodataPemohon(),
+                BiodataPemohon(pengajuan: pengajuan),
                 const SizedBox(height: 10),
-                const RincianPengajuan(),
+                RincianPengajuan(pengajuan: pengajuan),
                 const SizedBox(height: 10),
-                const RencanaPembangunan(),
+                RencanaPembangunan(pengajuan: pengajuan),
                 const SizedBox(height: 10),
                 const RincianDokumen(),
               ],

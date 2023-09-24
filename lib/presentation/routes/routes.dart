@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/pages/login_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/onboarding_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/register_page.dart';
@@ -10,6 +12,7 @@ import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/search_pen
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_profile_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/splash_page.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/animations/custom_transition_page.dart';
 import 'package:go_router/go_router.dart';
 
 part 'routes.g.dart';
@@ -61,18 +64,20 @@ class SearchPengajaunRoute extends GoRouteData {
   static const path = 'search_pengajuan';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const SearchPengajuanPage();
-  }
+  buildPage(BuildContext context, GoRouterState state) =>
+      AppPageTransition.customTransitionPageFade(const SearchPengajuanPage());
 }
 
 class DetailPengajuanRoute extends GoRouteData {
-  const DetailPengajuanRoute();
+  const DetailPengajuanRoute(this.$extra);
+  final Pengajuan $extra;
   static const path = 'detail_pengajuan';
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const DetailPengajuanPage();
+    return DetailPengajuanPage(
+      pengajuan: $extra,
+    );
   }
 }
 
