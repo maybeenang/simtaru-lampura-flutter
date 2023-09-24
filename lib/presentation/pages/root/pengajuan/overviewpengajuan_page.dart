@@ -9,14 +9,24 @@ import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_peng
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class OverviewPengajuanPage extends ConsumerWidget {
+class OverviewPengajuanPage extends HookConsumerWidget {
   const OverviewPengajuanPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pengajuanState = ref.watch(pengajuanControllerProvider);
 
+    final scrollController = ScrollController();
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        ref.read(pengajuanControllerProvider.notifier).loadMore();
+      }
+    });
+
     return CustomScrollView(
+      controller: scrollController,
       slivers: [
         SliverToBoxAdapter(
           child: Column(

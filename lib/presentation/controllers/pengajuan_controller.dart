@@ -53,4 +53,33 @@ class PengajuanController extends _$PengajuanController {
       return null;
     }
   }
+
+  Future<void> loadMore() async {
+    final loadMorePengajuan = await AsyncValue.guard<List<Pengajuan>>(
+      () async {
+        try {
+          page++;
+          String query = "?page=$page";
+
+          final Uri uri =
+              Uri.parse(Endpoints.baseURL + Endpoints.seluruhPengajuan + query);
+          final Response response = await dio.get(
+            uri.toString(),
+          );
+          final List<Pengajuan> pengajuan =
+              (response.data['data']['data'] as List)
+                  .map((e) => Pengajuan.fromJson(e))
+                  .toList();
+
+          return pengajuan;
+        } catch (e) {
+          return Future.error(e.toString());
+        }
+      },
+    );
+
+    loadMorePengajuan.whenData((value) {
+      state = AsyncValue.data([...state.value!, ...value]);
+    });
+  }
 }
