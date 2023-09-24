@@ -1,7 +1,7 @@
 name: flutter_map_simtaru
 description: A new Flutter project.
 
-publish_to: "none" 
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -38,6 +38,7 @@ dependencies:
   dio: ^5.3.2
   another_flushbar: ^1.12.30
   shimmer: ^3.0.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
@@ -58,7 +59,7 @@ flutter:
     - assets/svg/
     - assets/images/
     - assets/json/
-  
+
   fonts:
     - family: Poppins
       fonts:

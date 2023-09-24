@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/other/status_chip.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
+import 'package:intl/intl.dart';
 
-class ItemPengajuan extends StatelessWidget {
-  const ItemPengajuan({super.key});
+class ItemPengajuanCard extends StatelessWidget {
+  const ItemPengajuanCard({super.key, required this.pengajuan});
+
+  final Pengajuan pengajuan;
 
   @override
   Widget build(BuildContext context) {
+    final formatedDate = DateFormat("dd MMMM yyyy", "id_ID").format(
+      pengajuan.created_at.toLocal(),
+    );
+
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
@@ -26,7 +34,7 @@ class ItemPengajuan extends StatelessWidget {
             Future.delayed(
               const Duration(milliseconds: 300),
               () {
-                const DetailPengajuanRoute().go(context);
+                DetailPengajuanRoute(pengajuan).go(context);
               },
             );
           },
@@ -41,15 +49,15 @@ class ItemPengajuan extends StatelessWidget {
                   10,
                   15,
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       child: Text(
-                        "John Doe",
+                        pengajuan.nama_lengkap.toString(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -57,13 +65,13 @@ class ItemPengajuan extends StatelessWidget {
                     ),
                     SizedBox(
                       child: Text(
-                        "Bangunan Rumah dan Praktek Mandiri Keperawatan",
+                        pengajuan.rencana_penggunaan_tanah.toString(),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text("12 Mei 2022"),
+                    const SizedBox(height: 10),
+                    Text(formatedDate),
                   ],
                 ),
               ),

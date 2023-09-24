@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/detail_pengajuan/minimap_koordinat.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 
 class RencanaPembangunan extends StatelessWidget {
-  const RencanaPembangunan({super.key});
+  const RencanaPembangunan({super.key, required this.pengajuan});
+
+  final Pengajuan pengajuan;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +39,9 @@ class RencanaPembangunan extends StatelessWidget {
             "Letak Tanah",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const Text(
-            "Dusun Cendrawasih RT/RK 002/001, Desa Semuli Jaya, Kecamatan Abung Semuli, Kabupaten Lampung Utara",
-            style: TextStyle(
+          Text(
+            pengajuan.letak_tanah.toString(),
+            style: const TextStyle(
               fontSize: 16,
             ),
           ),
@@ -47,54 +50,54 @@ class RencanaPembangunan extends StatelessWidget {
             "Rencana Penggunaan Tanah",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const Text(
-            "Kantor dan Gudang",
-            style: TextStyle(fontSize: 16),
+          Text(
+            pengajuan.rencana_penggunaan_tanah.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           const Text(
             "Batas Sebelah Utara",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const Text(
-            "Tanah Milik an. Rangga",
-            style: TextStyle(fontSize: 16),
+          Text(
+            pengajuan.batas_sebelah_utara.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           const Text(
             "Batas Sebelah Timur",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const Text(
-            "Tanah Milik an. Jujun",
-            style: TextStyle(fontSize: 16),
+          Text(
+            pengajuan.batas_sebelah_timur.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           const Text(
             "Batas Sebelah Selatan",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const Text(
-            "Tanah Milik An. Neneng",
-            style: TextStyle(fontSize: 16),
+          Text(
+            pengajuan.batas_sebelah_selatan.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           const Text(
             "Batas Sebelah Barat",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const Text(
-            "Tanah Milik An. Subekti",
-            style: TextStyle(fontSize: 16),
+          Text(
+            pengajuan.batas_sebelah_barat.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           const Text(
             "Titik Koordinat",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const Text(
-            "-4.655018,104.738142",
-            style: TextStyle(fontSize: 16),
+          Text(
+            pengajuan.titik_koordinat.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           Container(

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 
 class RincianPengajuan extends StatelessWidget {
-  const RincianPengajuan({super.key});
+  const RincianPengajuan({super.key, required this.pengajuan});
+
+  final Pengajuan pengajuan;
 
   @override
   Widget build(BuildContext context) {
@@ -54,45 +57,45 @@ class RincianPengajuan extends StatelessWidget {
             "Bertindak Atas Nama",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const Text(
-            "PT.KEMBAR KECANA PRATAMA",
-            style: TextStyle(fontSize: 16),
+          Text(
+            pengajuan.bertindak_atas_nama.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           const Text(
             "Penggunaan Tanah Saat Dimohon",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const Text(
-            "Tanah Perkarangan",
-            style: TextStyle(fontSize: 16),
+          Text(
+            pengajuan.penggunaan_tanah_saat_dimohon.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           const Text(
             "Luas Tanah Seluruhnya",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const Text(
-            "367 m2",
-            style: TextStyle(fontSize: 16),
+          Text(
+            "${pengajuan.luas_tanah_seluruhnya.toString()} m2",
+            style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           const Text(
             "Luas Tanah Yang Dimohon",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const Text(
-            "84.8 m2",
-            style: TextStyle(fontSize: 16),
+          Text(
+            "${pengajuan.luas_tanah_yang_dimohon.toString()} m2",
+            style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           const Text(
             "Bukti Penguasaan Tanah",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const Text(
-            "Sertipikat Hak Milik No.01195 An. Griselda Anada Tanggal Pembukuan",
-            style: TextStyle(fontSize: 16),
+          Text(
+            pengajuan.bukti_penguasaan_tanah.toString(),
+            style: const TextStyle(fontSize: 16),
           ),
         ],
       ),
