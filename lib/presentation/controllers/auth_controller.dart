@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_map_simtaru/data/constants/api.dart';
-import 'package:flutter_map_simtaru/domain/entity/auth.dart';
+import 'package:flutter_map_simtaru/domain/entity/auth/auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';

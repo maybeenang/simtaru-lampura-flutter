@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_map_simtaru/domain/entity/pengajuan.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/pages/login_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/onboarding_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/register_page.dart';

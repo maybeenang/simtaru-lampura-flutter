@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/image.dart';
-import 'package:flutter_map_simtaru/domain/entity/auth.dart';
+import 'package:flutter_map_simtaru/domain/entity/auth/auth.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/auth_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';

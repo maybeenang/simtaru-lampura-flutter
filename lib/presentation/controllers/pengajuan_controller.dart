@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
-import 'package:flutter_map_simtaru/domain/entity/pengajuan.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/auth_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/domain/entity/user.dart';
+import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/auth_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';

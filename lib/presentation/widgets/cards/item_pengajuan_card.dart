@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/domain/entity/pengajuan.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/other/status_chip.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
