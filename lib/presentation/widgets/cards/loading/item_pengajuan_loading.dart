@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/presentation/widgets/other/status_chip.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
@@ -26,7 +25,19 @@ class ItemPengajuanLoading extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const StatusChip(),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 10,
+              ),
+              width: 125,
+              height: 30,
+              decoration: const BoxDecoration(
+                color: AppColors.whiteColor,
+                borderRadius:
+                    BorderRadius.only(bottomRight: Radius.circular(10)),
+              ),
+            ),
             Container(
               padding: const EdgeInsets.fromLTRB(
                 15,

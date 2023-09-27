@@ -24,7 +24,7 @@ class ButtonSearchPengajuan extends StatelessWidget {
           child: InkWell(
             onTap: () {
               Future.delayed(const Duration(milliseconds: 300), () {
-                const SearchPengajaunRoute().go(context);
+                const SearchPengajaunRoute().push(context);
               });
             },
             child: Ink(

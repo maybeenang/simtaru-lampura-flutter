@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map_simtaru/domain/entity/pengajuan.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/detail_pengajuan/biodata_pemohon.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/detail_pengajuan/rencana_pembangunan.dart';

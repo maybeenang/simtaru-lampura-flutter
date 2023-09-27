@@ -1,4 +1,4 @@
-import 'package:flutter_map_simtaru/domain/entity/user_utils.dart';
+import 'package:flutter_map_simtaru/domain/entity/user/user_utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';

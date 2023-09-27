@@ -42,7 +42,7 @@ class _SearchPengajuanPageState extends State<SearchPengajuanPage> {
                     ),
                     const SizedBox(width: 20),
                     const Text(
-                      "Pengajuan",
+                      "Cari Pengajuan",
                       style: TextStyle(
                         color: AppColors.whiteColor,
                         fontSize: 20,
@@ -115,9 +115,7 @@ class _SearchPengajuanPageState extends State<SearchPengajuanPage> {
                       label: Text('Item ${index + 1} '),
                       selectedColor: AppColors.primaryColor,
                       labelStyle: TextStyle(
-                        color: _value == index
-                            ? AppColors.whiteColor
-                            : AppColors.greyColor,
+                        color: _value == index ? AppColors.whiteColor : AppColors.greyColor,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),

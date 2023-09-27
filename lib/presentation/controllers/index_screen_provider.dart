@@ -1,4 +1,4 @@
-import 'package:flutter_map_simtaru/domain/entity/index_screen.dart';
+import 'package:flutter_map_simtaru/domain/entity/index_screen/index_screen.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

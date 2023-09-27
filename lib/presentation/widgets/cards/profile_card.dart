@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
-import 'package:flutter_map_simtaru/domain/entity/user.dart';
-import 'package:flutter_map_simtaru/domain/entity/user_utils.dart';
+import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/domain/entity/user/user_utils.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,6 +20,9 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppDouble.paddingOutside,
+      ),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,

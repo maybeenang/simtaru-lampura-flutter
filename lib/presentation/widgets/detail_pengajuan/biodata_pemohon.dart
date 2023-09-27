@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
-import 'package:flutter_map_simtaru/domain/entity/pengajuan.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 
 class BiodataPemohon extends StatelessWidget {

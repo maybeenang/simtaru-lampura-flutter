@@ -10,6 +10,9 @@ class ProfileCardLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppDouble.paddingOutside,
+      ),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,

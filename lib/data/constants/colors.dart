@@ -11,4 +11,7 @@ class AppColors {
   static const Color actionColor = Color(0xFFF94C10);
   static const Color redColor = Color(0xFFE72012);
   static const Color greenColor = Color(0xFF24B300);
+  static const Color pengajuanSelesai = Colors.green;
+  static Color pengajuandiProses = Colors.amber.shade700;
+  static const Color pengajuandiTolak = Color(0xFFe44d5c);
 }

@@ -6,4 +6,5 @@ class Endpoints {
   static String profile = "auth/me";
   static String refresh = "auth/refresh";
   static String seluruhPengajuan = "pengajuan/seluruh";
+  static String statusPengajuan = "status/getAll";
 }

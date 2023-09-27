@@ -64,6 +64,34 @@ RouteBase get $rootRoute => GoRouteData.$route(
           path: 'notif',
           factory: $NotifRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'admin-seluruh-pengajuan',
+          factory: $AdminSeluruhPengajuanRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'admin-pengajuan-ditolak',
+          factory: $AdminPengajuanDitolahRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'admin-surat-rekomendasi',
+          factory: $AdminSuratRekomendasiRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'admin-upload-scan-surat',
+          factory: $AdminUploadScanSuratRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'admin-verifikasi-lapangan',
+          factory: $AdminVerifikasiLapanganRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'admin-verifikasi-berkas',
+          factory: $AdminVerifikasiBerkasRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'admin-revisi-berkas',
+          factory: $AdminRevisiBerkasRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -183,6 +211,133 @@ extension $NotifRouteExtension on NotifRoute {
 
   String get location => GoRouteData.$location(
         '/notif',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminSeluruhPengajuanRouteExtension on AdminSeluruhPengajuanRoute {
+  static AdminSeluruhPengajuanRoute _fromState(GoRouterState state) =>
+      const AdminSeluruhPengajuanRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-seluruh-pengajuan',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminPengajuanDitolahRouteExtension on AdminPengajuanDitolahRoute {
+  static AdminPengajuanDitolahRoute _fromState(GoRouterState state) =>
+      const AdminPengajuanDitolahRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-pengajuan-ditolak',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminSuratRekomendasiRouteExtension on AdminSuratRekomendasiRoute {
+  static AdminSuratRekomendasiRoute _fromState(GoRouterState state) =>
+      const AdminSuratRekomendasiRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-surat-rekomendasi',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminUploadScanSuratRouteExtension on AdminUploadScanSuratRoute {
+  static AdminUploadScanSuratRoute _fromState(GoRouterState state) =>
+      const AdminUploadScanSuratRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-upload-scan-surat',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminVerifikasiLapanganRouteExtension
+    on AdminVerifikasiLapanganRoute {
+  static AdminVerifikasiLapanganRoute _fromState(GoRouterState state) =>
+      const AdminVerifikasiLapanganRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-verifikasi-lapangan',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminVerifikasiBerkasRouteExtension on AdminVerifikasiBerkasRoute {
+  static AdminVerifikasiBerkasRoute _fromState(GoRouterState state) =>
+      const AdminVerifikasiBerkasRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-verifikasi-berkas',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminRevisiBerkasRouteExtension on AdminRevisiBerkasRoute {
+  static AdminRevisiBerkasRoute _fromState(GoRouterState state) =>
+      const AdminRevisiBerkasRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-revisi-berkas',
       );
 
   void go(BuildContext context) => context.go(location);
