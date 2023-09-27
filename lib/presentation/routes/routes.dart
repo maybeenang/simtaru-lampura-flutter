@@ -9,6 +9,13 @@ import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/detail_pen
 import 'package:flutter_map_simtaru/presentation/pages/root/home/notif_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/search_pengajuan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_pengajuan_ditolak_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_revisi_berkas_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_seluruh_pengajuan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_surat_rekomendasi_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_upload_scan_surat_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_berkas_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_lapangan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_profile_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/splash_page.dart';
@@ -37,6 +44,13 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<DetailBeritaRoute>(path: DetailBeritaRoute.path),
     TypedGoRoute<EditProfileRoute>(path: EditProfileRoute.path),
     TypedGoRoute<NotifRoute>(path: NotifRoute.path),
+    TypedGoRoute<AdminSeluruhPengajuanRoute>(path: AdminSeluruhPengajuanRoute.path),
+    TypedGoRoute<AdminPengajuanDitolahRoute>(path: AdminPengajuanDitolahRoute.path),
+    TypedGoRoute<AdminSuratRekomendasiRoute>(path: AdminSuratRekomendasiRoute.path),
+    TypedGoRoute<AdminUploadScanSuratRoute>(path: AdminUploadScanSuratRoute.path),
+    TypedGoRoute<AdminVerifikasiLapanganRoute>(path: AdminVerifikasiLapanganRoute.path),
+    TypedGoRoute<AdminVerifikasiBerkasRoute>(path: AdminVerifikasiBerkasRoute.path),
+    TypedGoRoute<AdminRevisiBerkasRoute>(path: AdminRevisiBerkasRoute.path),
   ],
 )
 class RootRoute extends GoRouteData {
@@ -108,6 +122,76 @@ class NotifRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const NotifPage();
+  }
+}
+
+class AdminSeluruhPengajuanRoute extends GoRouteData {
+  const AdminSeluruhPengajuanRoute();
+  static const path = 'admin-seluruh-pengajuan';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminSeluruhPengajuanPage();
+  }
+}
+
+class AdminPengajuanDitolahRoute extends GoRouteData {
+  const AdminPengajuanDitolahRoute();
+  static const path = 'admin-pengajuan-ditolak';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminPengajuanDitolakPage();
+  }
+}
+
+class AdminSuratRekomendasiRoute extends GoRouteData {
+  const AdminSuratRekomendasiRoute();
+  static const path = 'admin-surat-rekomendasi';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminSuratRekomendasiPage();
+  }
+}
+
+class AdminUploadScanSuratRoute extends GoRouteData {
+  const AdminUploadScanSuratRoute();
+  static const path = 'admin-upload-scan-surat';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminUploadScanSuratPage();
+  }
+}
+
+class AdminVerifikasiLapanganRoute extends GoRouteData {
+  const AdminVerifikasiLapanganRoute();
+  static const path = 'admin-verifikasi-lapangan';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminVerifikasiBerkasPage();
+  }
+}
+
+class AdminVerifikasiBerkasRoute extends GoRouteData {
+  const AdminVerifikasiBerkasRoute();
+  static const path = 'admin-verifikasi-berkas';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminVerifikasiLapanganPage();
+  }
+}
+
+class AdminRevisiBerkasRoute extends GoRouteData {
+  const AdminRevisiBerkasRoute();
+  static const path = 'admin-revisi-berkas';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminRevisiBerkasPage();
   }
 }
 
