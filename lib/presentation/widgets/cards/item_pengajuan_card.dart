@@ -41,7 +41,7 @@ class ItemPengajuanCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const StatusChip(),
+              StatusChip(statusId: pengajuan.status_id!),
               Container(
                 padding: const EdgeInsets.fromLTRB(
                   15,
