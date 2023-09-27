@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/status_pengajuan_controller.dart';
@@ -15,6 +16,7 @@ class OverviewPengajuanPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final showScrollToTop = useState(false);
     final pengajuanState = ref.watch(pengajuanControllerProvider);
     ref.watch(statusPengajuanControllerProvider);
 
@@ -25,84 +27,112 @@ class OverviewPengajuanPage extends HookConsumerWidget {
           scrollController.position.maxScrollExtent) {
         ref.read(pengajuanControllerProvider.notifier).loadMore();
       }
+
+      if (scrollController.position.pixels >= 100) {
+        showScrollToTop.value = true;
+      } else {
+        showScrollToTop.value = false;
+      }
     });
 
-    return CustomScrollView(
-      controller: scrollController,
-      slivers: [
-        SliverToBoxAdapter(
-          child: Column(
-            children: [
-              const CustomAppBarFitur(
-                title: "Pengajuan",
-                bgColor: AppColors.primaryColor,
-                labelColor: AppColors.whiteColor,
+    return Scaffold(
+      floatingActionButton: showScrollToTop.value
+          ? Container(
+              margin: const EdgeInsets.only(bottom: 20),
+              child: FloatingActionButton(
+                onPressed: () {
+                  scrollController.animateTo(
+                    0,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                backgroundColor: AppColors.primaryColor,
+                shape: const CircleBorder(),
+                child: const Icon(
+                  Icons.arrow_upward,
+                  color: AppColors.whiteColor,
+                ),
               ),
-              Stack(
-                children: [
-                  Container(
-                    color: AppColors.primaryColor,
-                    child: const SizedBox(
-                      width: double.infinity,
-                      height: 25,
+            )
+          : null,
+      body: CustomScrollView(
+        controller: scrollController,
+        slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                const CustomAppBarFitur(
+                  title: "Pengajuan",
+                  bgColor: AppColors.primaryColor,
+                  labelColor: AppColors.whiteColor,
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      color: AppColors.primaryColor,
+                      child: const SizedBox(
+                        width: double.infinity,
+                        height: 25,
+                      ),
                     ),
-                  ),
-                  const ButtonSearchPengajuan(),
-                ],
-              ),
-              const SizedBox(height: 20),
-              const CarouselPengajuanCard(),
-              const SizedBox(height: 20),
-            ],
+                    const ButtonSearchPengajuan(),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                const CarouselPengajuanCard(),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
-        ),
-        pengajuanState.maybeWhen(
-          orElse: () {
-            return SliverList.separated(
-              itemCount: 5,
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 10);
-              },
-              itemBuilder: (context, index) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: AppDouble.paddingOutside),
-                  child: ItemPengajuanLoading(),
-                );
-              },
-            );
-          },
-          data: (data) {
-            if (data!.isEmpty) {
-              return const Center(
-                child: Text("Tidak ada data"),
+          pengajuanState.maybeWhen(
+            orElse: () {
+              return SliverList.separated(
+                itemCount: 5,
+                separatorBuilder: (context, index) {
+                  return const SizedBox(height: 10);
+                },
+                itemBuilder: (context, index) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: AppDouble.paddingOutside),
+                    child: ItemPengajuanLoading(),
+                  );
+                },
               );
-            }
-
-            return SliverList.separated(
-              itemCount: data.length + 3,
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 10);
-              },
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppDouble.paddingOutside,
-                  ),
-                  child: index >= data.length
-                      ? const ItemPengajuanLoading()
-                      : ItemPengajuanCard(
-                          pengajuan: data[index],
-                        ),
+            },
+            data: (data) {
+              if (data!.isEmpty) {
+                return const Center(
+                  child: Text("Tidak ada data"),
                 );
-              },
-            );
-          },
-        ),
-        const SliverToBoxAdapter(
-          child: SizedBox(height: 20),
-        )
-      ],
+              }
+
+              return SliverList.separated(
+                itemCount: data.length + 3,
+                separatorBuilder: (context, index) {
+                  return const SizedBox(height: 10);
+                },
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppDouble.paddingOutside,
+                    ),
+                    child: index >= data.length
+                        ? const ItemPengajuanLoading()
+                        : ItemPengajuanCard(
+                            pengajuan: data[index],
+                          ),
+                  );
+                },
+              );
+            },
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 20),
+          )
+        ],
+      ),
     );
   }
 }
