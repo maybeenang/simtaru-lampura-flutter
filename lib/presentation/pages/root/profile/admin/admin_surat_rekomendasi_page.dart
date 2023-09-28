@@ -6,6 +6,10 @@ class AdminSuratRekomendasiPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container();
+    return const Scaffold(
+      body: Center(
+        child: Text("Admin Surat Rekomendasi"),
+      ),
+    );
   }
 }
