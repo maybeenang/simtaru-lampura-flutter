@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
-import 'package:flutter_map_simtaru/presentation/controllers/status_pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/carousel_pengajuan_card.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
@@ -19,12 +18,12 @@ class AdminSeluruhPengajuanPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final showScrollToTop = useState(false);
     final pengajuanState = ref.watch(pengajuanControllerProvider);
-    ref.watch(statusPengajuanControllerProvider);
 
     final scrollController = ScrollController();
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
         ref.read(pengajuanControllerProvider.notifier).loadMore();
       }
 
@@ -95,7 +94,8 @@ class AdminSeluruhPengajuanPage extends HookConsumerWidget {
                   },
                   itemBuilder: (context, index) {
                     return const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: AppDouble.paddingOutside),
                       child: ItemPengajuanLoading(),
                     );
                   },

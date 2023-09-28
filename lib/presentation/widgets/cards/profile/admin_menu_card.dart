@@ -46,7 +46,7 @@ class AdminMenuProfileCard extends ConsumerWidget {
                   onTap: () {
                     Future.delayed(
                       const Duration(milliseconds: 300),
-                      () => const AdminSeluruhPengajuanRoute().go(context),
+                      () => const AdminSeluruhPengajuanRoute().push(context),
                     );
                   },
                 ),
@@ -56,9 +56,15 @@ class AdminMenuProfileCard extends ConsumerWidget {
                     color: AppColors.borderColor,
                   ),
                 ),
-                const ButtonProfile(
+                ButtonProfile(
                   label: "Pengajuan Ditolak",
                   icon: Icons.assignment_late_outlined,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminPengajuanDitolahRoute().push(context),
+                    );
+                  },
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -76,9 +82,15 @@ class AdminMenuProfileCard extends ConsumerWidget {
                     color: AppColors.borderColor,
                   ),
                 ),
-                const ButtonProfile(
+                ButtonProfile(
                   label: "Upload Scan Surat",
                   icon: Icons.assignment_turned_in_outlined,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminUploadScanSuratRoute().push(context),
+                    );
+                  },
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -96,9 +108,15 @@ class AdminMenuProfileCard extends ConsumerWidget {
                     color: AppColors.borderColor,
                   ),
                 ),
-                const ButtonProfile(
+                ButtonProfile(
                   label: "Verifikasi Berkas",
                   icon: Icons.file_open_outlined,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminVerifikasiBerkasRoute().push(context),
+                    );
+                  },
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),

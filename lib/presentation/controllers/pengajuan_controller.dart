@@ -34,16 +34,13 @@ class PengajuanController extends _$PengajuanController {
     if (isAuth) {
       try {
         String query = "?page=$page";
-        final Uri uri =
-            Uri.parse(Endpoints.baseURL + Endpoints.seluruhPengajuan + query);
+        final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.seluruhPengajuan + query);
         final Response response = await dio.get(
           uri.toString(),
         );
 
         final List<Pengajuan> pengajuan =
-            (response.data['data']['data'] as List)
-                .map((e) => Pengajuan.fromJson(e))
-                .toList();
+            (response.data['data']['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
 
         return pengajuan;
       } catch (e) {
@@ -61,15 +58,12 @@ class PengajuanController extends _$PengajuanController {
           page++;
           String query = "?page=$page";
 
-          final Uri uri =
-              Uri.parse(Endpoints.baseURL + Endpoints.seluruhPengajuan + query);
+          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.seluruhPengajuan + query);
           final Response response = await dio.get(
             uri.toString(),
           );
           final List<Pengajuan> pengajuan =
-              (response.data['data']['data'] as List)
-                  .map((e) => Pengajuan.fromJson(e))
-                  .toList();
+              (response.data['data']['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
 
           return pengajuan;
         } catch (e) {
@@ -79,6 +73,10 @@ class PengajuanController extends _$PengajuanController {
     );
 
     loadMorePengajuan.whenData((value) {
+      if (value.isEmpty) {
+        page--;
+      }
+
       state = AsyncValue.data([...state.value!, ...value]);
     });
   }

@@ -171,7 +171,7 @@ class AdminVerifikasiLapanganRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const AdminVerifikasiBerkasPage();
+    return const AdminVerifikasiLapanganPage();
   }
 }
 
@@ -181,7 +181,7 @@ class AdminVerifikasiBerkasRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const AdminVerifikasiLapanganPage();
+    return const AdminVerifikasiBerkasPage();
   }
 }
 
