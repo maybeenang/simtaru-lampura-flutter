@@ -104,9 +104,15 @@ class AdminMenuProfileCard extends ConsumerWidget {
                     color: AppColors.borderColor,
                   ),
                 ),
-                const ButtonProfile(
+                ButtonProfile(
                   label: "Verifikasi Lapangan",
                   icon: Icons.add_location_alt_outlined,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminVerifikasiLapanganRoute().push(context),
+                    );
+                  },
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -130,9 +136,15 @@ class AdminMenuProfileCard extends ConsumerWidget {
                     color: AppColors.borderColor,
                   ),
                 ),
-                const ButtonProfile(
+                ButtonProfile(
                   label: "Revisi Berkas",
                   icon: Icons.file_copy_outlined,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminRevisiBerkasRoute().push(context),
+                    );
+                  },
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
