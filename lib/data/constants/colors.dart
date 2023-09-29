@@ -14,4 +14,18 @@ class AppColors {
   static const Color pengajuanSelesai = Colors.green;
   static Color pengajuandiProses = Colors.amber.shade700;
   static const Color pengajuandiTolak = Color(0xFFe44d5c);
+  static final mapColorStatusChip = {
+    1: AppColors.pengajuandiTolak,
+    2: AppColors.pengajuandiProses,
+    3: AppColors.pengajuandiProses,
+    4: AppColors.pengajuandiProses,
+    5: AppColors.pengajuandiProses,
+    6: AppColors.pengajuandiProses,
+    7: AppColors.pengajuandiProses,
+    8: AppColors.pengajuandiProses,
+    9: AppColors.pengajuandiProses,
+    10: AppColors.pengajuandiProses,
+    11: AppColors.pengajuandiProses,
+    12: AppColors.pengajuanSelesai,
+  };
 }
