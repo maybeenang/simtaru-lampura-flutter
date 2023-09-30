@@ -8,9 +8,10 @@ import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:intl/intl.dart';
 
 class ItemPengajuanCard extends StatelessWidget {
-  const ItemPengajuanCard({super.key, required this.pengajuan});
+  const ItemPengajuanCard({super.key, required this.pengajuan, this.onTap});
 
   final Pengajuan pengajuan;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +31,15 @@ class ItemPengajuanCard extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {
-            Future.delayed(
-              const Duration(milliseconds: 300),
+          onTap: onTap ??
               () {
-                DetailPengajuanRoute(pengajuan).push(context);
+                Future.delayed(
+                  const Duration(milliseconds: 300),
+                  () {
+                    DetailPengajuanRoute(pengajuan).push(context);
+                  },
+                );
               },
-            );
-          },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

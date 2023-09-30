@@ -20,7 +20,7 @@ class PengajuanVerifikasiLapanganController extends _$PengajuanVerifikasiLapanga
 
     try {
       String query = "?page=$page";
-      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 2.toString() + query);
+      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 3.toString() + query);
       final Response response = await dio.get(
         uri.toString(),
       );
@@ -41,7 +41,7 @@ class PengajuanVerifikasiLapanganController extends _$PengajuanVerifikasiLapanga
           page++;
           String query = "?page=$page";
 
-          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 2.toString() + query);
+          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 3.toString() + query);
           final Response response = await dio.get(
             uri.toString(),
           );
