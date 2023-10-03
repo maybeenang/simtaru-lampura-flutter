@@ -4,6 +4,7 @@ import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/item_pengajuan_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
@@ -124,6 +125,19 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
                           ? const ItemPengajuanLoading()
                           : ItemPengajuanCard(
                               pengajuan: data[index],
+                              onTap: () {
+                                Future.delayed(
+                                  const Duration(milliseconds: 100),
+                                  () => showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return BottomSheetCard(
+                                        pengajuan: data[index],
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
                             ),
                     );
                   },

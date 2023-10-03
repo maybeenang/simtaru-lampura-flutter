@@ -66,8 +66,7 @@ class RincianPengajuan extends ConsumerWidget {
               color: statusState.maybeWhen(
                 orElse: () => AppColors.whiteColor,
                 data: (data) {
-                  final color = _mapColor[
-                      data.firstWhere((e) => e.id == pengajuan.status_id).id];
+                  final color = _mapColor[data.firstWhere((e) => e.id == pengajuan.status_id).id];
 
                   return color;
                 },
@@ -78,10 +77,7 @@ class RincianPengajuan extends ConsumerWidget {
               statusState.maybeWhen(
                 orElse: () => "Loading...",
                 data: (data) {
-                  final status = data
-                      .firstWhere((e) => e.id == pengajuan.status_id)
-                      .jenis_status
-                      .toString();
+                  final status = data.firstWhere((e) => e.id == pengajuan.status_id).jenis_status.toString();
 
                   return status;
                 },
@@ -93,13 +89,13 @@ class RincianPengajuan extends ConsumerWidget {
           pengajuan.status_id == 1
               ? const Text(
                   "Alasan Ditolak",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.redColor),
                 )
               : const SizedBox(),
           pengajuan.status_id == 1
               ? Text(
                   pengajuan.alasan_ditolak.toString(),
-                  style: const TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16, color: AppColors.redColor),
                 )
               : const SizedBox(),
           const SizedBox(height: 10),
