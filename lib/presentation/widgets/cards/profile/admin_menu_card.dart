@@ -49,6 +49,8 @@ class AdminMenuProfileCard extends ConsumerWidget {
                       () => const AdminSeluruhPengajuanRoute().push(context),
                     );
                   },
+                  isNotif: true,
+                  notif: 289,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -65,6 +67,7 @@ class AdminMenuProfileCard extends ConsumerWidget {
                       () => const AdminVerifikasiBerkasRoute().push(context),
                     );
                   },
+                  isNotif: true,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -81,6 +84,7 @@ class AdminMenuProfileCard extends ConsumerWidget {
                       () => const AdminVerifikasiLapanganRoute().push(context),
                     );
                   },
+                  isNotif: true,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -97,6 +101,7 @@ class AdminMenuProfileCard extends ConsumerWidget {
                       () => const AdminUploadScanSuratRoute().push(context),
                     );
                   },
+                  isNotif: true,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -113,6 +118,7 @@ class AdminMenuProfileCard extends ConsumerWidget {
                       () => const AdminSuratRekomendasiRoute().push(context),
                     );
                   },
+                  isNotif: true,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -129,6 +135,7 @@ class AdminMenuProfileCard extends ConsumerWidget {
                       () => const AdminRevisiBerkasRoute().push(context),
                     );
                   },
+                  isNotif: true,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -145,6 +152,7 @@ class AdminMenuProfileCard extends ConsumerWidget {
                       () => const AdminPengajuanDitolahRoute().push(context),
                     );
                   },
+                  isNotif: true,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
