@@ -69,13 +69,12 @@ class AuthController extends _$AuthController {
           );
           return auth;
         } on DioException catch (e) {
-          print("error ${e.toString()}");
           if (e.response!.statusCode! >= 500) {
             return const Auth.error("Internal Server Error");
           }
           return Auth.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
-          return Auth.error(e.toString());
+          return const Auth.error("Terjadi kesalahan");
         }
       },
     );
@@ -122,7 +121,7 @@ class AuthController extends _$AuthController {
           }
           return Auth.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
-          return Auth.error(e.toString());
+          return const Auth.error("Terjadi kesalahan");
         }
       },
     );
@@ -170,7 +169,7 @@ class AuthController extends _$AuthController {
           }
           return Auth.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
-          return Auth.error(e.toString());
+          return const Auth.error("Terjadi kesalahan");
         }
       },
     );
@@ -203,7 +202,7 @@ class AuthController extends _$AuthController {
           }
           return Auth.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
-          return Auth.error(e.toString());
+          return const Auth.error("Terjadi kesalahan");
         }
       },
     );
@@ -237,7 +236,7 @@ class AuthController extends _$AuthController {
           }
           return Auth.error(e.response?.data['message'].toString() ?? 'Error');
         } catch (e) {
-          return Auth.error(e.toString());
+          return const Auth.error("Terjadi kesalahan");
         }
       },
     );
@@ -255,10 +254,8 @@ class AuthController extends _$AuthController {
         next.requireValue.map<void>(
           signedIn: (signedIn) async {
             await _sharedPreferences.setString(_sharedPrefsKey, signedIn.token);
-            await _sharedPreferences.setString(
-                _sharedPrefsNipKey, signedIn.nip);
-            await _sharedPreferences.setString(
-                _sharedPrefsPasswordKey, signedIn.password);
+            await _sharedPreferences.setString(_sharedPrefsNipKey, signedIn.nip);
+            await _sharedPreferences.setString(_sharedPrefsPasswordKey, signedIn.password);
           },
           signedOut: (signedOut) async {
             await _sharedPreferences.remove(_sharedPrefsKey);
