@@ -55,7 +55,10 @@ class PengajuanVerifikasiLapanganController extends _$PengajuanVerifikasiLapanga
       },
     );
 
-    loadMorePengajuan.whenData((value) {
+    return loadMorePengajuan.maybeWhen(orElse: () {
+      page--;
+      return true;
+    }, data: (value) {
       if (value.isEmpty) {
         page--;
         return true;
@@ -63,7 +66,5 @@ class PengajuanVerifikasiLapanganController extends _$PengajuanVerifikasiLapanga
       state = AsyncValue.data([...state.value!, ...value]);
       return false;
     });
-
-    return true;
   }
 }

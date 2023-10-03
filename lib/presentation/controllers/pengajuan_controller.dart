@@ -51,7 +51,7 @@ class PengajuanController extends _$PengajuanController {
     }
   }
 
-  Future<void> loadMore() async {
+  Future<bool> loadMore() async {
     final loadMorePengajuan = await AsyncValue.guard<List<Pengajuan>>(
       () async {
         try {
@@ -72,12 +72,16 @@ class PengajuanController extends _$PengajuanController {
       },
     );
 
-    loadMorePengajuan.whenData((value) {
+    return loadMorePengajuan.maybeWhen(orElse: () {
+      page--;
+      return true;
+    }, data: (value) {
       if (value.isEmpty) {
         page--;
+        return true;
       }
-
       state = AsyncValue.data([...state.value!, ...value]);
+      return false;
     });
   }
 }

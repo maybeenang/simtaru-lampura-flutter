@@ -55,16 +55,16 @@ class PengajuanDitolakController extends _$PengajuanDitolakController {
       },
     );
 
-    loadMorePengajuan.whenData((value) {
+    return loadMorePengajuan.maybeWhen(orElse: () {
+      page--;
+      return true;
+    }, data: (value) {
       if (value.isEmpty) {
         page--;
         return true;
       }
-
       state = AsyncValue.data([...state.value!, ...value]);
       return false;
     });
-
-    return true;
   }
 }

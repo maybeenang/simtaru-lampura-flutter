@@ -55,7 +55,10 @@ class PengajuanUploadScanSuratController extends _$PengajuanUploadScanSuratContr
       },
     );
 
-    loadMorePengajuan.whenData((value) {
+    return loadMorePengajuan.maybeWhen(orElse: () {
+      page--;
+      return true;
+    }, data: (value) {
       if (value.isEmpty) {
         page--;
         return true;
@@ -63,6 +66,5 @@ class PengajuanUploadScanSuratController extends _$PengajuanUploadScanSuratContr
       state = AsyncValue.data([...state.value!, ...value]);
       return false;
     });
-    return true;
   }
 }
