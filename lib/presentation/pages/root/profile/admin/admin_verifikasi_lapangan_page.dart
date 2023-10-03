@@ -16,13 +16,15 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showScrollToTop = useState(false);
+    final hasReachedMax = useState(false);
     final pengajuanVerifikasiLapanganState = ref.watch(pengajuanVerifikasiLapanganControllerProvider);
 
     final scrollController = ScrollController();
 
     scrollController.addListener(() {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        ref.read(pengajuanVerifikasiLapanganControllerProvider.notifier).loadMore();
+        final newValue = ref.read(pengajuanVerifikasiLapanganControllerProvider.notifier).loadMore();
+        newValue.then((value) => hasReachedMax.value = value);
       }
 
       if (scrollController.position.pixels >= 100) {
@@ -61,7 +63,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   const CustomAppBarFitur(
-                    title: "Admin Pengajuan Ditolak",
+                    title: "Admin Verifikasi Lapangan",
                     bgColor: AppColors.primaryColor,
                     labelColor: AppColors.whiteColor,
                   ),
@@ -104,7 +106,11 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                 }
 
                 return SliverList.separated(
-                  itemCount: data.length + 3,
+                  itemCount: hasReachedMax.value
+                      ? data.length
+                      : data.length > 5
+                          ? data.length + 1
+                          : data.length,
                   separatorBuilder: (context, index) {
                     return const SizedBox(height: 10);
                   },

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class BottomSheetCard extends ConsumerWidget {
-  const BottomSheetCard({super.key});
+  const BottomSheetCard({super.key, required this.pengajuan});
+
+  final Pengajuan pengajuan;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,10 +38,19 @@ class BottomSheetCard extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 10),
-          const ButtonActionPengajuan(
+          ButtonActionPengajuan(
             label: "Lihat Detail",
             icon: Icons.document_scanner_outlined,
             color: AppColors.primaryColor,
+            onTap: () {
+              Future.delayed(
+                const Duration(milliseconds: 300),
+                () {
+                  Navigator.pop(context);
+                  DetailPengajuanRoute(pengajuan).push(context);
+                },
+              );
+            },
           ),
           const SizedBox(height: 10),
           const Divider(
@@ -46,7 +59,7 @@ class BottomSheetCard extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           const ButtonActionPengajuan(
-            label: "Verifikasi",
+            label: "Setujui",
             icon: Icons.check,
             color: AppColors.greenColor,
           ),

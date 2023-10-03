@@ -3,11 +3,12 @@ import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ButtonActionPengajuan extends ConsumerWidget {
-  const ButtonActionPengajuan({super.key, this.label, this.icon, this.color});
+  const ButtonActionPengajuan({super.key, this.label, this.icon, this.color, this.onTap});
 
   final String? label;
   final IconData? icon;
   final Color? color;
+  final Function? onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,7 +22,7 @@ class ButtonActionPengajuan extends ConsumerWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: onTap as void Function()? ?? () {},
           child: Ink(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Row(

@@ -16,13 +16,16 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showScrollToTop = useState(false);
+    final hasReachedMax = useState(false);
     final pengajuanUploadScanSuratState = ref.watch(pengajuanUploadScanSuratControllerProvider);
 
     final scrollController = ScrollController();
 
     scrollController.addListener(() {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        ref.read(pengajuanUploadScanSuratControllerProvider.notifier).loadMore();
+        final newValue = ref.read(pengajuanUploadScanSuratControllerProvider.notifier).loadMore();
+
+        newValue.then((value) => hasReachedMax.value = value);
       }
 
       if (scrollController.position.pixels >= 100) {
@@ -61,7 +64,7 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   const CustomAppBarFitur(
-                    title: "Admin Pengajuan Ditolak",
+                    title: "Admin Upload Scan Surat",
                     bgColor: AppColors.primaryColor,
                     labelColor: AppColors.whiteColor,
                   ),
@@ -104,7 +107,11 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
                 }
 
                 return SliverList.separated(
-                  itemCount: data.length + 3,
+                  itemCount: hasReachedMax.value
+                      ? data.length
+                      : data.length > 5
+                          ? data.length + 3
+                          : data.length,
                   separatorBuilder: (context, index) {
                     return const SizedBox(height: 10);
                   },
@@ -123,6 +130,9 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
                 );
               },
             ),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 50),
+            )
           ],
         ),
       ),

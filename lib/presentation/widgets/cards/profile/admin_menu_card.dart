@@ -57,44 +57,12 @@ class AdminMenuProfileCard extends ConsumerWidget {
                   ),
                 ),
                 ButtonProfile(
-                  label: "Pengajuan Ditolak",
-                  icon: Icons.assignment_late_outlined,
+                  label: "Verifikasi Berkas",
+                  icon: Icons.file_open_outlined,
                   onTap: () {
                     Future.delayed(
                       const Duration(milliseconds: 300),
-                      () => const AdminPengajuanDitolahRoute().push(context),
-                    );
-                  },
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Divider(
-                    color: AppColors.borderColor,
-                  ),
-                ),
-                ButtonProfile(
-                  label: "Surat Rekomendasi",
-                  icon: Icons.assignment_add,
-                  onTap: () {
-                    Future.delayed(
-                      const Duration(milliseconds: 300),
-                      () => const AdminSuratRekomendasiRoute().push(context),
-                    );
-                  },
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Divider(
-                    color: AppColors.borderColor,
-                  ),
-                ),
-                ButtonProfile(
-                  label: "Upload Scan Surat",
-                  icon: Icons.assignment_turned_in_outlined,
-                  onTap: () {
-                    Future.delayed(
-                      const Duration(milliseconds: 300),
-                      () => const AdminUploadScanSuratRoute().push(context),
+                      () => const AdminVerifikasiBerkasRoute().push(context),
                     );
                   },
                 ),
@@ -121,12 +89,28 @@ class AdminMenuProfileCard extends ConsumerWidget {
                   ),
                 ),
                 ButtonProfile(
-                  label: "Verifikasi Berkas",
-                  icon: Icons.file_open_outlined,
+                  label: "Upload Scan Surat",
+                  icon: Icons.assignment_turned_in_outlined,
                   onTap: () {
                     Future.delayed(
                       const Duration(milliseconds: 300),
-                      () => const AdminVerifikasiBerkasRoute().push(context),
+                      () => const AdminUploadScanSuratRoute().push(context),
+                    );
+                  },
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider(
+                    color: AppColors.borderColor,
+                  ),
+                ),
+                ButtonProfile(
+                  label: "Surat Rekomendasi",
+                  icon: Icons.assignment_add,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminSuratRekomendasiRoute().push(context),
                     );
                   },
                 ),
@@ -143,6 +127,22 @@ class AdminMenuProfileCard extends ConsumerWidget {
                     Future.delayed(
                       const Duration(milliseconds: 300),
                       () => const AdminRevisiBerkasRoute().push(context),
+                    );
+                  },
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider(
+                    color: AppColors.borderColor,
+                  ),
+                ),
+                ButtonProfile(
+                  label: "Pengajuan Ditolak",
+                  icon: Icons.assignment_late_outlined,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminPengajuanDitolahRoute().push(context),
                     );
                   },
                 ),

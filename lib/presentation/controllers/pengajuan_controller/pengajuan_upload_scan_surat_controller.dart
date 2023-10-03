@@ -34,7 +34,7 @@ class PengajuanUploadScanSuratController extends _$PengajuanUploadScanSuratContr
     }
   }
 
-  Future<void> loadMore() async {
+  Future<bool> loadMore() async {
     final loadMorePengajuan = await AsyncValue.guard<List<Pengajuan>>(
       () async {
         try {
@@ -58,8 +58,11 @@ class PengajuanUploadScanSuratController extends _$PengajuanUploadScanSuratContr
     loadMorePengajuan.whenData((value) {
       if (value.isEmpty) {
         page--;
+        return true;
       }
       state = AsyncValue.data([...state.value!, ...value]);
+      return false;
     });
+    return true;
   }
 }

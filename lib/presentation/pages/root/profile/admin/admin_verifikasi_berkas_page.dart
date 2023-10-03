@@ -17,13 +17,15 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showScrollToTop = useState(false);
+    final hasReachedMax = useState(false);
     final pengajuanVerifikasiBerkasState = ref.watch(pengajuanVerifikasiBerkasControllerProvider);
 
     final scrollController = ScrollController();
 
-    scrollController.addListener(() {
+    scrollController.addListener(() async {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        ref.read(pengajuanVerifikasiBerkasControllerProvider.notifier).loadMore();
+        final newValue = ref.read(pengajuanVerifikasiBerkasControllerProvider.notifier).loadMore();
+        newValue.then((value) => hasReachedMax.value = value);
       }
 
       if (scrollController.position.pixels >= 100) {
@@ -62,7 +64,7 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   const CustomAppBarFitur(
-                    title: "Admin Pengajuan Ditolak",
+                    title: "Admin Verifikasi Berkas",
                     bgColor: AppColors.primaryColor,
                     labelColor: AppColors.whiteColor,
                   ),
@@ -105,7 +107,11 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                 }
 
                 return SliverList.separated(
-                  itemCount: data.length + 3,
+                  itemCount: hasReachedMax.value
+                      ? data.length
+                      : data.length > 5
+                          ? data.length + 3
+                          : data.length,
                   separatorBuilder: (context, index) {
                     return const SizedBox(height: 10);
                   },
@@ -124,7 +130,9 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                                   () => showModalBottomSheet(
                                     context: context,
                                     builder: (context) {
-                                      return const BottomSheetCard();
+                                      return BottomSheetCard(
+                                        pengajuan: data[index],
+                                      );
                                     },
                                   ),
                                 );
@@ -134,6 +142,9 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                   },
                 );
               },
+            ),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 50),
             ),
           ],
         ),
