@@ -92,6 +92,10 @@ RouteBase get $rootRoute => GoRouteData.$route(
           path: 'admin-revisi-berkas',
           factory: $AdminRevisiBerkasRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'admin-ubah-status',
+          factory: $AdminUbahStatusRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -338,6 +342,24 @@ extension $AdminRevisiBerkasRouteExtension on AdminRevisiBerkasRoute {
 
   String get location => GoRouteData.$location(
         '/admin-revisi-berkas',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminUbahStatusRouteExtension on AdminUbahStatusRoute {
+  static AdminUbahStatusRoute _fromState(GoRouterState state) =>
+      const AdminUbahStatusRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-ubah-status',
       );
 
   void go(BuildContext context) => context.go(location);

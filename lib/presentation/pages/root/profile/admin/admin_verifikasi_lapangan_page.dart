@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/item_pengajuan_card.dart';
@@ -132,6 +133,31 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                                     builder: (context) {
                                       return BottomSheetCard(
                                         pengajuan: data[index],
+                                        actions: [
+                                          const ButtonActionPengajuan(
+                                            label: "Rekam Polygon",
+                                            icon: Icons.map,
+                                            color: AppColors.secondaryColor,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const ButtonActionPengajuan(
+                                            label: "Setujui",
+                                            icon: Icons.check,
+                                            color: AppColors.greenColor,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const ButtonActionPengajuan(
+                                            label: "Tolak",
+                                            icon: Icons.close,
+                                            color: AppColors.redColor,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          ButtonActionPengajuan(
+                                            label: "Edit",
+                                            icon: Icons.edit,
+                                            color: AppColors.mapColorStatusChip[2]!,
+                                          ),
+                                        ],
                                       );
                                     },
                                   ),

@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/item_pengajuan_card.dart';
@@ -133,6 +134,31 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
                                     builder: (context) {
                                       return BottomSheetCard(
                                         pengajuan: data[index],
+                                        actions: [
+                                          const ButtonActionPengajuan(
+                                            label: "Upload Surat",
+                                            icon: Icons.upload_file,
+                                            color: AppColors.secondaryColor,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const ButtonActionPengajuan(
+                                            label: "Edit Polygon",
+                                            icon: Icons.map,
+                                            color: AppColors.greenColor,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const ButtonActionPengajuan(
+                                            label: "Edit data Lapangan",
+                                            icon: Icons.edit_location_outlined,
+                                            color: AppColors.greenColor,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          ButtonActionPengajuan(
+                                            label: "Edit",
+                                            icon: Icons.edit,
+                                            color: AppColors.mapColorStatusChip[2]!,
+                                          ),
+                                        ],
                                       );
                                     },
                                   ),

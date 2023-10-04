@@ -6,9 +6,10 @@ import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_p
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class BottomSheetCard extends ConsumerWidget {
-  const BottomSheetCard({super.key, required this.pengajuan});
+  const BottomSheetCard({super.key, required this.pengajuan, this.actions});
 
   final Pengajuan pengajuan;
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,23 +59,7 @@ class BottomSheetCard extends ConsumerWidget {
             indent: 10,
           ),
           const SizedBox(height: 10),
-          const ButtonActionPengajuan(
-            label: "Setujui",
-            icon: Icons.check,
-            color: AppColors.greenColor,
-          ),
-          const SizedBox(height: 5),
-          const ButtonActionPengajuan(
-            label: "Tolak",
-            icon: Icons.close,
-            color: AppColors.redColor,
-          ),
-          const SizedBox(height: 5),
-          ButtonActionPengajuan(
-            label: "Edit",
-            icon: Icons.edit,
-            color: AppColors.mapColorStatusChip[2]!,
-          ),
+          ...actions ?? const [],
         ],
       ),
     );

@@ -160,6 +160,22 @@ class AdminMenuProfileCard extends ConsumerWidget {
                     color: AppColors.borderColor,
                   ),
                 ),
+                ButtonProfile(
+                  label: "Ubah Status Pengajuan",
+                  icon: Icons.edit,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminUbahStatusRoute().push(context),
+                    );
+                  },
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider(
+                    color: AppColors.borderColor,
+                  ),
+                ),
                 const ButtonProfile(
                   label: "Kelola User",
                   icon: Icons.group,

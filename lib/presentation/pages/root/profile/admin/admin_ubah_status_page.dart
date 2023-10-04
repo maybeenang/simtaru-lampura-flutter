@@ -2,30 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
-import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/item_pengajuan_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/cards/warning_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AdminVerifikasiBerkasPage extends HookConsumerWidget {
-  const AdminVerifikasiBerkasPage({super.key});
+class AdminUbahStatusPage extends HookConsumerWidget {
+  const AdminUbahStatusPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showScrollToTop = useState(false);
     final hasReachedMax = useState(false);
-    final pengajuanVerifikasiBerkasState = ref.watch(pengajuanVerifikasiBerkasControllerProvider);
+    final pengajuanState = ref.watch(pengajuanControllerProvider);
 
     final scrollController = ScrollController();
 
-    scrollController.addListener(() async {
+    scrollController.addListener(() {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        final newValue = ref.read(pengajuanVerifikasiBerkasControllerProvider.notifier).loadMore();
+        final newValue = ref.read(pengajuanControllerProvider.notifier).loadMore();
+
         newValue.then((value) => hasReachedMax.value = value);
       }
 
@@ -65,7 +67,7 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   const CustomAppBarFitur(
-                    title: "Admin Verifikasi Berkas",
+                    title: "Admin Ubah Status",
                     bgColor: AppColors.primaryColor,
                     labelColor: AppColors.whiteColor,
                   ),
@@ -82,10 +84,12 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
+                  const WarningCard(),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
-            pengajuanVerifikasiBerkasState.maybeWhen(
+            pengajuanState.maybeWhen(
               orElse: () {
                 return SliverList.separated(
                   itemCount: 5,
@@ -101,7 +105,7 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                 );
               },
               data: (data) {
-                if (data.isEmpty) {
+                if (data!.isEmpty) {
                   return const Center(
                     child: Text("Tidak ada data"),
                   );
@@ -134,20 +138,8 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                                       return BottomSheetCard(
                                         pengajuan: data[index],
                                         actions: [
-                                          const ButtonActionPengajuan(
-                                            label: "Setujui",
-                                            icon: Icons.check,
-                                            color: AppColors.greenColor,
-                                          ),
-                                          const SizedBox(height: 5),
-                                          const ButtonActionPengajuan(
-                                            label: "Tolak",
-                                            icon: Icons.close,
-                                            color: AppColors.redColor,
-                                          ),
-                                          const SizedBox(height: 5),
                                           ButtonActionPengajuan(
-                                            label: "Edit",
+                                            label: "Ubah Status",
                                             icon: Icons.edit,
                                             color: AppColors.mapColorStatusChip[2]!,
                                           ),
@@ -165,7 +157,7 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
             ),
             const SliverToBoxAdapter(
               child: SizedBox(height: 50),
-            ),
+            )
           ],
         ),
       ),
