@@ -3,10 +3,10 @@ import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'pengajuan_upload_scan_surat_controller.g.dart';
+part 'pengajuan_surat_rekomendasi_controller.g.dart';
 
 @riverpod
-class PengajuanUploadScanSuratController extends _$PengajuanUploadScanSuratController {
+class PengajuanSuratRekomendasiController extends _$PengajuanSuratRekomendasiController {
   final Dio dio = Dio();
   int page = 1;
 
@@ -20,7 +20,7 @@ class PengajuanUploadScanSuratController extends _$PengajuanUploadScanSuratContr
 
     try {
       String query = "?page=$page";
-      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 11.toString() + query);
+      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 12.toString() + query);
       final Response response = await dio.get(
         uri.toString(),
       );
@@ -41,7 +41,7 @@ class PengajuanUploadScanSuratController extends _$PengajuanUploadScanSuratContr
           page++;
           String query = "?page=$page";
 
-          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 11.toString() + query);
+          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 12.toString() + query);
           final Response response = await dio.get(
             uri.toString(),
           );

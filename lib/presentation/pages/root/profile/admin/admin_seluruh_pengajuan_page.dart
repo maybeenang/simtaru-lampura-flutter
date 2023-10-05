@@ -17,14 +17,16 @@ class AdminSeluruhPengajuanPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showScrollToTop = useState(false);
+    final hasReachedMax = useState(false);
     final pengajuanState = ref.watch(pengajuanControllerProvider);
 
     final scrollController = ScrollController();
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        ref.read(pengajuanControllerProvider.notifier).loadMore();
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+        final newValue = ref.read(pengajuanControllerProvider.notifier).loadMore();
+        newValue.then((value) => hasReachedMax.value = value);
+        print("hasReachedMax.value ${hasReachedMax.value}");
       }
 
       if (scrollController.position.pixels >= 100) {
@@ -94,8 +96,7 @@ class AdminSeluruhPengajuanPage extends HookConsumerWidget {
                   },
                   itemBuilder: (context, index) {
                     return const Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: AppDouble.paddingOutside),
+                      padding: EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
                       child: ItemPengajuanLoading(),
                     );
                   },
@@ -109,7 +110,7 @@ class AdminSeluruhPengajuanPage extends HookConsumerWidget {
                 }
 
                 return SliverList.separated(
-                  itemCount: data.length + 3,
+                  itemCount: hasReachedMax.value ? data.length : data.length + 3,
                   separatorBuilder: (context, index) {
                     return const SizedBox(height: 10);
                   },

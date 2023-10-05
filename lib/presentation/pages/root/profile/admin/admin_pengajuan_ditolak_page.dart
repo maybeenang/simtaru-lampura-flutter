@@ -16,14 +16,15 @@ class AdminPengajuanDitolakPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showScrollToTop = useState(false);
+    final hasReachedMax = useState(false);
     final pengajuanDitolakState = ref.watch(pengajuanDitolakControllerProvider);
 
     final scrollController = ScrollController();
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        ref.read(pengajuanDitolakControllerProvider.notifier).loadMore();
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+        final newValue = ref.read(pengajuanDitolakControllerProvider.notifier).loadMore();
+        newValue.then((value) => hasReachedMax.value = value);
       }
 
       if (scrollController.position.pixels >= 100) {
@@ -91,8 +92,7 @@ class AdminPengajuanDitolakPage extends HookConsumerWidget {
                   },
                   itemBuilder: (context, index) {
                     return const Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: AppDouble.paddingOutside),
+                      padding: EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
                       child: ItemPengajuanLoading(),
                     );
                   },
@@ -106,7 +106,11 @@ class AdminPengajuanDitolakPage extends HookConsumerWidget {
                 }
 
                 return SliverList.separated(
-                  itemCount: data.length + 3,
+                  itemCount: hasReachedMax.value
+                      ? data.length
+                      : data.length > 5
+                          ? data.length + 3
+                          : data.length,
                   separatorBuilder: (context, index) {
                     return const SizedBox(height: 10);
                   },
@@ -125,6 +129,9 @@ class AdminPengajuanDitolakPage extends HookConsumerWidget {
                 );
               },
             ),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 50),
+            )
           ],
         ),
       ),

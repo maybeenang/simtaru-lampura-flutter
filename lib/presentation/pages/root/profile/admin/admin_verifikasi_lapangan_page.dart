@@ -3,7 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/item_pengajuan_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
@@ -16,13 +18,15 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showScrollToTop = useState(false);
+    final hasReachedMax = useState(false);
     final pengajuanVerifikasiLapanganState = ref.watch(pengajuanVerifikasiLapanganControllerProvider);
 
     final scrollController = ScrollController();
 
     scrollController.addListener(() {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        ref.read(pengajuanVerifikasiLapanganControllerProvider.notifier).loadMore();
+        final newValue = ref.read(pengajuanVerifikasiLapanganControllerProvider.notifier).loadMore();
+        newValue.then((value) => hasReachedMax.value = value);
       }
 
       if (scrollController.position.pixels >= 100) {
@@ -61,7 +65,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   const CustomAppBarFitur(
-                    title: "Admin Pengajuan Ditolak",
+                    title: "Admin Verifikasi Lapangan",
                     bgColor: AppColors.primaryColor,
                     labelColor: AppColors.whiteColor,
                   ),
@@ -104,7 +108,11 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                 }
 
                 return SliverList.separated(
-                  itemCount: data.length + 3,
+                  itemCount: hasReachedMax.value
+                      ? data.length
+                      : data.length > 5
+                          ? data.length + 1
+                          : data.length,
                   separatorBuilder: (context, index) {
                     return const SizedBox(height: 10);
                   },
@@ -117,6 +125,44 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                           ? const ItemPengajuanLoading()
                           : ItemPengajuanCard(
                               pengajuan: data[index],
+                              onTap: () {
+                                Future.delayed(
+                                  const Duration(milliseconds: 100),
+                                  () => showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return BottomSheetCard(
+                                        pengajuan: data[index],
+                                        actions: [
+                                          const ButtonActionPengajuan(
+                                            label: "Rekam Polygon",
+                                            icon: Icons.map,
+                                            color: AppColors.secondaryColor,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const ButtonActionPengajuan(
+                                            label: "Setujui",
+                                            icon: Icons.check,
+                                            color: AppColors.greenColor,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const ButtonActionPengajuan(
+                                            label: "Tolak",
+                                            icon: Icons.close,
+                                            color: AppColors.redColor,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          ButtonActionPengajuan(
+                                            label: "Edit",
+                                            icon: Icons.edit,
+                                            color: AppColors.mapColorStatusChip[2]!,
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
                             ),
                     );
                   },

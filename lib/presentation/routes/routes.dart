@@ -13,6 +13,7 @@ import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_revisi_berkas_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_seluruh_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_surat_rekomendasi_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_ubah_status_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_upload_scan_surat_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_berkas_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_lapangan_page.dart';
@@ -51,6 +52,7 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<AdminVerifikasiLapanganRoute>(path: AdminVerifikasiLapanganRoute.path),
     TypedGoRoute<AdminVerifikasiBerkasRoute>(path: AdminVerifikasiBerkasRoute.path),
     TypedGoRoute<AdminRevisiBerkasRoute>(path: AdminRevisiBerkasRoute.path),
+    TypedGoRoute<AdminUbahStatusRoute>(path: AdminUbahStatusRoute.path),
   ],
 )
 class RootRoute extends GoRouteData {
@@ -192,6 +194,16 @@ class AdminRevisiBerkasRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const AdminRevisiBerkasPage();
+  }
+}
+
+class AdminUbahStatusRoute extends GoRouteData {
+  const AdminUbahStatusRoute();
+  static const path = 'admin-ubah-status';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminUbahStatusPage();
   }
 }
 

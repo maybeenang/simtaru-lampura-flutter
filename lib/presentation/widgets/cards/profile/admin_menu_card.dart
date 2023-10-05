@@ -49,70 +49,8 @@ class AdminMenuProfileCard extends ConsumerWidget {
                       () => const AdminSeluruhPengajuanRoute().push(context),
                     );
                   },
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Divider(
-                    color: AppColors.borderColor,
-                  ),
-                ),
-                ButtonProfile(
-                  label: "Pengajuan Ditolak",
-                  icon: Icons.assignment_late_outlined,
-                  onTap: () {
-                    Future.delayed(
-                      const Duration(milliseconds: 300),
-                      () => const AdminPengajuanDitolahRoute().push(context),
-                    );
-                  },
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Divider(
-                    color: AppColors.borderColor,
-                  ),
-                ),
-                ButtonProfile(
-                  label: "Surat Rekomendasi",
-                  icon: Icons.assignment_add,
-                  onTap: () {
-                    Future.delayed(
-                      const Duration(milliseconds: 300),
-                      () => const AdminSuratRekomendasiRoute().push(context),
-                    );
-                  },
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Divider(
-                    color: AppColors.borderColor,
-                  ),
-                ),
-                ButtonProfile(
-                  label: "Upload Scan Surat",
-                  icon: Icons.assignment_turned_in_outlined,
-                  onTap: () {
-                    Future.delayed(
-                      const Duration(milliseconds: 300),
-                      () => const AdminUploadScanSuratRoute().push(context),
-                    );
-                  },
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Divider(
-                    color: AppColors.borderColor,
-                  ),
-                ),
-                ButtonProfile(
-                  label: "Verifikasi Lapangan",
-                  icon: Icons.add_location_alt_outlined,
-                  onTap: () {
-                    Future.delayed(
-                      const Duration(milliseconds: 300),
-                      () => const AdminVerifikasiLapanganRoute().push(context),
-                    );
-                  },
+                  isNotif: true,
+                  notif: 289,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -129,6 +67,58 @@ class AdminMenuProfileCard extends ConsumerWidget {
                       () => const AdminVerifikasiBerkasRoute().push(context),
                     );
                   },
+                  isNotif: true,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider(
+                    color: AppColors.borderColor,
+                  ),
+                ),
+                ButtonProfile(
+                  label: "Verifikasi Lapangan",
+                  icon: Icons.add_location_alt_outlined,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminVerifikasiLapanganRoute().push(context),
+                    );
+                  },
+                  isNotif: true,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider(
+                    color: AppColors.borderColor,
+                  ),
+                ),
+                ButtonProfile(
+                  label: "Upload Scan Surat",
+                  icon: Icons.assignment_turned_in_outlined,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminUploadScanSuratRoute().push(context),
+                    );
+                  },
+                  isNotif: true,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider(
+                    color: AppColors.borderColor,
+                  ),
+                ),
+                ButtonProfile(
+                  label: "Surat Rekomendasi",
+                  icon: Icons.assignment_add,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminSuratRekomendasiRoute().push(context),
+                    );
+                  },
+                  isNotif: true,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -143,6 +133,40 @@ class AdminMenuProfileCard extends ConsumerWidget {
                     Future.delayed(
                       const Duration(milliseconds: 300),
                       () => const AdminRevisiBerkasRoute().push(context),
+                    );
+                  },
+                  isNotif: true,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider(
+                    color: AppColors.borderColor,
+                  ),
+                ),
+                ButtonProfile(
+                  label: "Pengajuan Ditolak",
+                  icon: Icons.assignment_late_outlined,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminPengajuanDitolahRoute().push(context),
+                    );
+                  },
+                  isNotif: true,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider(
+                    color: AppColors.borderColor,
+                  ),
+                ),
+                ButtonProfile(
+                  label: "Ubah Status Pengajuan",
+                  icon: Icons.edit,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminUbahStatusRoute().push(context),
                     );
                   },
                 ),
