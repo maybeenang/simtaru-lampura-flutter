@@ -9,8 +9,7 @@ class Langkah4Form extends StatefulWidget {
   State<Langkah4Form> createState() => _Langkah4FormState();
 }
 
-class _Langkah4FormState extends State<Langkah4Form>
-    with TickerProviderStateMixin {
+class _Langkah4FormState extends State<Langkah4Form> with TickerProviderStateMixin {
   List<Marker> markers = [];
   bool isMarker = false;
   LatLng latLng = LatLng(0, 0);
@@ -49,6 +48,7 @@ class _Langkah4FormState extends State<Langkah4Form>
             options: MapOptions(
               center: LatLng(-4.838455515616654, 104.89554453973685),
               zoom: 13.0,
+              maxZoom: 18.0,
               onTap: (tapPosition, point) {
                 setState(() {
                   markers = [];
@@ -113,13 +113,11 @@ class _Langkah4FormState extends State<Langkah4Form>
       duration: const Duration(milliseconds: 1000),
     );
 
-    final Animation<double> animation =
-        CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
+    final Animation<double> animation = CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
 
     controller.addListener(() {
       mapController.move(
-          LatLng(latTween.evaluate(animation), lngTween.evaluate(animation)),
-          zoomTween.evaluate(animation));
+          LatLng(latTween.evaluate(animation), lngTween.evaluate(animation)), zoomTween.evaluate(animation));
       mapController.rotate(rotationTween.evaluate(animation));
     });
 
