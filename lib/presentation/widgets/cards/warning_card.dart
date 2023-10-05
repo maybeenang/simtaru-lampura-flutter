@@ -4,7 +4,9 @@ import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 
 class WarningCard extends StatelessWidget {
-  const WarningCard({super.key});
+  const WarningCard({super.key, this.text});
+
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +21,10 @@ class WarningCard extends StatelessWidget {
           AppStyles.boxShadowStyle,
         ],
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Perhatian",
             style: TextStyle(
               color: AppColors.redColor,
@@ -30,10 +32,11 @@ class WarningCard extends StatelessWidget {
               fontSize: 18,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
-            "Halaman ini hanya digunakan jika ingin mengubah status saat terjadi kesalahan. Salah satu contohnya jika status tertera Selesai, Surat Dapat Diunduh, namun salah mengupload scan surat hasil rekomendasi, maka klik tombol Ubah status dan pilih status menjadi upload scan surat rekomendasi kemudian upload kembali hasil scan suratnya.",
-            style: TextStyle(
+            text ??
+                "Halaman ini hanya digunakan jika ingin mengubah status saat terjadi kesalahan. Salah satu contohnya jika status tertera Selesai, Surat Dapat Diunduh, namun salah mengupload scan surat hasil rekomendasi, maka klik tombol Ubah status dan pilih status menjadi upload scan surat rekomendasi kemudian upload kembali hasil scan suratnya.",
+            style: const TextStyle(
               color: AppColors.redColor,
             ),
             textAlign: TextAlign.justify,
