@@ -39,8 +39,7 @@ class PengajuanController extends _$PengajuanController {
           uri.toString(),
         );
 
-        final List<Pengajuan> pengajuan =
-            (response.data['data']['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
+        final List<Pengajuan> pengajuan = (response.data['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
 
         return pengajuan;
       } catch (e) {
@@ -62,8 +61,7 @@ class PengajuanController extends _$PengajuanController {
           final Response response = await dio.get(
             uri.toString(),
           );
-          final List<Pengajuan> pengajuan =
-              (response.data['data']['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
+          final List<Pengajuan> pengajuan = (response.data['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
 
           return pengajuan;
         } catch (e) {

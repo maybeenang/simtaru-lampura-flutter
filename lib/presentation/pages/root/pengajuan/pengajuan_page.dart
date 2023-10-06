@@ -10,6 +10,9 @@ import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah5_form.dar
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah6_form.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah7_form.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:latlong2/latlong.dart';
+
+final AutoDisposeStateProvider<LatLng> currLatLng = StateProvider.autoDispose<LatLng>((ref) => LatLng(0, 0));
 
 class PengajuanPage extends HookConsumerWidget {
   const PengajuanPage({Key? key}) : super(key: key);
@@ -17,6 +20,7 @@ class PengajuanPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = useState(0);
+    final currLatlangState = ref.watch(currLatLng);
 
     final List inputController = List.generate(17, (index) => useTextEditingController());
 
@@ -134,26 +138,41 @@ class PengajuanPage extends HookConsumerWidget {
             if (currentIndex.value < steps().length - 1) {
               switch (currentIndex.value) {
                 case 0:
+                  FocusScope.of(context).unfocus();
                   if (formPengajuanKey1.currentState!.validate()) {
                     currentIndex.value++;
                   }
                   break;
                 case 1:
+                  FocusScope.of(context).unfocus();
                   if (formPengajuanKey2.currentState!.validate()) {
                     currentIndex.value++;
                   }
                   break;
                 case 2:
+                  FocusScope.of(context).unfocus();
                   if (formPengajuanKey3.currentState!.validate()) {
                     currentIndex.value++;
                   }
                   break;
+                case 3:
+                  print(currLatlangState);
+                  if (currLatlangState != LatLng(0, 0)) {
+                    currentIndex.value++;
+                  }
+                  break;
                 default:
+                  FocusScope.of(context).unfocus();
                   currentIndex.value++;
               }
             }
           },
-          onStepCancel: () => currentIndex.value--,
+          onStepCancel: () {
+            FocusScope.of(context).unfocus();
+            if (currentIndex.value > 0) {
+              currentIndex.value--;
+            }
+          },
         ),
       ),
     );

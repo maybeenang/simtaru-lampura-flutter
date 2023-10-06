@@ -30,6 +30,7 @@ class Langkah1Form extends StatelessWidget {
           const SizedBox(height: 10),
           TextFieldCommon(
             labelText: "No. HP",
+            keyboardType: TextInputType.number,
             controller: inputController[3],
           ),
           const SizedBox(height: 10),

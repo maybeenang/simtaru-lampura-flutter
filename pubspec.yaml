@@ -39,6 +39,7 @@ dependencies:
   another_flushbar: ^1.12.30
   shimmer: ^3.0.0
   intl: ^0.18.1
+  file_picker: ^5.5.0
 
 dev_dependencies:
   flutter_test:

@@ -16,6 +16,8 @@ class Langkah2Form extends StatelessWidget {
           TextFieldCommon(
             labelText: "No. Identitas",
             controller: inputController[5],
+            isNik: true,
+            keyboardType: TextInputType.number,
           ),
           const SizedBox(height: 10),
           TextFieldCommon(
@@ -31,11 +33,13 @@ class Langkah2Form extends StatelessWidget {
           TextFieldCommon(
             labelText: "Luas tanah seluruhnya m2",
             controller: inputController[8],
+            keyboardType: TextInputType.number,
           ),
           const SizedBox(height: 10),
           TextFieldCommon(
             labelText: "Luas tanah yang dimohon m2",
             controller: inputController[9],
+            keyboardType: TextInputType.number,
           ),
           const SizedBox(height: 10),
           TextFieldCommon(

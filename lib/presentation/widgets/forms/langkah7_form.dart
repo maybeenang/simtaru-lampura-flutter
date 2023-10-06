@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/pengajuan_page.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Langkah7Form extends StatelessWidget {
+class Langkah7Form extends HookConsumerWidget {
   const Langkah7Form({super.key, required this.inputController});
 
   final List inputController;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currLatLngState = ref.watch(currLatLng);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -133,7 +137,7 @@ class Langkah7Form extends StatelessWidget {
           "Koordinat",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
-        const Text('1238129031829031829132o890'),
+        Text(currLatLngState.toString()),
       ],
     );
   }
