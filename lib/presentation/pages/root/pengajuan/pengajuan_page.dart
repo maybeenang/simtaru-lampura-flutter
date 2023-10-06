@@ -137,30 +137,30 @@ class PengajuanPage extends HookConsumerWidget {
           onStepContinue: () {
             if (currentIndex.value < steps().length - 1) {
               switch (currentIndex.value) {
-                case 0:
-                  FocusScope.of(context).unfocus();
-                  if (formPengajuanKey1.currentState!.validate()) {
-                    currentIndex.value++;
-                  }
-                  break;
-                case 1:
-                  FocusScope.of(context).unfocus();
-                  if (formPengajuanKey2.currentState!.validate()) {
-                    currentIndex.value++;
-                  }
-                  break;
-                case 2:
-                  FocusScope.of(context).unfocus();
-                  if (formPengajuanKey3.currentState!.validate()) {
-                    currentIndex.value++;
-                  }
-                  break;
-                case 3:
-                  print(currLatlangState);
-                  if (currLatlangState != LatLng(0, 0)) {
-                    currentIndex.value++;
-                  }
-                  break;
+                // case 0:
+                //   FocusScope.of(context).unfocus();
+                //   if (formPengajuanKey1.currentState!.validate()) {
+                //     currentIndex.value++;
+                //   }
+                //   break;
+                // case 1:
+                //   FocusScope.of(context).unfocus();
+                //   if (formPengajuanKey2.currentState!.validate()) {
+                //     currentIndex.value++;
+                //   }
+                //   break;
+                // case 2:
+                //   FocusScope.of(context).unfocus();
+                //   if (formPengajuanKey3.currentState!.validate()) {
+                //     currentIndex.value++;
+                //   }
+                //   break;
+                // case 3:
+                //   print(currLatlangState);
+                //   if (currLatlangState != LatLng(0, 0)) {
+                //     currentIndex.value++;
+                //   }
+                //   break;
                 default:
                   FocusScope.of(context).unfocus();
                   currentIndex.value++;
