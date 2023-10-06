@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TextFieldUploadFile extends HookConsumerWidget {
@@ -37,18 +38,17 @@ class TextFieldUploadFile extends HookConsumerWidget {
         Row(
           children: [
             Expanded(
-              child: TextField(
-                readOnly: true,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5.0),
-                      ),
-                      borderSide: BorderSide(color: Colors.white, width: 2)),
-                  hintText: namaFile.value == '' ? 'File Belum di Upload' : namaFile.value,
-                  contentPadding: const EdgeInsets.all(10.0),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: AppColors.whiteColor,
+                  border: Border.all(
+                    width: 1,
+                    color: AppColors.borderColor,
+                  ),
+                ),
+                child: Text(
+                  namaFile.value == '' ? "Upload File" : namaFile.value,
                 ),
               ),
             ),
