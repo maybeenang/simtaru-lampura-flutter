@@ -15,6 +15,7 @@ class TextFieldCommon extends HookConsumerWidget {
     this.isLast,
     this.isEmail,
     this.isNik,
+    this.initialValue,
   });
 
   final String labelText;
@@ -25,17 +26,21 @@ class TextFieldCommon extends HookConsumerWidget {
   final bool? isLast;
   final bool? isEmail;
   final bool? isNik;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final hidePassword = useState<bool>(isPassword ?? false);
 
+    if (initialValue != null && controller!.text.isEmpty) {
+      controller!.text = initialValue!;
+    }
+
     return TextFormField(
       keyboardType: keyboardType ?? TextInputType.text,
       controller: controller,
       obscureText: hidePassword.value,
-      textInputAction:
-          isLast == true ? TextInputAction.done : TextInputAction.next,
+      textInputAction: isLast == true ? TextInputAction.done : TextInputAction.next,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return '$labelText tidak boleh kosong';
@@ -64,9 +69,7 @@ class TextFieldCommon extends HookConsumerWidget {
                   hidePassword.value = !hidePassword.value;
                 },
                 icon: Icon(
-                  hidePassword.value
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined,
+                  hidePassword.value ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                   color: AppColors.greyColor,
                   size: 20,
                 ),
