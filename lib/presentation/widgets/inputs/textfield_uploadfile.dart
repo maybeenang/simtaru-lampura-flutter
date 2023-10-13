@@ -1,33 +1,35 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_icon.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:open_file/open_file.dart';
 
 class TextFieldUploadFile extends HookConsumerWidget {
   const TextFieldUploadFile({super.key, required this.labelText});
 
   final String labelText;
 
-  Future<String> openFileExplorer() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: false,
-    );
-
-    if (result != null) {
-      File file = File(result.files.first.name);
-      return file.path;
-    }
-
-    return '';
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final namaFile = useState('');
+    final file = useState<PlatformFile?>(null);
+
+    void openFileExplorer() async {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: false,
+      );
+
+      if (result != null) {
+        namaFile.value = result.files.single.path!;
+        file.value = result.files.first;
+      }
+    }
+
+    void _openFile(PlatformFile file) {
+      OpenFile.open(file.path);
+    }
 
     return Column(
       children: [
@@ -43,15 +45,11 @@ class TextFieldUploadFile extends HookConsumerWidget {
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: namaFile.value == '' ? AppColors.whiteColor : null,
-                  border: namaFile.value == ''
-                      ? Border.all(color: AppColors.greyColor)
-                      : Border.all(color: AppColors.greenColor),
+                  border: namaFile.value == '' ? Border.all(color: AppColors.greyColor) : null,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Text(
-                  namaFile.value == '' ? "Upload File" : namaFile.value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  namaFile.value == '' ? 'Belum ada file yang dipilih' : namaFile.value.toString().split('/').last,
                 ),
               ),
             ),
@@ -59,7 +57,7 @@ class TextFieldUploadFile extends HookConsumerWidget {
             namaFile.value == ''
                 ? ElevatedButton(
                     onPressed: () async {
-                      namaFile.value = await openFileExplorer();
+                      openFileExplorer();
                     },
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
@@ -71,13 +69,15 @@ class TextFieldUploadFile extends HookConsumerWidget {
                     children: [
                       ButtonIcon(
                         icon: Icons.remove_red_eye,
-                        onTap: () {},
+                        onTap: () {
+                          _openFile(file.value!);
+                        },
                       ),
                       const SizedBox(width: 5),
                       ButtonIcon(
                         icon: Icons.edit,
                         onTap: () async {
-                          namaFile.value = await openFileExplorer();
+                          openFileExplorer();
                         },
                         bgColor: AppColors.greenColor,
                       ),
@@ -86,6 +86,7 @@ class TextFieldUploadFile extends HookConsumerWidget {
                         icon: Icons.close,
                         onTap: () {
                           namaFile.value = '';
+                          file.value = null;
                         },
                         bgColor: AppColors.actionColor,
                       ),

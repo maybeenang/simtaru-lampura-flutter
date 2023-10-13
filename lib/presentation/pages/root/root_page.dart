@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/peta/peta_page.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/index_screen_provider.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/berita/berita_page.dart';
@@ -13,8 +14,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 // final PersistentTabController _controllerNavbar = PersistentTabController();
-final controllerNavbarProvider =
-    StateProvider.autoDispose<PersistentTabController>((ref) {
+final controllerNavbarProvider = StateProvider.autoDispose<PersistentTabController>((ref) {
   return PersistentTabController();
 });
 
@@ -41,17 +41,13 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
   List<PersistentBottomNavBarItem> _navBarsItems(currIndex) {
     return [
       PersistentBottomNavBarItem(
-        icon: currIndex.index == 0
-            ? const Icon(Icons.home_rounded)
-            : const Icon(Icons.home_outlined),
+        icon: currIndex.index == 0 ? const Icon(Icons.home_rounded) : const Icon(Icons.home_outlined),
         title: ("Beranda"),
         activeColorPrimary: AppColors.primaryColor,
         inactiveColorPrimary: AppColors.greyColor,
       ),
       PersistentBottomNavBarItem(
-        icon: currIndex.index == 1
-            ? const Icon(Icons.note)
-            : const Icon(Icons.note_outlined),
+        icon: currIndex.index == 1 ? const Icon(Icons.note) : const Icon(Icons.note_outlined),
         title: ("Pengajuan"),
         activeColorPrimary: AppColors.primaryColor,
         inactiveColorPrimary: AppColors.greyColor,
@@ -72,17 +68,13 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
         inactiveColorPrimary: AppColors.greyColor,
       ),
       PersistentBottomNavBarItem(
-        icon: currIndex.index == 3
-            ? const Icon(Icons.newspaper)
-            : const Icon(Icons.newspaper_outlined),
+        icon: currIndex.index == 3 ? const Icon(Icons.newspaper) : const Icon(Icons.newspaper_outlined),
         title: ("Berita"),
         activeColorPrimary: AppColors.primaryColor,
         inactiveColorPrimary: AppColors.greyColor,
       ),
       PersistentBottomNavBarItem(
-        icon: currIndex.index == 4
-            ? const Icon(Icons.person)
-            : const Icon(Icons.person_outline),
+        icon: currIndex.index == 4 ? const Icon(Icons.person) : const Icon(Icons.person_outline),
         title: ("Profil"),
         activeColorPrimary: AppColors.primaryColor,
         inactiveColorPrimary: AppColors.greyColor,
@@ -99,6 +91,7 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
   Widget build(BuildContext context) {
     var currIndex = ref.watch(indexScreenProvider);
     var controllerNavbar = ref.watch(controllerNavbarProvider);
+    ref.watch(userControllerProvider);
 
     return CustomSafeArea(
       child: Scaffold(
