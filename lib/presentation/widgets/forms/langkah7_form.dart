@@ -11,6 +11,7 @@ class Langkah7Form extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currLatLngState = ref.watch(currLatLng);
+    final inputsFileState = ref.watch(inputsFile);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,6 +139,12 @@ class Langkah7Form extends HookConsumerWidget {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         Text(currLatLngState.toString()),
+        const SizedBox(height: 5),
+        const Text(
+          "Foto",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+        Text(inputsFileState[0].toString()),
       ],
     );
   }

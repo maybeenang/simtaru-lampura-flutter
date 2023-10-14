@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
@@ -13,6 +15,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 final AutoDisposeStateProvider<LatLng> currLatLng = StateProvider.autoDispose<LatLng>((ref) => LatLng(0, 0));
+final AutoDisposeStateProvider<List<File>> inputsFile =
+    StateProvider.autoDispose<List<File>>((ref) => List.generate(10, (index) => File('')));
 
 class PengajuanPage extends HookConsumerWidget {
   const PengajuanPage({Key? key}) : super(key: key);
@@ -55,7 +59,7 @@ class PengajuanPage extends HookConsumerWidget {
           ),
           Step(
             title: Text(currentIndex.value == 4 ? 'Langkah 5' : ''),
-            content: const Langkah5Form(),
+            content: Langkah5Form(),
             isActive: currentIndex.value >= 4,
           ),
           Step(
