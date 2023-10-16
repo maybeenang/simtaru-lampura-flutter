@@ -86,9 +86,7 @@ class TextFieldUploadFile extends HookConsumerWidget {
                       ButtonIcon(
                         icon: Icons.edit,
                         onTap: () async {
-                          // openFileExplorer();
-                          print(ref.read(inputsFile.notifier).state[index]);
-                          print(index);
+                          openFileExplorer();
                         },
                         bgColor: AppColors.greenColor,
                       ),
@@ -98,6 +96,7 @@ class TextFieldUploadFile extends HookConsumerWidget {
                         onTap: () {
                           namaFile.value = '';
                           file.value = null;
+                          ref.read(inputsFile.notifier).state[index] = File('');
                         },
                         bgColor: AppColors.actionColor,
                       ),

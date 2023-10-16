@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/pengajuan_page.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/detail_pengajuan/file_pengajuan.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Langkah7Form extends HookConsumerWidget {
@@ -140,11 +141,28 @@ class Langkah7Form extends HookConsumerWidget {
         ),
         Text(currLatLngState.toString()),
         const SizedBox(height: 5),
-        const Text(
-          "Foto",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        ),
-        Text(inputsFileState[0].toString()),
+        FilePengajuan(labelText: "Fotocopy KTP", file: inputsFileState[0]),
+        const SizedBox(height: 5),
+        FilePengajuan(labelText: "Fotocopy Sertifikat/Surat Tanah", file: inputsFileState[1]),
+        const SizedBox(height: 5),
+        FilePengajuan(labelText: "Fotocopy SPPT PBB", file: inputsFileState[2]),
+        const SizedBox(height: 5),
+        FilePengajuan(labelText: "Fotocopy NPWP", file: inputsFileState[3]),
+        const SizedBox(height: 5),
+        FilePengajuan(
+            labelText: "Surat Persetujuan Tetangga Dilampirkan FC KTP Diketahui Oleh Kades/Lurah & Camat",
+            file: inputsFileState[4]),
+        const SizedBox(height: 5),
+        FilePengajuan(labelText: "Gambar Rencana Pembangunan", file: inputsFileState[5]),
+        const SizedBox(height: 5),
+        FilePengajuan(labelText: "Fotocopy Akte Pendirian Perusahaan", file: inputsFileState[6]),
+        const SizedBox(height: 5),
+        FilePengajuan(labelText: "Set Lokasi Bangunan", file: inputsFileState[7]),
+        const SizedBox(height: 5),
+        FilePengajuan(
+            labelText: "Surat Pernyataan Dari Pemohon (Pemilik) Jika Terjadi Force Majeur", file: inputsFileState[8]),
+        const SizedBox(height: 5),
+        FilePengajuan(labelText: "Uraian Rencana Proyek (Proposal)", file: inputsFileState[9]),
       ],
     );
   }

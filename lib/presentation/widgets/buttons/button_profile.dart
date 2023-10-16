@@ -1,25 +1,76 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan/notif_pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_jumlah_controller.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ButtonProfile extends StatelessWidget {
+class ButtonProfile extends HookConsumerWidget {
   const ButtonProfile(
       {super.key,
       this.label = "Button",
       this.icon = Icons.add,
       this.onTap,
       this.color = AppColors.blackColor,
-      this.notif = 0,
       this.isNotif = false});
 
   final String label;
   final IconData? icon;
   final Function()? onTap;
   final Color? color;
-  final int? notif;
   final bool? isNotif;
 
+  Future<NotifPengajuan> getNotif() async {
+    try {
+      var query = "/";
+      switch (label) {
+        case "Pengajuan Ditolak":
+          query += "1";
+          break;
+        case "Verifikasi Berkas":
+          query += "2";
+          break;
+        case "Verifikasi Lapangan":
+          query += "3";
+          break;
+        case "Upload Scan Surat":
+          query += "11";
+          break;
+        case "Surat Rekomendasi":
+          query += "12";
+          break;
+        default:
+      }
+
+      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanJumlah + query);
+      final Dio dio = Dio();
+      final Response response = await dio.get(
+        uri.toString(),
+      );
+
+      final NotifPengajuan notifPengajuan = NotifPengajuan.fromJson(response.data);
+
+      return notifPengajuan;
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notif = useState<NotifPengajuan?>(null);
+    final jumlahPengajuanState = ref.watch(pengajuanJumlahControllerProvider);
+
+    useEffect(() {
+      if (label != "Seluruh Pengajuan") {
+        getNotif().then((value) => notif.value = value);
+      }
+
+      return;
+    }, []);
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -40,7 +91,13 @@ class ButtonProfile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Text(
-                    notif.toString(),
+                    label == "Seluruh Pengajuan"
+                        ? jumlahPengajuanState
+                                .maybeWhen(orElse: () => null, data: (value) => value)
+                                ?.Seluruh
+                                .toString() ??
+                            "0"
+                        : notif.value?.Total.toString() ?? "0",
                     style: const TextStyle(
                       color: AppColors.whiteColor,
                       fontSize: 12,

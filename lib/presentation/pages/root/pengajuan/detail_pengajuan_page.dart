@@ -58,7 +58,7 @@ class DetailPengajuanPage extends StatelessWidget {
                 const SizedBox(height: 10),
                 RencanaPembangunan(pengajuan: pengajuan),
                 const SizedBox(height: 10),
-                const RincianDokumen(),
+                RincianDokumen(pengajuan: pengajuan),
               ],
             ),
           ),

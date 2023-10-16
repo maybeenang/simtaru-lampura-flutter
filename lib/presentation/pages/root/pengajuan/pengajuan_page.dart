@@ -25,6 +25,7 @@ class PengajuanPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = useState(0);
     final currLatlangState = ref.watch(currLatLng);
+    final currInputFileState = ref.watch(inputsFile);
 
     final List inputController = List.generate(17, (index) => useTextEditingController());
 
@@ -162,8 +163,27 @@ class PengajuanPage extends HookConsumerWidget {
                   }
                   break;
                 case 3:
-                  print(currLatlangState);
                   if (currLatlangState != LatLng(0, 0)) {
+                    currentIndex.value++;
+                  }
+                  break;
+                case 4:
+                  FocusScope.of(context).unfocus();
+                  if (currInputFileState[0].path != '' &&
+                      currInputFileState[1].path != '' &&
+                      currInputFileState[2].path != '' &&
+                      currInputFileState[3].path != '' &&
+                      currInputFileState[4].path != '') {
+                    currentIndex.value++;
+                  }
+                  break;
+                case 5:
+                  FocusScope.of(context).unfocus();
+                  if (currInputFileState[5].path != '' &&
+                      currInputFileState[6].path != '' &&
+                      currInputFileState[7].path != '' &&
+                      currInputFileState[8].path != '' &&
+                      currInputFileState[9].path != '') {
                     currentIndex.value++;
                   }
                   break;

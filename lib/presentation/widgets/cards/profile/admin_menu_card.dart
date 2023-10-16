@@ -50,7 +50,6 @@ class AdminMenuProfileCard extends ConsumerWidget {
                     );
                   },
                   isNotif: true,
-                  notif: 289,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),

@@ -9,15 +9,17 @@ import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_f
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_bar_chart.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_line_chart.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/other/subheader.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  // ignore: library_private_types_in_public_api
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

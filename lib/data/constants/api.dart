@@ -7,5 +7,6 @@ class Endpoints {
   static String refresh = "auth/refresh";
   static String seluruhPengajuan = "pengajuan/seluruh";
   static String pengajuanByStatus = "pengajuan/status/";
+  static String pengajuanJumlah = "pengajuan/hitungData";
   static String statusPengajuan = "status/getAll";
 }
