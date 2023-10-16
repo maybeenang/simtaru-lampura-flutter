@@ -92,7 +92,26 @@ class RincianDokumen extends StatelessWidget {
             "Gambar Rencana Pembangunan",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          checkFile(context, pengajuan.gambar_rencana_pembangunan.toString()),
+          pengajuan.gambar_rencana_pembangunan?.isEmpty ?? true
+              ? const Text("-")
+              : Column(
+                  children: pengajuan.gambar_rencana_pembangunan
+                          ?.map((e) => Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  ButtonIcon(
+                                    icon: Icons.download_rounded,
+                                    onTap: () {
+                                      _downloadFile(context, e);
+                                    },
+                                  ),
+                                ],
+                              ))
+                          .toList() ??
+                      [],
+                ),
           const SizedBox(height: 10),
           const Text(
             "Set Lokasi Bangunan",

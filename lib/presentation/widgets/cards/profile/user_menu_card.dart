@@ -7,6 +7,7 @@ import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_profile.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class UserMenuProfileCard extends ConsumerWidget {
   const UserMenuProfileCard({super.key});
@@ -78,10 +79,10 @@ class UserMenuProfileCard extends ConsumerWidget {
                     Future.delayed(
                       const Duration(milliseconds: 500),
                       () async {
-                        await ref
-                            .read(authControllerProvider.notifier)
-                            .logout();
+                        context.loaderOverlay.show();
+                        await ref.read(authControllerProvider.notifier).logout();
                         ref.read(indexScreenProvider.notifier).onIndexChange(0);
+                        context.loaderOverlay.hide();
                       },
                     );
                   },

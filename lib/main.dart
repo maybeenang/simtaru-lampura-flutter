@@ -11,6 +11,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,17 +46,21 @@ class App extends HookConsumerWidget {
     );
     precacheImage(const AssetImage(Images.bgPeta), context);
     precacheImage(const AssetImage(Images.logo), context);
-    return MaterialApp.router(
-      theme: ThemeData(
-        primaryColor: AppColors.primaryColor,
-        elevatedButtonTheme: AppStyles.elevatedButtonThemeData,
-        scaffoldBackgroundColor: AppColors.bgColor,
-        appBarTheme: AppStyles.appBarTheme,
-        fontFamily: 'Poppins',
-        useMaterial3: true,
+    return GlobalLoaderOverlay(
+      overlayOpacity: 0.5,
+      overlayColor: AppColors.bgColor.withOpacity(0.5),
+      child: MaterialApp.router(
+        theme: ThemeData(
+          primaryColor: AppColors.primaryColor,
+          elevatedButtonTheme: AppStyles.elevatedButtonThemeData,
+          scaffoldBackgroundColor: AppColors.bgColor,
+          appBarTheme: AppStyles.appBarTheme,
+          fontFamily: 'Poppins',
+          useMaterial3: true,
+        ),
+        debugShowCheckedModeBanner: false,
+        routerConfig: routes,
       ),
-      debugShowCheckedModeBanner: false,
-      routerConfig: routes,
     );
   }
 }

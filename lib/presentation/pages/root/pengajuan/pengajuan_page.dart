@@ -60,7 +60,7 @@ class PengajuanPage extends HookConsumerWidget {
           ),
           Step(
             title: Text(currentIndex.value == 4 ? 'Langkah 5' : ''),
-            content: Langkah5Form(),
+            content: const Langkah5Form(),
             isActive: currentIndex.value >= 4,
           ),
           Step(

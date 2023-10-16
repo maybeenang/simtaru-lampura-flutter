@@ -1,9 +1,12 @@
+// ignore_for_file: use_build_context_synchronously, no_leading_underscores_for_local_identifiers
+
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -41,18 +44,18 @@ class DownloadService {
       await Permission.manageExternalStorage.request();
     }
 
-    // if (permission.isDenied || permssion13.isDenied) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     snackbar(
-    //       "Izin akses penyimpanan ditolak",
-    //       "Coba lagi",
-    //       () {
-    //         downloadFile(url: Endpoints.convertDownloadUrl(url));
-    //       },
-    //     ),
-    //   );
-    //   return;
-    // }
+    if (permission.isDenied || permssion13.isDenied) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        snackbar(
+          "Izin akses penyimpanan ditolak",
+          "Coba lagi",
+          () {
+            downloadFile(url: Endpoints.convertDownloadUrl(url));
+          },
+        ),
+      );
+      return;
+    }
 
     // check directory is exist
     String _localPath = Directory("/storage/emulated/0/Download/").path;
@@ -61,6 +64,8 @@ class DownloadService {
     if (!await Directory(_localPath).exists()) {
       await Directory(_localPath).create(recursive: true);
     }
+
+    context.loaderOverlay.show();
 
     final Response response = await dio.get(
       Endpoints.convertDownloadUrl(url),
@@ -88,19 +93,20 @@ class DownloadService {
       OpenResult result = await OpenFile.open(File(_localPath + fileName).path);
 
       print(result.message);
+      context.loaderOverlay.hide();
       return;
     }
 
     try {
-      showSnackBar("Sedang mendownlad Dokumen", " ", () {});
-
       await FileDownloader.downloadFile(
-        notificationType: NotificationType.progressOnly,
         url: Endpoints.convertDownloadUrl(url),
         onDownloadError: (errorMessage) {
+          context.loaderOverlay.hide();
+
           print(errorMessage);
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           ScaffoldMessenger.of(context).showSnackBar(snackbar("Gagal mendownload file", "Coba lagi", () {
-            downloadFile(url: Endpoints.convertDownloadUrl(url));
+            downloadFile(url: url);
           }));
           throw Exception(errorMessage);
         },
@@ -111,12 +117,17 @@ class DownloadService {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
           try {
             await OpenFile.open(path);
+            context.loaderOverlay.hide();
           } catch (e) {
+            context.loaderOverlay.hide();
+
             print(e.toString());
           }
         },
       );
     } catch (e) {
+      context.loaderOverlay.hide();
+
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         snackbar(
