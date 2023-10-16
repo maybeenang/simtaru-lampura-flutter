@@ -33,7 +33,7 @@ def keystorePropertiesFile = rootProject.file('key.properties')
 
 android {
     namespace "com.example.flutter_map_simtaru"
-    compileSdkVersion 33
+    compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {

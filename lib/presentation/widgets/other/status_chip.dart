@@ -36,22 +36,18 @@ class StatusChip extends ConsumerWidget {
         color: statusState.maybeWhen(
           orElse: () => AppColors.whiteColor,
           data: (data) {
-            final color =
-                _mapColor[data.firstWhere((e) => e.id == statusId).id];
+            final color = _mapColor[data.firstWhere((e) => e.id == statusId).id];
 
             return color;
           },
         ),
-        borderRadius: BorderRadius.only(bottomRight: Radius.circular(10)),
+        borderRadius: const BorderRadius.only(bottomRight: Radius.circular(10)),
       ),
       child: Text(
         statusState.maybeWhen(
           orElse: () => "Loading...",
           data: (data) {
-            final status = data
-                .firstWhere((e) => e.id == statusId)
-                .jenis_status
-                .toString();
+            final status = data.firstWhere((e) => e.id == statusId).jenis_status.toString();
 
             return status;
           },

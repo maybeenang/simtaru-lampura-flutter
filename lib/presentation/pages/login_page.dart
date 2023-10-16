@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -11,6 +11,7 @@ import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_common.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/other/show_snackbart.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class LoginPage extends HookConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -29,8 +30,7 @@ class LoginPage extends HookConsumerWidget {
     Future<bool> _onWillPop(BuildContext context) async {
       DateTime now = DateTime.now();
 
-      if (currentBackPressTime == null ||
-          now.difference(currentBackPressTime!!) > const Duration(seconds: 2)) {
+      if (currentBackPressTime == null || now.difference(currentBackPressTime!!) > const Duration(seconds: 2)) {
         currentBackPressTime = now;
         AppSnackBar.show(
           context,
@@ -50,17 +50,14 @@ class LoginPage extends HookConsumerWidget {
           orElse: () {},
           data: (data) {
             if (data is Error) {
-              AppSnackBar.show(
-                  context, data.message, AppColors.redColor, Icons.dangerous);
+              AppSnackBar.show(context, data.message, AppColors.redColor, Icons.dangerous);
             }
             if (data is SignedUp) {
-              AppSnackBar.show(context, "Berhasil Mendaftar",
-                  AppColors.greenColor, Icons.check);
+              AppSnackBar.show(context, "Berhasil Mendaftar", AppColors.greenColor, Icons.check);
             }
           },
           error: (error, stackTrace) {
-            AppSnackBar.show(
-                context, error.toString(), AppColors.redColor, Icons.dangerous);
+            AppSnackBar.show(context, error.toString(), AppColors.redColor, Icons.dangerous);
           },
         );
       },
@@ -140,23 +137,19 @@ class LoginPage extends HookConsumerWidget {
                             const SizedBox(height: 20),
                             ElevatedButton(
                               onPressed: () async {
-                                if (loginFormKey.currentState!.validate() &&
-                                    !authState.isLoading) {
+                                if (loginFormKey.currentState!.validate() && !authState.isLoading) {
                                   final nik = nikController.text.toString();
-                                  final password =
-                                      passwordController.text.toString();
-                                  await ref
-                                      .read(authControllerProvider.notifier)
-                                      .login(nik, password);
+                                  final password = passwordController.text.toString();
+                                  context.loaderOverlay.show();
+
+                                  await ref.read(authControllerProvider.notifier).login(nik, password);
+                                  context.loaderOverlay.hide();
                                 }
                               },
                               child: authState.maybeWhen(
-                                loading: () => const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.whiteColor,
-                                  ),
+                                loading: () => const Text(
+                                  "Loading",
+                                  style: AppStyles.textButton,
                                 ),
                                 orElse: () => const Text(
                                   "Masuk",
