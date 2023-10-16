@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 
 class RincianDokumen extends StatelessWidget {
-  const RincianDokumen({super.key});
+  const RincianDokumen({super.key, required this.pengajuan});
+
+  final Pengajuan pengajuan;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class RincianDokumen extends StatelessWidget {
           AppStyles.boxShadowStyle,
         ],
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -34,7 +37,7 @@ class RincianDokumen extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            "-",
+            pengajuan.fotocopy_ktp.toString(),
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 10),

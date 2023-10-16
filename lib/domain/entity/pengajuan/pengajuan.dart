@@ -57,7 +57,7 @@ class Pengajuan with _$Pengajuan {
     @Default('') String? fotocopy_sppt_pbb,
     @Default('') String? fotocopy_npwp,
     @Default('') String? surat_persetujuan_tetangga,
-    @Default('') String? gambar_rencana_pembangunan,
+    @Default([]) List<String>? gambar_rencana_pembangunan,
     @Default('') String? fotocopy_akte_pendirian_perusahaan,
     @Default('') String? set_lokasi_bangunan,
     @Default('') String? surat_pernyataan_force_majeur,
@@ -80,6 +80,5 @@ class Pengajuan with _$Pengajuan {
     required DateTime updated_at,
   }) = _Pengajuan;
 
-  factory Pengajuan.fromJson(Map<String, dynamic> json) =>
-      _$PengajuanFromJson(json);
+  factory Pengajuan.fromJson(Map<String, dynamic> json) => _$PengajuanFromJson(json);
 }

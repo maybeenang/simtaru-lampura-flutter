@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_jumlah_controller.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class StatusPengajuanCard extends StatelessWidget {
+class StatusPengajuanCard extends HookConsumerWidget {
   StatusPengajuanCard({super.key, required this.label});
 
   final String label;
@@ -22,7 +24,9 @@ class StatusPengajuanCard extends StatelessWidget {
   };
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final jumlahPengajuanState = ref.watch(pengajuanJumlahControllerProvider);
+
     return Container(
       clipBehavior: Clip.antiAlias,
       margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
@@ -57,9 +61,25 @@ class StatusPengajuanCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "0",
-                      style: TextStyle(
+                    Text(
+                      jumlahPengajuanState.when(
+                        data: (data) {
+                          if (label == "Total Pengajuan") {
+                            return data.Seluruh.toString();
+                          } else if (label == "Pengajuan Disetujui") {
+                            return data.Disetujui.toString();
+                          } else if (label == "Pengajuan Diproses") {
+                            return data.Diproses.toString();
+                          } else if (label == "Pengajuan Ditolak") {
+                            return data.Ditolak.toString();
+                          } else {
+                            return '0';
+                          }
+                        },
+                        loading: () => '0',
+                        error: (e, s) => '0',
+                      ),
+                      style: const TextStyle(
                         color: AppColors.whiteColor,
                         fontSize: 40,
                         fontWeight: FontWeight.bold,

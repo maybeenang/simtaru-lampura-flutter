@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/pengajuan_page.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
-class Langkah4Form extends StatefulWidget {
+class Langkah4Form extends ConsumerStatefulWidget {
   const Langkah4Form({super.key});
 
   @override
-  State<Langkah4Form> createState() => _Langkah4FormState();
+  // ignore: library_private_types_in_public_api
+  _Langkah4FormState createState() => _Langkah4FormState();
 }
 
-class _Langkah4FormState extends State<Langkah4Form>
-    with TickerProviderStateMixin {
+class _Langkah4FormState extends ConsumerState<Langkah4Form> with TickerProviderStateMixin {
   List<Marker> markers = [];
   bool isMarker = false;
   LatLng latLng = LatLng(0, 0);
@@ -49,6 +51,7 @@ class _Langkah4FormState extends State<Langkah4Form>
             options: MapOptions(
               center: LatLng(-4.838455515616654, 104.89554453973685),
               zoom: 13.0,
+              maxZoom: 18.0,
               onTap: (tapPosition, point) {
                 setState(() {
                   markers = [];
@@ -65,6 +68,7 @@ class _Langkah4FormState extends State<Langkah4Form>
                   );
                   isMarker = true;
 
+                  ref.read(currLatLng.notifier).state = point;
                   latLng = point;
                   _animatedMapMove(point, 18.0);
                 });
@@ -113,13 +117,11 @@ class _Langkah4FormState extends State<Langkah4Form>
       duration: const Duration(milliseconds: 1000),
     );
 
-    final Animation<double> animation =
-        CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
+    final Animation<double> animation = CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
 
     controller.addListener(() {
       mapController.move(
-          LatLng(latTween.evaluate(animation), lngTween.evaluate(animation)),
-          zoomTween.evaluate(animation));
+          LatLng(latTween.evaluate(animation), lngTween.evaluate(animation)), zoomTween.evaluate(animation));
       mapController.rotate(rotationTween.evaluate(animation));
     });
 

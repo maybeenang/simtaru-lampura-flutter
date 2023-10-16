@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
-import 'package:flutter_map_simtaru/presentation/widgets/detail_pengajuan/minimap_koordinat.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
@@ -99,15 +98,15 @@ class RencanaPembangunan extends StatelessWidget {
             pengajuan.titik_koordinat.toString(),
             style: const TextStyle(fontSize: 16),
           ),
-          const SizedBox(height: 10),
-          Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              color: AppColors.greyColor,
-              borderRadius: BorderRadius.circular(AppDouble.borderRadius),
-            ),
-            child: const MinimapKoordinat(),
-          ),
+          // const SizedBox(height: 10),
+          // Container(
+          //   clipBehavior: Clip.antiAlias,
+          //   decoration: BoxDecoration(
+          //     color: AppColors.greyColor,
+          //     borderRadius: BorderRadius.circular(AppDouble.borderRadius),
+          //   ),
+          //   child: const MinimapKoordinat(),
+          // ),
         ],
       ),
     );
