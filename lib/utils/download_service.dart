@@ -23,6 +23,7 @@ class DownloadService {
         label: label,
         onPressed: onPressed!,
       ),
+      backgroundColor: Colors.red,
     );
   }
 
@@ -103,9 +104,8 @@ class DownloadService {
         onDownloadError: (errorMessage) {
           context.loaderOverlay.hide();
 
-          print(errorMessage);
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          ScaffoldMessenger.of(context).showSnackBar(snackbar("Gagal mendownload file", "Coba lagi", () {
+          ScaffoldMessenger.of(context).showSnackBar(snackbar("Gagal membuka file", "", () {
             downloadFile(url: url);
           }));
           throw Exception(errorMessage);
@@ -131,8 +131,8 @@ class DownloadService {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         snackbar(
-          "Gagal mendownload file",
-          "Coba lagi",
+          "Gagal membuka file",
+          "",
           () {
             downloadFile(url: Endpoints.convertDownloadUrl(url));
           },
