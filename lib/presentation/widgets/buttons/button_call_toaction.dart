@@ -16,7 +16,6 @@ class ButtonCallToAction extends HookConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 50,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -59,7 +58,7 @@ class ButtonCallToAction extends HookConsumerWidget {
                   BoxShadow(
                     color: AppColors.primaryColor.withOpacity(0.5),
                     blurRadius: 10,
-                    offset: const Offset(0, 4),
+                    offset: const Offset(2, 4),
                   ),
                 ],
               ),
@@ -79,54 +78,6 @@ class ButtonCallToAction extends HookConsumerWidget {
             ),
           ],
         ),
-
-        // clipBehavior: Clip.antiAlias,
-        // decoration: BoxDecoration(
-        //   color: AppColors.actionColor,
-        //   borderRadius: BorderRadius.circular(AppDouble.borderRadius),
-        //   boxShadow: [
-        //     BoxShadow(
-        //       color: AppColors.actionColor.withOpacity(0.5),
-        //       blurRadius: 10,
-        //       offset: const Offset(0, 4),
-        //     ),
-        //   ],
-        // ),
-        // child: Material(
-        //   clipBehavior: Clip.antiAlias,
-        //   color: Colors.transparent,
-        //   child: InkWell(
-        //     onTap: () {
-        //       Future.delayed(
-        //         const Duration(milliseconds: 300),
-        //         () {
-        //           const PengajuanRoute().go(context);
-        //         },
-        //       );
-        //     },
-        //     child: Ink(
-        //       padding: const EdgeInsets.symmetric(vertical: 10),
-        //       child: const Row(
-        //         mainAxisAlignment: MainAxisAlignment.center,
-        //         children: [
-        //           Text(
-        //             "Pengajuan",
-        //             style: TextStyle(
-        //               fontSize: 20,
-        //               fontWeight: FontWeight.w600,
-        //               color: AppColors.whiteColor,
-        //             ),
-        //           ),
-        //           Icon(
-        //             Icons.arrow_right_alt,
-        //             size: 40,
-        //             color: AppColors.whiteColor,
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // ),
       ),
     );
   }

@@ -73,7 +73,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             const SizedBox(height: 20),
             const ButtonCallToAction(),
-            const SizedBox(height: 15),
+            const SizedBox(height: 20),
             const SubHeader(labelText: "Informasi"),
             const SizedBox(height: 10),
             Container(

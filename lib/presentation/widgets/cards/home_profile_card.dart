@@ -44,16 +44,21 @@ class HomeProfileCard extends HookConsumerWidget {
                       text: userState.when(
                         data: (data) {
                           if (data is UserSuccess) {
-                            return data.model.name;
+                            // return data.model.name.trimLeft();
+                            // convert to uppercase first letter
+                            return data.model.name
+                                .split(" ")
+                                .map((str) => str[0].toUpperCase() + str.substring(1))
+                                .join(" ");
                           } else {
                             return null;
                           }
                         },
                         error: (error, stackTrace) {
-                          return null;
+                          return "-";
                         },
                         loading: () {
-                          return null;
+                          return "-";
                         },
                       ),
                       style: const TextStyle(
