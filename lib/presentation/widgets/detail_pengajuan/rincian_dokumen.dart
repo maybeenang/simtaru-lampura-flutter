@@ -21,16 +21,51 @@ class RincianDokumen extends StatelessWidget {
 
   Widget checkFile(BuildContext context, String url) {
     if (url == "") {
-      return const Text(
-        "-",
-        style: TextStyle(fontSize: 16),
+      return Row(
+        children: [
+          const Text(
+            "Belum ada file",
+            style: TextStyle(
+              color: AppColors.greyColor,
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(width: 10),
+          ButtonIcon(
+            icon: Icons.edit,
+            onTap: () {},
+            bgColor: Colors.amber[700],
+          ),
+          const SizedBox(width: 10),
+          ButtonIcon(
+            icon: Icons.delete,
+            onTap: () {},
+            bgColor: AppColors.redColor,
+          ),
+        ],
       );
     } else {
-      return ButtonIcon(
-        icon: Icons.download_rounded,
-        onTap: () {
-          _downloadFile(context, url);
-        },
+      return Row(
+        children: [
+          ButtonIcon(
+            icon: Icons.download_rounded,
+            onTap: () {
+              _downloadFile(context, url);
+            },
+          ),
+          const SizedBox(width: 10),
+          ButtonIcon(
+            icon: Icons.edit,
+            onTap: () {},
+            bgColor: Colors.amber[700],
+          ),
+          const SizedBox(width: 10),
+          ButtonIcon(
+            icon: Icons.delete,
+            onTap: () {},
+            bgColor: AppColors.redColor,
+          ),
+        ],
       );
     }
   }
@@ -93,25 +128,71 @@ class RincianDokumen extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           pengajuan.gambar_rencana_pembangunan?.isEmpty ?? true
-              ? const Text("-")
+              ? Row(
+                  children: [
+                    const Text(
+                      "Belum ada file",
+                      style: TextStyle(
+                        color: AppColors.greyColor,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    ButtonIcon(
+                      icon: Icons.edit,
+                      onTap: () {},
+                      bgColor: Colors.amber[700],
+                    ),
+                    const SizedBox(width: 10),
+                    ButtonIcon(
+                      icon: Icons.delete,
+                      onTap: () {},
+                      bgColor: AppColors.redColor,
+                    ),
+                  ],
+                )
               : Column(
                   children: pengajuan.gambar_rencana_pembangunan
-                          ?.map((e) => Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  ButtonIcon(
-                                    icon: Icons.download_rounded,
-                                    onTap: () {
-                                      _downloadFile(context, e);
-                                    },
-                                  ),
-                                ],
-                              ))
+                          ?.map(
+                            (e) => Column(
+                              children: [
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: [
+                                    ButtonIcon(
+                                      icon: Icons.download_rounded,
+                                      onTap: () {
+                                        _downloadFile(context, e);
+                                      },
+                                    ),
+                                    const SizedBox(width: 10),
+                                    ButtonIcon(
+                                      icon: Icons.edit,
+                                      onTap: () {},
+                                      bgColor: Colors.amber[700],
+                                    ),
+                                    const SizedBox(width: 10),
+                                    ButtonIcon(
+                                      icon: Icons.delete,
+                                      onTap: () {},
+                                      bgColor: AppColors.redColor,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
                           .toList() ??
                       [],
                 ),
+          const SizedBox(height: 10),
+          const Text(
+            "Fotocopy Akte Pendirian Perusahaan",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          checkFile(context, pengajuan.fotocopy_akte_pendirian_perusahaan.toString()),
           const SizedBox(height: 10),
           const Text(
             "Set Lokasi Bangunan",

@@ -13,4 +13,7 @@ class Endpoints {
   static String convertDownloadUrl(String url) {
     return baseURLDownload + url;
   }
+
+  static String weatherEndpoint =
+      "https://api.weatherapi.com/v1/current.json?key=0635e5c87e24430ca0041614220607&q=-4.813390,104.752094";
 }

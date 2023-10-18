@@ -19,9 +19,9 @@ class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
   late int _currentCarousel;
 
   final List<Widget> _welcomeCards = const [
+    WelcomeCard(image: Images.welcome2),
     WelcomeCard(image: Images.welcome3),
     WelcomeCard(image: Images.welcome1),
-    WelcomeCard(image: Images.welcome2),
   ];
 
   @override
@@ -56,7 +56,6 @@ class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
             options: CarouselOptions(
               height: 200,
               viewportFraction: 1,
-              autoPlay: true,
               enableInfiniteScroll: false,
               onPageChanged: (index, reason) {
                 setState(

@@ -27,6 +27,30 @@ class AuthController extends _$AuthController {
     return _loginRecoveryAttemp();
   }
 
+  void _persistentRefreshLogic() {
+    ref.listenSelf(
+      (_, next) {
+        if (next.isLoading) return;
+        if (next.hasError) {
+          return;
+        }
+
+        next.requireValue.map<void>(
+          signedIn: (signedIn) async {
+            await _sharedPreferences.setString(_sharedPrefsKey, signedIn.token);
+            await _sharedPreferences.setString(_sharedPrefsNipKey, signedIn.nip);
+            await _sharedPreferences.setString(_sharedPrefsPasswordKey, signedIn.password);
+          },
+          signedOut: (signedOut) async {
+            await _sharedPreferences.remove(_sharedPrefsKey);
+          },
+          signedUp: (value) {},
+          error: (error) {},
+        );
+      },
+    );
+  }
+
   Future<Auth> _loginRecoveryAttemp() async {
     try {
       state = const AsyncValue<Auth>.loading();
@@ -240,31 +264,6 @@ class AuthController extends _$AuthController {
         } catch (e) {
           return const Auth.error("Terjadi kesalahan");
         }
-      },
-    );
-  }
-
-  void _persistentRefreshLogic() {
-    ref.listenSelf(
-      (_, next) {
-        if (next.isLoading) return;
-        if (next.hasError) {
-          _sharedPreferences.remove(_sharedPrefsKey);
-          return;
-        }
-
-        next.requireValue.map<void>(
-          signedIn: (signedIn) async {
-            await _sharedPreferences.setString(_sharedPrefsKey, signedIn.token);
-            await _sharedPreferences.setString(_sharedPrefsNipKey, signedIn.nip);
-            await _sharedPreferences.setString(_sharedPrefsPasswordKey, signedIn.password);
-          },
-          signedOut: (signedOut) async {
-            await _sharedPreferences.remove(_sharedPrefsKey);
-          },
-          signedUp: (value) {},
-          error: (error) {},
-        );
       },
     );
   }
