@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/index_screen_provider.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_call_toaction.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/carousel_berita_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/carousel_welcome_card.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/cards/home_profile_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/status_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/notif_badge.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
-import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_bar_chart.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_line_chart.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/other/subheader.dart';
@@ -30,24 +32,30 @@ class _HomePageState extends ConsumerState<HomePage> {
           children: [
             Container(
               color: AppColors.primaryColor,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
                 children: [
-                  const CustomAppBarFitur(
-                    title: "Dashboard",
-                    bgColor: AppColors.primaryColor,
-                    labelColor: AppColors.whiteColor,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(left: 15),
+                        child: const Image(image: AssetImage("assets/images/logo.png"), width: 75, height: 75),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(right: 10),
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const NotifBadge(),
+                      )
+                    ],
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(right: 10),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const NotifBadge(),
-                  )
+                  const SizedBox(height: 10),
+                  const HomeProfileCard(),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
@@ -65,8 +73,8 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             const SizedBox(height: 20),
             const ButtonCallToAction(),
-            const SizedBox(height: 30),
-            const SubHeader(labelText: "Overview"),
+            const SizedBox(height: 15),
+            const SubHeader(labelText: "Informasi"),
             const SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -86,7 +94,14 @@ class _HomePageState extends ConsumerState<HomePage> {
             const SizedBox(height: 10),
             const CustomLineChart(),
             const SizedBox(height: 30),
-            const SubHeader(labelText: "Berita"),
+            SubHeader(
+              labelText: "Artikel",
+              showAction: true,
+              onTap: () {
+                ref.read(indexScreenProvider.notifier).onIndexChange(3);
+                ref.read(controllerNavbarProvider).index = 3;
+              },
+            ),
             const SizedBox(height: 10),
             const CarouselBerita(),
             const SizedBox(height: 50),

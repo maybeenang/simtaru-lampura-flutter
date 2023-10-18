@@ -56,7 +56,6 @@ class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
             options: CarouselOptions(
               height: 200,
               viewportFraction: 1,
-              autoPlay: true,
               enableInfiniteScroll: false,
               onPageChanged: (index, reason) {
                 setState(
