@@ -14,7 +14,7 @@ class UserUtils with _$UserUtils {
     required String email,
     @Default("") String? profile_photo_path,
     required String profile_photo_url,
-    @Default([]) List<String>? roles,
+    @Default([]) List<Map>? roles,
   }) = _UserUtils;
 
   factory UserUtils.fromJson(Map<String, dynamic> json) => _$UserUtilsFromJson(json);

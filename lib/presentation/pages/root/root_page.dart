@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/peta/peta_page.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/index_screen_provider.dart';
@@ -92,6 +93,7 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
     var currIndex = ref.watch(indexScreenProvider);
     var controllerNavbar = ref.watch(controllerNavbarProvider);
     ref.watch(userControllerProvider);
+    ref.watch(roleProvider);
 
     return CustomSafeArea(
       child: Scaffold(

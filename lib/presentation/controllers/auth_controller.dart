@@ -260,7 +260,8 @@ class AuthController extends _$AuthController {
           if (e.response!.statusCode! >= 500) {
             return const Auth.error("Internal Server Error");
           }
-          return Auth.error(e.response?.data['message'].toString() ?? 'Error');
+
+          return Auth.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
           return const Auth.error("Terjadi kesalahan");
         }

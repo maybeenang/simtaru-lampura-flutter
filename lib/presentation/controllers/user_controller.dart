@@ -62,16 +62,20 @@ class UserController extends _$UserController {
       () async {
         try {
           final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.profile);
-          final Response response = await dio.post(uri.toString(),
-              options: Options(headers: {"Authorization": "Bearer $token"}));
+          final Response response =
+              await dio.post(uri.toString(), options: Options(headers: {"Authorization": "Bearer $token"}));
           final data = response.data["data"];
           final User user = User.success(UserUtils.fromJson(data));
           return user;
           // ignore: unused_catch_clause
         } on DioException catch (e) {
-          return const User.error("Terjadi kesalahan");
+          if (e.response!.statusCode! >= 500) {
+            return const User.error("Terjadi kesalahan");
+          }
+          return User.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
-          return const User.error("Terjadi kesalahan");
+          print(e.toString());
+          return User.error(e.toString());
         }
       },
     );

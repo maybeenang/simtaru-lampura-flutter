@@ -1,6 +1,6 @@
 class Endpoints {
   // static String baseURL = "https://simtaru-lampura.com/api/v1/";
-  static String baseURL = "http://192.168.18.23:8000/api/v1/";
+  static String baseURL = "https://daring-asp-immortal.ngrok-free.app/api/v1/";
   static String baseURLDownload = "https://simtaru-lampura.com";
   static String login = "auth/login";
   static String logout = "auth/logout";
