@@ -44,6 +44,7 @@ dependencies:
   flutter_file_downloader: ^1.1.4
   permission_handler: ^11.0.1
   loader_overlay: ^2.3.2
+  device_info_plus: ^9.1.0
 
 dev_dependencies:
   flutter_test:
