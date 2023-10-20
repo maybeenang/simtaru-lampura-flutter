@@ -17,7 +17,7 @@ class TextFieldUploadFile extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final namaFile = useState('');
+    final namaFile = useState(ref.read(inputsFile.notifier).state[index].path.split('/').last);
     final file = useState<PlatformFile?>(null);
 
     void openFileExplorer() async {

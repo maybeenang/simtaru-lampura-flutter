@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
+import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/status_pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
@@ -15,6 +17,7 @@ class SearchPengajuanPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectItem = useState(0);
     final statusPengajuan = ref.watch(statusPengajuanControllerProvider);
+    final roleState = ref.watch(roleProvider);
     final filterStatusPengajuan = statusPengajuan.when(
       data: (data) {
         return data
@@ -105,70 +108,77 @@ class SearchPengajuanPage extends HookConsumerWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    "Filter",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.start,
-                  spacing: 10,
-                  children: [
-                    ChoiceChip(
-                      label: const Text(
-                        "Semua",
-                      ),
-                      selectedColor: AppColors.primaryColor,
-                      labelStyle: TextStyle(
-                        color: selectItem.value == 0 ? AppColors.whiteColor : AppColors.greyColor,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      showCheckmark: false,
-                      selected: selectItem.value == 0,
-                      onSelected: (bool selected) {
-                        selectItem.value = selected ? 0 : 0;
-                      },
-                    ),
-                    ...filterStatusPengajuan.map(
-                      (e) {
-                        return ChoiceChip(
-                          label: Text(
-                            e.jenis_status,
+              roleState is Admin
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              "Filter",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                          selectedColor: AppColors.primaryColor,
-                          labelStyle: TextStyle(
-                            color: selectItem.value == e.id ? AppColors.whiteColor : AppColors.greyColor,
+                        ),
+                        const SizedBox(height: 10),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            spacing: 10,
+                            children: [
+                              ChoiceChip(
+                                label: const Text(
+                                  "Semua",
+                                ),
+                                selectedColor: AppColors.primaryColor,
+                                labelStyle: TextStyle(
+                                  color: selectItem.value == 0 ? AppColors.whiteColor : AppColors.greyColor,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                showCheckmark: false,
+                                selected: selectItem.value == 0,
+                                onSelected: (bool selected) {
+                                  selectItem.value = selected ? 0 : 0;
+                                },
+                              ),
+                              ...filterStatusPengajuan.map(
+                                (e) {
+                                  return ChoiceChip(
+                                    label: Text(
+                                      e.jenis_status,
+                                    ),
+                                    selectedColor: AppColors.primaryColor,
+                                    labelStyle: TextStyle(
+                                      color: selectItem.value == e.id ? AppColors.whiteColor : AppColors.greyColor,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    showCheckmark: false,
+                                    selected: selectItem.value == e.id,
+                                    onSelected: (bool selected) {
+                                      selectItem.value = selected ? e.id : 0;
+                                    },
+                                  );
+                                },
+                              ).toList(),
+                            ],
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          showCheckmark: false,
-                          selected: selectItem.value == e.id,
-                          onSelected: (bool selected) {
-                            selectItem.value = selected ? e.id : 0;
-                          },
-                        );
-                      },
-                    ).toList(),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Divider(),

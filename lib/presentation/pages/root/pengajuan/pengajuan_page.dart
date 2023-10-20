@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -146,27 +147,42 @@ class PengajuanPage extends HookConsumerWidget {
         }
         if (context.mounted) {
           context.loaderOverlay.hide();
-          // ScaffoldMessenger.of(context).clearSnackBars();
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   const SnackBar(
-          //     content: Text('Berhasil menambahkan pengajuan'),
-          //   ),
-          // );
-          const RootRoute().go(context);
+          Flushbar(
+            message: "Berhasil membuat pengajuan",
+            backgroundColor: AppColors.greenColor,
+            duration: const Duration(seconds: 5),
+            flushbarPosition: FlushbarPosition.TOP,
+            flushbarStyle: FlushbarStyle.FLOATING,
+            animationDuration: const Duration(milliseconds: 300),
+            margin: const EdgeInsets.all(8),
+            borderRadius: BorderRadius.circular(8),
+            isDismissible: true,
+            shouldIconPulse: false,
+            icon: const Icon(
+              Icons.check,
+              color: AppColors.whiteColor,
+            ),
+          ).show(context).then(
+            (value) {
+              const RootRoute().go(context);
+            },
+          );
         }
       } on DioException catch (e) {
         if (context.mounted) {
-          // ScaffoldMessenger.of(context).clearSnackBars();
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(content: Text("Terjadi kesalahan periksa kembali data anda")),
-          // );
           if (e.response?.statusCode == 500) {
             AppSnackBar.show(context, "Terjadi kesalahan", AppColors.redColor);
           } else {
-            AppSnackBar.show(context, "Terjadi kesalahan periksa kembali data anda", AppColors.redColor);
+            print('error ${e.response?.data}');
+            if (e.response?.data['message'] != null) {
+              AppSnackBar.show(context, e.response?.data['message'], AppColors.redColor);
+            } else {
+              AppSnackBar.show(context, "Terjadi kesalahan, periksa kembali data anda", AppColors.redColor);
+            }
           }
         }
       } catch (e) {
+        print(e);
         if (context.mounted) {
           AppSnackBar.show(context, "Terjadi kesalahan", AppColors.redColor);
         }
@@ -176,7 +192,9 @@ class PengajuanPage extends HookConsumerWidget {
         }
       }
 
-      context.loaderOverlay.hide();
+      if (context.mounted) {
+        context.loaderOverlay.hide();
+      }
     }
 
     return Scaffold(
