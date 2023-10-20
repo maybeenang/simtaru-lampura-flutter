@@ -4,13 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
+import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
-import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_user_controller.dart';
-import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/tambah_pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
@@ -21,6 +20,7 @@ import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah4_form.dar
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah5_form.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah6_form.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah7_form.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/other/show_snackbart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -101,7 +101,6 @@ class PengajuanPage extends HookConsumerWidget {
     void submitFrom() async {
       context.loaderOverlay.show();
       try {
-        print(useId.value);
         var formData = FormData.fromMap({
           'user_id': useId.value,
           'nama_lengkap': inputController[0].text,
@@ -136,7 +135,7 @@ class PengajuanPage extends HookConsumerWidget {
         print(formData.fields);
         final Dio dio = Dio();
         final url = Endpoints.baseURL + Endpoints.tambahPengajuan;
-        final response = await dio.post(
+        await dio.post(
           url,
           data: formData,
         );
@@ -145,12 +144,38 @@ class PengajuanPage extends HookConsumerWidget {
         } else {
           await ref.refresh(pengajuanUserControllerProvider.notifier).getPengajuan();
         }
-        RootRoute().go(context);
+        if (context.mounted) {
+          context.loaderOverlay.hide();
+          // ScaffoldMessenger.of(context).clearSnackBars();
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(
+          //     content: Text('Berhasil menambahkan pengajuan'),
+          //   ),
+          // );
+          const RootRoute().go(context);
+        }
       } on DioException catch (e) {
-        print(e.response!.data);
+        if (context.mounted) {
+          // ScaffoldMessenger.of(context).clearSnackBars();
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text("Terjadi kesalahan periksa kembali data anda")),
+          // );
+          if (e.response?.statusCode == 500) {
+            AppSnackBar.show(context, "Terjadi kesalahan", AppColors.redColor);
+          } else {
+            AppSnackBar.show(context, "Terjadi kesalahan periksa kembali data anda", AppColors.redColor);
+          }
+        }
       } catch (e) {
-        print(e);
+        if (context.mounted) {
+          AppSnackBar.show(context, "Terjadi kesalahan", AppColors.redColor);
+        }
+      } finally {
+        if (context.mounted) {
+          context.loaderOverlay.hide();
+        }
       }
+
       context.loaderOverlay.hide();
     }
 

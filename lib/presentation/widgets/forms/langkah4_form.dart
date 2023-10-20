@@ -85,7 +85,7 @@ class _Langkah4FormState extends ConsumerState<Langkah4Form> with TickerProvider
         ),
         const SizedBox(height: 10),
         SizedBox(
-          child: Text(isMarker ? latLng.toString() : "Lokasi belum ditentukan"),
+          child: Text(isMarker ? "${latLng.latitude}, ${latLng.longitude}" : "Lokasi belum ditentukan"),
         ),
       ],
     );

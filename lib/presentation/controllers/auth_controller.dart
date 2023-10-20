@@ -31,9 +31,8 @@ class AuthController extends _$AuthController {
     ref.listenSelf(
       (_, next) {
         if (next.isLoading) return;
-        if (next.hasError) {
-          return;
-        }
+
+        print("next ${next}");
 
         next.requireValue.map<void>(
           signedIn: (signedIn) async {
@@ -41,9 +40,7 @@ class AuthController extends _$AuthController {
             await _sharedPreferences.setString(_sharedPrefsNipKey, signedIn.nip);
             await _sharedPreferences.setString(_sharedPrefsPasswordKey, signedIn.password);
           },
-          signedOut: (signedOut) async {
-            await _sharedPreferences.remove(_sharedPrefsKey);
-          },
+          signedOut: (signedOut) async {},
           signedUp: (value) {},
           error: (error) {},
         );
@@ -57,6 +54,7 @@ class AuthController extends _$AuthController {
       final nip = _sharedPreferences.getString(_sharedPrefsNipKey);
       final password = _sharedPreferences.getString(_sharedPrefsPasswordKey);
       print("nip ${nip.toString()}");
+      print("pw ${password.toString()}");
 
       if (nip == null || password == null) {
         throw Exception('No token found');

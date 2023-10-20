@@ -23,6 +23,8 @@ class TextFieldUploadFile extends HookConsumerWidget {
     void openFileExplorer() async {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: false,
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'docx', 'png', 'jpeg', 'jpg'],
       );
 
       if (result != null) {
