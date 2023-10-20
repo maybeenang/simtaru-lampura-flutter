@@ -1,27 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/status_pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SearchPengajuanPage extends StatefulWidget {
-  const SearchPengajuanPage({super.key});
-
-  @override
-  State<SearchPengajuanPage> createState() => _SearchPengajuanPageState();
-}
-
-class _SearchPengajuanPageState extends State<SearchPengajuanPage> {
-  int _value = 0;
+class SearchPengajuanPage extends HookConsumerWidget {
+  const SearchPengajuanPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectItem = useState(0);
+    final statusPengajuan = ref.watch(statusPengajuanControllerProvider);
+    final filterStatusPengajuan = statusPengajuan.when(
+      data: (data) {
+        return data
+            .where(
+              (element) =>
+                  element.id == 1 || element.id == 2 || element.id == 3 || element.id == 11 || element.id == 12,
+            )
+            .toList();
+      },
+      error: (error, stackTrace) {
+        return [];
+      },
+      loading: () {
+        return [];
+      },
+    );
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.bgColor,
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 color: AppColors.primaryColor,
@@ -104,37 +119,100 @@ class _SearchPengajuanPageState extends State<SearchPengajuanPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              SizedBox(
-                height: 40,
-                child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return ChoiceChip(
-                      label: Text('Item ${index + 1} '),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  spacing: 10,
+                  children: [
+                    ChoiceChip(
+                      label: Text(
+                        "Semua",
+                      ),
                       selectedColor: AppColors.primaryColor,
                       labelStyle: TextStyle(
-                        color: _value == index ? AppColors.whiteColor : AppColors.greyColor,
+                        color: selectItem.value == 0 ? AppColors.whiteColor : AppColors.greyColor,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
                       showCheckmark: false,
-                      selected: _value == index,
+                      selected: selectItem.value == 0,
                       onSelected: (bool selected) {
-                        setState(
-                          () {
-                            _value = (selected ? index : null)!;
+                        selectItem.value = selected ? 0 : 0;
+                      },
+                    ),
+                    ...filterStatusPengajuan.map(
+                      (e) {
+                        return ChoiceChip(
+                          label: Text(
+                            e.jenis_status,
+                          ),
+                          selectedColor: AppColors.primaryColor,
+                          labelStyle: TextStyle(
+                            color: selectItem.value == e.id ? AppColors.whiteColor : AppColors.greyColor,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          showCheckmark: false,
+                          selected: selectItem.value == e.id,
+                          onSelected: (bool selected) {
+                            selectItem.value = selected ? e.id : 0;
                           },
                         );
                       },
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(width: 10);
-                  },
+                    ).toList(),
+                  ],
+                  // children: filterStatusPengajuan.map(
+                  //   (e) {
+                  //     return ChoiceChip(
+                  //       label: Text(
+                  //         e.jenis_status,
+                  //       ),
+                  //       selectedColor: AppColors.primaryColor,
+                  //       labelStyle: TextStyle(
+                  //         color: selectItem.value == e.id ? AppColors.whiteColor : AppColors.greyColor,
+                  //       ),
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(50),
+                  //       ),
+                  //       showCheckmark: false,
+                  //       selected: selectItem.value == e.id,
+                  //       onSelected: (bool selected) {
+                  //         selectItem.value = selected ? e.id : 0;
+                  //       },
+                  //     );
+                  //   },
+                  // ).toList(),
                 ),
+                // child: ListView.separated(
+                //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                //   scrollDirection: Axis.horizontal,
+                //   itemCount: filterStatusPengajuan.length + 1,
+                //   itemBuilder: (context, index) {
+                //     return ChoiceChip(
+                //       label: Text(
+                //         index == 0 ? "Semua" : filterStatusPengajuan[index - 1].jenis_status,
+                //       ),
+                //       selectedColor: AppColors.primaryColor,
+                //       labelStyle: TextStyle(
+                //         color: selectItem.value == index ? AppColors.whiteColor : AppColors.greyColor,
+                //       ),
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(50),
+                //       ),
+                //       showCheckmark: false,
+                //       selected: selectItem.value == index,
+                //       onSelected: (bool selected) {
+                //         selectItem.value = selected ? index : 0;
+                //       },
+                //     );
+                //   },
+                //   separatorBuilder: (context, index) {
+                //     return const SizedBox(width: 10);
+                //   },
+                // ),
               ),
               const SizedBox(
                 height: 15,

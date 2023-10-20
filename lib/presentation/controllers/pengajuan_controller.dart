@@ -14,6 +14,7 @@ class PengajuanController extends _$PengajuanController {
 
   @override
   FutureOr<List<Pengajuan>?> build() async {
+    page = 1;
     isAuth = await ref.watch(
       authControllerProvider.selectAsync(
         (data) => data.map(
@@ -81,5 +82,43 @@ class PengajuanController extends _$PengajuanController {
       state = AsyncValue.data([...state.value!, ...value]);
       return false;
     });
+  }
+
+  FutureOr<List<Pengajuan>?> getPengajuan() async {
+    page = 1;
+    isAuth = await ref.watch(
+      authControllerProvider.selectAsync(
+        (data) => data.map(
+          signedIn: (value) => true,
+          signedOut: (value) => true,
+          signedUp: (value) => false,
+          error: (value) => false,
+        ),
+      ),
+    );
+
+    ref.listenSelf(
+      (_, __) {
+        if (state.isLoading) return;
+      },
+    );
+
+    if (isAuth) {
+      try {
+        String query = "?page=$page";
+        final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.seluruhPengajuan + query);
+        final Response response = await dio.get(
+          uri.toString(),
+        );
+
+        final List<Pengajuan> pengajuan = (response.data['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
+
+        return pengajuan;
+      } catch (e) {
+        return Future.error(e.toString());
+      }
+    } else {
+      return null;
+    }
   }
 }
