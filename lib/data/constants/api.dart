@@ -13,6 +13,7 @@ class Endpoints {
   static String pengajuanJumlah = "pengajuan/hitungData";
   static String statusPengajuan = "status/getAll";
   static String userPengajuan = "pengajuan/user/";
+  static String tambahPengajuan = "pengajuan/tambah";
   static String convertDownloadUrl(String url) {
     return baseURLDownload + url;
   }

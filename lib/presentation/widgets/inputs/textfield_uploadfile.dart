@@ -29,6 +29,7 @@ class TextFieldUploadFile extends HookConsumerWidget {
         namaFile.value = result.files.single.path!;
         file.value = result.files.first;
         ref.read(inputsFile.notifier).state[index] = File(result.files.single.path!);
+        print(ref.read(inputsFile.notifier).state[index]);
       }
     }
 

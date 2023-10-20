@@ -71,17 +71,25 @@ class DownloadService {
     }
 
     context.loaderOverlay.show();
+    Response response;
 
-    final Response response = await dio.get(
-      Endpoints.convertDownloadUrl(url),
-      options: Options(
-        responseType: ResponseType.bytes,
-        followRedirects: false,
-        validateStatus: (status) {
-          return status! < 500;
-        },
-      ),
-    );
+    try {
+      await File(_localPath + "test.txt").create(recursive: true);
+      response = await dio.get(
+        Endpoints.convertDownloadUrl(url),
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ),
+      );
+    } catch (e) {
+      print(e.toString());
+      context.loaderOverlay.hide();
+      return;
+    }
 
     // create file name
     String fileExtension = response.headers.value("content-type")!.split("/").last;

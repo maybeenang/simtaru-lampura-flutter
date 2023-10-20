@@ -1,8 +1,18 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_map_simtaru/data/constants/api.dart';
+import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
+import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_user_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/tambah_pengajuan_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah1_form.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah2_form.dart';
@@ -13,6 +23,7 @@ import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah6_form.dar
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah7_form.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 final AutoDisposeStateProvider<LatLng> currLatLng = StateProvider.autoDispose<LatLng>((ref) => LatLng(0, 0));
 final AutoDisposeStateProvider<List<File>> inputsFile =
@@ -26,6 +37,16 @@ class PengajuanPage extends HookConsumerWidget {
     final currentIndex = useState(0);
     final currLatlangState = ref.watch(currLatLng);
     final currInputFileState = ref.watch(inputsFile);
+    final user = ref.watch(userControllerProvider);
+    final roleState = ref.watch(roleProvider);
+
+    final useId = user.whenData((value) {
+      if (value is UserSuccess) {
+        return value.model.id;
+      } else {
+        return null;
+      }
+    });
 
     final List inputController = List.generate(17, (index) => useTextEditingController());
 
@@ -76,6 +97,62 @@ class PengajuanPage extends HookConsumerWidget {
             isActive: currentIndex.value >= 6,
           ),
         ];
+
+    void submitFrom() async {
+      context.loaderOverlay.show();
+      try {
+        print(useId.value);
+        var formData = FormData.fromMap({
+          'user_id': useId.value,
+          'nama_lengkap': inputController[0].text,
+          'tempat_tanggal_lahir': inputController[1].text,
+          'alamat': inputController[2].text,
+          'no_hp': inputController[3].text,
+          'pekerjaan': inputController[4].text,
+          'no_identitas': inputController[5].text,
+          'bertindak_atas_nama': inputController[6].text,
+          'penggunaan_tanah_saat_dimohon': inputController[7].text,
+          'luas_tanah_seluruhnya': inputController[8].text,
+          'luas_tanah_yang_dimohon': inputController[9].text,
+          'bukti_penguasaan_tanah': inputController[10].text,
+          'letak_tanah': inputController[11].text,
+          'rencana_penggunaan_tanah': inputController[12].text,
+          'batas_sebelah_utara': inputController[13].text,
+          'batas_sebelah_timur': inputController[14].text,
+          'batas_sebelah_selatan': inputController[15].text,
+          'batas_sebelah_barat': inputController[16].text,
+          'titik_koordinat': '${ref.watch(currLatLng).latitude},${ref.watch(currLatLng).longitude}',
+          'fotocopy_ktp': await MultipartFile.fromFile(currInputFileState[0].path),
+          'fotocopy_sertifikat': await MultipartFile.fromFile(currInputFileState[1].path),
+          'fotocopy_sppt_pbb': await MultipartFile.fromFile(currInputFileState[2].path),
+          'fotocopy_npwp': await MultipartFile.fromFile(currInputFileState[3].path),
+          'surat_persetujuan_tetangga': await MultipartFile.fromFile(currInputFileState[4].path),
+          'gambar_rencana_pembangunan[]': await MultipartFile.fromFile(currInputFileState[5].path),
+          'fotocopy_akte_pendirian_perusahaan': await MultipartFile.fromFile(currInputFileState[6].path),
+          'set_lokasi_bangunan': await MultipartFile.fromFile(currInputFileState[7].path),
+          'surat_pernyataan_force_majeur': await MultipartFile.fromFile(currInputFileState[8].path),
+          'proposal': await MultipartFile.fromFile(currInputFileState[9].path),
+        });
+        print(formData.fields);
+        final Dio dio = Dio();
+        final url = Endpoints.baseURL + Endpoints.tambahPengajuan;
+        final response = await dio.post(
+          url,
+          data: formData,
+        );
+        if (roleState is Admin) {
+          await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
+        } else {
+          await ref.refresh(pengajuanUserControllerProvider.notifier).getPengajuan();
+        }
+        RootRoute().go(context);
+      } on DioException catch (e) {
+        print(e.response!.data);
+      } catch (e) {
+        print(e);
+      }
+      context.loaderOverlay.hide();
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -129,7 +206,9 @@ class PengajuanPage extends HookConsumerWidget {
                           style: ButtonStyle(
                             elevation: MaterialStateProperty.all<double>(0),
                           ),
-                          onPressed: () => const RootRoute().go(context),
+                          onPressed: () {
+                            submitFrom();
+                          },
                           child: const Text('Selesai'),
                         ),
                       ),

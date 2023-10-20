@@ -126,7 +126,7 @@ class SearchPengajuanPage extends HookConsumerWidget {
                   spacing: 10,
                   children: [
                     ChoiceChip(
-                      label: Text(
+                      label: const Text(
                         "Semua",
                       ),
                       selectedColor: AppColors.primaryColor,
@@ -164,55 +164,7 @@ class SearchPengajuanPage extends HookConsumerWidget {
                       },
                     ).toList(),
                   ],
-                  // children: filterStatusPengajuan.map(
-                  //   (e) {
-                  //     return ChoiceChip(
-                  //       label: Text(
-                  //         e.jenis_status,
-                  //       ),
-                  //       selectedColor: AppColors.primaryColor,
-                  //       labelStyle: TextStyle(
-                  //         color: selectItem.value == e.id ? AppColors.whiteColor : AppColors.greyColor,
-                  //       ),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(50),
-                  //       ),
-                  //       showCheckmark: false,
-                  //       selected: selectItem.value == e.id,
-                  //       onSelected: (bool selected) {
-                  //         selectItem.value = selected ? e.id : 0;
-                  //       },
-                  //     );
-                  //   },
-                  // ).toList(),
                 ),
-                // child: ListView.separated(
-                //   padding: const EdgeInsets.symmetric(horizontal: 10),
-                //   scrollDirection: Axis.horizontal,
-                //   itemCount: filterStatusPengajuan.length + 1,
-                //   itemBuilder: (context, index) {
-                //     return ChoiceChip(
-                //       label: Text(
-                //         index == 0 ? "Semua" : filterStatusPengajuan[index - 1].jenis_status,
-                //       ),
-                //       selectedColor: AppColors.primaryColor,
-                //       labelStyle: TextStyle(
-                //         color: selectItem.value == index ? AppColors.whiteColor : AppColors.greyColor,
-                //       ),
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(50),
-                //       ),
-                //       showCheckmark: false,
-                //       selected: selectItem.value == index,
-                //       onSelected: (bool selected) {
-                //         selectItem.value = selected ? index : 0;
-                //       },
-                //     );
-                //   },
-                //   separatorBuilder: (context, index) {
-                //     return const SizedBox(width: 10);
-                //   },
-                // ),
               ),
               const SizedBox(
                 height: 15,
