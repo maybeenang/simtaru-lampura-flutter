@@ -97,189 +97,200 @@ class RincianDokumen extends HookConsumerWidget {
           AppStyles.boxShadowStyle,
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Dokumen",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const Text(
+          "Dokumen",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
-          const Divider(),
-          const Text(
-            "Fotocopy KTP",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.fotocopy_ktp.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Fotocopy Sertifikat",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.fotocopy_sertifikat.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Fotocopy SPPT PBB",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.fotocopy_sppt_pbb.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Fotocopy NPWP",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.fotocopy_npwp.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Surat Persetujuan Tetangga",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.surat_persetujuan_tetangga.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Gambar Rencana Pembangunan",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          pengajuan.gambar_rencana_pembangunan?.isEmpty ?? true
-              ? Row(
-                  children: [
-                    const Text(
-                      "Belum ada file",
-                      style: TextStyle(
-                        color: AppColors.greyColor,
-                        fontSize: 12,
-                      ),
+        ),
+        const Divider(),
+        const Text(
+          "Fotocopy KTP",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        checkFile(context, pengajuan.fotocopy_ktp.toString(), roleState is Admin),
+        const SizedBox(height: 10),
+        const Text(
+          "Fotocopy Sertifikat",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        checkFile(context, pengajuan.fotocopy_sertifikat.toString(), roleState is Admin),
+        const SizedBox(height: 10),
+        const Text(
+          "Fotocopy SPPT PBB",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        checkFile(context, pengajuan.fotocopy_sppt_pbb.toString(), roleState is Admin),
+        const SizedBox(height: 10),
+        const Text(
+          "Fotocopy NPWP",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        checkFile(context, pengajuan.fotocopy_npwp.toString(), roleState is Admin),
+        const SizedBox(height: 10),
+        const Text(
+          "Surat Persetujuan Tetangga",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        checkFile(context, pengajuan.surat_persetujuan_tetangga.toString(), roleState is Admin),
+        const SizedBox(height: 10),
+        const Text(
+          "Gambar Rencana Pembangunan",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        pengajuan.gambar_rencana_pembangunan?.isEmpty ?? true
+            ? Row(
+                children: [
+                  const Text(
+                    "Belum ada file",
+                    style: TextStyle(
+                      color: AppColors.greyColor,
+                      fontSize: 12,
                     ),
-                    const SizedBox(width: 10),
-                    ButtonIcon(
-                      icon: Icons.edit,
-                      onTap: () {},
-                      bgColor: Colors.amber[700],
-                    ),
-                    const SizedBox(width: 10),
-                    ButtonIcon(
-                      icon: Icons.delete,
-                      onTap: () {},
-                      bgColor: AppColors.redColor,
-                    ),
-                  ],
-                )
-              : Column(
-                  children: pengajuan.gambar_rencana_pembangunan
-                          ?.map(
-                            (e) => Column(
-                              children: [
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: [
-                                    ButtonIcon(
-                                      icon: Icons.download_rounded,
-                                      onTap: () {
-                                        _downloadFile(context, e);
-                                      },
-                                    ),
-                                    const SizedBox(width: 10),
-                                    roleState is Admin
-                                        ? ButtonIcon(
-                                            icon: Icons.edit,
-                                            onTap: () {},
-                                            bgColor: Colors.amber[700],
-                                          )
-                                        : const SizedBox(),
-                                    const SizedBox(width: 10),
-                                    roleState is Admin
-                                        ? ButtonIcon(
-                                            icon: Icons.delete,
-                                            onTap: () {},
-                                            bgColor: AppColors.redColor,
-                                          )
-                                        : const SizedBox()
-                                  ],
-                                )
-                              ],
+                  ),
+                  const SizedBox(width: 10),
+                  ButtonIcon(
+                    icon: Icons.edit,
+                    onTap: () {},
+                    bgColor: Colors.amber[700],
+                  ),
+                  const SizedBox(width: 10),
+                  ButtonIcon(
+                    icon: Icons.delete,
+                    onTap: () {},
+                    bgColor: AppColors.redColor,
+                  ),
+                ],
+              )
+            : Column(
+                children: pengajuan.gambar_rencana_pembangunan
+                        ?.map(
+                          (e) => Column(
+                            children: [
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  ButtonIcon(
+                                    icon: Icons.download_rounded,
+                                    onTap: () {
+                                      _downloadFile(context, e);
+                                    },
+                                  ),
+                                  const SizedBox(width: 10),
+                                  roleState is Admin
+                                      ? ButtonIcon(
+                                          icon: Icons.edit,
+                                          onTap: () {},
+                                          bgColor: Colors.amber[700],
+                                        )
+                                      : const SizedBox(),
+                                  const SizedBox(width: 10),
+                                  roleState is Admin
+                                      ? ButtonIcon(
+                                          icon: Icons.delete,
+                                          onTap: () {},
+                                          bgColor: AppColors.redColor,
+                                        )
+                                      : const SizedBox()
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                        .toList() ??
+                    [],
+              ),
+        const SizedBox(height: 10),
+        const Text(
+          "Fotocopy Akte Pendirian Perusahaan",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        checkFile(context, pengajuan.fotocopy_akte_pendirian_perusahaan.toString(), roleState is Admin),
+        const SizedBox(height: 10),
+        const Text(
+          "Set Lokasi Bangunan",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        checkFile(context, pengajuan.set_lokasi_bangunan.toString(), roleState is Admin),
+        const SizedBox(height: 10),
+        const Text(
+          "Surat Pernyataan Force Majeur",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        checkFile(context, pengajuan.surat_pernyataan_force_majeur.toString(), roleState is Admin),
+        const SizedBox(height: 10),
+        const Text(
+          "Proposal",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        checkFile(context, pengajuan.proposal.toString(), roleState is Admin),
+        const SizedBox(height: 10),
+        const Text(
+          "Surat Pernyataan",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        checkFile(context, pengajuan.surat_pernyataan.toString(), roleState is Admin),
+        const SizedBox(height: 10),
+        const Text(
+          "Surat Permohonan SKPR",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        checkFile(context, pengajuan.surat_permohonan_skpr.toString(), roleState is Admin),
+        const SizedBox(height: 10),
+        const Text(
+          "Surat Permohonan TKPRD",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        checkFile(context, pengajuan.surat_permohonan_tkprd.toString(), roleState is Admin),
+        const SizedBox(height: 10),
+        pengajuan.status_id! > 2
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Berita Acara",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  checkFile(context, pengajuan.berita_acara.toString(), roleState is Admin),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Dokumentasi",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  checkFile(context, pengajuan.file_dokumentasi.toString(), roleState is Admin),
+                  pengajuan.status_id! > 3
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 10),
+                            const Text(
+                              "Nota Dinas",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                             ),
-                          )
-                          .toList() ??
-                      [],
-                ),
-          const SizedBox(height: 10),
-          const Text(
-            "Fotocopy Akte Pendirian Perusahaan",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.fotocopy_akte_pendirian_perusahaan.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Set Lokasi Bangunan",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.set_lokasi_bangunan.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Surat Pernyataan Force Majeur",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.surat_pernyataan_force_majeur.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Proposal",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.proposal.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Surat Pernyataan",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.surat_pernyataan.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Surat Permohonan SKPR",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.surat_permohonan_skpr.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Surat Permohonan TKPRD",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.surat_permohonan_tkprd.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Berita Acara",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.berita_acara.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Dokumentasi",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.file_dokumentasi.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Nota Dinas",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.nota_dinas.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Surat Hasil Rekomendasi",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.surat_hasil_rekomendasi.toString(), roleState is Admin),
-          const SizedBox(height: 10),
-          const Text(
-            "Scan Surat Hasil Rekomendasi",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          checkFile(context, pengajuan.scan_surat_hasil_rekomendasi.toString(), roleState is Admin),
-        ],
-      ),
+                            checkFile(context, pengajuan.nota_dinas.toString(), roleState is Admin),
+                            const SizedBox(height: 10),
+                            const Text(
+                              "Surat Hasil Rekomendasi",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            checkFile(context, pengajuan.surat_hasil_rekomendasi.toString(), roleState is Admin),
+                            const SizedBox(height: 10),
+                            const Text(
+                              "Scan Surat Hasil Rekomendasi",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            checkFile(context, pengajuan.scan_surat_hasil_rekomendasi.toString(), roleState is Admin),
+                          ],
+                        )
+                      : const SizedBox()
+                ],
+              )
+            : const SizedBox(),
+      ]),
     );
   }
 }

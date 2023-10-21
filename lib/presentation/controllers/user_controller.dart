@@ -37,7 +37,6 @@ class UserController extends _$UserController {
 
     if (isAuth) {
       final user = await getProfile();
-
       if (user is UserSuccess) {
         return user;
       } else {
@@ -74,7 +73,6 @@ class UserController extends _$UserController {
           }
           return User.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
-          print(e.toString());
           return User.error(e.toString());
         }
       },

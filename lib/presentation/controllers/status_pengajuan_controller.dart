@@ -11,21 +11,6 @@ class StatusPengajuanController extends _$StatusPengajuanController {
 
   @override
   Future<List<StatusPengajuan>> build() async {
-    ref.listenSelf(
-      (previous, next) {
-        if (next.isLoading) return;
-
-        // if error so re fetch
-        next.maybeWhen(
-          error: (error, stackTrace) {
-            state = const AsyncValue.loading();
-            build();
-          },
-          orElse: () {},
-        );
-      },
-    );
-
     try {
       final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.statusPengajuan);
       final Response response = await dio.get(
