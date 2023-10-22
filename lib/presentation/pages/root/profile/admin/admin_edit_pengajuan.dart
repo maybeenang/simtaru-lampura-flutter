@@ -81,7 +81,7 @@ class AdminEditPengajuanPage extends HookConsumerWidget {
               },
             );
           }
-        } on DioException catch (e) {
+        } on DioException catch (_) {
           if (context.mounted) {
             context.loaderOverlay.hide();
             Flushbar(

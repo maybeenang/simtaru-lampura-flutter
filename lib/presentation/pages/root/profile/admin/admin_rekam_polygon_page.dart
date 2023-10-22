@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_dragmarker/flutter_map_dragmarker.dart';
 import 'package:flutter_map_line_editor/flutter_map_line_editor.dart';
@@ -59,81 +58,13 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
       callbackRefresh: () => {setState(() {})},
     );
 
-    valuePerizinan = list.first;
     polygons.add(testPolygon);
+    valuePerizinan = list.first;
     valueUMKM = umkm.first;
   }
 
   @override
   Widget build(BuildContext context) {
-    void handleSubmit(String geoJson) async {
-      print(geoJson);
-      QuickAlert.show(
-        context: context,
-        type: QuickAlertType.custom,
-        barrierDismissible: true,
-        title: "Peringatan",
-        text: 'Silahkan pilih jenis perizinan',
-        widget: Column(
-          children: [
-            const Text("Jenis Perizinan"),
-            DropdownButton<String>(
-              value: valuePerizinan,
-              icon: const Icon(Icons.arrow_downward),
-              elevation: 16,
-              style: const TextStyle(color: Colors.deepPurple),
-              underline: Container(
-                height: 2,
-                color: Colors.deepPurpleAccent,
-              ),
-              onChanged: (String? value) {
-                setState(() {
-                  valuePerizinan = value!;
-                });
-              },
-              items: list.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-            valuePerizinan == "UMKM"
-                ? DropdownButton<String>(
-                    value: valueUMKM,
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
-                    onChanged: (String? value) {
-                      setState(() {
-                        valueUMKM = value!;
-                      });   
-                    },
-                    items: umkm.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  )
-                : SizedBox()
-          ],
-        ),
-        headerBackgroundColor: AppColors.redColor,
-        showConfirmBtn: true,
-        showCancelBtn: true,
-        confirmBtnText: 'Ya',
-        cancelBtnText: 'Batal',
-        confirmBtnColor: AppColors.redColor,
-      );
-    }
-
-    ;
-
     return Scaffold(
         body: FlutterMap(
           options: MapOptions(
@@ -260,32 +191,132 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
               isEditing = false;
             });
           },
-        )
-        // floatingActionButton: FloatingActionButton(
-        //   child: const Icon(Icons.replay),
-        //   onPressed: () {
-        //     double getNumber(double input, {int precision = 6}) =>
-        //         double.parse('$input'.substring(0, '$input'.indexOf('.') + precision + 1));
-        //     Map<String, dynamic> geojson = {
-        //       "type": "FeatureCollection",
-        //       "features": [
-        //         {
-        //           "type": "Feature",
-        //           "properties": {},
-        //           "geometry": {
-        //             "type": "Polygon",
-        //             "coordinates": [
-        //               // polyEditor.points.map((e) => [getNumber(e.longitude), getNumber(e.latitude)]).toList()
-        //               polyEditor.points.map((e) => [e.longitude, e.latitude]).toList()
-        //             ]
-        //           }
-        //         }
-        //       ]
-        //     };
+        ));
+  }
 
-        //     print(jsonEncode(geojson));
-        //   },
-        // ),
-        );
+  Future handleSubmit(String geoJson) async {
+    print(geoJson);
+    AlertDialog alert = AlertDialog(
+      title: Text("Login Berhasil"),
+      content: //
+          Column(
+        children: [
+          DropdownButton<String>(
+            value: valuePerizinan,
+            icon: const Icon(Icons.arrow_downward),
+            elevation: 16,
+            style: const TextStyle(color: Colors.deepPurple),
+            underline: Container(
+              height: 2,
+              color: Colors.deepPurpleAccent,
+            ),
+            onChanged: (String? value) {
+              setState(() {
+                valuePerizinan = value!;
+              });
+            },
+            items: list.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+          valuePerizinan == "UMKM"
+              ? DropdownButton<String>(
+                  value: valueUMKM,
+                  icon: const Icon(Icons.arrow_downward),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (String? value) {
+                    setState(() {
+                      valueUMKM = value!;
+                    });
+                  },
+                  items: umkm.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                )
+              : SizedBox()
+        ],
+      ),
+      actions: [
+        TextButton(
+          child: Text('Ok'),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ],
+    );
+
+    showDialog(context: context, builder: (context) => alert);
+
+    // QuickAlert.show(
+    //   context: context,
+    //   type: QuickAlertType.custom,
+    //   barrierDismissible: true,
+    //   title: "Peringatan",
+    //   text: 'Silahkan pilih jenis perizinan',
+    //   widget: Column(
+    //     children: [
+    //       DropdownButton<String>(
+    //         value: valuePerizinan,
+    //         icon: const Icon(Icons.arrow_downward),
+    //         elevation: 16,
+    //         style: const TextStyle(color: Colors.deepPurple),
+    //         underline: Container(
+    //           height: 2,
+    //           color: Colors.deepPurpleAccent,
+    //         ),
+    //         onChanged: (String? value) {
+    //           setState(() {
+    //             valuePerizinan = value!;
+    //           });
+    //         },
+    //         items: list.map<DropdownMenuItem<String>>((String value) {
+    //           return DropdownMenuItem<String>(
+    //             value: value,
+    //             child: Text(value),
+    //           );
+    //         }).toList(),
+    //       ),
+    //       valuePerizinan == "UMKM"
+    //           ? DropdownButton<String>(
+    //               value: valueUMKM,
+    //               icon: const Icon(Icons.arrow_downward),
+    //               elevation: 16,
+    //               style: const TextStyle(color: Colors.deepPurple),
+    //               underline: Container(
+    //                 height: 2,
+    //                 color: Colors.deepPurpleAccent,
+    //               ),
+    //               onChanged: (String? value) {
+    //                 setState(() {
+    //                   valueUMKM = value!;
+    //                 });
+    //               },
+    //               items: umkm.map<DropdownMenuItem<String>>((String value) {
+    //                 return DropdownMenuItem<String>(
+    //                   value: value,
+    //                   child: Text(value),
+    //                 );
+    //               }).toList(),
+    //             )
+    //           : SizedBox()
+    //     ],
+    //   ),
+    //   headerBackgroundColor: AppColors.redColor,
+    //   showConfirmBtn: true,
+    //   showCancelBtn: true,
+    //   confirmBtnText: 'Ya',
+    //   cancelBtnText: 'Batal',
+    //   confirmBtnColor: AppColors.redColor,
+    // );
   }
 }

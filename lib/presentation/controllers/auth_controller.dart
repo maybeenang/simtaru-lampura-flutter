@@ -117,19 +117,43 @@ class AuthController extends _$AuthController {
     );
 
     print("HAHSAHASDASDDAS $loginAttemp");
+    return loginAttemp.when(
+      data: (data) {
+        if (data is SignedIn) {
+          print("INI MASALAH");
+          final accessToken = _sharedPreferences.getString(_sharedPrefsKey);
 
-    if (loginAttemp is AsyncData) {
-      print("INI MASALAHA");
-      final accessToken = _sharedPreferences.getString(_sharedPrefsKey);
-      return Auth.signedIn(
-        nip: nip,
-        password: password,
-        token: accessToken ?? '',
-      );
-    } else {
-      await _sharedPreferences.remove(_sharedPrefsKey);
-      return const Auth.signedOut();
-    }
+          return Auth.signedIn(
+            nip: nip,
+            password: password,
+            token: accessToken ?? '',
+          );
+        }
+
+        return data;
+      },
+      error: (error, stackTrace) {
+        print("INI MASALAH");
+        return Auth.error(error.toString());
+      },
+      loading: () {
+        return Auth.signedOut();
+      },
+    );
+
+    // if (loginAttemp is AsyncData<Auth>) {
+    //   print("INI MASALAHA");
+
+    //   final accessToken = _sharedPreferences.getString(_sharedPrefsKey);
+    //   return Auth.signedIn(
+    //     nip: nip,
+    //     password: password,
+    //     token: accessToken ?? '',
+    //   );
+    // } else {
+    //   await _sharedPreferences.remove(_sharedPrefsKey);
+    //   return const Auth.signedOut();
+    // }
   }
 
   Future<Auth> _loginWithToken(String token) async {
@@ -183,6 +207,7 @@ class AuthController extends _$AuthController {
       () async {
         try {
           final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.login);
+          print("kontolon" + uri.toString());
           final Response response = await dio.post(
             uri.toString(),
             data: {
@@ -204,11 +229,9 @@ class AuthController extends _$AuthController {
         } on DioException catch (e) {
           print("error ${e.toString()}");
 
-          if (e.response!.statusCode! >= 500) {
-            return const Auth.error("Internal Server Error");
-          }
-          return Auth.error(e.response?.data['message'] ?? 'Error');
-        } catch (e) {
+          return Auth.error(e.response?.data['message'] ?? 'Internal Server Error');
+        } catch (e, s) {
+          print("KONTOLOSON $e $s");
           return const Auth.error("Terjadi kesalahan");
         }
       },
@@ -237,10 +260,10 @@ class AuthController extends _$AuthController {
           const Auth auth = Auth.signedOut();
           return auth;
         } on DioException catch (e) {
-          if (e.response!.statusCode! >= 500) {
-            return const Auth.error("Internal Server Error");
-          }
-          return Auth.error(e.response?.data['message'] ?? 'Error');
+          await _sharedPreferences.remove(_sharedPrefsKey);
+          await _sharedPreferences.remove(_sharedPrefsNipKey);
+          await _sharedPreferences.remove(_sharedPrefsPasswordKey);
+          return Auth.error(e.response?.data['message'] ?? 'Internal Server Error');
         } catch (e) {
           return const Auth.error("Terjadi kesalahan");
         }
