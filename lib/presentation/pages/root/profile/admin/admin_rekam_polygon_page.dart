@@ -4,14 +4,15 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_dragmarker/flutter_map_dragmarker.dart';
+import 'package:flutter_map_geojson/flutter_map_geojson.dart';
 import 'package:flutter_map_line_editor/flutter_map_line_editor.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
@@ -30,6 +31,10 @@ class AdminRekamPolygonPage extends StatefulHookConsumerWidget {
 }
 
 class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
+  GeoJsonParser myGeoJson = GeoJsonParser();
+
+  // GeoJsonParser myGeoJson = GeoJsonParser();
+
   late PolyEditor polyEditor;
   final _key = GlobalKey<ExpandableFabState>();
   final keyPoli = GlobalKey();
@@ -50,9 +55,50 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
   late String valuePerizinan;
   late String valueUMKM;
   late bool showUMKM;
+  late LatLng centerLatLng;
+
+  void getPoly() async {
+    myGeoJson.defaultPolygonBorderColor = AppColors.whiteColor;
+    myGeoJson.defaultPolygonBorderStroke = 2;
+    myGeoJson.defaultPolygonIsFilled = true;
+    // myGeoJson.defaultPolygonFillColor = AppColors.primaryColor.withOpacity(0.7);
+    final fillColor = widget.pengajuan.color_polygon ?? "#ADD8E6";
+    myGeoJson.defaultPolygonFillColor = Color(
+      int.parse(
+        fillColor.substring(1, 7),
+        radix: 16,
+      ),
+    ).withOpacity(0.7);
+    myGeoJson.parseGeoJson(await jsonDecode(widget.pengajuan.titik_polygon!));
+  }
+
+  void getLatLng() {
+    final List<String> latlng = widget.pengajuan.titik_koordinat?.split(",") ?? [];
+
+    if (latlng.isNotEmpty) {
+      try {
+        centerLatLng = LatLng(
+          double.parse(latlng[0]),
+          double.parse(latlng[1]),
+        );
+      } catch (e) {
+        centerLatLng = LatLng(-4.838455515616654, 104.89554453973685);
+      }
+    } else {
+      centerLatLng = LatLng(-4.838455515616654, 104.89554453973685);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+
+    if (widget.pengajuan.titik_polygon != null) {
+      getPoly();
+    }
+
+    getLatLng();
+
     isEditing = false;
     polyEditor = PolyEditor(
       addClosePathMarker: true,
@@ -82,11 +128,6 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
 
   @override
   Widget build(BuildContext context) {
-    useEffect(() {
-      print("KONTOOOL $showUMKM");
-      return;
-    }, [showUMKM]);
-
     return Scaffold(
       body: FlutterMap(
         options: MapOptions(
@@ -98,7 +139,7 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
           },
           // For backwards compatibility with pre v5 don't use const
           // ignore: prefer_const_constructors
-          center: LatLng(-4.838455515616654, 104.89554453973685),
+          center: centerLatLng,
           zoom: 15.0,
           maxZoom: 22,
         ),
@@ -112,7 +153,27 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
             maxZoom: 22,
             fallbackUrl: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
           ),
-          PolygonLayer(polygons: polygons),
+          widget.pengajuan.titik_polygon != null
+              ? PolygonLayer(
+                  polygons: myGeoJson.polygons,
+                )
+              : const SizedBox(),
+          MarkerLayer(
+            markers: [
+              Marker(
+                width: 100.0,
+                height: 100.0,
+                point: centerLatLng,
+                builder: (ctx) => const Icon(
+                  Icons.location_on,
+                  color: Colors.red,
+                ),
+              ),
+            ],
+          ),
+          PolygonLayer(
+            polygons: polygons,
+          ),
           isEditing ? DragMarkers(markers: polyEditor.edit()) : const SizedBox()
         ],
       ),
