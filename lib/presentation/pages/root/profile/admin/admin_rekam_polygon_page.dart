@@ -133,6 +133,9 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Rekam Polygon ${widget.pengajuan.nama_lengkap}"),
+      ),
       body: FlutterMap(
         options: MapOptions(
           onTap: (_, ll) {

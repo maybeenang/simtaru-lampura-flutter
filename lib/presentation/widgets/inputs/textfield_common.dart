@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TextFieldCommon extends HookConsumerWidget {
-  const TextFieldCommon({
-    super.key,
-    required this.labelText,
-    this.focusNode,
-    this.controller,
-    this.keyboardType,
-    this.isPassword,
-    this.isLast,
-    this.isEmail,
-    this.isNik,
-    this.initialValue,
-    this.readOnly,
-    this.onTap,
-  });
+  const TextFieldCommon(
+      {super.key,
+      required this.labelText,
+      this.focusNode,
+      this.controller,
+      this.keyboardType,
+      this.isPassword,
+      this.isLast,
+      this.isEmail,
+      this.isNik,
+      this.initialValue,
+      this.readOnly,
+      this.onTap,
+      this.isNoHp});
 
   final String labelText;
   final FocusNode? focusNode;
@@ -28,6 +29,7 @@ class TextFieldCommon extends HookConsumerWidget {
   final bool? isLast;
   final bool? isEmail;
   final bool? isNik;
+  final bool? isNoHp;
   final bool? readOnly;
   final String? initialValue;
   final Function()? onTap;
@@ -42,6 +44,10 @@ class TextFieldCommon extends HookConsumerWidget {
 
     return TextFormField(
       onTap: onTap,
+      maxLength: isNik == true ? 16 : null,
+      inputFormatters: [
+        if (isNik == true || isNoHp == true) FilteringTextInputFormatter.digitsOnly,
+      ],
       keyboardType: keyboardType ?? TextInputType.text,
       controller: controller,
       obscureText: hidePassword.value,

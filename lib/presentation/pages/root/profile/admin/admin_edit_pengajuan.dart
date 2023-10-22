@@ -25,6 +25,8 @@ class AdminEditPengajuanPage extends HookConsumerWidget {
 
     void handleSubmitEditPengajuan() async {
       if (formEditPengajuanKey.currentState!.validate()) {
+        FocusScope.of(context).unfocus();
+
         context.loaderOverlay.show();
         try {
           final formData = FormData.fromMap({

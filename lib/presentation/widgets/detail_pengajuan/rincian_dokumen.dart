@@ -229,56 +229,14 @@ class RincianDokumen extends HookConsumerWidget {
         ),
         checkFile(context, pengajuan.proposal.toString(), roleState is Admin),
         const SizedBox(height: 10),
-        const Text(
-          "Surat Pernyataan",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        checkFile(context, pengajuan.surat_pernyataan.toString(), roleState is Admin),
-        const SizedBox(height: 10),
-        const Text(
-          "Surat Permohonan SKPR",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        checkFile(context, pengajuan.surat_permohonan_skpr.toString(), roleState is Admin),
-        const SizedBox(height: 10),
-        const Text(
-          "Surat Permohonan TKPRD",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        checkFile(context, pengajuan.surat_permohonan_tkprd.toString(), roleState is Admin),
-        const SizedBox(height: 10),
         pengajuan.status_id! > 2
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Berita Acara",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  checkFile(context, pengajuan.berita_acara.toString(), roleState is Admin),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Dokumentasi",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  checkFile(context, pengajuan.file_dokumentasi.toString(), roleState is Admin),
                   pengajuan.status_id! > 3
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 10),
-                            const Text(
-                              "Nota Dinas",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                            checkFile(context, pengajuan.nota_dinas.toString(), roleState is Admin),
-                            const SizedBox(height: 10),
-                            const Text(
-                              "Surat Hasil Rekomendasi",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                            checkFile(context, pengajuan.surat_hasil_rekomendasi.toString(), roleState is Admin),
-                            const SizedBox(height: 10),
                             const Text(
                               "Scan Surat Hasil Rekomendasi",
                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),

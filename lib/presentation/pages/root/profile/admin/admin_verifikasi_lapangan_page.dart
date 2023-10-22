@@ -1,7 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
@@ -13,6 +16,9 @@ import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_f
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class AdminVerifikasiLapanganPage extends HookConsumerWidget {
   const AdminVerifikasiLapanganPage({super.key});
@@ -38,10 +44,113 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
       }
     });
 
-    useEffect(() {
-      print("kontolon");
-      return () => print("memek");
-    }, []);
+    Future setujuiPengajuan(int pengajuanId, String pengajuanNama) async {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.confirm,
+        title: "Peringatan",
+        barrierDismissible: false,
+        text: 'Anda yakin pengajuan atas nama $pengajuanNama, lolos verifikasi lapangan?',
+        confirmBtnText: 'Ya',
+        cancelBtnText: 'Batal',
+        confirmBtnColor: Colors.green,
+        onConfirmBtnTap: () async {
+          Navigator.pop(context);
+          context.loaderOverlay.show();
+          String url = "${Endpoints.baseURL}${Endpoints.updateStatusPengajuan}$pengajuanId";
+          final Dio dio = Dio();
+          try {
+            await dio.put(
+              url,
+              data: {
+                "status_id": 11,
+              },
+            );
+            ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
+            await ref.refresh(pengajuanVerifikasiLapanganControllerProvider.notifier).getPengajuan();
+            if (context.mounted) {
+              context.loaderOverlay.hide();
+            }
+          } catch (e) {
+            if (context.mounted) {
+              context.loaderOverlay.hide();
+            }
+            return Future.error(e.toString());
+          } finally {
+            if (context.mounted) {
+              context.loaderOverlay.hide();
+            }
+          }
+        },
+      );
+    }
+
+    final inputAlasanDitolakController = useTextEditingController();
+
+    Future tolakPengajuan(int pengajuanId, String pengajuanNama) async {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.custom,
+        barrierDismissible: true,
+        title: "Peringatan",
+        text: 'Anda yakin pengajuan atas nama $pengajuanNama, gagal verifikasi lapangan?',
+        widget: Form(
+          key: alasanDitolakKey,
+          child: TextFormField(
+            controller: inputAlasanDitolakController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Alasan tidak boleh kosong';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              alignLabelWithHint: true,
+              hintText: 'Alasan ditolak',
+              prefixIcon: Icon(
+                Icons.info,
+              ),
+            ),
+          ),
+        ),
+        headerBackgroundColor: AppColors.redColor,
+        showConfirmBtn: true,
+        showCancelBtn: true,
+        confirmBtnText: 'Ya',
+        cancelBtnText: 'Batal',
+        confirmBtnColor: AppColors.redColor,
+        onConfirmBtnTap: () async {
+          if (alasanDitolakKey.currentState!.validate()) {
+            Navigator.pop(context);
+            context.loaderOverlay.show();
+            String url = "${Endpoints.baseURL}${Endpoints.updateStatusPengajuan}$pengajuanId";
+            final Dio dio = Dio();
+            try {
+              await dio.put(
+                url,
+                data: {
+                  "status_id": 1,
+                },
+              );
+              ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
+              await ref.refresh(pengajuanVerifikasiLapanganControllerProvider.notifier).getPengajuan();
+              if (context.mounted) {
+                context.loaderOverlay.hide();
+              }
+            } catch (e) {
+              if (context.mounted) {
+                context.loaderOverlay.hide();
+              }
+              return Future.error(e.toString());
+            } finally {
+              if (context.mounted) {
+                context.loaderOverlay.hide();
+              }
+            }
+          }
+        },
+      );
+    }
 
     return CustomSafeArea(
       child: Scaffold(
@@ -157,7 +266,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                                             const SizedBox(height: 5),
                                             ButtonActionPengajuan(
                                               label: "Kesesuaian Data Lapangan",
-                                              icon: Icons.map,
+                                              icon: Icons.edit_location_outlined,
                                               color: AppColors.mapColorStatusChip[2]!,
                                               onTap: () {
                                                 context.pop();
@@ -165,16 +274,24 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                                               },
                                             ),
                                             const SizedBox(height: 5),
-                                            const ButtonActionPengajuan(
+                                            ButtonActionPengajuan(
                                               label: "Setujui",
                                               icon: Icons.check,
                                               color: AppColors.greenColor,
+                                              onTap: () {
+                                                context.pop();
+                                                setujuiPengajuan(data[index].id, data[index].nama_lengkap!);
+                                              },
                                             ),
                                             const SizedBox(height: 5),
-                                            const ButtonActionPengajuan(
+                                            ButtonActionPengajuan(
                                               label: "Tolak",
                                               icon: Icons.close,
                                               color: AppColors.redColor,
+                                              onTap: () {
+                                                context.pop();
+                                                tolakPengajuan(data[index].id, data[index].nama_lengkap!);
+                                              },
                                             ),
                                             const SizedBox(height: 5),
                                             ButtonActionPengajuan(

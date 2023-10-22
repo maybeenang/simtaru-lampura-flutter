@@ -52,19 +52,19 @@ class Langkah7Form extends HookConsumerWidget {
         Text(inputController[2].text),
         const SizedBox(height: 5),
         const Text(
-          "Pekerjaan",
+          "No HP",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         Text(inputController[3].text),
         const SizedBox(height: 5),
         const Text(
-          "No. Identitas",
+          "Pekerjaan",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         Text(inputController[4].text),
         const SizedBox(height: 5),
         const Text(
-          "No. HP",
+          "No. Identitas",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         Text(inputController[5].text),

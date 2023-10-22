@@ -1,10 +1,17 @@
+import 'package:another_flushbar/flushbar.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_common.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class AdminEditDataLapanganPage extends HookConsumerWidget {
   const AdminEditDataLapanganPage({super.key, required this.pengajuan});
@@ -34,6 +41,107 @@ class AdminEditDataLapanganPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final inputController = List.generate(32, (index) => useTextEditingController());
 
+    void handleSubmit() async {
+      if (formEditDataLapanganKey.currentState!.validate()) {
+        FocusScope.of(context).unfocus();
+
+        context.loaderOverlay.show();
+
+        final formData = {
+          // "tanggal_peninjauan_lokasi": inputController[0].text,
+          "desa": inputController[1].text,
+          "kecamatan": inputController[2].text,
+          "batas_sebelah_utara": inputController[3].text,
+          "batas_sebelah_timur": inputController[4].text,
+          "batas_sebelah_selatan": inputController[5].text,
+          "batas_sebelah_barat": inputController[6].text,
+          "penggunaan_tanah_saat_dimohon": inputController[7].text,
+          "topografi_tanah": inputController[8].text,
+          "rencana_penggunaan_tanah": inputController[9].text,
+          "kesuburan_tanah": inputController[10].text,
+          "sarana_irigasi_atau_sumurbor": inputController[11].text,
+          "jarak_bangunan_dengan_sungai": inputController[12].text,
+          "jarak_bangunan_dengan_jalan": inputController[13].text,
+          "status_kepemilikan": inputController[14].text,
+          "bukti_penguasaan_tanah": inputController[15].text,
+          "luas_tanah_seluruhnya": inputController[16].text,
+          "luas_tanah_yang_dimohon": inputController[17].text,
+          "luas_tanah_yang_disetujui": inputController[18].text,
+          "kesesuaian_rencana": inputController[19].text,
+          "hubungan_pemohon_dengan_tanah": inputController[20].text,
+          "kesesuaian_dengan_keadaan_fisik_tanah": inputController[21].text,
+          "tanah_yang_dimohon_fisiknya": inputController[22].text,
+          "jarak_dari_pemukiman_terdekat": inputController[23].text,
+          "pertimbangan": inputController[24].text,
+          "luas_bangunan": inputController[25].text,
+          "tinggi_bangunan": inputController[26].text,
+          "kdb": inputController[27].text,
+          "klb": inputController[28].text,
+          "kdh": inputController[29].text,
+          "gsb": inputController[30].text,
+        };
+
+        final url = Endpoints.baseURL + Endpoints.editDataLapangan + pengajuan.id.toString();
+        print(url);
+        final Dio dio = Dio();
+
+        try {
+          await dio.post(url, data: formData);
+
+          if (context.mounted) {
+            ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
+            Flushbar(
+              message: "Berhasil mengedit data lapangan",
+              backgroundColor: AppColors.greenColor,
+              duration: const Duration(seconds: 1),
+              flushbarPosition: FlushbarPosition.TOP,
+              flushbarStyle: FlushbarStyle.FLOATING,
+              animationDuration: const Duration(milliseconds: 300),
+              margin: const EdgeInsets.all(8),
+              borderRadius: BorderRadius.circular(8),
+              isDismissible: true,
+              shouldIconPulse: false,
+              icon: const Icon(
+                Icons.check,
+                color: AppColors.whiteColor,
+              ),
+            ).show(context).then(
+              (value) {
+                context.pop();
+              },
+            );
+          }
+        } catch (e) {
+          print(e.toString());
+
+          if (context.mounted) {
+            context.loaderOverlay.hide();
+            print("KONTOL");
+            Flushbar(
+              message: "Gagal mengedit data lapangan",
+              backgroundColor: AppColors.redColor,
+              duration: const Duration(seconds: 3),
+              flushbarPosition: FlushbarPosition.TOP,
+              flushbarStyle: FlushbarStyle.FLOATING,
+              animationDuration: const Duration(milliseconds: 300),
+              margin: const EdgeInsets.all(8),
+              borderRadius: BorderRadius.circular(8),
+              isDismissible: true,
+              shouldIconPulse: false,
+              icon: const Icon(
+                Icons.close,
+                color: AppColors.whiteColor,
+              ),
+            ).show(context);
+          }
+        } finally {
+          if (context.mounted) {
+            context.loaderOverlay.hide();
+          }
+        }
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Data Lapangan"),
@@ -50,7 +158,7 @@ class AdminEditDataLapanganPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 30),
             Form(
-              // key: formEditPengajuanKey,
+              key: formEditDataLapanganKey,
               child: Column(
                 children: [
                   TextFieldCommon(
@@ -78,7 +186,7 @@ class AdminEditDataLapanganPage extends HookConsumerWidget {
                       );
 
                       if (pickedDate != null) {
-                        String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                        String formattedDate = DateFormat('MM/dd/yyyy').format(pickedDate);
                         inputController[0].text = formattedDate;
                       }
                     },
@@ -279,7 +387,9 @@ class AdminEditDataLapanganPage extends HookConsumerWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                handleSubmit();
+              },
               child: const Text(
                 "Simpan",
                 style: TextStyle(color: AppColors.whiteColor),
