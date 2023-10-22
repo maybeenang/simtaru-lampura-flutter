@@ -150,7 +150,7 @@ class PengajuanPage extends HookConsumerWidget {
           Flushbar(
             message: "Berhasil membuat pengajuan",
             backgroundColor: AppColors.greenColor,
-            duration: const Duration(seconds: 3),
+            duration: const Duration(seconds: 1),
             flushbarPosition: FlushbarPosition.TOP,
             flushbarStyle: FlushbarStyle.FLOATING,
             animationDuration: const Duration(milliseconds: 300),

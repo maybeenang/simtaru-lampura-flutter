@@ -7,6 +7,7 @@ import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card.dart';
@@ -276,6 +277,10 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                                             label: "Edit",
                                             icon: Icons.edit,
                                             color: AppColors.mapColorStatusChip[2]!,
+                                            onTap: () {
+                                              context.pop();
+                                              AdminEditPengajuanRoute(data[index]).push(context);
+                                            },
                                           ),
                                         ],
                                       );
