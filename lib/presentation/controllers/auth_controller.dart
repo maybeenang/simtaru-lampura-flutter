@@ -31,9 +31,8 @@ class AuthController extends _$AuthController {
     ref.listenSelf(
       (_, next) {
         if (next.isLoading) return;
-        if (next.hasError) {
-          return;
-        }
+
+        print("next ${next}");
 
         next.requireValue.map<void>(
           signedIn: (signedIn) async {
@@ -43,9 +42,15 @@ class AuthController extends _$AuthController {
           },
           signedOut: (signedOut) async {
             await _sharedPreferences.remove(_sharedPrefsKey);
+            await _sharedPreferences.remove(_sharedPrefsNipKey);
+            await _sharedPreferences.remove(_sharedPrefsPasswordKey);
           },
           signedUp: (value) {},
-          error: (error) {},
+          error: (error) async {
+            await _sharedPreferences.remove(_sharedPrefsKey);
+            await _sharedPreferences.remove(_sharedPrefsNipKey);
+            await _sharedPreferences.remove(_sharedPrefsPasswordKey);
+          },
         );
       },
     );
@@ -57,12 +62,14 @@ class AuthController extends _$AuthController {
       final nip = _sharedPreferences.getString(_sharedPrefsNipKey);
       final password = _sharedPreferences.getString(_sharedPrefsPasswordKey);
       print("nip ${nip.toString()}");
+      print("pw ${password.toString()}");
 
       if (nip == null || password == null) {
         throw Exception('No token found');
       }
       return _loginWithNipAndPassword(nip, password);
     } catch (e) {
+      print(e);
       await _sharedPreferences.remove(_sharedPrefsKey);
       return const Auth.signedOut();
     }
@@ -82,6 +89,7 @@ class AuthController extends _$AuthController {
               'password': password,
             },
           );
+          print("DISINI ${response.data}");
           final data = response.data;
           final token = data['data']['original']['access_token'];
           await _sharedPreferences.setString(_sharedPrefsKey, token);
@@ -95,26 +103,32 @@ class AuthController extends _$AuthController {
           );
           return auth;
         } on DioException catch (e) {
-          if (e.response!.statusCode! >= 500) {
+          print("DISANA ${e.response}");
+          if (e.response?.statusCode == 500) {
             return const Auth.error("Internal Server Error");
           }
+          print("ANJING ${e.response?.data['message']}");
           return Auth.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
+          print("KAMPANG ${e.toString()}");
           return const Auth.error("Terjadi kesalahan");
         }
       },
     );
 
-    if (loginAttemp is AsyncError<Auth>) {
-      await _sharedPreferences.remove(_sharedPrefsKey);
-      return const Auth.signedOut();
-    } else {
+    print("HAHSAHASDASDDAS $loginAttemp");
+
+    if (loginAttemp is AsyncData) {
+      print("INI MASALAHA");
       final accessToken = _sharedPreferences.getString(_sharedPrefsKey);
       return Auth.signedIn(
         nip: nip,
         password: password,
         token: accessToken ?? '',
       );
+    } else {
+      await _sharedPreferences.remove(_sharedPrefsKey);
+      return const Auth.signedOut();
     }
   }
 
@@ -260,7 +274,8 @@ class AuthController extends _$AuthController {
           if (e.response!.statusCode! >= 500) {
             return const Auth.error("Internal Server Error");
           }
-          return Auth.error(e.response?.data['message'].toString() ?? 'Error');
+
+          return Auth.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
           return const Auth.error("Terjadi kesalahan");
         }

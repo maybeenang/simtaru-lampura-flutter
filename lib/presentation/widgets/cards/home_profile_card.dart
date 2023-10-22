@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_user_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/weather/weather_controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,6 +17,9 @@ class HomeProfileCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userState = ref.watch(userControllerProvider);
     final weatherState = ref.watch(weatherProvider);
+    final roleState = ref.watch(roleProvider);
+    final pengajuanState =
+        roleState is Admin ? ref.watch(pengajuanControllerProvider) : ref.watch(pengajuanUserControllerProvider);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
@@ -80,9 +87,9 @@ class HomeProfileCard extends HookConsumerWidget {
               width: MediaQuery.of(context).size.width * 0.3,
               child: RichText(
                 textAlign: TextAlign.center,
-                text: const TextSpan(
+                text: TextSpan(
                   children: [
-                    TextSpan(
+                    const TextSpan(
                       text: "Total Pengajuan\n",
                       style: TextStyle(
                         color: AppColors.whiteColor,
@@ -91,8 +98,21 @@ class HomeProfileCard extends HookConsumerWidget {
                       ),
                     ),
                     TextSpan(
-                      text: "0",
-                      style: TextStyle(
+                      text: pengajuanState.when(
+                        data: (data) {
+                          if (data!.isEmpty) {
+                            return "0";
+                          }
+                          return data.length.toString();
+                        },
+                        error: (error, stackTrace) {
+                          return "0";
+                        },
+                        loading: () {
+                          return "-";
+                        },
+                      ),
+                      style: const TextStyle(
                         color: AppColors.whiteColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 10,

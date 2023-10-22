@@ -51,6 +51,7 @@ class DetailPengajuanPage extends StatelessWidget {
                     ],
                   ),
                 ),
+                
                 const SizedBox(height: 10),
                 BiodataPemohon(pengajuan: pengajuan),
                 const SizedBox(height: 10),

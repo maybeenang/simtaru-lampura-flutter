@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_map_simtaru/presentation/widgets/cards/item_pengajuan_ca
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AdminVerifikasiLapanganPage extends HookConsumerWidget {
@@ -36,6 +38,11 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
       }
     });
 
+    useEffect(() {
+      print("kontolon");
+      return () => print("memek");
+    }, []);
+
     return CustomSafeArea(
       child: Scaffold(
         floatingActionButton: showScrollToTop.value
@@ -58,118 +65,137 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                 ),
               )
             : null,
-        body: CustomScrollView(
-          controller: scrollController,
-          slivers: [
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  const CustomAppBarFitur(
-                    title: "Admin Verifikasi Lapangan",
-                    bgColor: AppColors.primaryColor,
-                    labelColor: AppColors.whiteColor,
-                  ),
-                  Stack(
-                    children: [
-                      Container(
-                        color: AppColors.primaryColor,
-                        child: const SizedBox(
-                          width: double.infinity,
-                          height: 25,
+        body: RefreshIndicator(
+          onRefresh: () async {
+            await ref.refresh(pengajuanVerifikasiLapanganControllerProvider.notifier).getPengajuan();
+          },
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: [
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    const CustomAppBarFitur(
+                      title: "Admin Verifikasi Lapangan",
+                      bgColor: AppColors.primaryColor,
+                      labelColor: AppColors.whiteColor,
+                    ),
+                    Stack(
+                      children: [
+                        Container(
+                          color: AppColors.primaryColor,
+                          child: const SizedBox(
+                            width: double.infinity,
+                            height: 25,
+                          ),
                         ),
-                      ),
-                      const ButtonSearchPengajuan(),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                ],
+                        const ButtonSearchPengajuan(),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
-            ),
-            pengajuanVerifikasiLapanganState.maybeWhen(
-              orElse: () {
-                return SliverList.separated(
-                  itemCount: 5,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 10);
-                  },
-                  itemBuilder: (context, index) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
-                      child: ItemPengajuanLoading(),
-                    );
-                  },
-                );
-              },
-              data: (data) {
-                if (data.isEmpty) {
-                  return const Center(
-                    child: Text("Tidak ada data"),
+              pengajuanVerifikasiLapanganState.maybeWhen(
+                orElse: () {
+                  return SliverList.separated(
+                    itemCount: 5,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 10);
+                    },
+                    itemBuilder: (context, index) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
+                        child: ItemPengajuanLoading(),
+                      );
+                    },
                   );
-                }
-
-                return SliverList.separated(
-                  itemCount: hasReachedMax.value
-                      ? data.length
-                      : data.length > 5
-                          ? data.length + 1
-                          : data.length,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 10);
-                  },
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppDouble.paddingOutside,
-                      ),
-                      child: index >= data.length
-                          ? const ItemPengajuanLoading()
-                          : ItemPengajuanCard(
-                              pengajuan: data[index],
-                              onTap: () {
-                                Future.delayed(
-                                  const Duration(milliseconds: 100),
-                                  () => showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) {
-                                      return BottomSheetCard(
-                                        pengajuan: data[index],
-                                        actions: [
-                                          const ButtonActionPengajuan(
-                                            label: "Rekam Polygon",
-                                            icon: Icons.map,
-                                            color: AppColors.secondaryColor,
-                                          ),
-                                          const SizedBox(height: 5),
-                                          const ButtonActionPengajuan(
-                                            label: "Setujui",
-                                            icon: Icons.check,
-                                            color: AppColors.greenColor,
-                                          ),
-                                          const SizedBox(height: 5),
-                                          const ButtonActionPengajuan(
-                                            label: "Tolak",
-                                            icon: Icons.close,
-                                            color: AppColors.redColor,
-                                          ),
-                                          const SizedBox(height: 5),
-                                          ButtonActionPengajuan(
-                                            label: "Edit",
-                                            icon: Icons.edit,
-                                            color: AppColors.mapColorStatusChip[2]!,
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
+                },
+                data: (data) {
+                  if (data.isEmpty) {
+                    return const Center(
+                      child: Text("Tidak ada data"),
                     );
-                  },
-                );
-              },
-            ),
-          ],
+                  }
+
+                  return SliverList.separated(
+                    itemCount: hasReachedMax.value
+                        ? data.length
+                        : data.length > 5
+                            ? data.length + 1
+                            : data.length,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 10);
+                    },
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppDouble.paddingOutside,
+                        ),
+                        child: index >= data.length
+                            ? const ItemPengajuanLoading()
+                            : ItemPengajuanCard(
+                                pengajuan: data[index],
+                                onTap: () {
+                                  Future.delayed(
+                                    const Duration(milliseconds: 100),
+                                    () => showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        return BottomSheetCard(
+                                          pengajuan: data[index],
+                                          actions: [
+                                            ButtonActionPengajuan(
+                                              label: "Rekam Polygon",
+                                              icon: Icons.map,
+                                              color: AppColors.secondaryColor,
+                                              onTap: () {
+                                                context.pop();
+                                                AdminRekamPolygonRoute(data[index]).push(context);
+                                              },
+                                            ),
+                                            const SizedBox(height: 5),
+                                            ButtonActionPengajuan(
+                                              label: "Kesesuaian Data Lapangan",
+                                              icon: Icons.map,
+                                              color: AppColors.mapColorStatusChip[2]!,
+                                            ),
+                                            const SizedBox(height: 5),
+                                            const ButtonActionPengajuan(
+                                              label: "Setujui",
+                                              icon: Icons.check,
+                                              color: AppColors.greenColor,
+                                            ),
+                                            const SizedBox(height: 5),
+                                            const ButtonActionPengajuan(
+                                              label: "Tolak",
+                                              icon: Icons.close,
+                                              color: AppColors.redColor,
+                                            ),
+                                            const SizedBox(height: 5),
+                                            ButtonActionPengajuan(
+                                              label: "Edit",
+                                              icon: Icons.edit,
+                                              color: AppColors.mapColorStatusChip[2]!,
+                                              onTap: () {
+                                                context.pop();
+                                                AdminEditPengajuanRoute(data[index]).push(context);
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

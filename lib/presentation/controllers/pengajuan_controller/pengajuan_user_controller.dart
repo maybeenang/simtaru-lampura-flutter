@@ -1,14 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'pengajuan_verifikasi_lapangan_controller.g.dart';
+part 'pengajuan_user_controller.g.dart';
 
 @riverpod
-class PengajuanVerifikasiLapanganController extends _$PengajuanVerifikasiLapanganController {
+class PengajuanUserController extends _$PengajuanUserController {
   final Dio dio = Dio();
   int page = 1;
+  int userId = 0;
 
   @override
   FutureOr<List<Pengajuan>> build() async {
@@ -19,9 +22,24 @@ class PengajuanVerifikasiLapanganController extends _$PengajuanVerifikasiLapanga
       },
     );
 
+    userId = ref.watch(userControllerProvider).maybeWhen(
+          data: (data) {
+            if (data is UserSuccess) {
+              return data.model.id;
+            } else {
+              return 0;
+            }
+          },
+          orElse: () => 0,
+        );
+
+    if (userId == 0) {
+      return [];
+    }
+
     try {
-      String query = "?page=$page";
-      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 3.toString() + query);
+      String query = "$userId?page=$page";
+      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.userPengajuan + query);
       final Response response = await dio.get(
         uri.toString(),
       );
@@ -39,9 +57,8 @@ class PengajuanVerifikasiLapanganController extends _$PengajuanVerifikasiLapanga
       () async {
         try {
           page++;
-          String query = "?page=$page";
-
-          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 3.toString() + query);
+          String query = "$userId?page=$page";
+          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.userPengajuan + query);
           final Response response = await dio.get(
             uri.toString(),
           );
@@ -75,9 +92,24 @@ class PengajuanVerifikasiLapanganController extends _$PengajuanVerifikasiLapanga
       },
     );
 
+    userId = ref.watch(userControllerProvider).maybeWhen(
+          data: (data) {
+            if (data is UserSuccess) {
+              return data.model.id;
+            } else {
+              return 0;
+            }
+          },
+          orElse: () => 0,
+        );
+
+    if (userId == 0) {
+      return [];
+    }
+
     try {
-      String query = "?page=$page";
-      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 3.toString() + query);
+      String query = "$userId?page=$page";
+      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.userPengajuan + query);
       final Response response = await dio.get(
         uri.toString(),
       );

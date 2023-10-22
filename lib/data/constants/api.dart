@@ -1,6 +1,10 @@
 class Endpoints {
   static String baseURL = "https://simtaru-lampura.com/api/v1/";
+  // static String baseURL = "https://daring-asp-immortal.ngrok-free.app/api/v1/";
+  // static String baseURL = "https://relieved-cheaply-drum.ngrok-free.app/api/v1/";
   static String baseURLDownload = "https://simtaru-lampura.com";
+  // static String baseURLDownload = "https://daring-asp-immortal.ngrok-free.app";
+  // static String baseURLDownload = "https://relieved-cheaply-drum.ngrok-free.app";
   static String login = "auth/login";
   static String logout = "auth/logout";
   static String register = "auth/register";
@@ -10,6 +14,10 @@ class Endpoints {
   static String pengajuanByStatus = "pengajuan/status/";
   static String pengajuanJumlah = "pengajuan/hitungData";
   static String statusPengajuan = "status/getAll";
+  static String userPengajuan = "pengajuan/user/";
+  static String tambahPengajuan = "pengajuan/tambah";
+  static String updateStatusPengajuan = "pengajuan/status/updateStatus/";
+  static String updatePengajuan = "pengajuan/edit/";
   static String convertDownloadUrl(String url) {
     return baseURLDownload + url;
   }

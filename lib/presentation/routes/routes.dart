@@ -9,7 +9,9 @@ import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/detail_pen
 import 'package:flutter_map_simtaru/presentation/pages/root/home/notif_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/search_pengajuan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_pengajuan_ditolak_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_rekam_polygon_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_revisi_berkas_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_seluruh_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_surat_rekomendasi_page.dart';
@@ -53,6 +55,8 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<AdminVerifikasiBerkasRoute>(path: AdminVerifikasiBerkasRoute.path),
     TypedGoRoute<AdminRevisiBerkasRoute>(path: AdminRevisiBerkasRoute.path),
     TypedGoRoute<AdminUbahStatusRoute>(path: AdminUbahStatusRoute.path),
+    TypedGoRoute<AdminEditPengajuanRoute>(path: AdminEditPengajuanRoute.path),
+    TypedGoRoute<AdminRekamPolygonRoute>(path: AdminRekamPolygonRoute.path),
   ],
 )
 class RootRoute extends GoRouteData {
@@ -204,6 +208,32 @@ class AdminUbahStatusRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const AdminUbahStatusPage();
+  }
+}
+
+class AdminEditPengajuanRoute extends GoRouteData {
+  const AdminEditPengajuanRoute(this.$extra);
+  static const path = 'admin-edit-pengajuan';
+  final Pengajuan $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return AdminEditPengajuanPage(
+      pengajuan: $extra,
+    );
+  }
+}
+
+class AdminRekamPolygonRoute extends GoRouteData {
+  const AdminRekamPolygonRoute(this.$extra);
+  static const path = 'admin-rekam-polygon';
+  final Pengajuan $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return AdminRekamPolygonPage(
+      pengajuan: $extra,
+    );
   }
 }
 

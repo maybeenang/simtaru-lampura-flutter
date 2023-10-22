@@ -17,18 +17,21 @@ class TextFieldUploadFile extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final namaFile = useState('');
+    final namaFile = useState(ref.read(inputsFile.notifier).state[index].path.split('/').last);
     final file = useState<PlatformFile?>(null);
 
     void openFileExplorer() async {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: false,
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'docx', 'png', 'jpeg', 'jpg'],
       );
 
       if (result != null) {
         namaFile.value = result.files.single.path!;
         file.value = result.files.first;
         ref.read(inputsFile.notifier).state[index] = File(result.files.single.path!);
+        print(ref.read(inputsFile.notifier).state[index]);
       }
     }
 

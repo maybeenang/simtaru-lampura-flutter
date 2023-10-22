@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/profile_card_loading.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/profile/admin_menu_card.dart';
@@ -15,6 +17,7 @@ class ProfilPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userState = ref.watch(userControllerProvider);
+    final roleState = ref.watch(roleProvider);
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -26,7 +29,7 @@ class ProfilPage extends ConsumerWidget {
             child: Column(
               children: [
                 const CustomAppBarFitur(
-                  title: "Profil",
+                  title: "Profile",
                   bgColor: AppColors.primaryColor,
                   labelColor: AppColors.whiteColor,
                 ),
@@ -59,7 +62,7 @@ class ProfilPage extends ConsumerWidget {
                 const SizedBox(height: 20),
                 const UserMenuProfileCard(),
                 const SizedBox(height: 20),
-                const AdminMenuProfileCard(),
+                if (roleState is Admin) const AdminMenuProfileCard(),
                 const SizedBox(
                   height: 50,
                 ),

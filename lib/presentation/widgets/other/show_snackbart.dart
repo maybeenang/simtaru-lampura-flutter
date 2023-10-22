@@ -9,7 +9,7 @@ class AppSnackBar {
     Color? color,
     IconData? icon,
   ]) async {
-    Flushbar(
+    await Flushbar(
       message: text,
       backgroundColor: color ?? AppColors.blackColor,
       duration: const Duration(seconds: 5),

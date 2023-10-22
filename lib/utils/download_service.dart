@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
@@ -33,10 +34,13 @@ class DownloadService {
   }
 
   Future<void> downloadFile({required String url}) async {
-    var permission = await Permission.storage.request();
+    bool permissionStatus;
+    final deviceInfo = await DeviceInfoPlugin().androidInfo;
 
-    if (permission.isDenied) {
-      await Permission.storage.request();
+    if (deviceInfo.version.sdkInt > 32) {
+      permissionStatus = await Permission.photos.request().isGranted;
+    } else {
+      permissionStatus = await Permission.storage.request().isGranted;
     }
 
     var permssion13 = await Permission.manageExternalStorage.request();
@@ -45,7 +49,7 @@ class DownloadService {
       await Permission.manageExternalStorage.request();
     }
 
-    if (permission.isDenied || permssion13.isDenied) {
+    if (!permissionStatus || permssion13.isDenied) {
       ScaffoldMessenger.of(context).showSnackBar(
         snackbar(
           "Izin akses penyimpanan ditolak",
@@ -67,17 +71,25 @@ class DownloadService {
     }
 
     context.loaderOverlay.show();
+    Response response;
 
-    final Response response = await dio.get(
-      Endpoints.convertDownloadUrl(url),
-      options: Options(
-        responseType: ResponseType.bytes,
-        followRedirects: false,
-        validateStatus: (status) {
-          return status! < 500;
-        },
-      ),
-    );
+    try {
+      await File(_localPath + "test.txt").create(recursive: true);
+      response = await dio.get(
+        Endpoints.convertDownloadUrl(url),
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ),
+      );
+    } catch (e) {
+      print(e.toString());
+      context.loaderOverlay.hide();
+      return;
+    }
 
     // create file name
     String fileExtension = response.headers.value("content-type")!.split("/").last;

@@ -27,6 +27,7 @@ class StatusPengajuanController extends _$StatusPengajuanController {
 
       return statusPengajuan;
     } catch (e) {
+      print("STATYS  $e");
       state = AsyncValue.error(e, StackTrace.current);
       rethrow;
     }

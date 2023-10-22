@@ -14,6 +14,7 @@ dependencies:
   flutter_map: ^4.0.0
   latlong2: ^0.8.0
   flutter_map_line_editor: ^5.0.0
+  flutter_map_dragmarker: ^4.1.3
   go_router: ^10.1.2
   flutter_svg: ^2.0.7
   carousel_slider: ^4.2.1
@@ -44,6 +45,9 @@ dependencies:
   flutter_file_downloader: ^1.1.4
   permission_handler: ^11.0.1
   loader_overlay: ^2.3.2
+  device_info_plus: ^9.1.0
+  quickalert: ^1.0.2
+  flutter_expandable_fab: ^2.0.0
 
 dev_dependencies:
   flutter_test:

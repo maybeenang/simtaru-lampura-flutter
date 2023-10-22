@@ -1,27 +1,71 @@
+import 'dart:async';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
+import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/cards/item_pengajuan_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SearchPengajuanPage extends StatefulWidget {
-  const SearchPengajuanPage({super.key});
-
-  @override
-  State<SearchPengajuanPage> createState() => _SearchPengajuanPageState();
-}
-
-class _SearchPengajuanPageState extends State<SearchPengajuanPage> {
-  int _value = 0;
+class SearchPengajuanPage extends HookConsumerWidget {
+  const SearchPengajuanPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final searchInput = useTextEditingController();
+    final roleState = ref.watch(roleProvider);
+    final userId = ref.watch(userControllerProvider).maybeWhen(
+          data: (data) {
+            if (data is UserSuccess) {
+              return data.model.id;
+            } else {
+              return 0;
+            }
+          },
+          orElse: () => 0,
+        );
+
+    final isLoading = useState(false);
+
+    final searchPengajuanItem = useState([]);
+
+    Future searchPengajuan(String input) async {
+      isLoading.value = true;
+      final Dio dio = Dio();
+      if (userId == 0) {
+        return;
+      }
+      final query = roleState is Admin ? "?searchName=$input" : "?searchUserId=$userId&searchName=$input";
+      try {
+        final response = await dio.get(
+          Endpoints.baseURL + Endpoints.seluruhPengajuan + query,
+        );
+        final List<Pengajuan> pengajuan = (response.data['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
+        searchPengajuanItem.value = pengajuan;
+        isLoading.value = false;
+      } catch (e) {
+        isLoading.value = false;
+        searchPengajuanItem.value = [];
+        return Future.error(e.toString());
+      }
+    }
+
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.bgColor,
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 color: AppColors.primaryColor,
@@ -72,6 +116,13 @@ class _SearchPengajuanPageState extends State<SearchPengajuanPage> {
                         ],
                       ),
                       child: TextField(
+                        onSubmitted: (value) {
+                          if (value.isEmpty) {
+                            return;
+                          }
+                          searchPengajuan(value);
+                        },
+                        controller: searchInput,
                         autofocus: true,
                         decoration: InputDecoration(
                           filled: true,
@@ -92,69 +143,37 @@ class _SearchPengajuanPageState extends State<SearchPengajuanPage> {
               const SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    "Filter",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                height: 40,
-                child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return ChoiceChip(
-                      label: Text('Item ${index + 1} '),
-                      selectedColor: AppColors.primaryColor,
-                      labelStyle: TextStyle(
-                        color: _value == index ? AppColors.whiteColor : AppColors.greyColor,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      showCheckmark: false,
-                      selected: _value == index,
-                      onSelected: (bool selected) {
-                        setState(
-                          () {
-                            _value = (selected ? index : null)!;
-                          },
-                        );
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(width: 10);
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Divider(),
               ),
-              ListView.separated(
-                padding: const EdgeInsetsDirectional.all(10),
-                itemBuilder: (context, index) {
-                  return const ItemPengajuanLoading();
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: 10);
-                },
-                itemCount: 5,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-              ),
+              isLoading.value
+                  ? ListView.separated(
+                      padding: const EdgeInsetsDirectional.all(10),
+                      itemBuilder: (context, index) {
+                        return const ItemPengajuanLoading();
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(height: 10);
+                      },
+                      itemCount: 2,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                    )
+                  : searchPengajuanItem.value.isEmpty
+                      ? const Center(
+                          child: Text("Tidak ada data"),
+                        )
+                      : ListView.separated(
+                          padding: const EdgeInsetsDirectional.all(10),
+                          itemBuilder: (context, index) {
+                            return ItemPengajuanCard(pengajuan: searchPengajuanItem.value[index]);
+                          },
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(height: 10);
+                          },
+                          itemCount: searchPengajuanItem.value.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                        ),
             ],
           ),
         ),

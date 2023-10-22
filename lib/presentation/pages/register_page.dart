@@ -8,6 +8,7 @@ import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_common
 import 'package:flutter_map_simtaru/presentation/widgets/other/show_snackbart.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 final registerFormKey = GlobalKey<FormState>();
 
@@ -21,7 +22,6 @@ class RegisterPage extends HookConsumerWidget {
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     final konfirmasiPasswordController = useTextEditingController();
-    final authState = ref.watch(authControllerProvider);
 
     return WillPopScope(
       onWillPop: () {
@@ -97,16 +97,15 @@ class RegisterPage extends HookConsumerWidget {
                                 FocusScope.of(context).unfocus();
 
                                 if (registerFormKey.currentState!.validate()) {
-                                  if (passwordController.text ==
-                                      konfirmasiPasswordController.text) {
-                                    await ref
-                                        .read(authControllerProvider.notifier)
-                                        .register(
+                                  if (passwordController.text == konfirmasiPasswordController.text) {
+                                    context.loaderOverlay.show();
+                                    await ref.read(authControllerProvider.notifier).register(
                                           nikController.text,
                                           namaController.text,
                                           emailController.text,
                                           passwordController.text,
                                         );
+                                    context.loaderOverlay.hide();
                                   } else {
                                     AppSnackBar.show(
                                       context,
@@ -117,18 +116,9 @@ class RegisterPage extends HookConsumerWidget {
                                   }
                                 }
                               },
-                              child: authState.maybeWhen(
-                                loading: () => const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.whiteColor,
-                                  ),
-                                ),
-                                orElse: () => const Text(
-                                  "Daftar",
-                                  style: AppStyles.textButton,
-                                ),
+                              child: const Text(
+                                "Daftar",
+                                style: AppStyles.textButton,
                               ),
                             ),
                             const SizedBox(height: 20),
