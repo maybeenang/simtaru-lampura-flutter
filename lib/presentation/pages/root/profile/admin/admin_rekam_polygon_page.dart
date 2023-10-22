@@ -1,56 +1,147 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_dragmarker/flutter_map_dragmarker.dart';
 import 'package:flutter_map_line_editor/flutter_map_line_editor.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
-class AdminRekamPolygonPage extends StatefulWidget {
+class AdminRekamPolygonPage extends StatefulHookConsumerWidget {
   const AdminRekamPolygonPage({Key? key, required this.pengajuan}) : super(key: key);
 
   final Pengajuan pengajuan;
 
   @override
-  State<AdminRekamPolygonPage> createState() => _PolygonPageState();
+  // ignore: library_private_types_in_public_api
+  _AdminRekamPolygonPageState createState() => _AdminRekamPolygonPageState();
 }
 
-class _PolygonPageState extends State<AdminRekamPolygonPage> {
+class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
   late PolyEditor polyEditor;
+  final _key = GlobalKey<ExpandableFabState>();
+  final keyPoli = GlobalKey();
 
   final polygons = <Polygon>[];
-  final testPolygon = Polygon(
-    color: AppColors.actionColor.withOpacity(0.5),
+  var testPolygon = Polygon(
+    borderColor: AppColors.whiteColor,
+    borderStrokeWidth: 2,
+    color: AppColors.primaryColor.withOpacity(0.7),
     isFilled: true,
     points: [],
   );
 
+  late bool isEditing;
+
+  final List<String> list = <String>['Berusaha', 'Non Berusaha'];
+  final List<String> umkm = <String>['UMKM', 'Non UMKM'];
+  late String valuePerizinan;
+  late String valueUMKM;
   @override
   void initState() {
     super.initState();
-
+    isEditing = false;
     polyEditor = PolyEditor(
       addClosePathMarker: true,
       points: testPolygon.points,
-      pointIcon: const Icon(Icons.crop_square, size: 23),
+      pointIcon: const Icon(
+        Icons.circle,
+        size: 23,
+        color: AppColors.whiteColor,
+      ),
       intermediateIcon: const Icon(Icons.lens, size: 15, color: Colors.grey),
       callbackRefresh: () => {setState(() {})},
     );
 
+    valuePerizinan = list.first;
     polygons.add(testPolygon);
+    valueUMKM = umkm.first;
   }
 
   @override
   Widget build(BuildContext context) {
+    void handleSubmit(String geoJson) async {
+      print(geoJson);
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.custom,
+        barrierDismissible: true,
+        title: "Peringatan",
+        text: 'Silahkan pilih jenis perizinan',
+        widget: Column(
+          children: [
+            const Text("Jenis Perizinan"),
+            DropdownButton<String>(
+              value: valuePerizinan,
+              icon: const Icon(Icons.arrow_downward),
+              elevation: 16,
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (String? value) {
+                setState(() {
+                  valuePerizinan = value!;
+                });
+              },
+              items: list.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            valuePerizinan == "UMKM"
+                ? DropdownButton<String>(
+                    value: valueUMKM,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String? value) {
+                      setState(() {
+                        valueUMKM = value!;
+                      });   
+                    },
+                    items: umkm.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  )
+                : SizedBox()
+          ],
+        ),
+        headerBackgroundColor: AppColors.redColor,
+        showConfirmBtn: true,
+        showCancelBtn: true,
+        confirmBtnText: 'Ya',
+        cancelBtnText: 'Batal',
+        confirmBtnColor: AppColors.redColor,
+      );
+    }
+
+    ;
+
     return Scaffold(
         body: FlutterMap(
           options: MapOptions(
             onTap: (_, ll) {
-              polyEditor.add(testPolygon.points, ll);
+              if (isEditing) {
+                polyEditor.add(testPolygon.points, ll);
+                // polygons.add(testPolygon);
+              }
             },
             // For backwards compatibility with pre v5 don't use const
             // ignore: prefer_const_constructors
@@ -69,11 +160,12 @@ class _PolygonPageState extends State<AdminRekamPolygonPage> {
               fallbackUrl: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             ),
             PolygonLayer(polygons: polygons),
-            DragMarkers(markers: polyEditor.edit()),
+            isEditing ? DragMarkers(markers: polyEditor.edit()) : const SizedBox()
           ],
         ),
         floatingActionButtonLocation: ExpandableFab.location,
         floatingActionButton: ExpandableFab(
+          key: _key,
           openButtonBuilder: RotateFloatingActionButtonBuilder(
             child: const Icon(Icons.edit),
             fabSize: ExpandableFabSize.regular,
@@ -81,7 +173,7 @@ class _PolygonPageState extends State<AdminRekamPolygonPage> {
             backgroundColor: AppColors.primaryColor,
             shape: const CircleBorder(),
           ),
-          closeButtonBuilder: DefaultFloatingActionButtonBuilder(
+          closeButtonBuilder: RotateFloatingActionButtonBuilder(
             child: const Icon(Icons.close),
             fabSize: ExpandableFabSize.regular,
             foregroundColor: AppColors.whiteColor,
@@ -89,31 +181,85 @@ class _PolygonPageState extends State<AdminRekamPolygonPage> {
             shape: const CircleBorder(),
           ),
           distance: 60.0,
-          childrenOffset: Offset(5, 5),
+          childrenOffset: const Offset(5, 5),
           type: ExpandableFabType.up,
           children: [
             FloatingActionButton.small(
               shape: const CircleBorder(),
               heroTag: null,
               backgroundColor: AppColors.redColor,
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  polyEditor.points.clear();
+                });
+              },
               child: const Icon(Icons.delete),
             ),
             FloatingActionButton.small(
               shape: const CircleBorder(),
               heroTag: null,
-              backgroundColor: AppColors.actionColor,
-              onPressed: () {},
+              backgroundColor: AppColors.mapColorStatusChip[2],
+              onPressed: () {
+                setState(() {
+                  if (polyEditor.points.isNotEmpty) {
+                    final index = polyEditor.points.length - 1;
+                    polyEditor.remove(index);
+                  }
+                });
+              },
               child: const Icon(Icons.undo),
             ),
             FloatingActionButton.small(
               shape: const CircleBorder(),
               heroTag: null,
               backgroundColor: AppColors.greenColor,
-              onPressed: () {},
+              onPressed: () {
+                if (polyEditor.points.length < 3) {
+                  QuickAlert.show(
+                    context: context,
+                    type: QuickAlertType.error,
+                    title: "Peringatan",
+                    barrierDismissible: false,
+                    text: 'Silahkan pilih minimal 3 titik',
+                    confirmBtnText: "OK",
+                  );
+                  return;
+                }
+
+                double getNumber(double input, {int precision = 6}) =>
+                    double.parse('$input'.substring(0, '$input'.indexOf('.') + precision + 1));
+                Map<String, dynamic> geojson = {
+                  "type": "FeatureCollection",
+                  "features": [
+                    {
+                      "type": "Feature",
+                      "properties": {},
+                      "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [
+                          // polyEditor.points.map((e) => [getNumber(e.longitude), getNumber(e.latitude)]).toList()
+                          polyEditor.points.map((e) => [e.longitude, e.latitude]).toList()
+                        ]
+                      }
+                    }
+                  ]
+                };
+
+                handleSubmit(jsonEncode(geojson));
+              },
               child: const Icon(Icons.check),
             ),
           ],
+          afterOpen: () {
+            setState(() {
+              isEditing = true;
+            });
+          },
+          afterClose: () {
+            setState(() {
+              isEditing = false;
+            });
+          },
         )
         // floatingActionButton: FloatingActionButton(
         //   child: const Icon(Icons.replay),
