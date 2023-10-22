@@ -9,6 +9,7 @@ import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/detail_pen
 import 'package:flutter_map_simtaru/presentation/pages/root/home/notif_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/search_pengajuan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_data_lapangan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_pengajuan_ditolak_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_rekam_polygon_page.dart';
@@ -57,6 +58,7 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<AdminUbahStatusRoute>(path: AdminUbahStatusRoute.path),
     TypedGoRoute<AdminEditPengajuanRoute>(path: AdminEditPengajuanRoute.path),
     TypedGoRoute<AdminRekamPolygonRoute>(path: AdminRekamPolygonRoute.path),
+    TypedGoRoute<AdminEditDataLapanganRoute>(path: AdminEditDataLapanganRoute.path),
   ],
 )
 class RootRoute extends GoRouteData {
@@ -232,6 +234,19 @@ class AdminRekamPolygonRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return AdminRekamPolygonPage(
+      pengajuan: $extra,
+    );
+  }
+}
+
+class AdminEditDataLapanganRoute extends GoRouteData {
+  const AdminEditDataLapanganRoute(this.$extra);
+  static const path = 'admin-edit-data-lapangan';
+  final Pengajuan $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return AdminEditDataLapanganPage(
       pengajuan: $extra,
     );
   }

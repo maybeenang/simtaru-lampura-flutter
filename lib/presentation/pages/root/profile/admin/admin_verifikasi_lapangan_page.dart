@@ -159,6 +159,10 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                                               label: "Kesesuaian Data Lapangan",
                                               icon: Icons.map,
                                               color: AppColors.mapColorStatusChip[2]!,
+                                              onTap: () {
+                                                context.pop();
+                                                AdminEditDataLapanganRoute(data[index]).push(context);
+                                              },
                                             ),
                                             const SizedBox(height: 5),
                                             const ButtonActionPengajuan(

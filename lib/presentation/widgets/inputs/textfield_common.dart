@@ -16,6 +16,8 @@ class TextFieldCommon extends HookConsumerWidget {
     this.isEmail,
     this.isNik,
     this.initialValue,
+    this.readOnly,
+    this.onTap,
   });
 
   final String labelText;
@@ -26,7 +28,9 @@ class TextFieldCommon extends HookConsumerWidget {
   final bool? isLast;
   final bool? isEmail;
   final bool? isNik;
+  final bool? readOnly;
   final String? initialValue;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,6 +41,7 @@ class TextFieldCommon extends HookConsumerWidget {
     }
 
     return TextFormField(
+      onTap: onTap,
       keyboardType: keyboardType ?? TextInputType.text,
       controller: controller,
       obscureText: hidePassword.value,
@@ -62,6 +67,7 @@ class TextFieldCommon extends HookConsumerWidget {
         }
         return null;
       },
+      readOnly: readOnly ?? false,
       decoration: AppStyles.inputDecoration.copyWith(
         suffixIcon: isPassword == true
             ? IconButton(
