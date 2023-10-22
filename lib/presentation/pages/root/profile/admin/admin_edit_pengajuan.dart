@@ -81,7 +81,7 @@ class AdminEditPengajuanPage extends HookConsumerWidget {
               },
             );
           }
-        } on DioException catch (e) {
+        } on DioException catch (_) {
           if (context.mounted) {
             context.loaderOverlay.hide();
             Flushbar(
@@ -111,29 +111,14 @@ class AdminEditPengajuanPage extends HookConsumerWidget {
 
     return CustomSafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Edit Data Lapangan"),
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        context.pop();
-                      },
-                      icon: const Icon(Icons.arrow_back),
-                    ),
-                    const Text(
-                      "Edit Pengajuan",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-                const Divider(),
                 const SizedBox(height: 10),
                 Text(
                   "Edit Pengajuan atas nama ${pengajuan.nama_lengkap}",
