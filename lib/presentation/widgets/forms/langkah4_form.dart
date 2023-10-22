@@ -50,8 +50,6 @@ class _Langkah4FormState extends ConsumerState<Langkah4Form> with TickerProvider
             mapController: mapController,
             options: MapOptions(
               center: LatLng(-4.838455515616654, 104.89554453973685),
-              zoom: 13.0,
-              maxZoom: 18.0,
               onTap: (tapPosition, point) {
                 setState(() {
                   markers = [];
@@ -73,11 +71,18 @@ class _Langkah4FormState extends ConsumerState<Langkah4Form> with TickerProvider
                   _animatedMapMove(point, 18.0);
                 });
               },
+              zoom: 15.0,
+              maxZoom: 22,
             ),
             children: [
               TileLayer(
-                urlTemplate: "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                urlTemplate:
+                    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                 subdomains: const ['a', 'b', 'c'],
+                userAgentPackageName: 'simtaru.lampura.com',
+                maxNativeZoom: 18,
+                maxZoom: 22,
+                fallbackUrl: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
               ),
               MarkerLayer(markers: markers.map((e) => e).toList())
             ],

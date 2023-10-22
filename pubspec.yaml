@@ -47,6 +47,7 @@ dependencies:
   loader_overlay: ^2.3.2
   device_info_plus: ^9.1.0
   quickalert: ^1.0.2
+  flutter_expandable_fab: ^2.0.0
 
 dev_dependencies:
   flutter_test:
