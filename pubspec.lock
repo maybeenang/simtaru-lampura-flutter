@@ -447,7 +447,7 @@ packages:
     source: hosted
     version: "4.0.0"
   flutter_map_dragmarker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_map_dragmarker
       sha256: c41e8f6d52dd5dcb92456f6bea172b1c292fde8f208e1b9483cfce74c7155f45

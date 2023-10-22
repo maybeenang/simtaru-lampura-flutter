@@ -8,7 +8,6 @@ import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
-import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/textfield_common.dart';
 import 'package:go_router/go_router.dart';
@@ -85,6 +84,22 @@ class AdminEditPengajuanPage extends HookConsumerWidget {
         } on DioException catch (e) {
           if (context.mounted) {
             context.loaderOverlay.hide();
+            Flushbar(
+              message: "Gagal mengedit pengajuan",
+              backgroundColor: AppColors.redColor,
+              duration: const Duration(seconds: 1),
+              flushbarPosition: FlushbarPosition.TOP,
+              flushbarStyle: FlushbarStyle.FLOATING,
+              animationDuration: const Duration(milliseconds: 300),
+              margin: const EdgeInsets.all(8),
+              borderRadius: BorderRadius.circular(8),
+              isDismissible: true,
+              shouldIconPulse: false,
+              icon: const Icon(
+                Icons.check,
+                color: AppColors.whiteColor,
+              ),
+            );
           }
         } finally {
           if (context.mounted) {

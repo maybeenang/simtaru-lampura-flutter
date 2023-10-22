@@ -100,6 +100,10 @@ RouteBase get $rootRoute => GoRouteData.$route(
           path: 'admin-edit-pengajuan',
           factory: $AdminEditPengajuanRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'admin-rekam-polygon',
+          factory: $AdminRekamPolygonRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -384,6 +388,28 @@ extension $AdminEditPengajuanRouteExtension on AdminEditPengajuanRoute {
 
   String get location => GoRouteData.$location(
         '/admin-edit-pengajuan',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
+}
+
+extension $AdminRekamPolygonRouteExtension on AdminRekamPolygonRoute {
+  static AdminRekamPolygonRoute _fromState(GoRouterState state) =>
+      AdminRekamPolygonRoute(
+        state.extra as Pengajuan,
+      );
+
+  String get location => GoRouteData.$location(
+        '/admin-rekam-polygon',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);

@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
-import 'package:flutter_map_simtaru/presentation/routes/router_listenable.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
@@ -146,10 +145,14 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                                         return BottomSheetCard(
                                           pengajuan: data[index],
                                           actions: [
-                                            const ButtonActionPengajuan(
+                                            ButtonActionPengajuan(
                                               label: "Rekam Polygon",
                                               icon: Icons.map,
                                               color: AppColors.secondaryColor,
+                                              onTap: () {
+                                                context.pop();
+                                                AdminRekamPolygonRoute(data[index]).push(context);
+                                              },
                                             ),
                                             const SizedBox(height: 5),
                                             ButtonActionPengajuan(
