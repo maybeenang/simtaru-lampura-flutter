@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
@@ -10,6 +11,8 @@ import 'package:flutter_map_line_editor/flutter_map_line_editor.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -64,9 +67,17 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
     );
 
     polygons.add(testPolygon);
-    valuePerizinan = list.first;
+    valuePerizinan = widget.pengajuan.jenis_perizinan != null
+        ? widget.pengajuan.jenis_perizinan == "1"
+            ? list.first
+            : "Non Berusaha"
+        : list.first;
     valueUMKM = umkm.first;
-    showUMKM = true;
+    showUMKM = widget.pengajuan.jenis_perizinan != null
+        ? widget.pengajuan.jenis_perizinan == "1"
+            ? true
+            : false
+        : false;
   }
 
   @override
@@ -292,8 +303,6 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
       onConfirmBtnTap: () async {
         Navigator.pop(context);
         context.loaderOverlay.show();
-        print("KONTOOOLLLlLLlLlLl ${jsonEncode(geoJson)}");
-        // return;
         try {
           String jenis_perizinan = valuePerizinan == "Berusaha" ? "1" : "2";
           String umkm = valueUMKM == "UMKM" ? "umkm" : "nonumkm";
@@ -308,7 +317,19 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
 
           // print(formData.fields);
 
-          final data = {"titik_polygon": jsonEncode(geoJson)};
+          final data = jenis_perizinan == "1"
+              ? {
+                  "titik_polygon": jsonEncode(geoJson),
+                  "jenis_perizinan": jenis_perizinan,
+                  "jenis_berusaha": umkm,
+                  "color_polygon": umkm == "umkm" ? "#COCOCO" : "#FFA500"
+                }
+              : {
+                  "titik_polygon": jsonEncode(geoJson),
+                  "jenis_perizinan": jenis_perizinan,
+                  "jenis_berusaha": "",
+                  "color_polygon": "#ADD8E6"
+                };
 
           final Dio dio = Dio();
           final url = "${Endpoints.baseURL}${Endpoints.updatePolygonPengajuan}${widget.pengajuan.id}";
@@ -324,11 +345,48 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
           if (context.mounted) {
             print(res.data);
             context.loaderOverlay.hide();
+            ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
+            Flushbar(
+              message: "Berhasil merekam polygon",
+              backgroundColor: AppColors.greenColor,
+              duration: const Duration(seconds: 1),
+              flushbarPosition: FlushbarPosition.TOP,
+              flushbarStyle: FlushbarStyle.FLOATING,
+              animationDuration: const Duration(milliseconds: 300),
+              margin: const EdgeInsets.all(8),
+              borderRadius: BorderRadius.circular(8),
+              isDismissible: true,
+              shouldIconPulse: false,
+              icon: const Icon(
+                Icons.check,
+                color: AppColors.whiteColor,
+              ),
+            ).show(context).then(
+              (value) {
+                context.pop();
+              },
+            );
           }
         } catch (e) {
-          print("KONTOLLLLL $e");
+          print("RROR DISINI $e");
           if (context.mounted) {
             context.loaderOverlay.hide();
+            Flushbar(
+              message: "Gagal merekam polygon",
+              backgroundColor: AppColors.redColor,
+              duration: const Duration(seconds: 1),
+              flushbarPosition: FlushbarPosition.TOP,
+              flushbarStyle: FlushbarStyle.FLOATING,
+              animationDuration: const Duration(milliseconds: 300),
+              margin: const EdgeInsets.all(8),
+              borderRadius: BorderRadius.circular(8),
+              isDismissible: true,
+              shouldIconPulse: false,
+              icon: const Icon(
+                Icons.check,
+                color: AppColors.whiteColor,
+              ),
+            );
           }
         } finally {
           if (context.mounted) {
