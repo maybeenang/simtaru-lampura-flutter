@@ -63,12 +63,16 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
     myGeoJson.defaultPolygonIsFilled = true;
     // myGeoJson.defaultPolygonFillColor = AppColors.primaryColor.withOpacity(0.7);
     final fillColor = widget.pengajuan.color_polygon ?? "#ADD8E6";
-    myGeoJson.defaultPolygonFillColor = Color(
-      int.parse(
-        fillColor.substring(1, 7),
-        radix: 16,
-      ),
-    ).withOpacity(0.7);
+    try {
+      myGeoJson.defaultPolygonFillColor = Color(
+        int.parse(
+          fillColor.substring(1, 7),
+          radix: 16,
+        ),
+      ).withOpacity(0.7);
+    } catch (e) {
+      myGeoJson.defaultPolygonFillColor = Colors.black.withOpacity(0.7);
+    }
     myGeoJson.parseGeoJson(await jsonDecode(widget.pengajuan.titik_polygon!));
   }
 
@@ -367,16 +371,6 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
         try {
           String jenis_perizinan = valuePerizinan == "Berusaha" ? "1" : "2";
           String umkm = valueUMKM == "UMKM" ? "umkm" : "nonumkm";
-          // String color = jenis_perizinan
-
-          // final formData = jenis_perizinan == "1"
-          //     ? FormData.fromMap(
-          //         {"titik_polygon": jsonEncode(geoJson), "jenis_berusaha": jenis_perizinan, "jenis_perizinan": umkm})
-          //     : FormData.fromMap({"titik_polygon": jsonEncode(geoJson), "jenis_perizinan": jenis_perizinan});
-
-          // final formData = FormData.fromMap({"titik_polygon": jsonEncode(geoJson).toString()});
-
-          // print(formData.fields);
 
           final data = jenis_perizinan == "1"
               ? {
