@@ -35,7 +35,6 @@ dependencies:
   freezed_annotation:
   json_annotation:
   cupertino_icons: ^1.0.2
-  flutter_native_splash:
   dio: ^5.3.2
   another_flushbar: ^1.12.30
   shimmer: ^3.0.0
@@ -61,6 +60,8 @@ dev_dependencies:
   freezed:
   json_serializable:
   riverpod_generator:
+  flutter_native_splash:
+
 
 flutter:
   uses-material-design: true
@@ -91,11 +92,19 @@ flutter:
         - asset: assets/fonts/Poppins-SemiBold.ttf
           weight: 600
 
+# flutter_native_splash-development.yaml
 flutter_native_splash:
   color: "#ffffff"
   image: assets/images/splash_screen.png
-  android: true
-  ios: true
+  branding: assets/images/splash_screen.png
+  color_dark: "#121212"
+  image_dark: assets/images/splash_screen.png
+  branding_dark: assets/images/splash_screen.png
+
   android_12:
     image: assets/images/splash_screen.png
-    foreground_color: "#ffffff"
+    icon_background_color: "#ffffff"
+    image_dark: assets/images/splash_screen.png
+    icon_background_color_dark: "#121212"
+
+  web: false

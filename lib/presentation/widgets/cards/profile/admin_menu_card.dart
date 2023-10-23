@@ -169,7 +169,7 @@ class AdminMenuProfileCard extends ConsumerWidget {
                   ),
                 ),
                 const ButtonProfile(
-                  label: "Kelola Berita",
+                  label: "Kelola Artikel",
                   icon: Icons.newspaper,
                 ),
               ],

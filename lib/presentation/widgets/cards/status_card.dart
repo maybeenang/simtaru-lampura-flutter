@@ -30,7 +30,7 @@ class StatusCard extends HookConsumerWidget {
     final jumlahPengajuanState = ref.watch(pengajuanJumlahControllerProvider);
 
     return Container(
-      height: MediaQuery.of(context).size.height / 7,
+      height: MediaQuery.of(context).size.height / 6,
       width: MediaQuery.of(context).size.width / 2.3,
       margin: const EdgeInsets.all(5),
       clipBehavior: Clip.antiAlias,

@@ -43,6 +43,7 @@ class ButtonCallToAction extends HookConsumerWidget {
                 },
                 child: const Text(
                   "Lihat Pengajuan",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: AppColors.primaryColor,
@@ -69,6 +70,7 @@ class ButtonCallToAction extends HookConsumerWidget {
                 },
                 child: const Text(
                   "Buat Pengajuan",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: AppColors.whiteColor,
