@@ -28,6 +28,12 @@ class InputDropDownMenu extends HookConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 30),
+        const Text(
+          "Pastikan anda memilih status yang benar!",
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.red),
+        ),
+        const SizedBox(height: 30),
         Text(title),
         DropdownButtonFormField(
           isExpanded: true,

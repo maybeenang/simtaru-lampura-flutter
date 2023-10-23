@@ -58,81 +58,86 @@ class AdminSeluruhPengajuanPage extends HookConsumerWidget {
                 ),
               )
             : null,
-        body: CustomScrollView(
-          controller: scrollController,
-          slivers: [
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  const CustomAppBarFitur(
-                    title: "Admin Seluruh Pengajuan",
-                    bgColor: AppColors.primaryColor,
-                    labelColor: AppColors.whiteColor,
-                  ),
-                  Stack(
-                    children: [
-                      Container(
-                        color: AppColors.primaryColor,
-                        child: const SizedBox(
-                          width: double.infinity,
-                          height: 25,
+        body: RefreshIndicator(
+          onRefresh: () async {
+            await ref.read(pengajuanControllerProvider.notifier).getPengajuan();
+          },
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: [
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    const CustomAppBarFitur(
+                      title: "Admin Seluruh Pengajuan",
+                      bgColor: AppColors.primaryColor,
+                      labelColor: AppColors.whiteColor,
+                    ),
+                    Stack(
+                      children: [
+                        Container(
+                          color: AppColors.primaryColor,
+                          child: const SizedBox(
+                            width: double.infinity,
+                            height: 25,
+                          ),
                         ),
-                      ),
-                      const ButtonSearchPengajuan(),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  const CarouselPengajuanCard(),
-                  const SizedBox(height: 20),
-                ],
+                        const ButtonSearchPengajuan(),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const CarouselPengajuanCard(),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
-            ),
-            pengajuanState.maybeWhen(
-              orElse: () {
-                return SliverList.separated(
-                  itemCount: 5,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 10);
-                  },
-                  itemBuilder: (context, index) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
-                      child: ItemPengajuanLoading(),
-                    );
-                  },
-                );
-              },
-              data: (data) {
-                if (data!.isEmpty) {
-                  return const Center(
-                    child: Text("Tidak ada data"),
+              pengajuanState.maybeWhen(
+                orElse: () {
+                  return SliverList.separated(
+                    itemCount: 5,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 10);
+                    },
+                    itemBuilder: (context, index) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
+                        child: ItemPengajuanLoading(),
+                      );
+                    },
                   );
-                }
-
-                return SliverList.separated(
-                  itemCount: hasReachedMax.value ? data.length : data.length + 3,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 10);
-                  },
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppDouble.paddingOutside,
-                      ),
-                      child: index >= data.length
-                          ? const ItemPengajuanLoading()
-                          : ItemPengajuanCard(
-                              pengajuan: data[index],
-                            ),
+                },
+                data: (data) {
+                  if (data!.isEmpty) {
+                    return const Center(
+                      child: Text("Tidak ada data"),
                     );
-                  },
-                );
-              },
-            ),
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 20),
-            )
-          ],
+                  }
+
+                  return SliverList.separated(
+                    itemCount: hasReachedMax.value ? data.length : data.length + 3,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 10);
+                    },
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppDouble.paddingOutside,
+                        ),
+                        child: index >= data.length
+                            ? const ItemPengajuanLoading()
+                            : ItemPengajuanCard(
+                                pengajuan: data[index],
+                              ),
+                      );
+                    },
+                  );
+                },
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 20),
+              )
+            ],
+          ),
         ),
       ),
     );

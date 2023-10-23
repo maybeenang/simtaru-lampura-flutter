@@ -5,6 +5,7 @@ import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
@@ -134,7 +135,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                 },
               );
               ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
-              await ref.refresh(pengajuanVerifikasiLapanganControllerProvider.notifier).getPengajuan();
+              ref.invalidate(pengajuanControllerProvider);
               if (context.mounted) {
                 context.loaderOverlay.hide();
               }

@@ -135,6 +135,8 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                 },
               );
               ref.invalidate(pengajuanVerifikasiBerkasControllerProvider);
+              ref.invalidate(pengajuanControllerProvider);
+
               await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
               if (context.mounted) {
                 context.loaderOverlay.hide();
@@ -176,129 +178,132 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                 ),
               )
             : null,
-        body: CustomScrollView(
-          controller: scrollController,
-          slivers: [
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  const CustomAppBarFitur(
-                    title: "Admin Verifikasi Berkas",
-                    bgColor: AppColors.primaryColor,
-                    labelColor: AppColors.whiteColor,
-                  ),
-                  Stack(
-                    children: [
-                      Container(
-                        color: AppColors.primaryColor,
-                        child: const SizedBox(
-                          width: double.infinity,
-                          height: 25,
-                        ),
-                      ),
-                      const ButtonSearchPengajuan(),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                ],
-              ),
-            ),
-            pengajuanVerifikasiBerkasState.maybeWhen(
-              orElse: () {
-                return SliverList.separated(
-                  itemCount: 5,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 10);
-                  },
-                  itemBuilder: (context, index) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
-                      child: ItemPengajuanLoading(),
-                    );
-                  },
-                );
-              },
-              data: (data) {
-                if (data.isEmpty) {
-                  return const SliverToBoxAdapter(
-                    child: Center(
-                      child: Text("Tidak ada data"),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            await ref.read(pengajuanVerifikasiBerkasControllerProvider.notifier).getPengajuan();
+          },
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: [
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    const CustomAppBarFitur(
+                      title: "Admin Verifikasi Berkas",
+                      bgColor: AppColors.primaryColor,
+                      labelColor: AppColors.whiteColor,
                     ),
+                    Stack(
+                      children: [
+                        Container(
+                          color: AppColors.primaryColor,
+                          child: const SizedBox(
+                            width: double.infinity,
+                            height: 25,
+                          ),
+                        ),
+                        const ButtonSearchPengajuan(),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+              pengajuanVerifikasiBerkasState.maybeWhen(
+                orElse: () {
+                  return SliverList.separated(
+                    itemCount: 5,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 10);
+                    },
+                    itemBuilder: (context, index) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
+                        child: ItemPengajuanLoading(),
+                      );
+                    },
                   );
-                }
-
-                return SliverList.separated(
-                  itemCount: hasReachedMax.value
-                      ? data.length
-                      : data.length > 5
-                          ? data.length + 3
-                          : data.length,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 10);
-                  },
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppDouble.paddingOutside,
+                },
+                data: (data) {
+                  if (data.isEmpty) {
+                    return const SliverToBoxAdapter(
+                      child: Center(
+                        child: Text("Tidak ada data"),
                       ),
-                      child: index >= data.length
-                          ? const ItemPengajuanLoading()
-                          : ItemPengajuanCard(
-                              pengajuan: data[index],
-                              onTap: () {
-                                Future.delayed(
-                                  const Duration(milliseconds: 100),
-                                  () => showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) {
-                                      return BottomSheetCard(
-                                        pengajuan: data[index],
-                                        actions: [
-                                          ButtonActionPengajuan(
-                                            label: "Setujui",
-                                            icon: Icons.check,
-                                            color: AppColors.greenColor,
-                                            onTap: () async {
-                                              context.pop();
-                                              setujuiPengajuan(data[index].id, data[index].nama_lengkap!);
-                                            },
-                                          ),
-                                          const SizedBox(height: 5),
-                                          ButtonActionPengajuan(
-                                            label: "Tolak",
-                                            icon: Icons.close,
-                                            color: AppColors.redColor,
-                                            onTap: () {
-                                              context.pop();
-                                              tolakPengajuan(data[index].id, data[index].nama_lengkap!);
-                                            },
-                                          ),
-                                          const SizedBox(height: 5),
-                                          ButtonActionPengajuan(
-                                            label: "Edit",
-                                            icon: Icons.edit,
-                                            color: AppColors.mapColorStatusChip[2]!,
-                                            onTap: () {
-                                              context.pop();
-                                              AdminEditPengajuanRoute(data[index]).push(context);
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
                     );
-                  },
-                );
-              },
-            ),
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 50),
-            ),
-          ],
+                  }
+
+                  return SliverList.separated(
+                    itemCount: hasReachedMax.value
+                        ? data.length
+                        : data.length > 5
+                            ? data.length + 3
+                            : data.length,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 10);
+                    },
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppDouble.paddingOutside,
+                        ),
+                        child: index >= data.length
+                            ? const ItemPengajuanLoading()
+                            : ItemPengajuanCard(
+                                pengajuan: data[index],
+                                onTap: () {
+                                  Future.delayed(
+                                    const Duration(milliseconds: 100),
+                                    () => showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        return BottomSheetCard(
+                                          pengajuan: data[index],
+                                          actions: [
+                                            ButtonActionPengajuan(
+                                              label: "Setujui",
+                                              icon: Icons.check,
+                                              color: AppColors.greenColor,
+                                              onTap: () async {
+                                                context.pop();
+                                                setujuiPengajuan(data[index].id, data[index].nama_lengkap!);
+                                              },
+                                            ),
+                                            const SizedBox(height: 5),
+                                            ButtonActionPengajuan(
+                                              label: "Tolak",
+                                              icon: Icons.close,
+                                              color: AppColors.redColor,
+                                              onTap: () {
+                                                context.pop();
+                                                tolakPengajuan(data[index].id, data[index].nama_lengkap!);
+                                              },
+                                            ),
+                                            const SizedBox(height: 5),
+                                            ButtonActionPengajuan(
+                                              label: "Edit",
+                                              icon: Icons.edit,
+                                              color: AppColors.mapColorStatusChip[2]!,
+                                              onTap: () {
+                                                context.pop();
+                                                AdminEditPengajuanRoute(data[index]).push(context);
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                      );
+                    },
+                  );
+                },
+              ),
+              const SliverFillRemaining(),
+            ],
+          ),
         ),
       ),
     );

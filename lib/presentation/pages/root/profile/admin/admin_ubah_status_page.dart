@@ -1,5 +1,8 @@
+import 'package:another_flushbar/flushbar.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
@@ -15,6 +18,7 @@ import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_are
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/input_dropdown_menu.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
@@ -23,7 +27,7 @@ class AdminUbahStatusPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final inputController = useState<int>(0);
+    final inputController = useState<int>(-1);
     final showScrollToTop = useState(false);
     final hasReachedMax = useState(false);
     final pengajuanState = ref.watch(pengajuanControllerProvider);
@@ -53,12 +57,78 @@ class AdminUbahStatusPage extends HookConsumerWidget {
         context: context,
         type: QuickAlertType.custom,
         barrierDismissible: true,
-        text: "Ubah status atas nama pengajuan $nama",
+        title: "Ubah status atas nama pengajuan $nama",
         textAlignment: TextAlign.justify,
         confirmBtnText: 'Ya',
         cancelBtnText: 'Batal',
         showCancelBtn: true,
         widget: InputDropDownMenu(title: "Pilih Status", pengajuan: pengajuan, inputController: inputController),
+        onConfirmBtnTap: () async {
+          Navigator.of(context).pop();
+          context.loaderOverlay.show();
+          try {
+            final url = Endpoints.baseURL + Endpoints.updateStatusPengajuan + idPengajuan;
+            final Dio dio = Dio();
+
+            await dio.put(
+              url,
+              data: {
+                "status_id": inputController.value,
+              },
+              // options: Options(
+              //   headers: {
+              //     "Accept": "application/json",
+              //     "Authorization": "Bearer ${ref.read(tokenProvider).state}",
+              //   },
+              // ),
+            );
+
+            ref.invalidate(pengajuanControllerProvider);
+            if (context.mounted) {
+              context.loaderOverlay.hide();
+              Flushbar(
+                message: "Berhasil ubah status",
+                backgroundColor: AppColors.greenColor,
+                duration: const Duration(seconds: 3),
+                flushbarPosition: FlushbarPosition.TOP,
+                flushbarStyle: FlushbarStyle.FLOATING,
+                animationDuration: const Duration(milliseconds: 300),
+                margin: const EdgeInsets.all(8),
+                borderRadius: BorderRadius.circular(8),
+                isDismissible: true,
+                shouldIconPulse: false,
+                icon: const Icon(
+                  Icons.check,
+                  color: AppColors.whiteColor,
+                ),
+              ).show(context);
+            }
+          } catch (e) {
+            if (context.mounted) {
+              context.loaderOverlay.hide();
+              Flushbar(
+                message: "Gagal ubah status",
+                backgroundColor: AppColors.redColor,
+                duration: const Duration(seconds: 3),
+                flushbarPosition: FlushbarPosition.TOP,
+                flushbarStyle: FlushbarStyle.FLOATING,
+                animationDuration: const Duration(milliseconds: 300),
+                margin: const EdgeInsets.all(8),
+                borderRadius: BorderRadius.circular(8),
+                isDismissible: true,
+                shouldIconPulse: false,
+                icon: const Icon(
+                  Icons.close,
+                  color: AppColors.whiteColor,
+                ),
+              ).show(context);
+            }
+          } finally {
+            if (context.mounted) {
+              context.loaderOverlay.hide();
+            }
+          }
+        },
       );
     }
 
