@@ -49,6 +49,7 @@ dependencies:
   quickalert: ^1.0.2
   flutter_expandable_fab: ^2.0.0
   flutter_map_geojson: 1.0.3
+  webview_flutter: ^4.4.1
 
 dev_dependencies:
   flutter_test:

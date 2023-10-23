@@ -63,7 +63,7 @@ class AdminSuratRekomendasiPage extends HookConsumerWidget {
             : null,
         body: RefreshIndicator(
           onRefresh: () async {
-            ref.read(pengajuanSuratRekomendasiControllerProvider.notifier).getPengajuan();
+            await ref.refresh(pengajuanSuratRekomendasiControllerProvider.notifier).getPengajuan();
           },
           child: CustomScrollView(
             controller: scrollController,

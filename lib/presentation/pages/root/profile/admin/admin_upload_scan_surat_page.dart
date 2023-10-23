@@ -173,7 +173,7 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
             : null,
         body: RefreshIndicator(
           onRefresh: () async {
-            ref.read(pengajuanUploadScanSuratControllerProvider.notifier).getPengajuan();
+            await ref.refresh(pengajuanUploadScanSuratControllerProvider.notifier).getPengajuan();
           },
           child: CustomScrollView(
             controller: scrollController,

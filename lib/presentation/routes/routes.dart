@@ -20,6 +20,7 @@ import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_upload_scan_surat_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_berkas_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_lapangan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_password_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_profile_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/splash_page.dart';
@@ -47,6 +48,7 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<DetailPengajuanRoute>(path: DetailPengajuanRoute.path),
     TypedGoRoute<DetailBeritaRoute>(path: DetailBeritaRoute.path),
     TypedGoRoute<EditProfileRoute>(path: EditProfileRoute.path),
+    TypedGoRoute<EditPasswordProfileRoute>(path: EditPasswordProfileRoute.path),
     TypedGoRoute<NotifRoute>(path: NotifRoute.path),
     TypedGoRoute<AdminSeluruhPengajuanRoute>(path: AdminSeluruhPengajuanRoute.path),
     TypedGoRoute<AdminPengajuanDitolahRoute>(path: AdminPengajuanDitolahRoute.path),
@@ -120,6 +122,16 @@ class EditProfileRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const EditProfilePage();
+  }
+}
+
+class EditPasswordProfileRoute extends GoRouteData {
+  const EditPasswordProfileRoute();
+  static const path = 'edit_password_profile';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const EditPasswordProfilePage();
   }
 }
 

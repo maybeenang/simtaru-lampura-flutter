@@ -21,6 +21,7 @@ class Endpoints {
   static String updatePolygonPengajuan = "pengajuan/updatePolygon/";
   static String editDataLapangan = "pengajuan/verifikasiLapangan/";
   static String editFilePengajuan = "pengajuan/edit/";
+  static String peta = "https://www.simtaru-lampura.com/peta";
   static String convertDownloadUrl(String url) {
     return baseURLDownload + url;
   }

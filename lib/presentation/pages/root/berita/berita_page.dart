@@ -13,7 +13,7 @@ class BeritaPage extends StatelessWidget {
       child: ListView(
         children: [
           const CustomAppBarFitur(
-            title: "Berita",
+            title: "Artikel",
             bgColor: AppColors.primaryColor,
             labelColor: AppColors.whiteColor,
           ),

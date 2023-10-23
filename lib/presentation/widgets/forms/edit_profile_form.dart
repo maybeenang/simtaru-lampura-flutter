@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
+import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class EditProfileForm extends StatelessWidget {
+class EditProfileForm extends HookConsumerWidget {
   const EditProfileForm({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userState = ref.watch(userControllerProvider);
+    final user = userState.maybeWhen(
+      orElse: () => null,
+      data: (data) {
+        if (data is UserSuccess) {
+          return data.model;
+        }
+      },
+    );
+
     return Column(
       children: [
         Container(
@@ -18,13 +31,6 @@ class EditProfileForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        const Text(
-          "Ganti Foto",
-          style: TextStyle(
-            color: AppColors.primaryColor,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
         const SizedBox(height: 20),
         Container(
           padding: const EdgeInsets.all(20),
@@ -39,7 +45,7 @@ class EditProfileForm extends StatelessWidget {
             children: [
               TextFormField(
                 readOnly: true,
-                initialValue: "1234567890123456",
+                initialValue: user?.no_ktp.toString() ?? "",
                 decoration: const InputDecoration(
                   labelText: "NIK/No. KTP",
                   labelStyle: TextStyle(
@@ -58,7 +64,7 @@ class EditProfileForm extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               TextFormField(
-                initialValue: "John Doe",
+                initialValue: user?.name ?? "",
                 decoration: const InputDecoration(
                   labelText: "Nama Lengkap",
                   labelStyle: TextStyle(
@@ -77,7 +83,7 @@ class EditProfileForm extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               TextFormField(
-                initialValue: "johndoe@email.com",
+                initialValue: user?.email ?? "",
                 decoration: const InputDecoration(
                   labelText: "Email",
                   labelStyle: TextStyle(
@@ -103,8 +109,7 @@ class EditProfileForm extends StatelessWidget {
           onPressed: () {},
           child: const Text(
             "Simpan",
-            style: TextStyle(
-                color: AppColors.whiteColor, fontWeight: FontWeight.w700),
+            style: TextStyle(color: AppColors.whiteColor, fontWeight: FontWeight.w700),
           ),
         )
       ],

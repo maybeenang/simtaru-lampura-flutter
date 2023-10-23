@@ -61,6 +61,10 @@ RouteBase get $rootRoute => GoRouteData.$route(
           factory: $EditProfileRouteExtension._fromState,
         ),
         GoRouteData.$route(
+          path: 'edit_password_profile',
+          factory: $EditPasswordProfileRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
           path: 'notif',
           factory: $NotifRouteExtension._fromState,
         ),
@@ -210,6 +214,24 @@ extension $EditProfileRouteExtension on EditProfileRoute {
 
   String get location => GoRouteData.$location(
         '/edit_profile',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $EditPasswordProfileRouteExtension on EditPasswordProfileRoute {
+  static EditPasswordProfileRoute _fromState(GoRouterState state) =>
+      const EditPasswordProfileRoute();
+
+  String get location => GoRouteData.$location(
+        '/edit_password_profile',
       );
 
   void go(BuildContext context) => context.go(location);

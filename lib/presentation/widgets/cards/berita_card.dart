@@ -8,6 +8,8 @@ class BeritaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
+      height: 100,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -20,50 +22,12 @@ class BeritaCard extends StatelessWidget {
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image(
-            image: AssetImage("assets/images/berita.png"),
-            width: double.infinity,
-            height: 150,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 15),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.calendar_today,
-                  size: 16,
-                ),
-                SizedBox(width: 5),
-                Text(
-                  "12/12/2021",
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Icon(
-                  Icons.remove_red_eye_outlined,
-                  size: 16,
-                ),
-                SizedBox(width: 5),
-                Text(
-                  "60",
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 5),
+          SizedBox(height: 20),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-              maxLines: 1,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 16,
@@ -75,8 +39,8 @@ class BeritaCard extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. dsfsdfs fdsf sd fsd fsdfsdf sdf sdf sf sfds",
-              maxLines: 2,
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. dsfsdfs fdsf sd fsd fsdfsdf sdf sdf sf sfds Lorem ipsum dolor sit amet, consectetur adipiscing elit. dsfsdfs fdsf sd fsd fsdfsdf sdf sdf sf sfds ",
+              maxLines: 5,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 14,
