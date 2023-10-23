@@ -26,7 +26,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
-final AutoDisposeStateProvider<LatLng> currLatLng = StateProvider.autoDispose<LatLng>((ref) => LatLng(0, 0));
+final AutoDisposeStateProvider<LatLng> currLatLng = StateProvider.autoDispose<LatLng>((ref) => const LatLng(0, 0));
 final AutoDisposeStateProvider<List<File>> inputsFile =
     StateProvider.autoDispose<List<File>>((ref) => List.generate(10, (index) => File('')));
 
@@ -197,130 +197,158 @@ class PengajuanPage extends HookConsumerWidget {
       }
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 2,
-        title: const Text(
-          "Pengajuan",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+    Future<bool> _onWillPop() async {
+      return (await showDialog(
+            context: context,
+            builder: (context) => Theme(
+              data: ThemeData.from(colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor)),
+              child: AlertDialog(
+                shape: const RoundedRectangleBorder(),
+                title: const Text('Apakah anda yakin?'),
+                content: const Text('Semua data yang sudah anda inputkan akan hilang'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('Batal'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: const Text('Ya'),
+                  ),
+                ],
+              ),
+            ),
+          )) ??
+          false;
+    }
+
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 2,
+          title: const Text(
+            "Pengajuan",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: "Poppins",
+            ),
+          ),
+        ),
+        body: Theme(
+          data: ThemeData(
             fontFamily: "Poppins",
+            colorScheme: ColorScheme.fromSwatch(
+              primarySwatch: Colors.blue,
+            ),
           ),
-        ),
-      ),
-      body: Theme(
-        data: ThemeData(
-          fontFamily: "Poppins",
-          colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.blue,
-          ),
-        ),
-        child: Stepper(
-          elevation: 0,
-          controlsBuilder: (context, details) {
-            return Column(
-              children: [
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    if (currentIndex.value != 0)
-                      TextButton(
-                        onPressed: details.onStepCancel,
-                        child: const Text('Kembali'),
-                      ),
-                    if (currentIndex.value != steps().length - 1)
-                      Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        width: 100,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            elevation: MaterialStateProperty.all<double>(0),
-                          ),
-                          onPressed: details.onStepContinue,
-                          child: const Text('Lanjut'),
+          child: Stepper(
+            elevation: 0,
+            controlsBuilder: (context, details) {
+              return Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      if (currentIndex.value != 0)
+                        TextButton(
+                          onPressed: details.onStepCancel,
+                          child: const Text('Kembali'),
                         ),
-                      ),
-                    if (currentIndex.value == steps().length - 1)
-                      Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        width: 100,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            elevation: MaterialStateProperty.all<double>(0),
+                      if (currentIndex.value != steps().length - 1)
+                        Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          width: 100,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              elevation: MaterialStateProperty.all<double>(0),
+                            ),
+                            onPressed: details.onStepContinue,
+                            child: const Text('Lanjut'),
                           ),
-                          onPressed: () {
-                            submitFrom();
-                          },
-                          child: const Text('Selesai'),
                         ),
-                      ),
-                  ],
-                ),
-              ],
-            );
-          },
-          type: StepperType.horizontal,
-          steps: steps(),
-          currentStep: currentIndex.value,
-          onStepContinue: () {
-            if (currentIndex.value < steps().length - 1) {
-              switch (currentIndex.value) {
-                case 0:
-                  FocusScope.of(context).unfocus();
-                  if (formPengajuanKey1.currentState!.validate()) {
+                      if (currentIndex.value == steps().length - 1)
+                        Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          width: 100,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              elevation: MaterialStateProperty.all<double>(0),
+                            ),
+                            onPressed: () {
+                              submitFrom();
+                            },
+                            child: const Text('Selesai'),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              );
+            },
+            type: StepperType.horizontal,
+            steps: steps(),
+            currentStep: currentIndex.value,
+            onStepContinue: () {
+              if (currentIndex.value < steps().length - 1) {
+                switch (currentIndex.value) {
+                  case 0:
+                    FocusScope.of(context).unfocus();
+                    if (formPengajuanKey1.currentState!.validate()) {
+                      currentIndex.value++;
+                    }
+                    break;
+                  case 1:
+                    FocusScope.of(context).unfocus();
+                    if (formPengajuanKey2.currentState!.validate()) {
+                      currentIndex.value++;
+                    }
+                    break;
+                  case 2:
+                    FocusScope.of(context).unfocus();
+                    if (formPengajuanKey3.currentState!.validate()) {
+                      currentIndex.value++;
+                    }
+                    break;
+                  case 3:
+                    if (currLatlangState != const LatLng(0, 0)) {
+                      currentIndex.value++;
+                    }
+                    break;
+                  case 4:
+                    FocusScope.of(context).unfocus();
+                    if (currInputFileState[0].path != '' &&
+                        currInputFileState[1].path != '' &&
+                        currInputFileState[2].path != '' &&
+                        currInputFileState[3].path != '' &&
+                        currInputFileState[4].path != '') {
+                      currentIndex.value++;
+                    }
+                    break;
+                  case 5:
+                    FocusScope.of(context).unfocus();
+                    if (currInputFileState[5].path != '' &&
+                        currInputFileState[6].path != '' &&
+                        currInputFileState[7].path != '' &&
+                        currInputFileState[8].path != '' &&
+                        currInputFileState[9].path != '') {
+                      currentIndex.value++;
+                    }
+                    break;
+                  default:
+                    FocusScope.of(context).unfocus();
                     currentIndex.value++;
-                  }
-                  break;
-                case 1:
-                  FocusScope.of(context).unfocus();
-                  if (formPengajuanKey2.currentState!.validate()) {
-                    currentIndex.value++;
-                  }
-                  break;
-                case 2:
-                  FocusScope.of(context).unfocus();
-                  if (formPengajuanKey3.currentState!.validate()) {
-                    currentIndex.value++;
-                  }
-                  break;
-                case 3:
-                  if (currLatlangState != LatLng(0, 0)) {
-                    currentIndex.value++;
-                  }
-                  break;
-                case 4:
-                  FocusScope.of(context).unfocus();
-                  if (currInputFileState[0].path != '' &&
-                      currInputFileState[1].path != '' &&
-                      currInputFileState[2].path != '' &&
-                      currInputFileState[3].path != '' &&
-                      currInputFileState[4].path != '') {
-                    currentIndex.value++;
-                  }
-                  break;
-                case 5:
-                  FocusScope.of(context).unfocus();
-                  if (currInputFileState[5].path != '' &&
-                      currInputFileState[6].path != '' &&
-                      currInputFileState[7].path != '' &&
-                      currInputFileState[8].path != '' &&
-                      currInputFileState[9].path != '') {
-                    currentIndex.value++;
-                  }
-                  break;
-                default:
-                  FocusScope.of(context).unfocus();
-                  currentIndex.value++;
+                }
               }
-            }
-          },
-          onStepCancel: () {
-            FocusScope.of(context).unfocus();
-            if (currentIndex.value > 0) {
-              currentIndex.value--;
-            }
-          },
+            },
+            onStepCancel: () {
+              FocusScope.of(context).unfocus();
+              if (currentIndex.value > 0) {
+                currentIndex.value--;
+              }
+            },
+          ),
         ),
       ),
     );

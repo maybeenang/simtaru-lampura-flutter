@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_surat_rekomendasi_controller.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_map_simtaru/presentation/widgets/cards/item_pengajuan_ca
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AdminSuratRekomendasiPage extends HookConsumerWidget {
@@ -134,17 +136,15 @@ class AdminSuratRekomendasiPage extends HookConsumerWidget {
                                     builder: (context) {
                                       return BottomSheetCard(
                                         pengajuan: data[index],
-                                        actions: const [
+                                        actions: [
                                           ButtonActionPengajuan(
                                             label: "Edit Polygon",
                                             icon: Icons.map,
                                             color: AppColors.greenColor,
-                                          ),
-                                          SizedBox(height: 5),
-                                          ButtonActionPengajuan(
-                                            label: "Edit data Lapangan",
-                                            icon: Icons.edit_location_outlined,
-                                            color: AppColors.greenColor,
+                                            onTap: () {
+                                              context.pop();
+                                              AdminRekamPolygonRoute(data[index]).push(context);
+                                            },
                                           ),
                                         ],
                                       );

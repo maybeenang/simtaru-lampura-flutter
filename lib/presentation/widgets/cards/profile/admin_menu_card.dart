@@ -126,23 +126,6 @@ class AdminMenuProfileCard extends ConsumerWidget {
                   ),
                 ),
                 ButtonProfile(
-                  label: "Revisi Berkas",
-                  icon: Icons.file_copy_outlined,
-                  onTap: () {
-                    Future.delayed(
-                      const Duration(milliseconds: 300),
-                      () => const AdminRevisiBerkasRoute().push(context),
-                    );
-                  },
-                  isNotif: true,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Divider(
-                    color: AppColors.borderColor,
-                  ),
-                ),
-                ButtonProfile(
                   label: "Pengajuan Ditolak",
                   icon: Icons.assignment_late_outlined,
                   onTap: () {

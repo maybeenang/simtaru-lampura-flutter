@@ -19,6 +19,8 @@ class Endpoints {
   static String updateStatusPengajuan = "pengajuan/status/updateStatus/";
   static String updatePengajuan = "pengajuan/edit/";
   static String updatePolygonPengajuan = "pengajuan/updatePolygon/";
+  static String editDataLapangan = "pengajuan/verifikasiLapangan/";
+  static String editFilePengajuan = "pengajuan/edit/";
   static String convertDownloadUrl(String url) {
     return baseURLDownload + url;
   }

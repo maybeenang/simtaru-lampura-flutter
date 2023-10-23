@@ -46,6 +46,7 @@ class Langkah1Form extends HookConsumerWidget {
             labelText: "No. HP",
             keyboardType: TextInputType.number,
             controller: inputController[3],
+            isNoHp: true,
           ),
           const SizedBox(height: 10),
           TextFieldCommon(
