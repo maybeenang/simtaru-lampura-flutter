@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
@@ -11,32 +12,55 @@ import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_peng
 import 'package:flutter_map_simtaru/presentation/widgets/cards/warning_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/inputs/input_dropdown_menu.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class AdminUbahStatusPage extends HookConsumerWidget {
   const AdminUbahStatusPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final inputController = useState<int>(0);
     final showScrollToTop = useState(false);
     final hasReachedMax = useState(false);
     final pengajuanState = ref.watch(pengajuanControllerProvider);
 
     final scrollController = ScrollController();
 
-    scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        final newValue = ref.read(pengajuanControllerProvider.notifier).loadMore();
+    scrollController.addListener(
+      () {
+        if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+          final newValue = ref.read(pengajuanControllerProvider.notifier).loadMore();
 
-        newValue.then((value) => hasReachedMax.value = value);
-      }
+          newValue.then((value) => hasReachedMax.value = value);
+        }
 
-      if (scrollController.position.pixels >= 100) {
-        showScrollToTop.value = true;
-      } else {
-        showScrollToTop.value = false;
-      }
-    });
+        if (scrollController.position.pixels >= 100) {
+          showScrollToTop.value = true;
+        } else {
+          showScrollToTop.value = false;
+        }
+      },
+    );
+
+    void handleUbahStatus(String nama, String idPengajuan, Pengajuan pengajuan) async {
+      context.pop();
+
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.custom,
+        barrierDismissible: true,
+        text: "Ubah status atas nama pengajuan $nama",
+        textAlignment: TextAlign.justify,
+        confirmBtnText: 'Ya',
+        cancelBtnText: 'Batal',
+        showCancelBtn: true,
+        widget: InputDropDownMenu(title: "Pilih Status", pengajuan: pengajuan, inputController: inputController),
+      );
+    }
 
     return CustomSafeArea(
       child: Scaffold(
@@ -142,6 +166,13 @@ class AdminUbahStatusPage extends HookConsumerWidget {
                                             label: "Ubah Status",
                                             icon: Icons.edit,
                                             color: AppColors.mapColorStatusChip[2]!,
+                                            onTap: () {
+                                              handleUbahStatus(
+                                                data[index].nama_lengkap!,
+                                                data[index].id.toString(),
+                                                data[index],
+                                              );
+                                            },
                                           ),
                                         ],
                                       );
