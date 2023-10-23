@@ -12,6 +12,7 @@ class PengajuanSuratRekomendasiController extends _$PengajuanSuratRekomendasiCon
 
   @override
   FutureOr<List<Pengajuan>> build() async {
+    page = 1;
     ref.listenSelf(
       (_, __) {
         if (state.isLoading) return;
@@ -64,5 +65,28 @@ class PengajuanSuratRekomendasiController extends _$PengajuanSuratRekomendasiCon
       state = AsyncValue.data([...state.value!, ...value]);
       return false;
     });
+  }
+
+  FutureOr<List<Pengajuan>> getPengajuan() async {
+    page = 1;
+    ref.listenSelf(
+      (_, __) {
+        if (state.isLoading) return;
+      },
+    );
+
+    try {
+      String query = "?page=$page";
+      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 12.toString() + query);
+      final Response response = await dio.get(
+        uri.toString(),
+      );
+
+      final List<Pengajuan> pengajuan = (response.data['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
+
+      return pengajuan;
+    } catch (e) {
+      return Future.error(e.toString());
+    }
   }
 }

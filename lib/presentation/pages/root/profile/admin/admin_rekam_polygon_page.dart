@@ -11,6 +11,8 @@ import 'package:flutter_map_line_editor/flutter_map_line_editor.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_surat_rekomendasi_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
 
 import 'package:go_router/go_router.dart';
@@ -404,6 +406,8 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
             print(res.data);
             context.loaderOverlay.hide();
             ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
+            ref.invalidate(pengajuanUploadScanSuratControllerProvider);
+            ref.invalidate(pengajuanSuratRekomendasiControllerProvider);
             Flushbar(
               message: "Berhasil merekam polygon",
               backgroundColor: AppColors.greenColor,
