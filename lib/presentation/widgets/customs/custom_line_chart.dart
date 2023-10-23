@@ -38,8 +38,10 @@ class CustomLineChart extends StatelessWidget {
               aspectRatio: 2,
               child: LineChart(
                 LineChartData(
-                  maxY: lineData.barData.map((data) => data.y).toList().reduce(
-                      (value, element) => value > element ? value : element),
+                  maxY: lineData.barData
+                      .map((data) => data.y)
+                      .toList()
+                      .reduce((value, element) => value > element ? value : element),
                   minY: 0,
                   borderData: FlBorderData(
                     show: true,
@@ -85,17 +87,17 @@ class CustomLineChart extends StatelessWidget {
                   ),
                   lineBarsData: [
                     LineChartBarData(
-                      color: AppColors.secondaryColor,
+                      color: AppColors.actionColor,
                       isCurved: true,
                       barWidth: 3,
                       belowBarData: BarAreaData(
                         show: true,
-                        color: AppColors.secondaryColor.withOpacity(0.1),
+                        color: AppColors.actionColor.withOpacity(0.1),
                       ),
                       dotData: FlDotData(
                         getDotPainter: (p0, p1, p2, p3) {
                           return FlDotCirclePainter(
-                            color: AppColors.primaryColor,
+                            color: AppColors.actionColor,
                             strokeWidth: 2,
                             strokeColor: Colors.white,
                             radius: 5,
@@ -128,31 +130,25 @@ class CustomLineChart extends StatelessWidget {
     switch (value.toInt()) {
       case 1:
         text = const Text(
-          '2018',
+          '2020',
           style: textStyle,
         );
         break;
       case 2:
         text = const Text(
-          '2019',
+          '2021',
           style: textStyle,
         );
         break;
       case 3:
         text = const Text(
-          '2020',
+          '2022',
           style: textStyle,
         );
         break;
       case 4:
         text = const Text(
-          '2021',
-          style: textStyle,
-        );
-        break;
-      case 5:
-        text = const Text(
-          '2022',
+          '2023',
           style: textStyle,
         );
         break;

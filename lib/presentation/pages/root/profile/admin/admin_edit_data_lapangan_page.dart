@@ -42,13 +42,15 @@ class AdminEditDataLapanganPage extends HookConsumerWidget {
     final inputController = List.generate(32, (index) => useTextEditingController());
 
     void handleSubmit() async {
+      // print(inputController[0].text.toString());
+      // return;
       if (formEditDataLapanganKey.currentState!.validate()) {
         FocusScope.of(context).unfocus();
 
         context.loaderOverlay.show();
 
         final formData = {
-          // "tanggal_peninjauan_lokasi": inputController[0].text,
+          "tanggal_peninjauan_lokasi": inputController[0].text,
           "desa": inputController[1].text,
           "kecamatan": inputController[2].text,
           "batas_sebelah_utara": inputController[3].text,
@@ -186,7 +188,7 @@ class AdminEditDataLapanganPage extends HookConsumerWidget {
                       );
 
                       if (pickedDate != null) {
-                        String formattedDate = DateFormat('MM/dd/yyyy').format(pickedDate);
+                        String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
                         inputController[0].text = formattedDate;
                       }
                     },

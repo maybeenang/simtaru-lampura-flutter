@@ -130,6 +130,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                 url,
                 data: {
                   "status_id": 1,
+                  "alasan_ditolak": inputAlasanDitolakController.text,
                 },
               );
               ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
