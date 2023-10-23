@@ -59,19 +59,30 @@ class AdminKelolaUserPage extends HookConsumerWidget {
         body: CustomScrollView(
           controller: scrollController,
           slivers: [
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Tambah User"),
-                  ),
-                  const Divider(
-                    color: AppColors.borderColor,
-                  ),
-                  const SizedBox(height: 10),
-                ],
+            userGetAllState.maybeWhen(
+              orElse: () => const SliverToBoxAdapter(
+                child: SizedBox(height: 30),
               ),
+              data: (data) {
+                return SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: const Text(
+                            "Tambah User",
+                            style: TextStyle(color: AppColors.whiteColor),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                );
+              },
             ),
             userGetAllState.when(
               data: (data) {

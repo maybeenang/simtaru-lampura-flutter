@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/domain/entity/user/user_utils.dart';
 import 'package:flutter_map_simtaru/presentation/pages/login_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/onboarding_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/register_page.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/pengajuan_
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/search_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_data_lapangan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_user_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_kelola_user_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_pengajuan_ditolak_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_rekam_polygon_page.dart';
@@ -63,6 +65,7 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<AdminRekamPolygonRoute>(path: AdminRekamPolygonRoute.path),
     TypedGoRoute<AdminEditDataLapanganRoute>(path: AdminEditDataLapanganRoute.path),
     TypedGoRoute<AdminKelolaUserRoute>(path: AdminKelolaUserRoute.path),
+    TypedGoRoute<AdminEditUserRoute>(path: AdminEditUserRoute.path),
   ],
 )
 class RootRoute extends GoRouteData {
@@ -273,6 +276,21 @@ class AdminKelolaUserRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const AdminKelolaUserPage();
+  }
+}
+
+class AdminEditUserRoute extends GoRouteData {
+  const AdminEditUserRoute(
+    this.$extra,
+  );
+  static const path = 'admin-edit-user';
+  final UserUtils $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return AdminEditUserPage(
+      user: $extra,
+    );
   }
 }
 

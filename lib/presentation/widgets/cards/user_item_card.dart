@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card_user.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -25,9 +27,10 @@ class UserItemCard extends HookConsumerWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         height: 100,
+        clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: AppColors.whiteColor,
           borderRadius: BorderRadius.circular(10),
@@ -35,50 +38,71 @@ class UserItemCard extends HookConsumerWidget {
             AppStyles.boxShadowStyle,
           ],
         ),
-        child: Row(
-          children: [
-            const SizedBox(width: 20),
-            Container(
-              clipBehavior: Clip.antiAlias,
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child:
-                  userUtil?.profile_photo_url != null ? tryBuildImage(userUtil!.profile_photo_url) : const SizedBox(),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    userUtil?.name ?? "User",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+        child: Material(
+          child: InkWell(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => BottomSheetCardUser(
+                  user: userUtil!,
+                  actions: [
+                    ButtonActionPengajuan(
+                      label: "Assign ke Pemohon",
+                      icon: Icons.person,
+                      color: AppColors.primaryColor,
+                      onTap: () {},
                     ),
+                  ],
+                ),
+              );
+            },
+            child: Row(
+              children: [
+                const SizedBox(width: 20),
+                Container(
+                  clipBehavior: Clip.antiAlias,
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(100),
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    userUtil?.email ?? "email",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
+                  child: userUtil?.profile_photo_url != null
+                      ? tryBuildImage(userUtil!.profile_photo_url)
+                      : const SizedBox(),
+                ),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        userUtil?.name ?? "User",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        userUtil?.email ?? "email",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 20),
+              ],
             ),
-            const SizedBox(width: 20),
-          ],
+          ),
         ),
       ),
     );

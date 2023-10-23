@@ -116,6 +116,10 @@ RouteBase get $rootRoute => GoRouteData.$route(
           path: 'admin-kelola-user',
           factory: $AdminKelolaUserRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'admin-edit-user',
+          factory: $AdminEditUserRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -492,6 +496,28 @@ extension $AdminKelolaUserRouteExtension on AdminKelolaUserRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminEditUserRouteExtension on AdminEditUserRoute {
+  static AdminEditUserRoute _fromState(GoRouterState state) =>
+      AdminEditUserRoute(
+        state.extra as UserUtils,
+      );
+
+  String get location => GoRouteData.$location(
+        '/admin-edit-user',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 RouteBase get $loginRoute => GoRouteData.$route(

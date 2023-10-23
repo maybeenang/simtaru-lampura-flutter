@@ -207,6 +207,7 @@ class RincianDokumen extends HookConsumerWidget {
         const SizedBox(height: 10),
         const Text(
           "Fotocopy Akte Pendirian Perusahaan",
+          maxLines: 1,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         checkFile(context, pengajuan.fotocopy_akte_pendirian_perusahaan.toString(), roleState is Admin),
