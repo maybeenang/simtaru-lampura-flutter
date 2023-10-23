@@ -301,7 +301,6 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                   );
                 },
               ),
-              const SliverFillRemaining(),
             ],
           ),
         ),
