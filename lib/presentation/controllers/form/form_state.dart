@@ -10,3 +10,4 @@ final formEditUserKey = GlobalKey<FormState>();
 final formTambahUserKey = GlobalKey<FormState>();
 final formEditProfileKey = GlobalKey<FormState>();
 final formEditPasswordKey = GlobalKey<FormState>();
+final formTambahArtikelKey = GlobalKey<FormState>();

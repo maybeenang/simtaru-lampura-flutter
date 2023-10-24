@@ -206,10 +206,10 @@ class AuthController extends _$AuthController {
     state = await AsyncValue.guard<Auth>(
       () async {
         try {
-          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.login);
-          print("kontolon" + uri.toString());
+          final uri = Endpoints.baseURL + Endpoints.login;
+
           final Response response = await dio.post(
-            uri.toString(),
+            uri,
             data: {
               'no_ktp': nik,
               'password': password,

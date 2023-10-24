@@ -29,6 +29,8 @@ class ArtikelController extends _$ArtikelController {
   }
 
   FutureOr<List<Artikel>?> getAllArtikel() async {
+    page = 1;
+
     try {
       final query = "?page=$page";
       final url = Endpoints.baseURL + Endpoints.getAllArtikel + query;
@@ -42,6 +44,17 @@ class ArtikelController extends _$ArtikelController {
       return artikel;
     } catch (e) {
       print("INI SALAH NGAB ${e.toString()}");
+      return Future.error(e.toString());
+    }
+  }
+
+  Future<String> createArtikel(data) async {
+    try {
+      final url = Endpoints.baseURL + Endpoints.createArtikel;
+      await dio.post(url, data: data);
+      ref.invalidate(artikelControllerProvider);
+      return "Berhasil Tambah Artikel";
+    } catch (e) {
       return Future.error(e.toString());
     }
   }
