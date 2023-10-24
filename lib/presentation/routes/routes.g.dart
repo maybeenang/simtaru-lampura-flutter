@@ -120,6 +120,10 @@ RouteBase get $rootRoute => GoRouteData.$route(
           path: 'admin-edit-user',
           factory: $AdminEditUserRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'admin-tambah-user',
+          factory: $AdminTambahUserRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -518,6 +522,24 @@ extension $AdminEditUserRouteExtension on AdminEditUserRoute {
 
   void replace(BuildContext context) =>
       context.replace(location, extra: $extra);
+}
+
+extension $AdminTambahUserRouteExtension on AdminTambahUserRoute {
+  static AdminTambahUserRoute _fromState(GoRouterState state) =>
+      const AdminTambahUserRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-tambah-user',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $loginRoute => GoRouteData.$route(

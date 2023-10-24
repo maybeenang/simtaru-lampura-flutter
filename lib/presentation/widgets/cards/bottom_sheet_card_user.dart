@@ -6,15 +6,20 @@ import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_p
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class BottomSheetCardUser extends HookConsumerWidget {
-  const BottomSheetCardUser({super.key, this.actions, required this.user});
+class BottomSheetCardUser extends StatefulHookConsumerWidget {
+  const BottomSheetCardUser({super.key, required this.user, this.actions});
 
   final UserUtils user;
 
   final List<Widget>? actions;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _BottomSheetCardUserState();
+}
+
+class _BottomSheetCardUserState extends ConsumerState<BottomSheetCardUser> {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -47,15 +52,8 @@ class BottomSheetCardUser extends HookConsumerWidget {
             color: AppColors.mapColorStatusChip[2],
             onTap: () {
               context.pop();
-              AdminEditUserRoute(user).push(context);
+              AdminEditUserRoute(widget.user).push(context);
             },
-          ),
-          const SizedBox(height: 10),
-          ButtonActionPengajuan(
-            label: "Hapus User",
-            icon: Icons.delete,
-            color: AppColors.redColor,
-            onTap: () {},
           ),
           const SizedBox(height: 10),
           const Divider(
@@ -63,7 +61,7 @@ class BottomSheetCardUser extends HookConsumerWidget {
             indent: 10,
           ),
           const SizedBox(height: 10),
-          ...actions ?? const [],
+          ...widget.actions ?? const [],
         ],
       ),
     );

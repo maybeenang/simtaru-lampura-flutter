@@ -13,7 +13,6 @@ import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card
 import 'package:flutter_map_simtaru/presentation/widgets/cards/item_pengajuan_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/warning_card.dart';
-import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/input_dropdown_menu.dart';
 import 'package:go_router/go_router.dart';
@@ -83,7 +82,7 @@ class AdminUbahStatusPage extends HookConsumerWidget {
               // ),
             );
 
-            ref.invalidate(pengajuanControllerProvider);
+            await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
             if (context.mounted) {
               context.loaderOverlay.hide();
               Flushbar(
@@ -154,17 +153,15 @@ class AdminUbahStatusPage extends HookConsumerWidget {
                 ),
               )
             : null,
+        appBar: AppBar(
+          title: const Text("Admin Ubah Status"),
+        ),
         body: CustomScrollView(
           controller: scrollController,
           slivers: [
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  const CustomAppBarFitur(
-                    title: "Admin Ubah Status",
-                    bgColor: AppColors.primaryColor,
-                    labelColor: AppColors.whiteColor,
-                  ),
                   Stack(
                     children: [
                       Container(

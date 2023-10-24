@@ -22,6 +22,9 @@ class Endpoints {
   static String editDataLapangan = "pengajuan/verifikasiLapangan/";
   static String editFilePengajuan = "pengajuan/edit/";
   static String getAllUser = "user/getAll";
+  static String editUser = "user/edit/";
+  static String tambahUser = "user/createUser";
+  static String hapusUser = "user/delete/";
   static String peta = "https://www.simtaru-lampura.com/peta";
   static String convertDownloadUrl(String url) {
     return baseURLDownload + url;

@@ -1,11 +1,17 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/user/admin_user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card_user.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class UserItemCard extends HookConsumerWidget {
   const UserItemCard({super.key, required this.user});
@@ -25,6 +31,63 @@ class UserItemCard extends HookConsumerWidget {
       success: (data) => data,
       error: (error) => null,
     );
+
+    Future deleteUser(String id) async {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.confirm,
+        title: "Hapus User",
+        text: "Apakah anda yakin ingin menghapus user ini?",
+        cancelBtnText: "Batal",
+        confirmBtnText: "Ya",
+        confirmBtnColor: AppColors.redColor,
+        onConfirmBtnTap: () async {
+          Navigator.pop(context);
+          context.loaderOverlay.show();
+          final result = await ref.read(adminUserControllerProvider.notifier).deleteUser(id);
+          result.when(
+            success: (data) {
+              context.loaderOverlay.hide();
+              Flushbar(
+                message: "Berhasil Hapus User",
+                backgroundColor: AppColors.greenColor,
+                duration: const Duration(seconds: 2),
+                flushbarPosition: FlushbarPosition.TOP,
+                flushbarStyle: FlushbarStyle.FLOATING,
+                animationDuration: const Duration(milliseconds: 300),
+                margin: const EdgeInsets.all(8),
+                borderRadius: BorderRadius.circular(8),
+                isDismissible: true,
+                shouldIconPulse: false,
+                icon: const Icon(
+                  Icons.check,
+                  color: AppColors.whiteColor,
+                ),
+              ).show(context);
+            },
+            error: (error) {
+              context.loaderOverlay.hide();
+              Flushbar(
+                message: error.toString(),
+                backgroundColor: AppColors.redColor,
+                duration: const Duration(seconds: 2),
+                flushbarPosition: FlushbarPosition.TOP,
+                flushbarStyle: FlushbarStyle.FLOATING,
+                animationDuration: const Duration(milliseconds: 300),
+                margin: const EdgeInsets.all(8),
+                borderRadius: BorderRadius.circular(8),
+                isDismissible: true,
+                shouldIconPulse: false,
+                icon: const Icon(
+                  Icons.close,
+                  color: AppColors.whiteColor,
+                ),
+              ).show(context);
+            },
+          );
+        },
+      );
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -47,10 +110,13 @@ class UserItemCard extends HookConsumerWidget {
                   user: userUtil!,
                   actions: [
                     ButtonActionPengajuan(
-                      label: "Assign ke Pemohon",
-                      icon: Icons.person,
-                      color: AppColors.primaryColor,
-                      onTap: () {},
+                      label: "Hapus User",
+                      icon: Icons.delete,
+                      color: AppColors.redColor,
+                      onTap: () {
+                        context.pop();
+                        deleteUser(userUtil.id.toString());
+                      },
                     ),
                   ],
                 ),

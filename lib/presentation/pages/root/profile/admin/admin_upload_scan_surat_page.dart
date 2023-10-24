@@ -15,7 +15,6 @@ import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_p
 import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/item_pengajuan_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
-import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/input_uploadfile.dart';
 import 'package:go_router/go_router.dart';
@@ -181,10 +180,8 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    const CustomAppBarFitur(
-                      title: "Admin Upload Scan Surat",
-                      bgColor: AppColors.primaryColor,
-                      labelColor: AppColors.whiteColor,
+                    AppBar(
+                      title: const Text("Admin Upload Scan Surat"),
                     ),
                     Stack(
                       children: [

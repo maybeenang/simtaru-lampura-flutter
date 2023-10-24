@@ -19,6 +19,7 @@ import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_revisi_berkas_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_seluruh_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_surat_rekomendasi_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_tambah_user_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_ubah_status_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_upload_scan_surat_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_berkas_page.dart';
@@ -66,6 +67,7 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<AdminEditDataLapanganRoute>(path: AdminEditDataLapanganRoute.path),
     TypedGoRoute<AdminKelolaUserRoute>(path: AdminKelolaUserRoute.path),
     TypedGoRoute<AdminEditUserRoute>(path: AdminEditUserRoute.path),
+    TypedGoRoute<AdminTambahUserRoute>(path: AdminTambahUserRoute.path),
   ],
 )
 class RootRoute extends GoRouteData {
@@ -291,6 +293,16 @@ class AdminEditUserRoute extends GoRouteData {
     return AdminEditUserPage(
       user: $extra,
     );
+  }
+}
+
+class AdminTambahUserRoute extends GoRouteData {
+  const AdminTambahUserRoute();
+  static const path = 'admin-tambah-user';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminTambahUserPage();
   }
 }
 

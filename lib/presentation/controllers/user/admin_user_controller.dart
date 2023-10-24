@@ -93,4 +93,128 @@ class AdminUserController extends _$AdminUserController {
       },
     );
   }
+
+  FutureOr<List<User>?> getUser() async {
+    page = 1;
+    ref.listenSelf(
+      (_, __) {
+        // One could write more conditional logic for when to call redirection
+        if (state.isLoading) return;
+      },
+    );
+
+    final user = await getAllUser();
+    if (user is List<User>) {
+      return user;
+    } else {
+      return Future.error("Terjadi Kesalahan");
+    }
+  }
+
+  FutureOr<User> createUser(Map data) async {
+    try {
+      final url = Endpoints.baseURL + Endpoints.tambahUser;
+      final response = await dio.post(
+        url,
+        data: data,
+      );
+
+      final dataResponse = response.data['data'];
+      dataResponse['is_active'] = 1;
+
+      final User user = User.success(
+        UserUtils.fromJson(dataResponse),
+      );
+
+      ref.invalidate(adminUserControllerProvider);
+
+      return user;
+    } on DioException catch (e) {
+      if (e.response != null) {
+        var dataResponse = e.response!.data['message'] ?? "Terjadi Kesalahan";
+
+        final User user = User.error(
+          dataResponse.toString(),
+        );
+
+        return user;
+      } else {
+        const User user = User.error(
+          "Internal Server Error",
+        );
+        return user;
+      }
+    } catch (e) {
+      print("INI SALAH NGABB ${e.toString()}");
+      const User user = User.error(
+        "Terjadi Kesalahan",
+      );
+      return user;
+    }
+  }
+
+  Future<User> editUser(Map data, String id) async {
+    print(data.toString());
+    try {
+      final url = Endpoints.baseURL + Endpoints.editUser + id;
+      final response = await dio.post(
+        url,
+        data: data,
+      );
+      var dataResponse = response.data['data'];
+
+      final User user = User.success(
+        UserUtils.fromJson(dataResponse),
+      );
+
+      ref.invalidate(adminUserControllerProvider);
+      return user;
+    } on DioException catch (e) {
+      print("INI SALAH ${e.toString()}");
+
+      if (e.response != null) {
+        final dataResponse = e.response!.data['message'] ?? "Terjadi Kesalahan";
+        final User user = User.error(
+          dataResponse.toString(),
+        );
+        return user;
+      } else {
+        const User user = User.error(
+          "Internal Server Error",
+        );
+        return user;
+      }
+    } catch (e, s) {
+      print("INI SALAH NGABB ${e.toString()}");
+      print("INI NGABB ${s.toString()}");
+      const User user = User.error(
+        "Terjadi Kesalahan",
+      );
+      return user;
+    }
+  }
+
+  Future<User> deleteUser(String id) async {
+    try {
+      final url = Endpoints.baseURL + Endpoints.hapusUser + id;
+
+      final Response response = await dio.post(url);
+
+      final dataResponse = response.data['data'];
+
+      final User user = User.success(
+        UserUtils.fromJson(dataResponse),
+      );
+
+      await ref.refresh(adminUserControllerProvider.notifier).getUser();
+
+      return user;
+    } catch (e) {
+      print("INI SALAH NGABB ${e.toString()}");
+      const User user = User.error(
+        "Terjadi Kesalahan",
+      );
+      return user;
+    }
+  }
 }
