@@ -132,6 +132,10 @@ RouteBase get $rootRoute => GoRouteData.$route(
           path: 'admin-tambah-artikel',
           factory: $AdminTambahArtikelRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'admin-edit-artikel',
+          factory: $AdminEditArtikelRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -587,6 +591,28 @@ extension $AdminTambahArtikelRouteExtension on AdminTambahArtikelRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminEditArtikelRouteExtension on AdminEditArtikelRoute {
+  static AdminEditArtikelRoute _fromState(GoRouterState state) =>
+      AdminEditArtikelRoute(
+        state.extra as Artikel,
+      );
+
+  String get location => GoRouteData.$location(
+        '/admin-edit-artikel',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 RouteBase get $loginRoute => GoRouteData.$route(

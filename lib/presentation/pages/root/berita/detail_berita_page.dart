@@ -53,12 +53,26 @@ class DetailBeritaPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    artikel.judul,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                      height: 1,
+                  Container(
+                    decoration: const BoxDecoration(
+                      border: BorderDirectional(
+                        start: BorderSide(
+                          color: Colors.black54,
+                          width: 6.0,
+                        ),
+                      ),
+                    ),
+                    padding: const EdgeInsetsDirectional.only(start: 15, top: 15, bottom: 15),
+                    child: Column(
+                      children: [
+                        Text(
+                          artikel.judul,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -78,8 +92,10 @@ class DetailBeritaPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
+                  const Divider(),
                   Text(
                     artikel.isi,
+                    textAlign: TextAlign.justify,
                     style: const TextStyle(
                       height: 1.5,
                     ),

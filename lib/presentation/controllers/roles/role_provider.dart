@@ -1,5 +1,6 @@
 import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/roles/role_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -8,6 +9,7 @@ part 'role_provider.g.dart';
 @riverpod
 Role role(RoleRef ref) {
   final userState = ref.watch(userControllerProvider);
+  final roleState = ref.watch(roleControllerProvider);
 
   return userState.maybeWhen(
     orElse: () => const Role.user(),

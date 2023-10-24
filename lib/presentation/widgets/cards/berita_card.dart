@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/domain/entity/artikel/artikel.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
@@ -14,17 +15,18 @@ class BeritaCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 120,
+      height: 150,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(AppDouble.borderRadius),
         boxShadow: [
           AppStyles.boxShadowStyle,
         ],
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       child: Material(
+        color: Colors.transparent,
         child: InkWell(
           onTap: () {
             Future.delayed(
@@ -36,7 +38,6 @@ class BeritaCard extends StatelessWidget {
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
               Padding(
@@ -77,12 +78,14 @@ class BeritaCard extends StatelessWidget {
                 child: Text(
                   artikel.isi,
                   maxLines: 5,
+                  textAlign: TextAlign.justify,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 14,
                   ),
                 ),
               ),
+              SizedBox(height: 10)
             ],
           ),
         ),

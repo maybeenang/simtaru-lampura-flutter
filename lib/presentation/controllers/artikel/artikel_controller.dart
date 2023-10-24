@@ -58,4 +58,26 @@ class ArtikelController extends _$ArtikelController {
       return Future.error(e.toString());
     }
   }
+
+  Future<String> editArtikel(data, String id) async {
+    try {
+      final url = Endpoints.baseURL + Endpoints.editArtikel + id;
+      await dio.post(url, data: data);
+      ref.invalidate(artikelControllerProvider);
+      return "Berhasil Edit Artikel";
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
+  Future<String> deleteArtikel(String id) async {
+    try {
+      final url = Endpoints.baseURL + Endpoints.deleteArtikel + id;
+      await dio.post(url);
+      ref.invalidate(artikelControllerProvider);
+      return "Berhasil Hapus Artikel";
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
 }

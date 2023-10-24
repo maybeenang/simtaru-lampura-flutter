@@ -30,6 +30,9 @@ class Endpoints {
   static String hapusUser = "user/delete/";
   static String getAllArtikel = "artikel/getAll";
   static String createArtikel = "artikel/create";
+  static String editArtikel = "artikel/edit/";
+  static String deleteArtikel = "artikel/delete/";
+  static String getAllRole = "user/getAllRole";
 
   static String convertDownloadUrl(String url) {
     return baseURLDownload + url;

@@ -2,34 +2,45 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
+import 'package:flutter_map_simtaru/domain/entity/artikel/artikel.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/artikel/artikel_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
-class AdminTambahArtikelPage extends HookConsumerWidget {
-  const AdminTambahArtikelPage({super.key});
+class AdminEditArtikelPage extends HookConsumerWidget {
+  const AdminEditArtikelPage({super.key, required this.artikel});
+
+  final Artikel artikel;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final inputController = List.generate(2, (index) => useTextEditingController());
 
+    useEffect(() {
+      inputController[0].text = artikel.judul;
+      inputController[1].text = artikel.isi;
+
+      return () {};
+    }, []);
+
     void handleSubmit() async {
       FocusScope.of(context).unfocus();
-      if (formTambahArtikelKey.currentState!.validate()) {
+      if (formEditArtikelKey.currentState!.validate()) {
         context.loaderOverlay.show();
 
         final data = {
           "judul": inputController[0].text,
           "isi": inputController[1].text,
         };
-        final result = await ref.read(artikelControllerProvider.notifier).createArtikel(data);
+        final result = await ref.read(artikelControllerProvider.notifier).editArtikel(data, artikel.id.toString());
 
-        if (result == "Berhasil Tambah Artikel") {
+        if (result == "Berhasil Edit Artikel") {
           if (context.mounted) {
             context.loaderOverlay.hide();
             Flushbar(
-              message: "Berhasil Tambah Artikel",
+              message: "Berhasil Edit Artikel",
               backgroundColor: AppColors.greenColor,
               duration: const Duration(seconds: 1),
               flushbarPosition: FlushbarPosition.TOP,
@@ -49,7 +60,7 @@ class AdminTambahArtikelPage extends HookConsumerWidget {
           if (context.mounted) {
             context.loaderOverlay.hide();
             Flushbar(
-              message: "Gagal Tambah Artikel",
+              message: "Gagal Edit Artikel",
               backgroundColor: AppColors.redColor,
               duration: const Duration(seconds: 3),
               flushbarPosition: FlushbarPosition.TOP,
@@ -71,7 +82,7 @@ class AdminTambahArtikelPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Admin Tambah Artikel"),
+        title: const Text("Admin Edit Artikel"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -81,7 +92,7 @@ class AdminTambahArtikelPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               const SizedBox(height: 20),
               Form(
-                key: formTambahArtikelKey,
+                key: formEditArtikelKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -120,7 +131,7 @@ class AdminTambahArtikelPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 5),
                     TextFormField(
-                      maxLines: 5, //or null
+                      maxLines: 10, //or null
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
