@@ -10,6 +10,10 @@ import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_surat_rekomendasi_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_icon.dart';
@@ -75,13 +79,17 @@ class RincianDokumen extends HookConsumerWidget {
               uploadFileController.value = File('');
 
               ref.invalidate(pengajuanControllerProvider);
+              ref.invalidate(pengajuanVerifikasiBerkasControllerProvider);
+              ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
+              ref.invalidate(pengajuanUploadScanSuratControllerProvider);
+              ref.invalidate(pengajuanSuratRekomendasiControllerProvider);
 
               if (context.mounted) {
                 context.loaderOverlay.hide();
                 Flushbar(
                   message: "Berhasil Upload File",
                   backgroundColor: AppColors.greenColor,
-                  duration: const Duration(seconds: 3),
+                  duration: const Duration(seconds: 1),
                   flushbarPosition: FlushbarPosition.TOP,
                   flushbarStyle: FlushbarStyle.FLOATING,
                   animationDuration: const Duration(milliseconds: 300),
@@ -104,7 +112,7 @@ class RincianDokumen extends HookConsumerWidget {
                 Flushbar(
                   message: "Terjadi Kesalahan",
                   backgroundColor: AppColors.redColor,
-                  duration: const Duration(seconds: 1),
+                  duration: const Duration(seconds: 3),
                   flushbarPosition: FlushbarPosition.TOP,
                   flushbarStyle: FlushbarStyle.FLOATING,
                   animationDuration: const Duration(milliseconds: 300),
@@ -150,6 +158,10 @@ class RincianDokumen extends HookConsumerWidget {
             await dio.post(url);
 
             ref.invalidate(pengajuanControllerProvider);
+            ref.invalidate(pengajuanVerifikasiBerkasControllerProvider);
+            ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
+            ref.invalidate(pengajuanUploadScanSuratControllerProvider);
+            ref.invalidate(pengajuanSuratRekomendasiControllerProvider);
 
             if (context.mounted) {
               context.loaderOverlay.hide();
