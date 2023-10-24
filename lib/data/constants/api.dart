@@ -21,6 +21,7 @@ class Endpoints {
   static String updatePolygonPengajuan = "pengajuan/updatePolygon/";
   static String editDataLapangan = "pengajuan/verifikasiLapangan/";
   static String editFilePengajuan = "pengajuan/edit/";
+  static String deleteFilePengajuan = "pengajuan/delete/";
   static String getAllUser = "user/getAll";
   static String editUser = "user/edit/";
   static String tambahUser = "user/createUser";

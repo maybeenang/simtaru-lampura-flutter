@@ -60,7 +60,7 @@ class InputUploadFile extends HookConsumerWidget {
             children: [
               namaFile.value != ''
                   ? Container(
-                      width: 150,
+                      width: 100,
                       child: GestureDetector(
                         onTap: () {
                           if (namaFile.value != '') {
@@ -85,7 +85,7 @@ class InputUploadFile extends HookConsumerWidget {
                         fontSize: 12,
                       ),
                     ),
-              Spacer(),
+              const Spacer(),
               ButtonIcon(
                 icon: Icons.edit,
                 onTap: () {
