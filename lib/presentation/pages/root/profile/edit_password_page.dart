@@ -32,7 +32,7 @@ class EditPasswordProfilePage extends StatelessWidget {
                     ),
                     const SizedBox(width: 20),
                     const Text(
-                      "Edit Password",
+                      "Ganti Password",
                       style: TextStyle(
                         color: AppColors.blackColor,
                         fontSize: 20,

@@ -39,6 +39,8 @@ class AdminTambahUserPage extends HookConsumerWidget {
           return;
         }
 
+        context.loaderOverlay.show();
+
         final data = {
           "no_ktp": int.parse(inputController[0].text),
           "name": inputController[1].text,

@@ -174,9 +174,15 @@ class AdminMenuProfileCard extends ConsumerWidget {
                     color: AppColors.borderColor,
                   ),
                 ),
-                const ButtonProfile(
+                ButtonProfile(
                   label: "Kelola Artikel",
                   icon: Icons.newspaper,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminKelolaArtikelRoute().push(context),
+                    );
+                  },
                 ),
               ],
             ),

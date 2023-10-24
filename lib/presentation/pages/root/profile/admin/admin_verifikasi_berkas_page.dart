@@ -67,7 +67,6 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
               },
             );
             ref.invalidate(pengajuanVerifikasiBerkasControllerProvider);
-            await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
             if (context.mounted) {
               context.loaderOverlay.hide();
             }

@@ -67,7 +67,6 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
               },
             );
             ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
-            await ref.refresh(pengajuanVerifikasiLapanganControllerProvider.notifier).getPengajuan();
             if (context.mounted) {
               context.loaderOverlay.hide();
             }

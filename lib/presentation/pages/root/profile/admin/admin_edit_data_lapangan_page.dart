@@ -118,7 +118,6 @@ class AdminEditDataLapanganPage extends HookConsumerWidget {
 
           if (context.mounted) {
             context.loaderOverlay.hide();
-            print("KONTOL");
             Flushbar(
               message: "Gagal mengedit data lapangan",
               backgroundColor: AppColors.redColor,
