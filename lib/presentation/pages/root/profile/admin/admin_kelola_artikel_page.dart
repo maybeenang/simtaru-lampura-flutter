@@ -69,6 +69,9 @@ class AdminKelolaArtikelPage extends HookConsumerWidget {
         type: QuickAlertType.confirm,
         title: "Hapus Artikel",
         text: "Apakah anda yakin ingin menghapus artikel ini?",
+        confirmBtnColor: AppColors.redColor,
+        confirmBtnText: "Hapus",
+        cancelBtnText: "Batal",
         onConfirmBtnTap: () => {
           Navigator.pop(context),
           handlDeleteArtikel(id),

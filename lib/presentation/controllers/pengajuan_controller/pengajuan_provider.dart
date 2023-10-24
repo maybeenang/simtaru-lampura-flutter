@@ -1,14 +1,19 @@
-import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/domain/entity/role/role_dto.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_user_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/roles/role_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'role_provider.g.dart';
+part 'pengajuan_provider.g.dart';
 
 @riverpod
-Role role(RoleRef ref) {
+AsyncValue<List<Pengajuan>?> pengajuanProvider(PengajuanProviderRef ref) {
   final userState = ref.watch(userControllerProvider);
   final roleState = ref.watch(roleControllerProvider);
 
@@ -18,15 +23,15 @@ Role role(RoleRef ref) {
   );
 
   return userState.maybeWhen(
-    orElse: () => const Role.user(),
+    orElse: () => ref.watch(pengajuanUserControllerProvider),
     data: (data) {
       if (data is UserSuccess) {
         if (roleDto.isEmpty) {
-          return const Role.user();
+          return ref.watch(pengajuanUserControllerProvider);
         }
 
         if (data.model.roles!.isEmpty) {
-          return const Role.user();
+          return ref.watch(pengajuanUserControllerProvider);
         }
 
         // if (data.model.roles!.isEmpty) {
@@ -52,22 +57,22 @@ Role role(RoleRef ref) {
 
         switch (namaRole.name) {
           case "Superadmin":
-            return const Role.admin();
+            return ref.watch(pengajuanControllerProvider);
           case "Pemohon":
-            return const Role.user();
+            return ref.watch(pengajuanUserControllerProvider);
           case "Admin Verif Berkas":
-            return const Role.adminVerifBerkas();
+            return ref.watch(pengajuanVerifikasiBerkasControllerProvider);
           case "Admin Verif Lapangan":
-            return const Role.adminVerifLapangan();
+            return ref.watch(pengajuanVerifikasiLapanganControllerProvider);
           case "Admin Upload Scan Surat":
-            return const Role.adminUploadScanSurat();
+            return ref.watch(pengajuanUploadScanSuratControllerProvider);
           case "Surveyor":
-            return const Role.surveyor();
+            return ref.watch(pengajuanUserControllerProvider);
           default:
-            return const Role.user();
+            return ref.watch(pengajuanUserControllerProvider);
         }
       } else {
-        return const Role.user();
+        return ref.watch(pengajuanUserControllerProvider);
       }
     },
   );

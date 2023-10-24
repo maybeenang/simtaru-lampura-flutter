@@ -9,9 +9,6 @@ class RoleDto with _$RoleDto {
   const factory RoleDto({
     required int id,
     required String name,
-    required String guard_name,
-    required String created_at,
-    required String updated_at,
   }) = _RoleDto;
 
   factory RoleDto.fromJson(Map<String, dynamic> json) => _$RoleDtoFromJson(json);
