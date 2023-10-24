@@ -4,6 +4,7 @@ import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/domain/entity/artikel/artikel.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
+import 'package:intl/intl.dart';
 
 class BeritaItemCard extends StatelessWidget {
   const BeritaItemCard({super.key, required this.artikel});
@@ -52,9 +53,26 @@ class BeritaItemCard extends StatelessWidget {
                           fontSize: 18,
                         ),
                       ),
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.calendar_today,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            DateFormat('yyyy-MM-dd').format(artikel.created_at),
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
                       Text(
                         artikel.isi,
-                        maxLines: 2,
+                        maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],
