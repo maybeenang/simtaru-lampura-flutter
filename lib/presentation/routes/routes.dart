@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_map_simtaru/domain/entity/artikel/artikel.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/domain/entity/user/user_utils.dart';
 import 'package:flutter_map_simtaru/presentation/pages/login_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/onboarding_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/register_page.dart';
@@ -11,15 +13,20 @@ import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/pengajuan_
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/search_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_data_lapangan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_user_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_kelola_artikel_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_kelola_user_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_pengajuan_ditolak_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_rekam_polygon_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_revisi_berkas_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_seluruh_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_surat_rekomendasi_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_tambah_user_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_ubah_status_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_upload_scan_surat_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_berkas_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_lapangan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_password_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_profile_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/splash_page.dart';
@@ -47,6 +54,7 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<DetailPengajuanRoute>(path: DetailPengajuanRoute.path),
     TypedGoRoute<DetailBeritaRoute>(path: DetailBeritaRoute.path),
     TypedGoRoute<EditProfileRoute>(path: EditProfileRoute.path),
+    TypedGoRoute<EditPasswordProfileRoute>(path: EditPasswordProfileRoute.path),
     TypedGoRoute<NotifRoute>(path: NotifRoute.path),
     TypedGoRoute<AdminSeluruhPengajuanRoute>(path: AdminSeluruhPengajuanRoute.path),
     TypedGoRoute<AdminPengajuanDitolahRoute>(path: AdminPengajuanDitolahRoute.path),
@@ -59,6 +67,10 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<AdminEditPengajuanRoute>(path: AdminEditPengajuanRoute.path),
     TypedGoRoute<AdminRekamPolygonRoute>(path: AdminRekamPolygonRoute.path),
     TypedGoRoute<AdminEditDataLapanganRoute>(path: AdminEditDataLapanganRoute.path),
+    TypedGoRoute<AdminKelolaUserRoute>(path: AdminKelolaUserRoute.path),
+    TypedGoRoute<AdminEditUserRoute>(path: AdminEditUserRoute.path),
+    TypedGoRoute<AdminTambahUserRoute>(path: AdminTambahUserRoute.path),
+    TypedGoRoute<AdminKelolaArtikelRoute>(path: AdminKelolaArtikelRoute.path),
   ],
 )
 class RootRoute extends GoRouteData {
@@ -104,12 +116,17 @@ class DetailPengajuanRoute extends GoRouteData {
 }
 
 class DetailBeritaRoute extends GoRouteData {
-  const DetailBeritaRoute();
+  const DetailBeritaRoute(
+    this.$extra,
+  );
   static const path = 'detail_berita';
+  final Artikel $extra;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const DetailBeritaPage();
+    return DetailBeritaPage(
+      artikel: $extra,
+    );
   }
 }
 
@@ -120,6 +137,16 @@ class EditProfileRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const EditProfilePage();
+  }
+}
+
+class EditPasswordProfileRoute extends GoRouteData {
+  const EditPasswordProfileRoute();
+  static const path = 'edit_password_profile';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const EditPasswordProfilePage();
   }
 }
 
@@ -249,6 +276,51 @@ class AdminEditDataLapanganRoute extends GoRouteData {
     return AdminEditDataLapanganPage(
       pengajuan: $extra,
     );
+  }
+}
+
+class AdminKelolaUserRoute extends GoRouteData {
+  const AdminKelolaUserRoute();
+  static const path = 'admin-kelola-user';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminKelolaUserPage();
+  }
+}
+
+class AdminEditUserRoute extends GoRouteData {
+  const AdminEditUserRoute(
+    this.$extra,
+  );
+  static const path = 'admin-edit-user';
+  final UserUtils $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return AdminEditUserPage(
+      user: $extra,
+    );
+  }
+}
+
+class AdminTambahUserRoute extends GoRouteData {
+  const AdminTambahUserRoute();
+  static const path = 'admin-tambah-user';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminTambahUserPage();
+  }
+}
+
+class AdminKelolaArtikelRoute extends GoRouteData {
+  const AdminKelolaArtikelRoute();
+  static const path = 'admin-kelola-artikel';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminKelolaArtikelPage();
   }
 }
 

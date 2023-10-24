@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
-import 'package:flutter_map_simtaru/data/constants/image.dart';
+import 'package:flutter_map_simtaru/domain/entity/artikel/artikel.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
+import 'package:intl/intl.dart';
 
 class BeritaItemCard extends StatelessWidget {
-  const BeritaItemCard({super.key});
+  const BeritaItemCard({super.key, required this.artikel});
+
+  final Artikel artikel;
 
   @override
   Widget build(BuildContext context) {
@@ -29,71 +32,48 @@ class BeritaItemCard extends StatelessWidget {
               Future.delayed(
                 const Duration(milliseconds: 300),
                 () {
-                  const DetailBeritaRoute().go(context);
+                  DetailBeritaRoute(artikel).go(context);
                 },
               );
             },
             child: Column(
               children: [
                 Container(
-                  height: 200,
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(AppDouble.borderRadius),
-                    ),
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  child: Image.asset(
-                    Images.berita,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Container(
                   padding: const EdgeInsets.all(20),
-                  child: const Column(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Lorem ipsum dolor sit amet, consecte tur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        artikel.judul,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 18,
                         ),
                       ),
-                      Text(
-                        "Lorem ipsum dolor sit amet, consecte tur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 5),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.calendar_today,
                             size: 16,
                           ),
-                          SizedBox(width: 5),
+                          const SizedBox(width: 5),
                           Text(
-                            "12/12/2021",
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Icon(
-                            Icons.remove_red_eye_outlined,
-                            size: 16,
-                          ),
-                          SizedBox(width: 5),
-                          Text(
-                            "60",
-                            style: TextStyle(
+                            DateFormat('yyyy-MM-dd').format(artikel.created_at),
+                            style: const TextStyle(
                               fontSize: 14,
                             ),
                           ),
                         ],
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        artikel.isi,
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),

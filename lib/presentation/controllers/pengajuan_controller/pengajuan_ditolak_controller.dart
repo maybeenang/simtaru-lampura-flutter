@@ -12,6 +12,7 @@ class PengajuanDitolakController extends _$PengajuanDitolakController {
 
   @override
   FutureOr<List<Pengajuan>> build() async {
+    page = 1;
     ref.listenSelf(
       (_, __) {
         if (state.isLoading) return;
@@ -53,16 +54,19 @@ class PengajuanDitolakController extends _$PengajuanDitolakController {
       },
     );
 
-    return loadMorePengajuan.maybeWhen(orElse: () {
-      page--;
-      return true;
-    }, data: (value) {
-      if (value.isEmpty) {
+    return loadMorePengajuan.maybeWhen(
+      orElse: () {
         page--;
         return true;
-      }
-      state = AsyncValue.data([...state.value!, ...value]);
-      return false;
-    });
+      },
+      data: (value) {
+        if (value.isEmpty) {
+          page--;
+          return true;
+        }
+        state = AsyncValue.data([...state.value!, ...value]);
+        return false;
+      },
+    );
   }
 }

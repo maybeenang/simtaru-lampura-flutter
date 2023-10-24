@@ -6,7 +6,6 @@ import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controlle
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/item_pengajuan_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
-import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -62,10 +61,8 @@ class AdminPengajuanDitolakPage extends HookConsumerWidget {
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  const CustomAppBarFitur(
-                    title: "Admin Pengajuan Ditolak",
-                    bgColor: AppColors.primaryColor,
-                    labelColor: AppColors.whiteColor,
+                  AppBar(
+                    title: const Text("Admin Pengajuan Ditolak"),
                   ),
                   Stack(
                     children: [

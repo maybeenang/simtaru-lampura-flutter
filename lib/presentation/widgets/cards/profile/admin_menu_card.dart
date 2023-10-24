@@ -158,9 +158,15 @@ class AdminMenuProfileCard extends ConsumerWidget {
                     color: AppColors.borderColor,
                   ),
                 ),
-                const ButtonProfile(
+                ButtonProfile(
                   label: "Kelola User",
                   icon: Icons.group,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminKelolaUserRoute().push(context),
+                    );
+                  },
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -168,9 +174,15 @@ class AdminMenuProfileCard extends ConsumerWidget {
                     color: AppColors.borderColor,
                   ),
                 ),
-                const ButtonProfile(
-                  label: "Kelola Berita",
+                ButtonProfile(
+                  label: "Kelola Artikel",
                   icon: Icons.newspaper,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () => const AdminKelolaArtikelRoute().push(context),
+                    );
+                  },
                 ),
               ],
             ),

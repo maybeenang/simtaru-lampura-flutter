@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/domain/entity/artikel/artikel.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
+import 'package:intl/intl.dart';
 
 class BeritaCard extends StatelessWidget {
-  const BeritaCard({super.key});
+  const BeritaCard({super.key, required this.artikel});
+
+  final Artikel artikel;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
+      height: 100,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -17,73 +24,68 @@ class BeritaCard extends StatelessWidget {
         ],
       ),
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image(
-            image: AssetImage("assets/images/berita.png"),
-            width: double.infinity,
-            height: 150,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 15),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.calendar_today,
-                  size: 16,
+      child: Material(
+        child: InkWell(
+          onTap: () {
+            Future.delayed(
+              const Duration(milliseconds: 300),
+              () {
+                DetailBeritaRoute(artikel).go(context);
+              },
+            );
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  artikel.judul,
+                  textAlign: TextAlign.start,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                SizedBox(width: 5),
-                Text(
-                  "12/12/2021",
-                  style: TextStyle(
+              ),
+              const SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.calendar_today,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      DateFormat('yyyy-MM-dd').format(artikel.created_at),
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  artikel.isi,
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
                     fontSize: 14,
                   ),
                 ),
-                SizedBox(width: 10),
-                Icon(
-                  Icons.remove_red_eye_outlined,
-                  size: 16,
-                ),
-                SizedBox(width: 5),
-                Text(
-                  "60",
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 5),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
               ),
-            ),
+            ],
           ),
-          SizedBox(height: 5),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. dsfsdfs fdsf sd fsd fsdfsdf sdf sdf sf sfds",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

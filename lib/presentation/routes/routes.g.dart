@@ -61,6 +61,10 @@ RouteBase get $rootRoute => GoRouteData.$route(
           factory: $EditProfileRouteExtension._fromState,
         ),
         GoRouteData.$route(
+          path: 'edit_password_profile',
+          factory: $EditPasswordProfileRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
           path: 'notif',
           factory: $NotifRouteExtension._fromState,
         ),
@@ -107,6 +111,22 @@ RouteBase get $rootRoute => GoRouteData.$route(
         GoRouteData.$route(
           path: 'admin-edit-data-lapangan',
           factory: $AdminEditDataLapanganRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'admin-kelola-user',
+          factory: $AdminKelolaUserRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'admin-edit-user',
+          factory: $AdminEditUserRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'admin-tambah-user',
+          factory: $AdminTambahUserRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'admin-kelola-artikel',
+          factory: $AdminKelolaArtikelRouteExtension._fromState,
         ),
       ],
     );
@@ -187,11 +207,32 @@ extension $DetailPengajuanRouteExtension on DetailPengajuanRoute {
 }
 
 extension $DetailBeritaRouteExtension on DetailBeritaRoute {
-  static DetailBeritaRoute _fromState(GoRouterState state) =>
-      const DetailBeritaRoute();
+  static DetailBeritaRoute _fromState(GoRouterState state) => DetailBeritaRoute(
+        state.extra as Artikel,
+      );
 
   String get location => GoRouteData.$location(
         '/detail_berita',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
+}
+
+extension $EditProfileRouteExtension on EditProfileRoute {
+  static EditProfileRoute _fromState(GoRouterState state) =>
+      const EditProfileRoute();
+
+  String get location => GoRouteData.$location(
+        '/edit_profile',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -204,12 +245,12 @@ extension $DetailBeritaRouteExtension on DetailBeritaRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $EditProfileRouteExtension on EditProfileRoute {
-  static EditProfileRoute _fromState(GoRouterState state) =>
-      const EditProfileRoute();
+extension $EditPasswordProfileRouteExtension on EditPasswordProfileRoute {
+  static EditPasswordProfileRoute _fromState(GoRouterState state) =>
+      const EditPasswordProfileRoute();
 
   String get location => GoRouteData.$location(
-        '/edit_profile',
+        '/edit_password_profile',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -448,6 +489,82 @@ extension $AdminEditDataLapanganRouteExtension on AdminEditDataLapanganRoute {
 
   void replace(BuildContext context) =>
       context.replace(location, extra: $extra);
+}
+
+extension $AdminKelolaUserRouteExtension on AdminKelolaUserRoute {
+  static AdminKelolaUserRoute _fromState(GoRouterState state) =>
+      const AdminKelolaUserRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-kelola-user',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminEditUserRouteExtension on AdminEditUserRoute {
+  static AdminEditUserRoute _fromState(GoRouterState state) =>
+      AdminEditUserRoute(
+        state.extra as UserUtils,
+      );
+
+  String get location => GoRouteData.$location(
+        '/admin-edit-user',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
+}
+
+extension $AdminTambahUserRouteExtension on AdminTambahUserRoute {
+  static AdminTambahUserRoute _fromState(GoRouterState state) =>
+      const AdminTambahUserRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-tambah-user',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminKelolaArtikelRouteExtension on AdminKelolaArtikelRoute {
+  static AdminKelolaArtikelRoute _fromState(GoRouterState state) =>
+      const AdminKelolaArtikelRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-kelola-artikel',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $loginRoute => GoRouteData.$route(

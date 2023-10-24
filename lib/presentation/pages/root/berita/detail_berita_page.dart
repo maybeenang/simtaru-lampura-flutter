@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
-import 'package:flutter_map_simtaru/data/constants/image.dart';
+import 'package:flutter_map_simtaru/domain/entity/artikel/artikel.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class DetailBeritaPage extends StatelessWidget {
-  const DetailBeritaPage({super.key});
+  const DetailBeritaPage({super.key, required this.artikel});
+
+  final Artikel artikel;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class DetailBeritaPage extends StatelessWidget {
                   ),
                   const SizedBox(width: 20),
                   const Text(
-                    "Berita",
+                    "Artikel",
                     style: TextStyle(
                       color: AppColors.blackColor,
                       fontSize: 20,
@@ -46,60 +49,38 @@ class DetailBeritaPage extends StatelessWidget {
             ),
             Container(
               width: double.infinity,
-              height: 200,
-              decoration: const BoxDecoration(
-                color: Colors.grey,
-              ),
-              child: Image.asset(
-                Images.berita,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Container(
-              width: double.infinity,
               padding: const EdgeInsets.all(20),
-              child: const Column(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Lorem ipsum dolor sit amet, consecte tur adipiscing elit",
-                    style: TextStyle(
+                    artikel.judul,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 18,
                       height: 1,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.calendar_today,
                         size: 16,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
-                        "12/12/2021",
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Icon(
-                        Icons.remove_red_eye_outlined,
-                        size: 16,
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        "60",
-                        style: TextStyle(
+                        DateFormat('yyyy-MM-dd').format(artikel.created_at),
+                        style: const TextStyle(
                           fontSize: 14,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
-                    "Lorem ipsum dolor sit amet, consecte tur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consecte tur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                    style: TextStyle(
+                    artikel.isi,
+                    style: const TextStyle(
                       height: 1.5,
                     ),
                   ),

@@ -6,3 +6,7 @@ final formPengajuanKey3 = GlobalKey<FormState>();
 final alasanDitolakKey = GlobalKey<FormState>();
 final formEditPengajuanKey = GlobalKey<FormState>();
 final formEditDataLapanganKey = GlobalKey<FormState>();
+final formEditUserKey = GlobalKey<FormState>();
+final formTambahUserKey = GlobalKey<FormState>();
+final formEditProfileKey = GlobalKey<FormState>();
+final formEditPasswordKey = GlobalKey<FormState>();

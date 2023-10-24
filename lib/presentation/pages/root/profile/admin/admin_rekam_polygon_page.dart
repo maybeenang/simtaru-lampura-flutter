@@ -114,7 +114,7 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
         size: 23,
         color: AppColors.whiteColor,
       ),
-      intermediateIcon: const Icon(Icons.lens, size: 15, color: Colors.grey),
+      intermediateIcon: const Icon(Icons.lens, size: 20, color: Colors.black),
       callbackRefresh: () => {setState(() {})},
     );
 

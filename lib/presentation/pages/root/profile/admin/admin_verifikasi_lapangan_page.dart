@@ -5,6 +5,7 @@ import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
@@ -12,7 +13,6 @@ import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_p
 import 'package:flutter_map_simtaru/presentation/widgets/cards/bottom_sheet_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/item_pengajuan_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/item_pengajuan_loading.dart';
-import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_appbar_fitur.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -67,7 +67,6 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
               },
             );
             ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
-            await ref.refresh(pengajuanVerifikasiLapanganControllerProvider.notifier).getPengajuan();
             if (context.mounted) {
               context.loaderOverlay.hide();
             }
@@ -130,10 +129,11 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                 url,
                 data: {
                   "status_id": 1,
+                  "alasan_ditolak": inputAlasanDitolakController.text,
                 },
               );
               ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
-              await ref.refresh(pengajuanVerifikasiLapanganControllerProvider.notifier).getPengajuan();
+              ref.invalidate(pengajuanControllerProvider);
               if (context.mounted) {
                 context.loaderOverlay.hide();
               }
@@ -184,10 +184,8 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    const CustomAppBarFitur(
-                      title: "Admin Verifikasi Lapangan",
-                      bgColor: AppColors.primaryColor,
-                      labelColor: AppColors.whiteColor,
+                    AppBar(
+                      title: const Text("Admin Verifikasi Lapangan"),
                     ),
                     Stack(
                       children: [

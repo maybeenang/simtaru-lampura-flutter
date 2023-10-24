@@ -1,282 +1,101 @@
-// ignore_for_file: avoid_print, duplicate_ignore
-
-// import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/data/constants/api.dart';
+import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-// import 'package:flutter_map/plugin_api.dart';
-// import 'package:flutter_map_simtaru/utils/geojson/geojson/classes.dart';
-// import 'package:flutter_map_simtaru/utils/geojson/geojson/geojson.dart';
-// import 'package:flutter_map_simtaru/utils/geojson/geojson/geojson_options.dart';
-// import 'package:flutter_map_simtaru/utils/geojson/geojson/geojson_widget.dart';
-// import 'package:flutter_map_simtaru/utils/geojson/geojson/index.dart';
-// import 'package:flutter_map_simtaru/presentation/controllers/index_screen_provider.dart';
-// import 'package:hooks_riverpod/hooks_riverpod.dart';
-// import 'package:latlong2/latlong.dart';
-// import 'dart:ui' as dartui;
-// import 'package:flutter/services.dart' show rootBundle;
-// import 'dart:async';
+import 'package:webview_flutter/webview_flutter.dart';
 
 final isLoadingPetaProvider = StateProvider.autoDispose<bool>((ref) => false);
 
-class PetaPage extends ConsumerStatefulWidget {
-  const PetaPage({Key? key}) : super(key: key);
+class PetaPage extends StatefulHookConsumerWidget {
+  const PetaPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _PetaPageState createState() => _PetaPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _PetaPageState();
 }
 
-class _PetaPageState extends ConsumerState<PetaPage> with TickerProviderStateMixin {
-  // final _random = Random();
-  // double doubleInRange(num start, num end) =>
-  //     _random.nextDouble() * (end - start) + start;
+class _PetaPageState extends ConsumerState<PetaPage> {
+  late WebViewController _controller;
 
-  // late final MapController mapController;
-  // late GeoJSONVT geoJsonIndex = GeoJSONVT({}, GeoJSONVTOptions(buffer: 32));
-  // GeoJSONVT? highlightedIndex = GeoJSONVT({}, GeoJSONVTOptions(buffer: 32));
-  // var infoText = 'No Info';
-  // var tileSize = 256;
-  // var tilePointCheckZoom = 14;
-  // String? featureSelected;
+  bool isLoading = false;
+  bool isError = false;
 
-  // GeoJSON geoJSON = GeoJSON();
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   mapController = MapController();
-
-  //   CustomImages().loadPlane();
-  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..scrollTo(0, 810)
+      ..loadRequest(Uri.parse(Endpoints.peta))
+      ..setBackgroundColor(AppColors.bgColor)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (progress) {
+            print("progress $progress");
+            if (progress == 100) {
+              setState(() {
+                isLoading = true;
+              });
+            } else {
+              setState(() {
+                isLoading = false;
+              });
+            }
+          },
+          onWebResourceError: (value) {
+            setState(() {
+              isLoading = false;
+              isError = true;
+            });
+          },
+        ),
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
-    // final loading = ref.watch(isLoadingPetaProvider);
-    // final currIndex = ref.watch(indexScreenProvider).index;
-
-    // if (currIndex == 2 && !loading) {
-    //   WidgetsBinding.instance.addPostFrameCallback(
-    //     (_) async {
-    //       geoJsonIndex = await geoJSON.createIndex('assets/json/testing2.json',
-    //           tileSize: tileSize, keepSource: true, buffer: 32);
-    //       ref.read(isLoadingPetaProvider.notifier).state = true;
-    //     },
-    //   );
-    // }
-
-    return SizedBox(
-        // width: MediaQuery.of(context).size.width,
-        // height: MediaQuery.of(context).size.height,
-        // child: !loading
-        //     ? const Center(child: CircularProgressIndicator())
-        //     : FlutterMap(
-        //         mapController: mapController,
-        //         options: MapOptions(
-        //           onTap: (tapPosition, point) async {
-        //             featureSelected = null;
-        //             var pt = const Epsg3857()
-        //                 .latLngToPoint(point, mapController.zoom.floorToDouble());
-        //             var x = (pt.x / tileSize).floor();
-        //             var y = (pt.y / tileSize).floor();
-        //             var tile =
-        //                 geoJsonIndex.getTile(mapController.zoom.floor(), x, y);
-        //             // ignore: avoid_print
-        //             print(
-        //                 "anjy $x, $y  $point $pt  tile ${tile!.x} ${tile.y} ${tile.z}");
-
-        //             for (var feature in tile.features) {
-        //               var polygonList = feature.geometry;
-
-        //               if (feature.type != 1) {
-        //                 if (geoJSON.isGeoPointInPoly(pt, polygonList,
-        //                     size: tileSize)) {
-        //                   infoText =
-        //                       "${feature.tags['NAME']}, ${feature.tags['COUNTY']} tapped";
-        //                   // print("$infoText");
-        //                   // print("source IS ${feature.tags['source']}");
-
-        //                   highlightedIndex = await GeoJSON().createIndex(null,
-        //                       geoJsonMap: feature.tags['source'], tolerance: 0);
-
-        //                   if (feature.tags.containsKey('NAME')) {
-        //                     featureSelected =
-        //                         "${feature.tags['NAME']}_${feature.tags['COUNTY']}";
-        //                   }
-
-        //                   _animatedMapMove(point, 11.5);
-        //                 }
-        //               }
-        //             }
-        //             if (featureSelected != null) {
-        //               print("Tapped $infoText $featureSelected");
-        //             }
-
-        //             setState(() {});
-        //           },
-        //           center: LatLng(-4.838455515616654, 104.89554453973685),
-        //           zoom: 10.0,
-        //           maxZoom: 18.45,
-        //         ),
-        //         children: [
-        //           TileLayer(
-        //             urlTemplate:
-        //                 "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        //             subdomains: const ['a', 'b', 'c'],
-        //             userAgentPackageName: 'simtaru.lampura.com',
-        //           ),
-        //           GeoJSONWidget(
-        //             drawClusters: false,
-        //             drawFeatures: true,
-        //             index: geoJsonIndex,
-        //             noSlice: false,
-        //             options: GeoJSONOptions(
-        //                 featuresHaveSameStyle: false,
-        //                 overallStyleFunc: (TileFeature feature) {
-        //                   var paint = Paint()
-        //                     ..style = PaintingStyle.fill
-        //                     ..color = Colors.blue
-        //                     ..strokeWidth = 5
-        //                     ..isAntiAlias = true;
-        //                   if (feature.type == 3) {
-        //                     // lineString
-        //                     paint.style = PaintingStyle.fill;
-        //                   }
-        //                   return paint;
-        //                 },
-        //                 polygonStyle: (feature) {
-        //                   var paint = Paint()
-        //                     ..style = PaintingStyle.fill
-        //                     ..color = Colors.red
-        //                     ..strokeWidth = 3
-        //                     ..isAntiAlias = true;
-
-        //                   paint.color = Colors.yellow.withOpacity(0.5);
-
-        //                   return paint;
-        //                 }),
-        //           ),
-        //           GeoJSONWidget(
-        //             drawClusters: false,
-        //             drawFeatures: true,
-        //             index: geoJsonIndex,
-        //             noSlice: false,
-        //             options: GeoJSONOptions(
-        //                 featuresHaveSameStyle: false,
-        //                 overallStyleFunc: (TileFeature feature) {
-        //                   var paint = Paint()
-        //                     ..style = PaintingStyle.fill
-        //                     ..color = Colors.blue
-        //                     ..strokeWidth = 5
-        //                     ..isAntiAlias = true;
-        //                   if (feature.type == 3) {
-        //                     // lineString
-        //                     paint.style = PaintingStyle.fill;
-        //                   }
-        //                   return paint;
-        //                 },
-        //                 polygonStyle: (feature) {
-        //                   var paint = Paint()
-        //                     ..style = PaintingStyle.stroke
-        //                     ..color = Colors.red
-        //                     ..strokeWidth = 3
-        //                     ..isAntiAlias = true;
-
-        //                   paint.color = Colors.black.withOpacity(0.5);
-
-        //                   return paint;
-        //                 }),
-        //           ),
-        //           GeoJSONWidget(
-        //             index: highlightedIndex,
-        //             drawFeatures: true,
-        //             options: GeoJSONOptions(polygonStyle: (feature) {
-        //               return Paint()
-        //                 ..style = PaintingStyle.fill
-        //                 ..color = Colors.red.withOpacity(0.5)
-        //                 ..strokeWidth = 8
-        //                 ..isAntiAlias = true;
-        //             }),
-        //           ),
-        //           GeoJSONWidget(
-        //             index: highlightedIndex,
-        //             drawFeatures: true,
-        //             options: GeoJSONOptions(polygonStyle: (feature) {
-        //               return Paint()
-        //                 ..style = PaintingStyle.stroke
-        //                 ..color = Colors.purple.withOpacity(0.5)
-        //                 ..strokeWidth = 5
-        //                 ..isAntiAlias = true;
-        //             }),
-        //           ),
-        //         ],
-        //       ),
-        );
+    return Scaffold(
+        body: RefreshIndicator(
+      onRefresh: () async {
+        await _controller.reload();
+      },
+      child: Stack(
+        children: [
+          WebViewWidget(controller: _controller),
+          !isLoading
+              ? Container(
+                  color: AppColors.whiteColor,
+                  child: const Center(child: Padding(padding: EdgeInsets.all(20), child: LinearProgressIndicator())),
+                )
+              : const SizedBox.shrink(),
+          isError
+              ? Container(
+                  color: AppColors.whiteColor,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Terjadi kesalahan"),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: 200,
+                          child: TextButton(
+                            onPressed: () async {
+                              setState(() {
+                                isError = false;
+                              });
+                              await _controller.reload();
+                            },
+                            child: const Text("Muat ulang"),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ],
+      ),
+    ));
   }
-
-  // void _animatedMapMove(LatLng destLocation, double destZoom) {
-  //   final latTween = Tween<double>(
-  //     begin: mapController.center.latitude,
-  //     end: destLocation.latitude,
-  //   );
-
-  //   final lngTween = Tween<double>(
-  //     begin: mapController.center.longitude,
-  //     end: destLocation.longitude,
-  //   );
-
-  //   final zoomTween = Tween<double>(
-  //     begin: mapController.zoom,
-  //     end: destZoom,
-  //   );
-
-  //   final rotationTween = Tween<double>(
-  //     begin: mapController.rotation,
-  //     end: 0.0,
-  //   );
-
-  //   final controller = AnimationController(
-  //     vsync: this,
-  //     duration: const Duration(milliseconds: 1000),
-  //   );
-
-  //   final Animation<double> animation =
-  //       CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
-
-  //   controller.addListener(() {
-  //     mapController.move(
-  //         LatLng(latTween.evaluate(animation), lngTween.evaluate(animation)),
-  //         zoomTween.evaluate(animation));
-  //     mapController.rotate(rotationTween.evaluate(animation));
-  //   });
-
-  //   animation.addStatusListener((status) {
-  //     if (status == AnimationStatus.completed) {
-  //       controller.dispose();
-  //     } else if (status == AnimationStatus.dismissed) {
-  //       controller.dispose();
-  //     }
-  //   });
-
-  //   controller.forward();
-  // }
-}
-
-class CustomImages {
-  // static late dartui.Image plane;
-  // static bool imageLoaded = false;
-
-  // void loadPlane() async {
-  //   plane = await loadUiImage('assets/aeroplane.png');
-  //   imageLoaded = true;
-  // }
-
-  // Future<dartui.Image> loadUiImage(String imageAssetPath) async {
-  //   final ByteData data = await rootBundle.load(imageAssetPath);
-  //   final Completer<dartui.Image> completer = Completer();
-  //   dartui.decodeImageFromList(Uint8List.view(data.buffer), (dartui.Image img) {
-  //     return completer.complete(img);
-  //   });
-  //   return completer.future;
-  // }
 }

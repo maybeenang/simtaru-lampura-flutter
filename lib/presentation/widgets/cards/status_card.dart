@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/index_screen_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_jumlah_controller.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class StatusCard extends HookConsumerWidget {
@@ -28,7 +30,7 @@ class StatusCard extends HookConsumerWidget {
     final jumlahPengajuanState = ref.watch(pengajuanJumlahControllerProvider);
 
     return Container(
-      height: MediaQuery.of(context).size.height / 7,
+      height: MediaQuery.of(context).size.height / 6,
       width: MediaQuery.of(context).size.width / 2.3,
       margin: const EdgeInsets.all(5),
       clipBehavior: Clip.antiAlias,
@@ -46,7 +48,10 @@ class StatusCard extends HookConsumerWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            ref.read(indexScreenProvider.notifier).onIndexChange(1);
+            ref.read(controllerNavbarProvider).index = 1;
+          },
           child: Stack(
             children: [
               Align(

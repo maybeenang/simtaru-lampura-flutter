@@ -50,7 +50,7 @@ class UserMenuProfileCard extends ConsumerWidget {
                     Future.delayed(
                       const Duration(milliseconds: 300),
                       () {
-                        const EditProfileRoute().go(context);
+                        const EditProfileRoute().push(context);
                       },
                     );
                   },
@@ -61,9 +61,17 @@ class UserMenuProfileCard extends ConsumerWidget {
                     color: AppColors.borderColor,
                   ),
                 ),
-                const ButtonProfile(
+                ButtonProfile(
                   label: "Ganti Password",
                   icon: Icons.lock,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () {
+                        const EditPasswordProfileRoute().push(context);
+                      },
+                    );
+                  },
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
