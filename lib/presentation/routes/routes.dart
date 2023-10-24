@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_map_simtaru/domain/entity/artikel/artikel.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user_utils.dart';
 import 'package:flutter_map_simtaru/presentation/pages/login_page.dart';
@@ -113,12 +114,17 @@ class DetailPengajuanRoute extends GoRouteData {
 }
 
 class DetailBeritaRoute extends GoRouteData {
-  const DetailBeritaRoute();
+  const DetailBeritaRoute(
+    this.$extra,
+  );
   static const path = 'detail_berita';
+  final Artikel $extra;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const DetailBeritaPage();
+    return DetailBeritaPage(
+      artikel: $extra,
+    );
   }
 }
 

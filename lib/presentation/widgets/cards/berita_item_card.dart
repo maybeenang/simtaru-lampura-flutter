@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/domain/entity/artikel/artikel.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 
 class BeritaItemCard extends StatelessWidget {
-  const BeritaItemCard({super.key});
+  const BeritaItemCard({super.key, required this.artikel});
+
+  final Artikel artikel;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class BeritaItemCard extends StatelessWidget {
               Future.delayed(
                 const Duration(milliseconds: 300),
                 () {
-                  const DetailBeritaRoute().go(context);
+                  DetailBeritaRoute(artikel).go(context);
                 },
               );
             },
@@ -36,19 +39,21 @@ class BeritaItemCard extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(20),
-                  child: const Column(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Lorem ipsum dolor sit amet, consecte tur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        artikel.judul,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 18,
                         ),
                       ),
                       Text(
-                        "Lorem ipsum dolor sit amet, consecte tur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        artikel.isi,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
