@@ -128,6 +128,10 @@ RouteBase get $rootRoute => GoRouteData.$route(
           path: 'admin-kelola-artikel',
           factory: $AdminKelolaArtikelRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'admin-tambah-artikel',
+          factory: $AdminTambahArtikelRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -555,6 +559,24 @@ extension $AdminKelolaArtikelRouteExtension on AdminKelolaArtikelRoute {
 
   String get location => GoRouteData.$location(
         '/admin-kelola-artikel',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminTambahArtikelRouteExtension on AdminTambahArtikelRoute {
+  static AdminTambahArtikelRoute _fromState(GoRouterState state) =>
+      const AdminTambahArtikelRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-tambah-artikel',
       );
 
   void go(BuildContext context) => context.go(location);

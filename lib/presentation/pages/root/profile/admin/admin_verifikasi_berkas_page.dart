@@ -181,6 +181,7 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
             await ref.read(pengajuanVerifikasiBerkasControllerProvider.notifier).getPengajuan();
           },
           child: CustomScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             controller: scrollController,
             slivers: [
               SliverToBoxAdapter(
