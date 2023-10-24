@@ -6,6 +6,8 @@ import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class AdminKelolaArtikelPage extends HookConsumerWidget {
   const AdminKelolaArtikelPage({super.key});
@@ -15,6 +17,7 @@ class AdminKelolaArtikelPage extends HookConsumerWidget {
     final artikelState = ref.watch(artikelControllerProvider);
 
     void handlDeleteArtikel(String id) async {
+      context.loaderOverlay.show();
       final result = await ref.read(artikelControllerProvider.notifier).deleteArtikel(id);
 
       if (result == "Berhasil Hapus Artikel") {
@@ -58,6 +61,19 @@ class AdminKelolaArtikelPage extends HookConsumerWidget {
           ).show(context);
         }
       }
+    }
+
+    void showAlert(String id) {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.confirm,
+        title: "Hapus Artikel",
+        text: "Apakah anda yakin ingin menghapus artikel ini?",
+        onConfirmBtnTap: () => {
+          Navigator.pop(context),
+          handlDeleteArtikel(id),
+        },
+      );
     }
 
     return Scaffold(
@@ -159,8 +175,9 @@ class AdminKelolaArtikelPage extends HookConsumerWidget {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    context.loaderOverlay.show();
-                                    handlDeleteArtikel(data[index].id.toString());
+                                    // context.loaderOverlay.show();
+                                    // handlDeleteArtikel(data[index].id.toString());
+                                    showAlert(data[index].id.toString());
                                   },
                                   icon: const Icon(
                                     Icons.delete,
