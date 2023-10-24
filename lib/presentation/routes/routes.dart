@@ -14,6 +14,7 @@ import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/search_pen
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_data_lapangan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_user_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_kelola_artikel_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_kelola_user_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_pengajuan_ditolak_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_rekam_polygon_page.dart';
@@ -69,6 +70,7 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<AdminKelolaUserRoute>(path: AdminKelolaUserRoute.path),
     TypedGoRoute<AdminEditUserRoute>(path: AdminEditUserRoute.path),
     TypedGoRoute<AdminTambahUserRoute>(path: AdminTambahUserRoute.path),
+    TypedGoRoute<AdminKelolaArtikelRoute>(path: AdminKelolaArtikelRoute.path),
   ],
 )
 class RootRoute extends GoRouteData {
@@ -309,6 +311,16 @@ class AdminTambahUserRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const AdminTambahUserPage();
+  }
+}
+
+class AdminKelolaArtikelRoute extends GoRouteData {
+  const AdminKelolaArtikelRoute();
+  static const path = 'admin-kelola-artikel';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminKelolaArtikelPage();
   }
 }
 
