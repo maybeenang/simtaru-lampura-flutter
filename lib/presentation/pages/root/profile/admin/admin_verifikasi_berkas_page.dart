@@ -66,7 +66,6 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                 "status_id": 3,
               },
             );
-            ref.invalidate(pengajuanVerifikasiBerkasControllerProvider);
             if (context.mounted) {
               context.loaderOverlay.hide();
             }
@@ -76,6 +75,8 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
             }
             return Future.error(e.toString());
           } finally {
+            ref.invalidate(pengajuanVerifikasiBerkasControllerProvider);
+            await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
             if (context.mounted) {
               context.loaderOverlay.hide();
             }
@@ -132,10 +133,6 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                   "alasan_ditolak": inputAlasanDitolakController.text,
                 },
               );
-              ref.invalidate(pengajuanVerifikasiBerkasControllerProvider);
-              ref.invalidate(pengajuanControllerProvider);
-
-              await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
               if (context.mounted) {
                 context.loaderOverlay.hide();
               }
@@ -145,6 +142,9 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
               }
               return Future.error(e.toString());
             } finally {
+              ref.invalidate(pengajuanVerifikasiBerkasControllerProvider);
+
+              await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
               if (context.mounted) {
                 context.loaderOverlay.hide();
               }

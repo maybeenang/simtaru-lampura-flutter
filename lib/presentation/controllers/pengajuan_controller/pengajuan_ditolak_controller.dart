@@ -69,4 +69,29 @@ class PengajuanDitolakController extends _$PengajuanDitolakController {
       },
     );
   }
+
+  FutureOr<List<Pengajuan>> getPengajuan() async {
+    page = 1;
+    ref.listenSelf(
+      (_, __) {
+        if (state.isLoading) return;
+      },
+    );
+
+    try {
+      String query = "?page=$page";
+      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanByStatus + 1.toString() + query);
+      final Response response = await dio.get(
+        uri.toString(),
+      );
+
+      final List<Pengajuan> pengajuan = (response.data['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
+
+      state = AsyncValue.data(pengajuan);
+
+      return pengajuan;
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
 }

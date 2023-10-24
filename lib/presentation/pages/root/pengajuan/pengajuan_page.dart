@@ -122,16 +122,26 @@ class PengajuanPage extends HookConsumerWidget {
           'batas_sebelah_selatan': inputController[15].text,
           'batas_sebelah_barat': inputController[16].text,
           'titik_koordinat': '${ref.watch(currLatLng).latitude},${ref.watch(currLatLng).longitude}',
-          'fotocopy_ktp': await MultipartFile.fromFile(currInputFileState[0].path),
-          'fotocopy_sertifikat': await MultipartFile.fromFile(currInputFileState[1].path),
-          'fotocopy_sppt_pbb': await MultipartFile.fromFile(currInputFileState[2].path),
-          'fotocopy_npwp': await MultipartFile.fromFile(currInputFileState[3].path),
-          'surat_persetujuan_tetangga': await MultipartFile.fromFile(currInputFileState[4].path),
-          'gambar_rencana_pembangunan[]': await MultipartFile.fromFile(currInputFileState[5].path),
-          'fotocopy_akte_pendirian_perusahaan': await MultipartFile.fromFile(currInputFileState[6].path),
-          'set_lokasi_bangunan': await MultipartFile.fromFile(currInputFileState[7].path),
-          'surat_pernyataan_force_majeur': await MultipartFile.fromFile(currInputFileState[8].path),
-          'proposal': await MultipartFile.fromFile(currInputFileState[9].path),
+          'fotocopy_ktp':
+              currInputFileState[0].path == '' ? null : await MultipartFile.fromFile(currInputFileState[0].path),
+          'fotocopy_sertifikat':
+              currInputFileState[1].path == '' ? null : await MultipartFile.fromFile(currInputFileState[1].path),
+          'fotocopy_sppt_pbb':
+              currInputFileState[2].path == '' ? null : await MultipartFile.fromFile(currInputFileState[2].path),
+          'fotocopy_npwp':
+              currInputFileState[3].path == '' ? null : await MultipartFile.fromFile(currInputFileState[3].path),
+          'surat_persetujuan_tetangga':
+              currInputFileState[4].path == '' ? null : await MultipartFile.fromFile(currInputFileState[4].path),
+          'gambar_rencana_pembangunan[]':
+              currInputFileState[5].path == '' ? null : await MultipartFile.fromFile(currInputFileState[5].path),
+          'fotocopy_akte_pendirian_perusahaan':
+              currInputFileState[6].path == '' ? null : await MultipartFile.fromFile(currInputFileState[6].path),
+          'set_lokasi_bangunan':
+              currInputFileState[7].path == '' ? null : await MultipartFile.fromFile(currInputFileState[7].path),
+          'surat_pernyataan_force_majeur':
+              currInputFileState[8].path == '' ? null : await MultipartFile.fromFile(currInputFileState[8].path),
+          'proposal':
+              currInputFileState[9].path == '' ? null : await MultipartFile.fromFile(currInputFileState[9].path),
         });
         print(formData.fields);
         final Dio dio = Dio();
@@ -328,11 +338,7 @@ class PengajuanPage extends HookConsumerWidget {
                     break;
                   case 5:
                     FocusScope.of(context).unfocus();
-                    if (currInputFileState[5].path != '' &&
-                        currInputFileState[6].path != '' &&
-                        currInputFileState[7].path != '' &&
-                        currInputFileState[8].path != '' &&
-                        currInputFileState[9].path != '') {
+                    if (currInputFileState[5].path != '') {
                       currentIndex.value++;
                     }
                     break;

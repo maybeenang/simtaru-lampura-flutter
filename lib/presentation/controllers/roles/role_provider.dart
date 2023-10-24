@@ -53,6 +53,14 @@ Role role(RoleRef ref) {
         switch (namaRole.name) {
           case "Superadmin":
             return const Role.admin();
+          case "Sekretariat-TKPRD":
+            return const Role.admin();
+          case "Pokja-PRPPR":
+            return const Role.admin();
+          case "Ketua-TKPRD":
+            return const Role.admin();
+          case "Kepala-Dinas-PUPR":
+            return const Role.admin();
           case "Pemohon":
             return const Role.user();
           case "Admin Verif Berkas":

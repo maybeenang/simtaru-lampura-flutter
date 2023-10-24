@@ -84,6 +84,8 @@ class PengajuanSuratRekomendasiController extends _$PengajuanSuratRekomendasiCon
 
       final List<Pengajuan> pengajuan = (response.data['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
 
+      state = AsyncValue.data(pengajuan);
+
       return pengajuan;
     } catch (e) {
       return Future.error(e.toString());

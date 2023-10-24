@@ -66,7 +66,6 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                 "status_id": 11,
               },
             );
-            ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
             if (context.mounted) {
               context.loaderOverlay.hide();
             }
@@ -76,6 +75,8 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
             }
             return Future.error(e.toString());
           } finally {
+            ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
+            ref.invalidate(pengajuanControllerProvider);
             if (context.mounted) {
               context.loaderOverlay.hide();
             }
@@ -132,8 +133,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                   "alasan_ditolak": inputAlasanDitolakController.text,
                 },
               );
-              ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
-              ref.invalidate(pengajuanControllerProvider);
+
               if (context.mounted) {
                 context.loaderOverlay.hide();
               }
@@ -143,6 +143,8 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
               }
               return Future.error(e.toString());
             } finally {
+              ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
+              ref.invalidate(pengajuanControllerProvider);
               if (context.mounted) {
                 context.loaderOverlay.hide();
               }

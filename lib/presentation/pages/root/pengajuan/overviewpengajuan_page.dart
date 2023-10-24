@@ -46,6 +46,7 @@ class OverviewPengajuanPage extends HookConsumerWidget {
     }
 
     Future refresh() async {
+      print(roleState);
       hasReachedMax.value = false;
       if (roleState is Admin) {
         await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
@@ -99,6 +100,7 @@ class OverviewPengajuanPage extends HookConsumerWidget {
           await refresh();
         },
         child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           controller: scrollController,
           slivers: [
             SliverToBoxAdapter(
