@@ -283,7 +283,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.fotocopy_ktp.toString(),
-          roleState is Admin,
+          roleState is! User,
           "Fotocopy KTP",
           "fotocopy_ktp",
         ),
@@ -292,7 +292,7 @@ class RincianDokumen extends HookConsumerWidget {
           "Fotocopy Sertifikat",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
-        checkFile(context, pengajuan.fotocopy_sertifikat.toString(), roleState is Admin, "Fotocopy Sertifikat",
+        checkFile(context, pengajuan.fotocopy_sertifikat.toString(), roleState is! User, "Fotocopy Sertifikat",
             "fotocopy_sertifikat"),
         const SizedBox(height: 10),
         const Text(
@@ -302,7 +302,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.fotocopy_sppt_pbb.toString(),
-          roleState is Admin,
+          roleState is! User,
           "Fotocopy SPPT PBB",
           "fotocopy_sppt_pbb",
         ),
@@ -314,7 +314,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.fotocopy_npwp.toString(),
-          roleState is Admin,
+          roleState is! User,
           "Fotocopy NPWP",
           "fotocopy_npwp",
         ),
@@ -326,7 +326,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.surat_persetujuan_tetangga.toString(),
-          roleState is Admin,
+          roleState is! User,
           "Surat Persetujuan Tetangga",
           "surat_persetujuan_tetangga",
         ),
@@ -376,7 +376,7 @@ class RincianDokumen extends HookConsumerWidget {
                                     },
                                   ),
                                   const SizedBox(width: 10),
-                                  roleState is Admin
+                                  roleState is! User
                                       ? ButtonIcon(
                                           icon: Icons.edit,
                                           onTap: () {},
@@ -384,7 +384,7 @@ class RincianDokumen extends HookConsumerWidget {
                                         )
                                       : const SizedBox(),
                                   const SizedBox(width: 10),
-                                  roleState is Admin
+                                  roleState is! User
                                       ? ButtonIcon(
                                           icon: Icons.delete,
                                           onTap: () {},
@@ -408,7 +408,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.fotocopy_akte_pendirian_perusahaan.toString(),
-          roleState is Admin,
+          roleState is! User,
           "Fotocopy Akte Pendirian Perusahaan",
           "fotocopy_akte_pendirian_perusahaan",
         ),
@@ -420,7 +420,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.set_lokasi_bangunan.toString(),
-          roleState is Admin,
+          roleState is! User,
           "Set Lokasi Bangunan",
           "set_lokasi_bangunan",
         ),
@@ -432,7 +432,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.surat_pernyataan_force_majeur.toString(),
-          roleState is Admin,
+          roleState is! User,
           "Surat Pernyataan Force Majeur",
           "surat_pernyataan_force_majeur",
         ),
@@ -444,7 +444,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.proposal.toString(),
-          roleState is Admin,
+          roleState is! User,
           "Proposal",
           "proposal",
         ),
@@ -464,7 +464,7 @@ class RincianDokumen extends HookConsumerWidget {
                             checkFile(
                               context,
                               pengajuan.scan_surat_hasil_rekomendasi.toString(),
-                              roleState is Admin,
+                              roleState is! User,
                               "Scan Surat Hasil Rekomendasi",
                               "scan_surat_hasil_rekomendasi",
                             ),
