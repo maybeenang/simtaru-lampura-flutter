@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/auth_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pengajuan_controller.g.dart';
@@ -9,11 +10,12 @@ part 'pengajuan_controller.g.dart';
 @riverpod
 class PengajuanController extends _$PengajuanController {
   bool isAuth = false;
-  final Dio dio = Dio();
   int page = 1;
 
   @override
   FutureOr<List<Pengajuan>?> build() async {
+    final Dio dio = ref.watch(dioProvider);
+
     page = 1;
     isAuth = await ref.watch(
       authControllerProvider.selectAsync(
@@ -52,6 +54,8 @@ class PengajuanController extends _$PengajuanController {
   }
 
   Future<bool> loadMore() async {
+    final Dio dio = ref.watch(dioProvider);
+
     final loadMorePengajuan = await AsyncValue.guard<List<Pengajuan>>(
       () async {
         try {
@@ -85,6 +89,8 @@ class PengajuanController extends _$PengajuanController {
   }
 
   FutureOr<List<Pengajuan>?> getPengajuan() async {
+    final Dio dio = ref.watch(dioProvider);
+
     page = 1;
     isAuth = await ref.watch(
       authControllerProvider.selectAsync(

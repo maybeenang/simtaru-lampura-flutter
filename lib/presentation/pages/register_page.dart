@@ -105,7 +105,9 @@ class RegisterPage extends HookConsumerWidget {
                                           emailController.text,
                                           passwordController.text,
                                         );
-                                    context.loaderOverlay.hide();
+                                    if (context.mounted) {
+                                      context.loaderOverlay.hide();
+                                    }
                                   } else {
                                     AppSnackBar.show(
                                       context,

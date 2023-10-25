@@ -32,8 +32,6 @@ class AuthController extends _$AuthController {
       (_, next) {
         if (next.isLoading) return;
 
-        print("next ${next}");
-
         next.requireValue.map<void>(
           signedIn: (signedIn) async {
             await _sharedPreferences.setString(_sharedPrefsKey, signedIn.token);
@@ -69,7 +67,6 @@ class AuthController extends _$AuthController {
       }
       return _loginWithNipAndPassword(nip, password);
     } catch (e) {
-      print(e);
       await _sharedPreferences.remove(_sharedPrefsKey);
       return const Auth.signedOut();
     }
@@ -89,7 +86,6 @@ class AuthController extends _$AuthController {
               'password': password,
             },
           );
-          print("DISINI ${response.data}");
           final data = response.data;
           final token = data['data']['original']['access_token'];
           await _sharedPreferences.setString(_sharedPrefsKey, token);
@@ -103,24 +99,19 @@ class AuthController extends _$AuthController {
           );
           return auth;
         } on DioException catch (e) {
-          print("DISANA ${e.response}");
           if (e.response?.statusCode == 500) {
             return const Auth.error("Internal Server Error");
           }
-          print("ANJING ${e.response?.data['message']}");
           return Auth.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
-          print("KAMPANG ${e.toString()}");
           return const Auth.error("Terjadi kesalahan");
         }
       },
     );
 
-    print("HAHSAHASDASDDAS $loginAttemp");
     return loginAttemp.when(
       data: (data) {
         if (data is SignedIn) {
-          print("INI MASALAH");
           final accessToken = _sharedPreferences.getString(_sharedPrefsKey);
 
           return Auth.signedIn(
@@ -133,11 +124,10 @@ class AuthController extends _$AuthController {
         return data;
       },
       error: (error, stackTrace) {
-        print("INI MASALAH");
         return Auth.error(error.toString());
       },
       loading: () {
-        return Auth.signedOut();
+        return const Auth.signedOut();
       },
     );
 
@@ -156,50 +146,50 @@ class AuthController extends _$AuthController {
     // }
   }
 
-  Future<Auth> _loginWithToken(String token) async {
-    state = const AsyncValue<Auth>.loading();
+  // Future<Auth> _loginWithToken(String token) async {
+  //   state = const AsyncValue<Auth>.loading();
 
-    final loginAttemp = await AsyncValue.guard<Auth>(
-      () async {
-        try {
-          final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.refresh);
-          final Response response = await dio.post(
-            uri.toString(),
-            options: Options(
-              headers: {
-                "Authorization": "Bearer $token",
-              },
-            ),
-          );
-          final data = response.data;
-          final accessToken = data['data']['original']['access_token'];
-          await _sharedPreferences.setString(_sharedPrefsKey, accessToken);
-          // ignore: avoid_print
-          final Auth auth = Auth.signedIn(
-            token: accessToken,
-          );
-          return auth;
-        } on DioException catch (e) {
-          if (e.response!.statusCode! >= 500) {
-            return const Auth.error("Internal Server Error");
-          }
-          return Auth.error(e.response?.data['message'] ?? 'Error');
-        } catch (e) {
-          return const Auth.error("Terjadi kesalahan");
-        }
-      },
-    );
+  //   final loginAttemp = await AsyncValue.guard<Auth>(
+  //     () async {
+  //       try {
+  //         final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.refresh);
+  //         final Response response = await dio.post(
+  //           uri.toString(),
+  //           options: Options(
+  //             headers: {
+  //               "Authorization": "Bearer $token",
+  //             },
+  //           ),
+  //         );
+  //         final data = response.data;
+  //         final accessToken = data['data']['original']['access_token'];
+  //         await _sharedPreferences.setString(_sharedPrefsKey, accessToken);
+  //         // ignore: avoid_print
+  //         final Auth auth = Auth.signedIn(
+  //           token: accessToken,
+  //         );
+  //         return auth;
+  //       } on DioException catch (e) {
+  //         if (e.response!.statusCode! >= 500) {
+  //           return const Auth.error("Internal Server Error");
+  //         }
+  //         return Auth.error(e.response?.data['message'] ?? 'Error');
+  //       } catch (e) {
+  //         return const Auth.error("Terjadi kesalahan");
+  //       }
+  //     },
+  //   );
 
-    if (loginAttemp is AsyncError<Auth>) {
-      await _sharedPreferences.remove(_sharedPrefsKey);
-      return const Auth.signedOut();
-    } else {
-      final accessToken = _sharedPreferences.getString(_sharedPrefsKey);
-      return Auth.signedIn(
-        token: accessToken ?? '',
-      );
-    }
-  }
+  //   if (loginAttemp is AsyncError<Auth>) {
+  //     await _sharedPreferences.remove(_sharedPrefsKey);
+  //     return const Auth.signedOut();
+  //   } else {
+  //     final accessToken = _sharedPreferences.getString(_sharedPrefsKey);
+  //     return Auth.signedIn(
+  //       token: accessToken ?? '',
+  //     );
+  //   }
+  // }
 
   Future<void> login(String nik, String password) async {
     state = const AsyncValue<Auth>.loading();
@@ -227,11 +217,8 @@ class AuthController extends _$AuthController {
           );
           return auth;
         } on DioException catch (e) {
-          print("error ${e.toString()}");
-
           return Auth.error(e.response?.data['message'] ?? 'Internal Server Error');
-        } catch (e, s) {
-          print("KONTOLOSON $e $s");
+        } catch (e) {
           return const Auth.error("Terjadi kesalahan");
         }
       },
