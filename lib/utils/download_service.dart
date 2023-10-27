@@ -19,14 +19,16 @@ class DownloadService {
   final Dio dio;
   final String token;
 
-  SnackBar snackbar(String word, String label, void Function()? onPressed) {
+  SnackBar snackbar(String word, String label, void Function()? onPressed, {Color color = Colors.red}) {
     return SnackBar(
-      content: Text(word),
+      content: Text(word, style: const TextStyle(color: Colors.white, fontSize: 12)),
       action: SnackBarAction(
         label: label,
         onPressed: onPressed!,
       ),
-      backgroundColor: Colors.red,
+      backgroundColor: color,
+      // duration: const Duration(seconds: 5),
+      behavior: SnackBarBehavior.floating,
     );
   }
 
@@ -128,7 +130,7 @@ class DownloadService {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         snackbar(
-          "Gagal membuka file",
+          "Gagal mendownload file",
           "",
           () {
             // downloadFile(url: Endpoints.convertDownloadUrl(url));
@@ -155,8 +157,10 @@ class DownloadService {
       return;
     }
 
+    var taskId;
+
     try {
-      final taskId = await FlutterDownloader.enqueue(
+      taskId = await FlutterDownloader.enqueue(
         url: Endpoints.convertDownloadUrl(url),
         headers: {
           "Authorization": "Bearer $token",
@@ -170,11 +174,21 @@ class DownloadService {
         fileName: fileName2,
       );
 
-      if (taskId != null) {
-        await FlutterDownloader.open(taskId: taskId);
-      }
+      print("KONTOOOLLL $taskId");
 
       context.loaderOverlay.hide();
+
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        snackbar(
+          "Sedang mendownload file, silihakan cek notifikasi",
+          "",
+          () {
+            // downloadFile(url: Endpoints.convertDownloadUrl(url));
+          },
+          color: Colors.green,
+        ),
+      );
 
       // await FileDownloader.downloadFile(
       //   headers: {

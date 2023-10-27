@@ -1,8 +1,11 @@
 import 'dart:io';
+import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
@@ -24,13 +27,31 @@ import 'package:flutter_map_simtaru/utils/download_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:open_file/open_file.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class RincianDokumen extends HookConsumerWidget {
-  const RincianDokumen({super.key, required this.pengajuan});
+  RincianDokumen({super.key, required this.pengajuan});
 
   final Pengajuan pengajuan;
+
+  @pragma('vm:entry-point')
+  static void downloadCallback(
+    String id,
+    int status,
+    int progress,
+  ) {
+    print(
+      'KONOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL'
+      'Callback on background isolate: '
+      'task ($id) is in status ($status) and process ($progress)',
+    );
+
+    IsolateNameServer.lookupPortByName('downloader_send_port')?.send([id, status, progress]);
+  }
+
+  final ReceivePort _port = ReceivePort();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -271,6 +292,45 @@ class RincianDokumen extends HookConsumerWidget {
         ],
       );
     }
+
+    useEffect(() {
+      // ref.read(pengajuanControllerProvider.notifier).getPengajuanById(pengajuan.id!)
+
+      final isSuccess = IsolateNameServer.registerPortWithName(
+        _port.sendPort,
+        'downloader_send_port',
+      );
+
+      _port.listen(
+        (dynamic data) {
+          final taskId = (data as List<dynamic>)[0] as String;
+          final status = DownloadTaskStatus.fromInt(data[1] as int);
+          final progress = data[2] as int;
+
+          print("MEMEKKKKKKK $status $progress");
+
+          if (progress == 100 && status == DownloadTaskStatus.complete) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'Download Selesai, silahkan cek notifikasi untuk membuka file',
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+                backgroundColor: Colors.green,
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
+          }
+        },
+      );
+
+      FlutterDownloader.registerCallback(downloadCallback, step: 10);
+
+      return () {
+        IsolateNameServer.removePortNameMapping('downloader_send_port');
+      };
+    }, []);
 
     return Container(
       padding: const EdgeInsets.all(AppDouble.paddingInside),
