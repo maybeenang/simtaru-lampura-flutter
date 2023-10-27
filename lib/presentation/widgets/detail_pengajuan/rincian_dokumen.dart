@@ -27,7 +27,6 @@ import 'package:flutter_map_simtaru/utils/download_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:open_file/open_file.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
@@ -43,7 +42,6 @@ class RincianDokumen extends HookConsumerWidget {
     int progress,
   ) {
     print(
-      'KONOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL'
       'Callback on background isolate: '
       'task ($id) is in status ($status) and process ($progress)',
     );
@@ -140,7 +138,7 @@ class RincianDokumen extends HookConsumerWidget {
                 ).show(context).then((value) => context.pop());
               }
             } catch (e) {
-              print("KONROL ${e.toString()}");
+              // print("KONROL ${e.toString()}");
               uploadFileController.value = File('');
 
               if (context.mounted) {
@@ -319,6 +317,7 @@ class RincianDokumen extends HookConsumerWidget {
                 ),
                 backgroundColor: Colors.green,
                 behavior: SnackBarBehavior.floating,
+                duration: Duration(seconds: 5),
               ),
             );
           }

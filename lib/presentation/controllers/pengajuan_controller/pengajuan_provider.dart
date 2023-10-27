@@ -1,6 +1,7 @@
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_surveyor_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
@@ -30,7 +31,7 @@ AsyncValue<List<Pengajuan>?> pengajuanProvider(PengajuanProviderRef ref) {
   } else if (roleBaruProvider is AdminUploadScanSurat) {
     return ref.watch(pengajuanUploadScanSuratControllerProvider);
   } else if (roleBaruProvider is Surveyor) {
-    return ref.watch(pengajuanUserControllerProvider);
+    return ref.watch(pengajuanSurveyorControllerProvider);
   } else {
     return ref.watch(pengajuanUserControllerProvider);
   }

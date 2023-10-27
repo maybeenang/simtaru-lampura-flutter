@@ -69,7 +69,7 @@ Role role(RoleRef ref) {
             return const Role.adminVerifLapangan();
           case "Admin Upload Scan Surat":
             return const Role.adminUploadScanSurat();
-          case "Surveyor":
+          case "Admin Surveyor":
             return const Role.surveyor();
           default:
             return const Role.user();

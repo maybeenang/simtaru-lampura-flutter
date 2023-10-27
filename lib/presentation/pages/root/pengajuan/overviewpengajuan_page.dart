@@ -4,6 +4,7 @@ import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_provider.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_surveyor_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
@@ -40,6 +41,8 @@ class OverviewPengajuanPage extends HookConsumerWidget {
         return await ref.read(pengajuanVerifikasiLapanganControllerProvider.notifier).loadMore();
       } else if (roleState is AdminUploadScanSurat) {
         return await ref.read(pengajuanUploadScanSuratControllerProvider.notifier).loadMore();
+      } else if (roleState is Surveyor) {
+        return await ref.read(pengajuanSurveyorControllerProvider.notifier).loadMore();
       } else {
         return await ref.read(pengajuanUserControllerProvider.notifier).loadMore();
       }
@@ -56,6 +59,8 @@ class OverviewPengajuanPage extends HookConsumerWidget {
         await ref.refresh(pengajuanVerifikasiLapanganControllerProvider.notifier).getPengajuan();
       } else if (roleState is AdminUploadScanSurat) {
         await ref.refresh(pengajuanUploadScanSuratControllerProvider.notifier).getPengajuan();
+      } else if (roleState is Surveyor) {
+        await ref.refresh(pengajuanSurveyorControllerProvider.notifier).getPengajuan();
       } else {
         await ref.refresh(pengajuanUserControllerProvider.notifier).getPengajuan();
       }

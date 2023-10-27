@@ -57,43 +57,43 @@ class PengajuanPage extends HookConsumerWidget {
 
     List<Step> steps() => [
           Step(
-            title: Text(currentIndex.value == 0 ? 'Langkah 1' : ''),
+            title: Text(currentIndex.value == 0 ? '' : ''),
             content: Langkah1Form(
               inputController: inputController,
             ),
             isActive: currentIndex.value >= 0,
           ),
           Step(
-            title: Text(currentIndex.value == 1 ? 'Langkah 2' : ''),
+            title: Text(currentIndex.value == 1 ? '' : ''),
             content: Langkah2Form(
               inputController: inputController,
             ),
             isActive: currentIndex.value >= 1,
           ),
           Step(
-            title: Text(currentIndex.value == 2 ? 'Langkah 3' : ''),
+            title: Text(currentIndex.value == 2 ? '' : ''),
             content: Langkah3Form(
               inputController: inputController,
             ),
             isActive: currentIndex.value >= 2,
           ),
           Step(
-            title: Text(currentIndex.value == 3 ? 'Langkah 4' : ''),
+            title: Text(currentIndex.value == 3 ? '' : ''),
             content: const Langkah4Form(),
             isActive: currentIndex.value >= 3,
           ),
           Step(
-            title: Text(currentIndex.value == 4 ? 'Langkah 5' : ''),
+            title: Text(currentIndex.value == 4 ? '' : ''),
             content: const Langkah5Form(),
             isActive: currentIndex.value >= 4,
           ),
           Step(
-            title: Text(currentIndex.value == 5 ? 'Langkah 6' : ''),
+            title: Text(currentIndex.value == 5 ? '' : ''),
             content: const Langkah6Form(),
             isActive: currentIndex.value >= 5,
           ),
           Step(
-            title: Text(currentIndex.value == 6 ? 'Langkah 7' : ''),
+            title: Text(currentIndex.value == 6 ? '' : ''),
             content: Langkah7Form(
               inputController: inputController,
             ),
@@ -301,6 +301,12 @@ class PengajuanPage extends HookConsumerWidget {
             },
             type: StepperType.horizontal,
             steps: steps(),
+            onStepTapped: (index) {
+              if (index <= currentIndex.value) {
+                currentIndex.value = index;
+              }
+            },
+            physics: const BouncingScrollPhysics(),
             currentStep: currentIndex.value,
             onStepContinue: () {
               if (currentIndex.value < steps().length - 1) {

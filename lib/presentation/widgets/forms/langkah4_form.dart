@@ -15,12 +15,15 @@ class Langkah4Form extends ConsumerStatefulWidget {
 class _Langkah4FormState extends ConsumerState<Langkah4Form> with TickerProviderStateMixin {
   List<Marker> markers = [];
   bool isMarker = false;
-  LatLng latLng = LatLng(0, 0);
+  LatLng latLng = const LatLng(0, 0);
   MapController mapController = MapController();
+
+  bool mapType = false;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(
           width: double.infinity,
@@ -44,12 +47,26 @@ class _Langkah4FormState extends ConsumerState<Langkah4Form> with TickerProvider
             ),
           ),
         const SizedBox(height: 10),
+        Row(
+          children: [
+            const Text("Flat Map"),
+            Switch(
+              value: mapType,
+              onChanged: (value) {
+                setState(() {
+                  mapType = value;
+                });
+              },
+            ),
+            const Text("Satellite Map"),
+          ],
+        ),
         AspectRatio(
           aspectRatio: 1.0,
           child: FlutterMap(
             mapController: mapController,
             options: MapOptions(
-              center: LatLng(-4.838455515616654, 104.89554453973685),
+              center: const LatLng(-4.838455515616654, 104.89554453973685),
               onTap: (tapPosition, point) {
                 setState(() {
                   markers = [];
@@ -76,14 +93,23 @@ class _Langkah4FormState extends ConsumerState<Langkah4Form> with TickerProvider
             ),
             children: [
               TileLayer(
-                urlTemplate:
-                    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                urlTemplate: mapType
+                    ? "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                    : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 subdomains: const ['a', 'b', 'c'],
                 userAgentPackageName: 'simtaru.lampura.com',
                 maxNativeZoom: 18,
                 maxZoom: 22,
                 fallbackUrl: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
               ),
+              // TileLayer(
+              //   urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              //   subdomains: const ['a', 'b', 'c'],
+              //   userAgentPackageName: 'simtaru.lampura.com',
+              //   maxNativeZoom: 18,
+              //   maxZoom: 22,
+              //   fallbackUrl: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              // ),
               MarkerLayer(markers: markers.map((e) => e).toList())
             ],
           ),
