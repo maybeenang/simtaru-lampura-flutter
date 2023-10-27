@@ -104,7 +104,7 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
     );
 
     return loadMorePengajuan.maybeWhen(orElse: () {
-      page--;
+      pageSelesai--;
       return true;
     }, data: (value) {
       if (value.isEmpty) {
