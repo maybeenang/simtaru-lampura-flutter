@@ -146,16 +146,16 @@ class DownloadService {
     String fileName2 = "${fileId}_${url.split("/").last}";
 
     // check file is exist
-    print(File(_localPath + fileName).existsSync());
-    if (File(_localPath + fileName).existsSync()) {
-      await OpenFile.open(File(_localPath + fileName).path);
+    // print(File(_localPath + fileName).existsSync());
+    // if (File(_localPath + fileName).existsSync()) {
+    //   await OpenFile.open(File(_localPath + fileName).path);
 
-      OpenResult result = await OpenFile.open(File(_localPath + fileName).path);
+    //   OpenResult result = await OpenFile.open(File(_localPath + fileName).path);
 
-      print(result.message);
-      context.loaderOverlay.hide();
-      return;
-    }
+    //   print(result.message);
+    //   context.loaderOverlay.hide();
+    //   return;
+    // }
 
     var taskId;
 
