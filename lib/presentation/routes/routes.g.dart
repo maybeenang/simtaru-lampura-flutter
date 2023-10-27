@@ -136,6 +136,10 @@ RouteBase get $rootRoute => GoRouteData.$route(
           path: 'admin-edit-artikel',
           factory: $AdminEditArtikelRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'call-center-profile',
+          factory: $CallCenterProfileRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -613,6 +617,24 @@ extension $AdminEditArtikelRouteExtension on AdminEditArtikelRoute {
 
   void replace(BuildContext context) =>
       context.replace(location, extra: $extra);
+}
+
+extension $CallCenterProfileRouteExtension on CallCenterProfileRoute {
+  static CallCenterProfileRoute _fromState(GoRouterState state) =>
+      const CallCenterProfileRoute();
+
+  String get location => GoRouteData.$location(
+        '/call-center-profile',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $loginRoute => GoRouteData.$route(

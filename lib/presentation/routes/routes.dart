@@ -28,6 +28,7 @@ import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_upload_scan_surat_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_berkas_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_lapangan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/call_center_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_password_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_profile_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
@@ -75,6 +76,7 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<AdminKelolaArtikelRoute>(path: AdminKelolaArtikelRoute.path),
     TypedGoRoute<AdminTambahArtikelRoute>(path: AdminTambahArtikelRoute.path),
     TypedGoRoute<AdminEditArtikelRoute>(path: AdminEditArtikelRoute.path),
+    TypedGoRoute<CallCenterProfileRoute>(path: CallCenterProfileRoute.path),
   ],
 )
 class RootRoute extends GoRouteData {
@@ -151,6 +153,16 @@ class EditPasswordProfileRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const EditPasswordProfilePage();
+  }
+}
+
+class CallCenterProfileRoute extends GoRouteData {
+  const CallCenterProfileRoute();
+  static const path = 'call-center-profile';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const CallCenterPage();
   }
 }
 

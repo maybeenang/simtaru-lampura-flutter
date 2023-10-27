@@ -9,7 +9,7 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 // import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:open_file/open_file.dart';
+// import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class DownloadService {
