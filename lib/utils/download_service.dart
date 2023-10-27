@@ -140,10 +140,11 @@ class DownloadService {
       return;
     }
 
-    String fileName = "${url.split("/").last}.$fileExtension";
-    String fileId = url.split("/")[(url.split("/").length - 2)];
-    fileName = "${fileId}_$fileName";
-    String fileName2 = "${fileId}_${url.split("/").last}";
+    // String fileName = "${url.split("/").last}.$fileExtension";
+    String fileId = url.split("/")[(url.split("/").length - 3)];
+    String fileId2 = url.split("/")[(url.split("/").length - 2)];
+    // fileName = "${fileId}_$fileName";
+    String fileName2 = "${fileId}_${url.split("/").last}_$fileId2";
 
     // check file is exist
     // print(File(_localPath + fileName).existsSync());
