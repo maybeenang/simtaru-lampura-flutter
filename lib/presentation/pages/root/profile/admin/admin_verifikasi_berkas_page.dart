@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
@@ -25,6 +26,7 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
     final showScrollToTop = useState(false);
     final hasReachedMax = useState(false);
     final pengajuanVerifikasiBerkasState = ref.watch(pengajuanVerifikasiBerkasControllerProvider);
@@ -58,7 +60,7 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
           Navigator.pop(context);
           context.loaderOverlay.show();
           String url = "${Endpoints.baseURL}${Endpoints.updateStatusPengajuan}$pengajuanId";
-          final Dio dio = Dio();
+          // final Dio dio = Dio();
           try {
             await dio.put(
               url,
@@ -124,7 +126,7 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
             Navigator.pop(context);
             context.loaderOverlay.show();
             String url = "${Endpoints.baseURL}${Endpoints.updateStatusPengajuan}$pengajuanId";
-            final Dio dio = Dio();
+            // final Dio dio = Dio();
             try {
               await dio.put(
                 url,

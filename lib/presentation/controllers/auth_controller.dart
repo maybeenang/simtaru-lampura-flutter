@@ -198,6 +198,8 @@ class AuthController extends _$AuthController {
         try {
           final uri = Endpoints.baseURL + Endpoints.login;
 
+          print("KONTOL $uri");
+
           final Response response = await dio.post(
             uri,
             data: {

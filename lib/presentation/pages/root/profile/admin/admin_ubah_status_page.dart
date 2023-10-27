@@ -6,6 +6,7 @@ import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
@@ -26,6 +27,7 @@ class AdminUbahStatusPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
     final inputController = useState<int>(-1);
     final showScrollToTop = useState(false);
     final hasReachedMax = useState(false);
@@ -68,7 +70,7 @@ class AdminUbahStatusPage extends HookConsumerWidget {
           try {
             final url = Endpoints.baseURL + Endpoints.updateStatusPengajuan + idPengajuan;
             print("URL" + url.toString());
-            final Dio dio = Dio();
+            // final Dio dio = Dio();
 
             final res = await dio.put(
               url,

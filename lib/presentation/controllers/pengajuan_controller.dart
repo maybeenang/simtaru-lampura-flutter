@@ -21,7 +21,7 @@ class PengajuanController extends _$PengajuanController {
       authControllerProvider.selectAsync(
         (data) => data.map(
           signedIn: (value) => true,
-          signedOut: (value) => true,
+          signedOut: (value) => false,
           signedUp: (value) => false,
           error: (value) => false,
         ),
@@ -46,10 +46,10 @@ class PengajuanController extends _$PengajuanController {
 
         return pengajuan;
       } catch (e) {
-        return Future.error(e.toString());
+        return [];
       }
     } else {
-      return null;
+      return [];
     }
   }
 
@@ -70,7 +70,7 @@ class PengajuanController extends _$PengajuanController {
 
           return pengajuan;
         } catch (e) {
-          return Future.error(e.toString());
+          return [];
         }
       },
     );
@@ -96,7 +96,7 @@ class PengajuanController extends _$PengajuanController {
       authControllerProvider.selectAsync(
         (data) => data.map(
           signedIn: (value) => true,
-          signedOut: (value) => true,
+          signedOut: (value) => false,
           signedUp: (value) => false,
           error: (value) => false,
         ),
@@ -122,10 +122,10 @@ class PengajuanController extends _$PengajuanController {
         return pengajuan;
       } catch (e) {
         print("DINISADNASIDANSD $e");
-        return Future.error(e.toString());
+        return [];
       }
     } else {
-      return null;
+      return [];
     }
   }
 }

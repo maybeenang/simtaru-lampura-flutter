@@ -1,17 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pengajuan_surat_rekomendasi_controller.g.dart';
 
 @riverpod
 class PengajuanSuratRekomendasiController extends _$PengajuanSuratRekomendasiController {
-  final Dio dio = Dio();
+  // final Dio dio = Dio();
   int page = 1;
 
   @override
   FutureOr<List<Pengajuan>> build() async {
+    final Dio dio = ref.watch(dioProvider);
     page = 1;
     ref.listenSelf(
       (_, __) {
@@ -30,11 +32,12 @@ class PengajuanSuratRekomendasiController extends _$PengajuanSuratRekomendasiCon
 
       return pengajuan;
     } catch (e) {
-      return Future.error(e.toString());
+      return [];
     }
   }
 
   Future<bool> loadMore() async {
+    final Dio dio = ref.watch(dioProvider);
     final loadMorePengajuan = await AsyncValue.guard<List<Pengajuan>>(
       () async {
         try {
@@ -49,7 +52,7 @@ class PengajuanSuratRekomendasiController extends _$PengajuanSuratRekomendasiCon
 
           return pengajuan;
         } catch (e) {
-          return Future.error(e.toString());
+          return [];
         }
       },
     );
@@ -68,6 +71,7 @@ class PengajuanSuratRekomendasiController extends _$PengajuanSuratRekomendasiCon
   }
 
   FutureOr<List<Pengajuan>> getPengajuan() async {
+    final Dio dio = ref.watch(dioProvider);
     page = 1;
     ref.listenSelf(
       (_, __) {
@@ -88,7 +92,7 @@ class PengajuanSuratRekomendasiController extends _$PengajuanSuratRekomendasiCon
 
       return pengajuan;
     } catch (e) {
-      return Future.error(e.toString());
+      return [];
     }
   }
 }

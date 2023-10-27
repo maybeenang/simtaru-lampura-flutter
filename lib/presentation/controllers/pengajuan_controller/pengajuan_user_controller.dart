@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,12 +10,13 @@ part 'pengajuan_user_controller.g.dart';
 
 @riverpod
 class PengajuanUserController extends _$PengajuanUserController {
-  final Dio dio = Dio();
+  // final Dio dio = Dio();
   int page = 1;
   int userId = 0;
 
   @override
   FutureOr<List<Pengajuan>> build() async {
+    final Dio dio = ref.watch(dioProvider);
     page = 1;
     ref.listenSelf(
       (_, __) {
@@ -48,11 +50,12 @@ class PengajuanUserController extends _$PengajuanUserController {
 
       return pengajuan;
     } catch (e) {
-      return Future.error(e.toString());
+      return [];
     }
   }
 
   Future<bool> loadMore() async {
+    final Dio dio = ref.watch(dioProvider);
     final loadMorePengajuan = await AsyncValue.guard<List<Pengajuan>>(
       () async {
         try {
@@ -66,7 +69,7 @@ class PengajuanUserController extends _$PengajuanUserController {
 
           return pengajuan;
         } catch (e) {
-          return Future.error(e.toString());
+          return [];
         }
       },
     );
@@ -85,6 +88,7 @@ class PengajuanUserController extends _$PengajuanUserController {
   }
 
   FutureOr<List<Pengajuan>> getPengajuan() async {
+    final Dio dio = ref.watch(dioProvider);
     page = 1;
     ref.listenSelf(
       (_, __) {
@@ -120,7 +124,7 @@ class PengajuanUserController extends _$PengajuanUserController {
 
       return pengajuan;
     } catch (e) {
-      return Future.error(e.toString());
+      return [];
     }
   }
 }

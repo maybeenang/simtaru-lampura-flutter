@@ -12,6 +12,13 @@ part 'pengajuan_provider.g.dart';
 
 @riverpod
 AsyncValue<List<Pengajuan>?> pengajuanProvider(PengajuanProviderRef ref) {
+  ref.listenSelf(
+    (_, next) {
+      // One could write more conditional logic for when to call redirection
+      if (next.isLoading) return;
+    },
+  );
+
   final roleBaruProvider = ref.watch(roleProvider);
 
   if (roleBaruProvider is Admin) {

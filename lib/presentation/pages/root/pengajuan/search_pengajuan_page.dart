@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
@@ -22,6 +22,7 @@ class SearchPengajuanPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
     final searchInput = useTextEditingController();
     final roleState = ref.watch(roleProvider);
     final userId = ref.watch(userControllerProvider).maybeWhen(
@@ -41,7 +42,7 @@ class SearchPengajuanPage extends HookConsumerWidget {
 
     Future searchPengajuan(String input) async {
       isLoading.value = true;
-      final Dio dio = Dio();
+      // final Dio dio = Dio();
       if (userId == 0) {
         return;
       }

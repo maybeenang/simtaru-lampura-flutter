@@ -8,6 +8,7 @@ import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_user_controller.dart';
@@ -35,6 +36,7 @@ class PengajuanPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
     final currentIndex = useState(0);
     final currLatlangState = ref.watch(currLatLng);
     final currInputFileState = ref.watch(inputsFile);
@@ -144,7 +146,7 @@ class PengajuanPage extends HookConsumerWidget {
               currInputFileState[9].path == '' ? null : await MultipartFile.fromFile(currInputFileState[9].path),
         });
         print(formData.fields);
-        final Dio dio = Dio();
+        // final Dio dio = Dio();
         final url = Endpoints.baseURL + Endpoints.tambahPengajuan;
         await dio.post(
           url,

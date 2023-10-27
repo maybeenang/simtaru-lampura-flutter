@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/notif_pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_jumlah_controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -22,7 +23,7 @@ class ButtonProfile extends HookConsumerWidget {
   final Color? color;
   final bool? isNotif;
 
-  Future<NotifPengajuan> getNotif() async {
+  Future<NotifPengajuan> getNotif(Dio dio) async {
     try {
       var query = "/";
       switch (label) {
@@ -45,7 +46,7 @@ class ButtonProfile extends HookConsumerWidget {
       }
 
       final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.pengajuanJumlah + query);
-      final Dio dio = Dio();
+      // final Dio dio = Dio();
       final Response response = await dio.get(
         uri.toString(),
       );
@@ -60,12 +61,13 @@ class ButtonProfile extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
     final notif = useState<NotifPengajuan?>(null);
     final jumlahPengajuanState = ref.watch(pengajuanJumlahControllerProvider);
 
     useEffect(() {
       if (label != "Seluruh Pengajuan") {
-        getNotif().then((value) => notif.value = value);
+        getNotif(dio).then((value) => notif.value = value);
       }
 
       return;

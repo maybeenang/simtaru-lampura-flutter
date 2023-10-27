@@ -22,7 +22,7 @@ class CarouselBerita extends HookConsumerWidget {
         }
 
         return CarouselSlider.builder(
-          itemCount: 3,
+          itemCount: data.length > 5 ? 5 : data.length,
           itemBuilder: (context, index, realIndex) {
             return BeritaCard(
               artikel: data[index],

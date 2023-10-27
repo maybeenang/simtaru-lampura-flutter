@@ -1,17 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/domain/entity/artikel/artikel.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'artikel_controller.g.dart';
 
 @riverpod
 class ArtikelController extends _$ArtikelController {
-  final Dio dio = Dio();
   int page = 1;
 
   @override
   FutureOr<List<Artikel>?> build() async {
+    // final Dio dio = ref.watch(dioProvider);
     page = 1;
     ref.listenSelf(
       (_, __) {
@@ -24,12 +25,13 @@ class ArtikelController extends _$ArtikelController {
     if (artikel is List<Artikel>) {
       return artikel;
     } else {
-      return Future.error("Terjadi Kesalahan");
+      return [];
     }
   }
 
   FutureOr<List<Artikel>?> getAllArtikel() async {
     page = 1;
+    final Dio dio = ref.watch(dioProvider);
 
     try {
       final query = "?page=$page";
@@ -44,11 +46,12 @@ class ArtikelController extends _$ArtikelController {
       return artikel;
     } catch (e) {
       print("INI SALAH NGAB ${e.toString()}");
-      return Future.error(e.toString());
+      return [];
     }
   }
 
   Future<String> createArtikel(data) async {
+    final Dio dio = ref.watch(dioProvider);
     try {
       final url = Endpoints.baseURL + Endpoints.createArtikel;
       await dio.post(url, data: data);
@@ -60,6 +63,7 @@ class ArtikelController extends _$ArtikelController {
   }
 
   Future<String> editArtikel(data, String id) async {
+    final Dio dio = ref.watch(dioProvider);
     try {
       final url = Endpoints.baseURL + Endpoints.editArtikel + id;
       await dio.post(url, data: data);
@@ -71,6 +75,7 @@ class ArtikelController extends _$ArtikelController {
   }
 
   Future<String> deleteArtikel(String id) async {
+    final Dio dio = ref.watch(dioProvider);
     try {
       final url = Endpoints.baseURL + Endpoints.deleteArtikel + id;
       await dio.post(url);

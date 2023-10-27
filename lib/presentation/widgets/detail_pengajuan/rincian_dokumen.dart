@@ -9,12 +9,14 @@ import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_surat_rekomendasi_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/sharedpreferences/sharedpreferences_provider.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_icon.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/input_uploadfile.dart';
@@ -30,16 +32,30 @@ class RincianDokumen extends HookConsumerWidget {
 
   final Pengajuan pengajuan;
 
-  Future<void> _downloadFile(BuildContext context, String url) async {
-    DownloadService downloadService = DownloadService(context: context);
-
-    await downloadService.downloadFile(
-      url: url,
-    );
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
+
+    const sharedPrefsKey = 'token';
+
+    final String token = ref.watch(sharedPreferenceProvider).map(data: (data) {
+      return data.value.getString(sharedPrefsKey)!;
+    }, error: (error) {
+      return '';
+    }, loading: (loading) {
+      return '';
+    });
+
+    print("TOKENNN $token");
+
+    Future<void> _downloadFile(BuildContext context, String url) async {
+      DownloadService downloadService = DownloadService(context: context, dio: dio, token: token);
+
+      await downloadService.downloadFile(
+        url: url,
+      );
+    }
+
     final roleState = ref.watch(roleProvider);
 
     final uploadFileController = useState<File>(File(''));
@@ -72,7 +88,6 @@ class RincianDokumen extends HookConsumerWidget {
                   tipeFile: await MultipartFile.fromFile(uploadFileController.value.path),
                 },
               );
-              final Dio dio = Dio();
 
               await dio.post(url, data: data);
 
@@ -153,7 +168,7 @@ class RincianDokumen extends HookConsumerWidget {
           try {
             final url = "${Endpoints.baseURL}${Endpoints.deleteFilePengajuan}${pengajuan.id}/$tipeFile";
 
-            final Dio dio = Dio();
+            // final Dio dio = Dio();
 
             await dio.post(url);
 

@@ -11,6 +11,7 @@ import 'package:flutter_map_line_editor/flutter_map_line_editor.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_surat_rekomendasi_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
@@ -99,7 +100,7 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
   void initState() {
     super.initState();
 
-    if (widget.pengajuan.titik_polygon != null) {
+    if (widget.pengajuan.titik_polygon != "") {
       getPoly();
     }
 
@@ -134,6 +135,7 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
 
   @override
   Widget build(BuildContext context) {
+    final dio = ref.watch(dioProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text("Rekam Polygon ${widget.pengajuan.nama_lengkap}"),
@@ -274,7 +276,7 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
                 };
 
                 state.toggle();
-                handleSubmit(geojson);
+                handleSubmit(geojson, dio);
               }
             },
             child: const Icon(Icons.check),
@@ -298,7 +300,7 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
     );
   }
 
-  Future handleSubmit(Map geoJson) async {
+  Future handleSubmit(Map geoJson, Dio dio) async {
     print(geoJson);
 
     QuickAlert.show(
@@ -391,7 +393,7 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
                   "color_polygon": "#ADD8E6"
                 };
 
-          final Dio dio = Dio();
+          // final Dio dio = Dio();
           final url = "${Endpoints.baseURL}${Endpoints.updatePolygonPengajuan}${widget.pengajuan.id}";
 
           print(url);

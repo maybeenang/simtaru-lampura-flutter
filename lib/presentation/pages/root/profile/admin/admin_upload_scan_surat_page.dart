@@ -8,6 +8,7 @@ import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
@@ -28,6 +29,7 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
     final uploadFileController = useState(File(''));
     final showScrollToTop = useState(false);
     final hasReachedMax = useState(false);
@@ -80,7 +82,7 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
                   "scan_surat_hasil_rekomendasi": await MultipartFile.fromFile(uploadFileController.value.path),
                 },
               );
-              final Dio dio = Dio();
+              // final Dio dio = Dio();
 
               await dio.post(url, data: data);
 

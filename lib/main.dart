@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/status_pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/router_listenable.dart';
@@ -20,6 +21,12 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
   await initializeDateFormatting('id_ID');
+  // Plugin must be initialized before using
+  await FlutterDownloader.initialize(
+      debug: true, // optional: set to false to disable printing logs to console (default: true)
+      ignoreSsl: true // option: set to false to disable working with http links (default: false)
+      );
+
   runApp(
     const ProviderScope(
       observers: [
