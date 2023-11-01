@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_surat_rekomendasi_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
@@ -21,6 +23,7 @@ class AdminSuratRekomendasiPage extends HookConsumerWidget {
     final showScrollToTop = useState(false);
     final hasReachedMax = useState(false);
     final pengajuanSuratRekomendasiState = ref.watch(pengajuanSuratRekomendasiControllerProvider);
+    final roleState = ref.watch(roleProvider);
 
     final scrollController = ScrollController();
 
@@ -137,17 +140,28 @@ class AdminSuratRekomendasiPage extends HookConsumerWidget {
                                       builder: (context) {
                                         return BottomSheetCard(
                                           pengajuan: data[index],
-                                          actions: [
-                                            ButtonActionPengajuan(
-                                              label: "Edit Polygon",
-                                              icon: Icons.map,
-                                              color: AppColors.greenColor,
-                                              onTap: () {
-                                                context.pop();
-                                                AdminRekamPolygonRoute(data[index]).push(context);
-                                              },
-                                            ),
-                                          ],
+                                          actions: roleState is! Surveyor
+                                              ? [
+                                                  ButtonActionPengajuan(
+                                                    label: "Edit Polygon",
+                                                    icon: Icons.map,
+                                                    color: AppColors.greenColor,
+                                                    onTap: () {
+                                                      context.pop();
+                                                      AdminRekamPolygonRoute(data[index]).push(context);
+                                                    },
+                                                  ),
+                                                ]
+                                              : [
+                                                  ButtonActionPengajuan(
+                                                    label: "Tambah Catatan",
+                                                    icon: Icons.note_add,
+                                                    color: AppColors.greenColor,
+                                                    onTap: () {
+                                                      context.pop();
+                                                    },
+                                                  ),
+                                                ],
                                         );
                                       },
                                     ),

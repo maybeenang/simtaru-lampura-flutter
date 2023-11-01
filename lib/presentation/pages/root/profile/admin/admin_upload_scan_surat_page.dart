@@ -8,8 +8,10 @@ import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
@@ -34,6 +36,7 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
     final showScrollToTop = useState(false);
     final hasReachedMax = useState(false);
     final pengajuanUploadScanSuratState = ref.watch(pengajuanUploadScanSuratControllerProvider);
+    final roleState = ref.watch(roleProvider);
 
     final scrollController = ScrollController();
 
@@ -249,33 +252,55 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
                                       builder: (context) {
                                         return BottomSheetCard(
                                           pengajuan: data[index],
-                                          actions: [
-                                            ButtonActionPengajuan(
-                                              label: "Upload Surat",
-                                              icon: Icons.upload_file,
-                                              color: AppColors.secondaryColor,
-                                              onTap: () {
-                                                handleUploadSurat(
-                                                    data[index].nama_lengkap!, data[index].id.toString(), data[index]);
-                                              },
-                                            ),
-                                            const SizedBox(height: 5),
-                                            ButtonActionPengajuan(
-                                              label: "Edit Polygon",
-                                              icon: Icons.map,
-                                              color: AppColors.greenColor,
-                                              onTap: () {
-                                                context.pop();
-                                                AdminRekamPolygonRoute(data[index]).push(context);
-                                              },
-                                            ),
-                                            const SizedBox(height: 5),
-                                            ButtonActionPengajuan(
-                                              label: "Edit",
-                                              icon: Icons.edit,
-                                              color: AppColors.mapColorStatusChip[2]!,
-                                            ),
-                                          ],
+                                          actions: roleState is! Surveyor
+                                              ? [
+                                                  ButtonActionPengajuan(
+                                                    label: "Upload Surat",
+                                                    icon: Icons.upload_file,
+                                                    color: AppColors.secondaryColor,
+                                                    onTap: () {
+                                                      handleUploadSurat(data[index].nama_lengkap!,
+                                                          data[index].id.toString(), data[index]);
+                                                    },
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  ButtonActionPengajuan(
+                                                    label: "Edit Polygon",
+                                                    icon: Icons.map,
+                                                    color: AppColors.greenColor,
+                                                    onTap: () {
+                                                      context.pop();
+                                                      AdminRekamPolygonRoute(data[index]).push(context);
+                                                    },
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  ButtonActionPengajuan(
+                                                    label: "Edit",
+                                                    icon: Icons.edit,
+                                                    color: AppColors.mapColorStatusChip[2]!,
+                                                  ),
+                                                ]
+                                              : [
+                                                  ButtonActionPengajuan(
+                                                    label: "Tambah Catatan",
+                                                    icon: Icons.note_add,
+                                                    color: AppColors.greenColor,
+                                                    onTap: () {
+                                                      context.pop();
+                                                      AdminRekamPolygonRoute(data[index]).push(context);
+                                                    },
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  ButtonActionPengajuan(
+                                                    label: "Tambah Catatan",
+                                                    icon: Icons.note_add,
+                                                    color: AppColors.greenColor,
+                                                    onTap: () {
+                                                      context.pop();
+                                                      AdminRekamPolygonRoute(data[index]).push(context);
+                                                    },
+                                                  ),
+                                                ],
                                         );
                                       },
                                     ),

@@ -357,7 +357,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.fotocopy_ktp.toString(),
-          roleState is! User,
+          (roleState is! User && roleState is! Surveyor),
           "Fotocopy KTP",
           "fotocopy_ktp",
         ),
@@ -366,8 +366,8 @@ class RincianDokumen extends HookConsumerWidget {
           "Fotocopy Sertifikat",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
-        checkFile(context, pengajuan.fotocopy_sertifikat.toString(), roleState is! User, "Fotocopy Sertifikat",
-            "fotocopy_sertifikat"),
+        checkFile(context, pengajuan.fotocopy_sertifikat.toString(), (roleState is! User && roleState is! Surveyor),
+            "Fotocopy Sertifikat", "fotocopy_sertifikat"),
         const SizedBox(height: 10),
         const Text(
           "Fotocopy SPPT PBB",
@@ -376,7 +376,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.fotocopy_sppt_pbb.toString(),
-          roleState is! User,
+          (roleState is! User && roleState is! Surveyor),
           "Fotocopy SPPT PBB",
           "fotocopy_sppt_pbb",
         ),
@@ -388,7 +388,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.fotocopy_npwp.toString(),
-          roleState is! User,
+          (roleState is! User && roleState is! Surveyor),
           "Fotocopy NPWP",
           "fotocopy_npwp",
         ),
@@ -400,7 +400,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.surat_persetujuan_tetangga.toString(),
-          roleState is! User,
+          (roleState is! User && roleState is! Surveyor),
           "Surat Persetujuan Tetangga",
           "surat_persetujuan_tetangga",
         ),
@@ -420,17 +420,23 @@ class RincianDokumen extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  ButtonIcon(
-                    icon: Icons.edit,
-                    onTap: () {},
-                    bgColor: Colors.amber[700],
-                  ),
-                  const SizedBox(width: 10),
-                  ButtonIcon(
-                    icon: Icons.delete,
-                    onTap: () {},
-                    bgColor: AppColors.redColor,
-                  ),
+                  (roleState is! User && roleState is! Surveyor)
+                      ? Row(
+                          children: [
+                            ButtonIcon(
+                              icon: Icons.edit,
+                              onTap: () {},
+                              bgColor: Colors.amber[700],
+                            ),
+                            const SizedBox(width: 10),
+                            ButtonIcon(
+                              icon: Icons.delete,
+                              onTap: () {},
+                              bgColor: AppColors.redColor,
+                            ),
+                          ],
+                        )
+                      : const SizedBox()
                 ],
               )
             : Column(
@@ -450,7 +456,7 @@ class RincianDokumen extends HookConsumerWidget {
                                     },
                                   ),
                                   const SizedBox(width: 10),
-                                  roleState is! User
+                                  (roleState is! User && roleState is! Surveyor)
                                       ? ButtonIcon(
                                           icon: Icons.edit,
                                           onTap: () {},
@@ -458,7 +464,7 @@ class RincianDokumen extends HookConsumerWidget {
                                         )
                                       : const SizedBox(),
                                   const SizedBox(width: 10),
-                                  roleState is! User
+                                  (roleState is! User && roleState is! Surveyor)
                                       ? ButtonIcon(
                                           icon: Icons.delete,
                                           onTap: () {},
@@ -482,7 +488,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.fotocopy_akte_pendirian_perusahaan.toString(),
-          roleState is! User,
+          (roleState is! User && roleState is! Surveyor),
           "Fotocopy Akte Pendirian Perusahaan",
           "fotocopy_akte_pendirian_perusahaan",
         ),
@@ -494,7 +500,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.set_lokasi_bangunan.toString(),
-          roleState is! User,
+          (roleState is! User && roleState is! Surveyor),
           "Set Lokasi Bangunan",
           "set_lokasi_bangunan",
         ),
@@ -506,7 +512,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.surat_pernyataan_force_majeur.toString(),
-          roleState is! User,
+          (roleState is! User && roleState is! Surveyor),
           "Surat Pernyataan Force Majeur",
           "surat_pernyataan_force_majeur",
         ),
@@ -518,7 +524,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.proposal.toString(),
-          roleState is! User,
+          (roleState is! User && roleState is! Surveyor),
           "Proposal",
           "proposal",
         ),
@@ -538,7 +544,7 @@ class RincianDokumen extends HookConsumerWidget {
                             checkFile(
                               context,
                               pengajuan.scan_surat_hasil_rekomendasi.toString(),
-                              roleState is! User,
+                              (roleState is! User && roleState is! Surveyor),
                               "Scan Surat Hasil Rekomendasi",
                               "scan_surat_hasil_rekomendasi",
                             ),

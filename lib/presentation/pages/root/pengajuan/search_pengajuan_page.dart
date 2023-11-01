@@ -46,7 +46,20 @@ class SearchPengajuanPage extends HookConsumerWidget {
       if (userId == 0) {
         return;
       }
-      final query = roleState is Admin ? "?searchName=$input" : "?searchUserId=$userId&searchName=$input";
+      String query;
+      if (roleState is Admin) {
+        query = "?searchName=$input";
+      } else if (roleState is AdminVerifBerkas) {
+        query = "?searchName=$input&searchStatus=2";
+      } else if (roleState is AdminVerifLapangan) {
+        query = "?searchName=$input&searchStatus=3";
+      } else if (roleState is AdminUploadScanSurat) {
+        query = "?searchName=$input&searchStatus=11";
+      } else if (roleState is Surveyor) {
+        query = "?searchName=$input&searchStatus=12";
+      } else {
+        query = "?searchUserId=$userId&searchName=$input";
+      }
       try {
         final response = await dio.get(
           Endpoints.baseURL + Endpoints.seluruhPengajuan + query,

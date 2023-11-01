@@ -30,7 +30,7 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
         uri.toString(),
       );
 
-      final List<Pengajuan> pengajuan = (response.data['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
+      List<Pengajuan> pengajuan = (response.data['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
 
       return pengajuan;
     } catch (e) {
