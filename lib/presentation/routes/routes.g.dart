@@ -140,6 +140,10 @@ RouteBase get $rootRoute => GoRouteData.$route(
           path: 'call-center-profile',
           factory: $CallCenterProfileRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'admin-surveyor-tambah-catatan',
+          factory: $AdminSurveyorTambahCatatanRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -625,6 +629,25 @@ extension $CallCenterProfileRouteExtension on CallCenterProfileRoute {
 
   String get location => GoRouteData.$location(
         '/call-center-profile',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminSurveyorTambahCatatanRouteExtension
+    on AdminSurveyorTambahCatatanRoute {
+  static AdminSurveyorTambahCatatanRoute _fromState(GoRouterState state) =>
+      const AdminSurveyorTambahCatatanRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-surveyor-tambah-catatan',
       );
 
   void go(BuildContext context) => context.go(location);
