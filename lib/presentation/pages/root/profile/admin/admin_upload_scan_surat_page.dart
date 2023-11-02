@@ -284,18 +284,20 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
                                                   ButtonActionPengajuan(
                                                     label: "Tambah Catatan",
                                                     icon: Icons.note_add,
-                                                    color: AppColors.greenColor,
+                                                    color: AppColors.pengajuandiProses,
                                                     onTap: () {
                                                       context.pop();
+                                                      const AdminSurveyorTambahCatatanRoute().push(context);
                                                     },
                                                   ),
                                                   const SizedBox(height: 5),
                                                   ButtonActionPengajuan(
                                                     label: "Lihat Catatan",
                                                     icon: Icons.note,
-                                                    color: AppColors.primaryColor,
+                                                    color: AppColors.greenColor,
                                                     onTap: () {
                                                       context.pop();
+                                                      const AdminSurveyorLihatCatatanRoute().push(context);
                                                     },
                                                   ),
                                                 ],

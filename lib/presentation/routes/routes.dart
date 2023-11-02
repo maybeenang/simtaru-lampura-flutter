@@ -22,6 +22,7 @@ import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_revisi_berkas_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_seluruh_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_surat_rekomendasi_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_surveyor_lihat_catatan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_surveyor_tambah_catatan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_tambah_artikel_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_tambah_user_page.dart';
@@ -79,6 +80,7 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<AdminEditArtikelRoute>(path: AdminEditArtikelRoute.path),
     TypedGoRoute<CallCenterProfileRoute>(path: CallCenterProfileRoute.path),
     TypedGoRoute<AdminSurveyorTambahCatatanRoute>(path: AdminSurveyorTambahCatatanRoute.path),
+    TypedGoRoute<AdminSurveyorLihatCatatanRoute>(path: AdminSurveyorLihatCatatanRoute.path),
   ],
 )
 class RootRoute extends GoRouteData {
@@ -375,6 +377,16 @@ class AdminSurveyorTambahCatatanRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const AdminSurveyorTambahCatatanPage();
+  }
+}
+
+class AdminSurveyorLihatCatatanRoute extends GoRouteData {
+  const AdminSurveyorLihatCatatanRoute();
+  static const path = 'admin-surveyor-lihat-catatan';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminSurveyorLihatCatatanPage();
   }
 }
 

@@ -144,6 +144,10 @@ RouteBase get $rootRoute => GoRouteData.$route(
           path: 'admin-surveyor-tambah-catatan',
           factory: $AdminSurveyorTambahCatatanRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'admin-surveyor-lihat-catatan',
+          factory: $AdminSurveyorLihatCatatanRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -648,6 +652,25 @@ extension $AdminSurveyorTambahCatatanRouteExtension
 
   String get location => GoRouteData.$location(
         '/admin-surveyor-tambah-catatan',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminSurveyorLihatCatatanRouteExtension
+    on AdminSurveyorLihatCatatanRoute {
+  static AdminSurveyorLihatCatatanRoute _fromState(GoRouterState state) =>
+      const AdminSurveyorLihatCatatanRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-surveyor-lihat-catatan',
       );
 
   void go(BuildContext context) => context.go(location);
