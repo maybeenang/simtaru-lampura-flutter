@@ -6,8 +6,17 @@ class AdminSurveyorLihatCatatanPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const Scaffold(
-      body: Center(
-        child: Text("AdminSurveyorLihatCatatanPage"),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text("Lihat Catatan"),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 100,
+            ),
+          ),
+        ],
       ),
     );
   }
