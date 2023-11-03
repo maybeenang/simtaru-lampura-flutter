@@ -294,6 +294,7 @@ class RincianDokumen extends HookConsumerWidget {
     useEffect(() {
       // ref.read(pengajuanControllerProvider.notifier).getPengajuanById(pengajuan.id!)
 
+      // ignore: unused_local_variable
       final isSuccess = IsolateNameServer.registerPortWithName(
         _port.sendPort,
         'downloader_send_port',
@@ -301,6 +302,7 @@ class RincianDokumen extends HookConsumerWidget {
 
       _port.listen(
         (dynamic data) {
+          // ignore: unused_local_variable
           final taskId = (data as List<dynamic>)[0] as String;
           final status = DownloadTaskStatus.fromInt(data[1] as int);
           final progress = data[2] as int;

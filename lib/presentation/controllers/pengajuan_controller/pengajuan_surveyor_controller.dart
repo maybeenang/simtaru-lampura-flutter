@@ -11,6 +11,8 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
   // final Dio dio = Dio();
   int page = 1;
   int pageSelesai = 1;
+  bool isLoadMoreUpload = false;
+  bool isLoadMoreSelesai = false;
 
   @override
   FutureOr<List<Pengajuan>> build() async {
@@ -39,12 +41,15 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
   }
 
   Future<bool> loadMore() async {
-    final res = await loadMoreUpload();
-
-    if (res) {
-      return await loadMoreSelesai();
+    if (!isLoadMoreUpload) {
+      final res = await loadMoreUpload();
+      if (res) {
+        return await loadMoreSelesai();
+      } else {
+        return false;
+      }
     } else {
-      return false;
+      return true;
     }
   }
 
@@ -71,10 +76,12 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
 
     return loadMorePengajuan.maybeWhen(orElse: () {
       page--;
+      isLoadMoreUpload = true;
       return true;
     }, data: (value) {
       if (value.isEmpty) {
         page--;
+        isLoadMoreUpload = true;
         return true;
       }
       state = AsyncValue.data([...state.value!, ...value]);
@@ -104,11 +111,11 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
     );
 
     return loadMorePengajuan.maybeWhen(orElse: () {
-      pageSelesai--;
+      isLoadMoreSelesai = true;
       return true;
     }, data: (value) {
       if (value.isEmpty) {
-        page--;
+        isLoadMoreSelesai = true;
         return true;
       }
       pageSelesai++;
@@ -119,6 +126,8 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
 
   FutureOr<List<Pengajuan>> getPengajuan() async {
     final Dio dio = ref.watch(dioProvider);
+    isLoadMoreUpload = false;
+    isLoadMoreSelesai = false;
     page = 1;
     pageSelesai = 1;
     ref.listenSelf(
