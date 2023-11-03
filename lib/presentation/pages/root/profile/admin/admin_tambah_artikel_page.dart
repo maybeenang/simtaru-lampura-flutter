@@ -79,21 +79,29 @@ class AdminTambahArtikelPage extends HookConsumerWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              const Text(
-                "Tambah Artikel",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
               const SizedBox(height: 20),
               Form(
                 key: formTambahArtikelKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const Text(
+                      "Judul Artikel",
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
                     TextFormField(
+                      maxLines: null,
                       decoration: const InputDecoration(
-                        labelText: "Judul Artikel",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(6),
+                          ),
+                        ),
+                        fillColor: AppColors.whiteColor,
+                        filled: true,
                       ),
                       controller: inputController[0],
                       validator: (value) {
@@ -103,11 +111,24 @@ class AdminTambahArtikelPage extends HookConsumerWidget {
                         return null;
                       },
                     ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Isi Artikel",
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
                     const SizedBox(height: 5),
                     TextFormField(
-                      maxLines: 10, //or null
+                      maxLines: 5, //or null
                       decoration: const InputDecoration(
-                        labelText: "Isi Artikel",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(6),
+                          ),
+                        ),
+                        fillColor: AppColors.whiteColor,
+                        filled: true,
                       ),
                       controller: inputController[1],
                       validator: (value) {
@@ -120,7 +141,7 @@ class AdminTambahArtikelPage extends HookConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
                   handleSubmit();

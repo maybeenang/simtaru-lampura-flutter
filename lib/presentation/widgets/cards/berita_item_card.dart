@@ -46,7 +46,7 @@ class BeritaItemCard extends StatelessWidget {
                     children: [
                       Text(
                         artikel.judul,
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
@@ -69,9 +69,10 @@ class BeritaItemCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 5),
+                      const Divider(),
                       Text(
                         artikel.isi,
+                        textAlign: TextAlign.justify,
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                       ),

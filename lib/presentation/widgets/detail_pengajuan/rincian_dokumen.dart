@@ -1,20 +1,25 @@
 import 'dart:io';
+import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_surat_rekomendasi_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/sharedpreferences/sharedpreferences_provider.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_icon.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/inputs/input_uploadfile.dart';
@@ -26,20 +31,50 @@ import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class RincianDokumen extends HookConsumerWidget {
-  const RincianDokumen({super.key, required this.pengajuan});
+  RincianDokumen({super.key, required this.pengajuan});
 
   final Pengajuan pengajuan;
 
-  Future<void> _downloadFile(BuildContext context, String url) async {
-    DownloadService downloadService = DownloadService(context: context);
-
-    await downloadService.downloadFile(
-      url: url,
+  @pragma('vm:entry-point')
+  static void downloadCallback(
+    String id,
+    int status,
+    int progress,
+  ) {
+    print(
+      'Callback on background isolate: '
+      'task ($id) is in status ($status) and process ($progress)',
     );
+
+    IsolateNameServer.lookupPortByName('downloader_send_port')?.send([id, status, progress]);
   }
+
+  final ReceivePort _port = ReceivePort();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
+
+    const sharedPrefsKey = 'token';
+
+    final String token = ref.watch(sharedPreferenceProvider).map(data: (data) {
+      return data.value.getString(sharedPrefsKey)!;
+    }, error: (error) {
+      return '';
+    }, loading: (loading) {
+      return '';
+    });
+
+    print("TOKENNN $token");
+
+    Future<void> _downloadFile(BuildContext context, String url) async {
+      DownloadService downloadService = DownloadService(context: context, dio: dio, token: token);
+
+      await downloadService.downloadFile(
+        url: url,
+      );
+    }
+
     final roleState = ref.watch(roleProvider);
 
     final uploadFileController = useState<File>(File(''));
@@ -72,7 +107,6 @@ class RincianDokumen extends HookConsumerWidget {
                   tipeFile: await MultipartFile.fromFile(uploadFileController.value.path),
                 },
               );
-              final Dio dio = Dio();
 
               await dio.post(url, data: data);
 
@@ -104,7 +138,7 @@ class RincianDokumen extends HookConsumerWidget {
                 ).show(context).then((value) => context.pop());
               }
             } catch (e) {
-              print("KONROL ${e.toString()}");
+              // print("KONROL ${e.toString()}");
               uploadFileController.value = File('');
 
               if (context.mounted) {
@@ -153,7 +187,7 @@ class RincianDokumen extends HookConsumerWidget {
           try {
             final url = "${Endpoints.baseURL}${Endpoints.deleteFilePengajuan}${pengajuan.id}/$tipeFile";
 
-            final Dio dio = Dio();
+            // final Dio dio = Dio();
 
             await dio.post(url);
 
@@ -257,6 +291,46 @@ class RincianDokumen extends HookConsumerWidget {
       );
     }
 
+    useEffect(() {
+      // ref.read(pengajuanControllerProvider.notifier).getPengajuanById(pengajuan.id!)
+
+      final isSuccess = IsolateNameServer.registerPortWithName(
+        _port.sendPort,
+        'downloader_send_port',
+      );
+
+      _port.listen(
+        (dynamic data) {
+          final taskId = (data as List<dynamic>)[0] as String;
+          final status = DownloadTaskStatus.fromInt(data[1] as int);
+          final progress = data[2] as int;
+
+          print("MEMEKKKKKKK $status $progress");
+
+          if (progress == 100 && status == DownloadTaskStatus.complete) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'Download Selesai, silahkan cek notifikasi untuk membuka file',
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+                backgroundColor: Colors.green,
+                behavior: SnackBarBehavior.floating,
+                duration: Duration(seconds: 5),
+              ),
+            );
+          }
+        },
+      );
+
+      FlutterDownloader.registerCallback(downloadCallback, step: 10);
+
+      return () {
+        IsolateNameServer.removePortNameMapping('downloader_send_port');
+      };
+    }, []);
+
     return Container(
       padding: const EdgeInsets.all(AppDouble.paddingInside),
       width: double.infinity,
@@ -283,7 +357,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.fotocopy_ktp.toString(),
-          roleState is Admin,
+          (roleState is! User && roleState is! Surveyor),
           "Fotocopy KTP",
           "fotocopy_ktp",
         ),
@@ -292,8 +366,8 @@ class RincianDokumen extends HookConsumerWidget {
           "Fotocopy Sertifikat",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
-        checkFile(context, pengajuan.fotocopy_sertifikat.toString(), roleState is Admin, "Fotocopy Sertifikat",
-            "fotocopy_sertifikat"),
+        checkFile(context, pengajuan.fotocopy_sertifikat.toString(), (roleState is! User && roleState is! Surveyor),
+            "Fotocopy Sertifikat", "fotocopy_sertifikat"),
         const SizedBox(height: 10),
         const Text(
           "Fotocopy SPPT PBB",
@@ -302,7 +376,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.fotocopy_sppt_pbb.toString(),
-          roleState is Admin,
+          (roleState is! User && roleState is! Surveyor),
           "Fotocopy SPPT PBB",
           "fotocopy_sppt_pbb",
         ),
@@ -314,7 +388,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.fotocopy_npwp.toString(),
-          roleState is Admin,
+          (roleState is! User && roleState is! Surveyor),
           "Fotocopy NPWP",
           "fotocopy_npwp",
         ),
@@ -326,7 +400,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.surat_persetujuan_tetangga.toString(),
-          roleState is Admin,
+          (roleState is! User && roleState is! Surveyor),
           "Surat Persetujuan Tetangga",
           "surat_persetujuan_tetangga",
         ),
@@ -346,17 +420,23 @@ class RincianDokumen extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  ButtonIcon(
-                    icon: Icons.edit,
-                    onTap: () {},
-                    bgColor: Colors.amber[700],
-                  ),
-                  const SizedBox(width: 10),
-                  ButtonIcon(
-                    icon: Icons.delete,
-                    onTap: () {},
-                    bgColor: AppColors.redColor,
-                  ),
+                  (roleState is! User && roleState is! Surveyor)
+                      ? Row(
+                          children: [
+                            ButtonIcon(
+                              icon: Icons.edit,
+                              onTap: () {},
+                              bgColor: Colors.amber[700],
+                            ),
+                            const SizedBox(width: 10),
+                            ButtonIcon(
+                              icon: Icons.delete,
+                              onTap: () {},
+                              bgColor: AppColors.redColor,
+                            ),
+                          ],
+                        )
+                      : const SizedBox()
                 ],
               )
             : Column(
@@ -376,7 +456,7 @@ class RincianDokumen extends HookConsumerWidget {
                                     },
                                   ),
                                   const SizedBox(width: 10),
-                                  roleState is Admin
+                                  (roleState is! User && roleState is! Surveyor)
                                       ? ButtonIcon(
                                           icon: Icons.edit,
                                           onTap: () {},
@@ -384,7 +464,7 @@ class RincianDokumen extends HookConsumerWidget {
                                         )
                                       : const SizedBox(),
                                   const SizedBox(width: 10),
-                                  roleState is Admin
+                                  (roleState is! User && roleState is! Surveyor)
                                       ? ButtonIcon(
                                           icon: Icons.delete,
                                           onTap: () {},
@@ -408,7 +488,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.fotocopy_akte_pendirian_perusahaan.toString(),
-          roleState is Admin,
+          (roleState is! User && roleState is! Surveyor),
           "Fotocopy Akte Pendirian Perusahaan",
           "fotocopy_akte_pendirian_perusahaan",
         ),
@@ -420,7 +500,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.set_lokasi_bangunan.toString(),
-          roleState is Admin,
+          (roleState is! User && roleState is! Surveyor),
           "Set Lokasi Bangunan",
           "set_lokasi_bangunan",
         ),
@@ -432,7 +512,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.surat_pernyataan_force_majeur.toString(),
-          roleState is Admin,
+          (roleState is! User && roleState is! Surveyor),
           "Surat Pernyataan Force Majeur",
           "surat_pernyataan_force_majeur",
         ),
@@ -444,7 +524,7 @@ class RincianDokumen extends HookConsumerWidget {
         checkFile(
           context,
           pengajuan.proposal.toString(),
-          roleState is Admin,
+          (roleState is! User && roleState is! Surveyor),
           "Proposal",
           "proposal",
         ),
@@ -464,7 +544,7 @@ class RincianDokumen extends HookConsumerWidget {
                             checkFile(
                               context,
                               pengajuan.scan_surat_hasil_rekomendasi.toString(),
-                              roleState is Admin,
+                              (roleState is! User && roleState is! Surveyor),
                               "Scan Surat Hasil Rekomendasi",
                               "scan_surat_hasil_rekomendasi",
                             ),

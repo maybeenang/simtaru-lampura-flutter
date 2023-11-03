@@ -11,6 +11,7 @@ import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/detail_pen
 import 'package:flutter_map_simtaru/presentation/pages/root/home/notif_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/pengajuan/search_pengajuan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_artikel_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_data_lapangan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_edit_user_page.dart';
@@ -21,12 +22,15 @@ import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_revisi_berkas_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_seluruh_pengajuan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_surat_rekomendasi_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_surveyor_lihat_catatan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_surveyor_tambah_catatan_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_tambah_artikel_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_tambah_user_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_ubah_status_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_upload_scan_surat_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_berkas_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/admin/admin_verifikasi_lapangan_page.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/profile/call_center_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_password_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/profile/edit_profile_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
@@ -73,6 +77,10 @@ class SplashRoute extends GoRouteData {
     TypedGoRoute<AdminTambahUserRoute>(path: AdminTambahUserRoute.path),
     TypedGoRoute<AdminKelolaArtikelRoute>(path: AdminKelolaArtikelRoute.path),
     TypedGoRoute<AdminTambahArtikelRoute>(path: AdminTambahArtikelRoute.path),
+    TypedGoRoute<AdminEditArtikelRoute>(path: AdminEditArtikelRoute.path),
+    TypedGoRoute<CallCenterProfileRoute>(path: CallCenterProfileRoute.path),
+    TypedGoRoute<AdminSurveyorTambahCatatanRoute>(path: AdminSurveyorTambahCatatanRoute.path),
+    TypedGoRoute<AdminSurveyorLihatCatatanRoute>(path: AdminSurveyorLihatCatatanRoute.path),
   ],
 )
 class RootRoute extends GoRouteData {
@@ -149,6 +157,16 @@ class EditPasswordProfileRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const EditPasswordProfilePage();
+  }
+}
+
+class CallCenterProfileRoute extends GoRouteData {
+  const CallCenterProfileRoute();
+  static const path = 'call-center-profile';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const CallCenterPage();
   }
 }
 
@@ -333,6 +351,42 @@ class AdminTambahArtikelRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const AdminTambahArtikelPage();
+  }
+}
+
+class AdminEditArtikelRoute extends GoRouteData {
+  const AdminEditArtikelRoute(
+    this.$extra,
+  );
+  static const path = 'admin-edit-artikel';
+
+  final Artikel $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return AdminEditArtikelPage(
+      artikel: $extra,
+    );
+  }
+}
+
+class AdminSurveyorTambahCatatanRoute extends GoRouteData {
+  const AdminSurveyorTambahCatatanRoute();
+  static const path = 'admin-surveyor-tambah-catatan';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminSurveyorTambahCatatanPage();
+  }
+}
+
+class AdminSurveyorLihatCatatanRoute extends GoRouteData {
+  const AdminSurveyorLihatCatatanRoute();
+  static const path = 'admin-surveyor-lihat-catatan';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AdminSurveyorLihatCatatanPage();
   }
 }
 

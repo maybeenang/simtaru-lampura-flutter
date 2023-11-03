@@ -2,13 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user_utils.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'admin_user_controller.g.dart';
 
 @riverpod
 class AdminUserController extends _$AdminUserController {
-  final Dio dio = Dio();
+  // final Dio dio = Dio();
   int page = 1;
 
   @override
@@ -30,6 +31,7 @@ class AdminUserController extends _$AdminUserController {
   }
 
   FutureOr<List<User>?> getAllUser() async {
+    final Dio dio = ref.watch(dioProvider);
     page = 1;
     try {
       final query = "?page=$page";
@@ -51,6 +53,7 @@ class AdminUserController extends _$AdminUserController {
   }
 
   Future<bool> loadMore() async {
+    final Dio dio = ref.watch(dioProvider);
     final loadMorePengajuan = await AsyncValue.guard<List<User>>(
       () async {
         try {
@@ -112,6 +115,7 @@ class AdminUserController extends _$AdminUserController {
   }
 
   FutureOr<User> createUser(Map data) async {
+    final Dio dio = ref.watch(dioProvider);
     try {
       final url = Endpoints.baseURL + Endpoints.tambahUser;
       final response = await dio.post(
@@ -154,6 +158,7 @@ class AdminUserController extends _$AdminUserController {
   }
 
   Future<User> editUser(Map data, String id) async {
+    final Dio dio = ref.watch(dioProvider);
     print(data.toString());
     try {
       final url = Endpoints.baseURL + Endpoints.editUser + id;
@@ -195,6 +200,7 @@ class AdminUserController extends _$AdminUserController {
   }
 
   Future<User> deleteUser(String id) async {
+    final Dio dio = ref.watch(dioProvider);
     try {
       final url = Endpoints.baseURL + Endpoints.hapusUser + id;
 

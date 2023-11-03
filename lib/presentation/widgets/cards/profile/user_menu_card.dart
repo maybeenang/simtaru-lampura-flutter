@@ -80,6 +80,24 @@ class UserMenuProfileCard extends ConsumerWidget {
                   ),
                 ),
                 ButtonProfile(
+                  label: "Pusat Bantuan",
+                  icon: Icons.call,
+                  onTap: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 300),
+                      () {
+                        const CallCenterProfileRoute().push(context);
+                      },
+                    );
+                  },
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider(
+                    color: AppColors.borderColor,
+                  ),
+                ),
+                ButtonProfile(
                   label: "Logout",
                   icon: Icons.logout,
                   color: AppColors.redColor,

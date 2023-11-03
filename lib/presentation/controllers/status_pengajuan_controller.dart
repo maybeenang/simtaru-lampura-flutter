@@ -26,9 +26,11 @@ class StatusPengajuanController extends _$StatusPengajuanController {
       );
 
       return statusPengajuan;
+    } on DioException catch (_) {
+      ref.invalidate(statusPengajuanControllerProvider);
+      rethrow;
     } catch (e) {
-      print("STATYS  $e");
-      state = AsyncValue.error(e, StackTrace.current);
+      ref.invalidate(statusPengajuanControllerProvider);
       rethrow;
     }
   }

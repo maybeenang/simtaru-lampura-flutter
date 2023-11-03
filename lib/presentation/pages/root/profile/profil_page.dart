@@ -4,6 +4,9 @@ import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/loading/profile_card_loading.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/cards/profile/admin/admin_surveyor_menu_card.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/cards/profile/admin/admin_upload_scan_surat_menu_card.dart';
+import 'package:flutter_map_simtaru/presentation/widgets/cards/profile/admin/admin_verif_berkas_menu_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/profile/admin_menu_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/profile/user_menu_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/profile_card.dart';
@@ -63,6 +66,10 @@ class ProfilPage extends ConsumerWidget {
                 const UserMenuProfileCard(),
                 const SizedBox(height: 20),
                 if (roleState is Admin) const AdminMenuProfileCard(),
+                if (roleState is AdminVerifBerkas) const AdminVerifBerkasMenuCard(),
+                if (roleState is AdminVerifLapangan) const AdminVerifBerkasMenuCard(),
+                if (roleState is AdminUploadScanSurat) const AdminUploadScanSuratMenuCard(),
+                if (roleState is Surveyor) const AdminSurveyorMenuCard(),
                 const SizedBox(
                   height: 50,
                 ),

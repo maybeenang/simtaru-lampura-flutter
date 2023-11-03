@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/notif_controller.dart/notif_controller.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/items/notif_item.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class NotifPage extends StatelessWidget {
+class NotifPage extends HookConsumerWidget {
   const NotifPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notifState = ref.watch(notifControllerProvider);
+
     return CustomSafeArea(
       color: AppColors.bgColor,
       child: Scaffold(
@@ -41,25 +45,38 @@ class NotifPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 30),
-                const NotifItem(),
-                const Divider(
-                  color: AppColors.borderColor,
-                ),
-                const NotifItem(),
-                const Divider(
-                  color: AppColors.borderColor,
-                ),
-                const NotifItem(),
-                const Divider(
-                  color: AppColors.borderColor,
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.2),
-                const Text(
-                  "Tidak ada notifikasi",
-                  style: TextStyle(
-                    color: AppColors.blackColor,
-                    fontSize: 14,
-                  ),
+                notifState.maybeWhen(
+                  orElse: () {
+                    return const Text(
+                      "Tidak ada notifikasi",
+                      style: TextStyle(
+                        color: AppColors.blackColor,
+                        fontSize: 14,
+                      ),
+                    );
+                  },
+                  data: (data) {
+                    if (data!.isEmpty) {
+                      return const Text(
+                        "Tidak ada notifikasi",
+                        style: TextStyle(
+                          color: AppColors.blackColor,
+                          fontSize: 14,
+                        ),
+                      );
+                    }
+
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        return NotifItem(
+                          notif: data[index],
+                        );
+                      },
+                    );
+                  },
                 ),
               ],
             ),

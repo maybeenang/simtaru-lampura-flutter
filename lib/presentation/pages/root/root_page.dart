@@ -70,7 +70,7 @@ class _RootWidgetState extends ConsumerState<RootWidget> {
       ),
       PersistentBottomNavBarItem(
         icon: currIndex.index == 3 ? const Icon(Icons.newspaper) : const Icon(Icons.newspaper_outlined),
-        title: ("Berita"),
+        title: ("Artikel"),
         activeColorPrimary: AppColors.primaryColor,
         inactiveColorPrimary: AppColors.greyColor,
       ),

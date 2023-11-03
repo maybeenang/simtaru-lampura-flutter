@@ -8,6 +8,7 @@ import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_user_controller.dart';
@@ -35,6 +36,7 @@ class PengajuanPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
     final currentIndex = useState(0);
     final currLatlangState = ref.watch(currLatLng);
     final currInputFileState = ref.watch(inputsFile);
@@ -55,43 +57,43 @@ class PengajuanPage extends HookConsumerWidget {
 
     List<Step> steps() => [
           Step(
-            title: Text(currentIndex.value == 0 ? 'Langkah 1' : ''),
+            title: Text(currentIndex.value == 0 ? '' : ''),
             content: Langkah1Form(
               inputController: inputController,
             ),
             isActive: currentIndex.value >= 0,
           ),
           Step(
-            title: Text(currentIndex.value == 1 ? 'Langkah 2' : ''),
+            title: Text(currentIndex.value == 1 ? '' : ''),
             content: Langkah2Form(
               inputController: inputController,
             ),
             isActive: currentIndex.value >= 1,
           ),
           Step(
-            title: Text(currentIndex.value == 2 ? 'Langkah 3' : ''),
+            title: Text(currentIndex.value == 2 ? '' : ''),
             content: Langkah3Form(
               inputController: inputController,
             ),
             isActive: currentIndex.value >= 2,
           ),
           Step(
-            title: Text(currentIndex.value == 3 ? 'Langkah 4' : ''),
+            title: Text(currentIndex.value == 3 ? '' : ''),
             content: const Langkah4Form(),
             isActive: currentIndex.value >= 3,
           ),
           Step(
-            title: Text(currentIndex.value == 4 ? 'Langkah 5' : ''),
+            title: Text(currentIndex.value == 4 ? '' : ''),
             content: const Langkah5Form(),
             isActive: currentIndex.value >= 4,
           ),
           Step(
-            title: Text(currentIndex.value == 5 ? 'Langkah 6' : ''),
+            title: Text(currentIndex.value == 5 ? '' : ''),
             content: const Langkah6Form(),
             isActive: currentIndex.value >= 5,
           ),
           Step(
-            title: Text(currentIndex.value == 6 ? 'Langkah 7' : ''),
+            title: Text(currentIndex.value == 6 ? '' : ''),
             content: Langkah7Form(
               inputController: inputController,
             ),
@@ -122,19 +124,29 @@ class PengajuanPage extends HookConsumerWidget {
           'batas_sebelah_selatan': inputController[15].text,
           'batas_sebelah_barat': inputController[16].text,
           'titik_koordinat': '${ref.watch(currLatLng).latitude},${ref.watch(currLatLng).longitude}',
-          'fotocopy_ktp': await MultipartFile.fromFile(currInputFileState[0].path),
-          'fotocopy_sertifikat': await MultipartFile.fromFile(currInputFileState[1].path),
-          'fotocopy_sppt_pbb': await MultipartFile.fromFile(currInputFileState[2].path),
-          'fotocopy_npwp': await MultipartFile.fromFile(currInputFileState[3].path),
-          'surat_persetujuan_tetangga': await MultipartFile.fromFile(currInputFileState[4].path),
-          'gambar_rencana_pembangunan[]': await MultipartFile.fromFile(currInputFileState[5].path),
-          'fotocopy_akte_pendirian_perusahaan': await MultipartFile.fromFile(currInputFileState[6].path),
-          'set_lokasi_bangunan': await MultipartFile.fromFile(currInputFileState[7].path),
-          'surat_pernyataan_force_majeur': await MultipartFile.fromFile(currInputFileState[8].path),
-          'proposal': await MultipartFile.fromFile(currInputFileState[9].path),
+          'fotocopy_ktp':
+              currInputFileState[0].path == '' ? null : await MultipartFile.fromFile(currInputFileState[0].path),
+          'fotocopy_sertifikat':
+              currInputFileState[1].path == '' ? null : await MultipartFile.fromFile(currInputFileState[1].path),
+          'fotocopy_sppt_pbb':
+              currInputFileState[2].path == '' ? null : await MultipartFile.fromFile(currInputFileState[2].path),
+          'fotocopy_npwp':
+              currInputFileState[3].path == '' ? null : await MultipartFile.fromFile(currInputFileState[3].path),
+          'surat_persetujuan_tetangga':
+              currInputFileState[4].path == '' ? null : await MultipartFile.fromFile(currInputFileState[4].path),
+          'gambar_rencana_pembangunan[]':
+              currInputFileState[5].path == '' ? null : await MultipartFile.fromFile(currInputFileState[5].path),
+          'fotocopy_akte_pendirian_perusahaan':
+              currInputFileState[6].path == '' ? null : await MultipartFile.fromFile(currInputFileState[6].path),
+          'set_lokasi_bangunan':
+              currInputFileState[7].path == '' ? null : await MultipartFile.fromFile(currInputFileState[7].path),
+          'surat_pernyataan_force_majeur':
+              currInputFileState[8].path == '' ? null : await MultipartFile.fromFile(currInputFileState[8].path),
+          'proposal':
+              currInputFileState[9].path == '' ? null : await MultipartFile.fromFile(currInputFileState[9].path),
         });
         print(formData.fields);
-        final Dio dio = Dio();
+        // final Dio dio = Dio();
         final url = Endpoints.baseURL + Endpoints.tambahPengajuan;
         await dio.post(
           url,
@@ -289,6 +301,12 @@ class PengajuanPage extends HookConsumerWidget {
             },
             type: StepperType.horizontal,
             steps: steps(),
+            onStepTapped: (index) {
+              if (index <= currentIndex.value) {
+                currentIndex.value = index;
+              }
+            },
+            physics: const BouncingScrollPhysics(),
             currentStep: currentIndex.value,
             onStepContinue: () {
               if (currentIndex.value < steps().length - 1) {
@@ -328,11 +346,7 @@ class PengajuanPage extends HookConsumerWidget {
                     break;
                   case 5:
                     FocusScope.of(context).unfocus();
-                    if (currInputFileState[5].path != '' &&
-                        currInputFileState[6].path != '' &&
-                        currInputFileState[7].path != '' &&
-                        currInputFileState[8].path != '' &&
-                        currInputFileState[9].path != '') {
+                    if (currInputFileState[5].path != '') {
                       currentIndex.value++;
                     }
                     break;

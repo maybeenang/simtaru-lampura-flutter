@@ -132,7 +132,6 @@ class EditProfileForm extends HookConsumerWidget {
                 isEmail: true,
                 controller: inputController[2],
                 initialValue: user.email,
-                readOnly: true,
               ),
             ],
           ),

@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
@@ -21,6 +22,7 @@ class AdminEditPengajuanPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
     final inputController = List.generate(18, (index) => useTextEditingController());
 
     void handleSubmitEditPengajuan() async {
@@ -51,7 +53,7 @@ class AdminEditPengajuanPage extends HookConsumerWidget {
           });
           print(formData.fields);
           final url = Endpoints.baseURL + Endpoints.updatePengajuan + pengajuan.id.toString();
-          final Dio dio = Dio();
+          // final Dio dio = Dio();
 
           await dio.post(
             url,

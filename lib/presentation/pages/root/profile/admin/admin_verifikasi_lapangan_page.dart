@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
@@ -25,6 +26,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
     final showScrollToTop = useState(false);
     final hasReachedMax = useState(false);
     final pengajuanVerifikasiLapanganState = ref.watch(pengajuanVerifikasiLapanganControllerProvider);
@@ -44,7 +46,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
       }
     });
 
-    Future setujuiPengajuan(int pengajuanId, String pengajuanNama) async {
+    Future setujuiPengajuan(int pengajuanId, String pengajuanNama, Dio dio) async {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.confirm,
@@ -58,7 +60,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
           Navigator.pop(context);
           context.loaderOverlay.show();
           String url = "${Endpoints.baseURL}${Endpoints.updateStatusPengajuan}$pengajuanId";
-          final Dio dio = Dio();
+          // final Dio dio = Dio();
           try {
             await dio.put(
               url,
@@ -66,7 +68,6 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                 "status_id": 11,
               },
             );
-            ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
             if (context.mounted) {
               context.loaderOverlay.hide();
             }
@@ -76,6 +77,8 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
             }
             return Future.error(e.toString());
           } finally {
+            ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
+            ref.invalidate(pengajuanControllerProvider);
             if (context.mounted) {
               context.loaderOverlay.hide();
             }
@@ -86,7 +89,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
 
     final inputAlasanDitolakController = useTextEditingController();
 
-    Future tolakPengajuan(int pengajuanId, String pengajuanNama) async {
+    Future tolakPengajuan(int pengajuanId, String pengajuanNama, Dio dio) async {
       QuickAlert.show(
         context: context,
         type: QuickAlertType.custom,
@@ -123,7 +126,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
             Navigator.pop(context);
             context.loaderOverlay.show();
             String url = "${Endpoints.baseURL}${Endpoints.updateStatusPengajuan}$pengajuanId";
-            final Dio dio = Dio();
+            // final Dio dio = Dio();
             try {
               await dio.put(
                 url,
@@ -132,8 +135,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                   "alasan_ditolak": inputAlasanDitolakController.text,
                 },
               );
-              ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
-              ref.invalidate(pengajuanControllerProvider);
+
               if (context.mounted) {
                 context.loaderOverlay.hide();
               }
@@ -143,6 +145,8 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
               }
               return Future.error(e.toString());
             } finally {
+              ref.invalidate(pengajuanVerifikasiLapanganControllerProvider);
+              ref.invalidate(pengajuanControllerProvider);
               if (context.mounted) {
                 context.loaderOverlay.hide();
               }
@@ -278,7 +282,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                                               color: AppColors.greenColor,
                                               onTap: () {
                                                 context.pop();
-                                                setujuiPengajuan(data[index].id, data[index].nama_lengkap!);
+                                                setujuiPengajuan(data[index].id, data[index].nama_lengkap!, dio);
                                               },
                                             ),
                                             const SizedBox(height: 5),
@@ -288,7 +292,7 @@ class AdminVerifikasiLapanganPage extends HookConsumerWidget {
                                               color: AppColors.redColor,
                                               onTap: () {
                                                 context.pop();
-                                                tolakPengajuan(data[index].id, data[index].nama_lengkap!);
+                                                tolakPengajuan(data[index].id, data[index].nama_lengkap!, dio);
                                               },
                                             ),
                                             const SizedBox(height: 5),

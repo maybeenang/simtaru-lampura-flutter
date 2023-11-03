@@ -3,9 +3,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_provider.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_surveyor_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_user_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
-import 'package:flutter_map_simtaru/presentation/controllers/status_pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/carousel_pengajuan_card.dart';
@@ -22,17 +26,49 @@ class OverviewPengajuanPage extends HookConsumerWidget {
     final showScrollToTop = useState(false);
     final hasReachedMax = useState(false);
     final roleState = ref.watch(roleProvider);
-    final pengajuanState =
-        roleState is Admin ? ref.watch(pengajuanControllerProvider) : ref.watch(pengajuanUserControllerProvider);
-    ref.watch(statusPengajuanControllerProvider);
+    final pengajuanState = ref.watch(pengajuanProviderProvider);
+    //     roleState is Admin ? ref.watch(pengajuanControllerProvider) : ref.watch(pengajuanUserControllerProvider);
+    // ref.watch(statusPengajuanControllerProvider);
 
     final scrollController = ScrollController();
 
+    Future<bool> loadMore() async {
+      if (roleState is Admin) {
+        return await ref.read(pengajuanControllerProvider.notifier).loadMore();
+      } else if (roleState is AdminVerifBerkas) {
+        return await ref.read(pengajuanVerifikasiBerkasControllerProvider.notifier).loadMore();
+      } else if (roleState is AdminVerifLapangan) {
+        return await ref.read(pengajuanVerifikasiLapanganControllerProvider.notifier).loadMore();
+      } else if (roleState is AdminUploadScanSurat) {
+        return await ref.read(pengajuanUploadScanSuratControllerProvider.notifier).loadMore();
+      } else if (roleState is Surveyor) {
+        return await ref.read(pengajuanSurveyorControllerProvider.notifier).loadMore();
+      } else {
+        return await ref.read(pengajuanUserControllerProvider.notifier).loadMore();
+      }
+    }
+
+    Future refresh() async {
+      print(roleState);
+      hasReachedMax.value = false;
+      if (roleState is Admin) {
+        await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
+      } else if (roleState is AdminVerifBerkas) {
+        await ref.refresh(pengajuanVerifikasiBerkasControllerProvider.notifier).getPengajuan();
+      } else if (roleState is AdminVerifLapangan) {
+        await ref.refresh(pengajuanVerifikasiLapanganControllerProvider.notifier).getPengajuan();
+      } else if (roleState is AdminUploadScanSurat) {
+        await ref.refresh(pengajuanUploadScanSuratControllerProvider.notifier).getPengajuan();
+      } else if (roleState is Surveyor) {
+        await ref.refresh(pengajuanSurveyorControllerProvider.notifier).getPengajuan();
+      } else {
+        await ref.refresh(pengajuanUserControllerProvider.notifier).getPengajuan();
+      }
+    }
+
     scrollController.addListener(() {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        final newValue = roleState is Admin
-            ? ref.read(pengajuanControllerProvider.notifier).loadMore()
-            : ref.read(pengajuanUserControllerProvider.notifier).loadMore();
+        final newValue = loadMore();
         newValue.then((value) => hasReachedMax.value = value);
       }
 
@@ -66,13 +102,10 @@ class OverviewPengajuanPage extends HookConsumerWidget {
           : null,
       body: RefreshIndicator(
         onRefresh: () async {
-          if (roleState is Admin) {
-            await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
-          } else {
-            await ref.refresh(pengajuanUserControllerProvider.notifier).getPengajuan();
-          }
+          await refresh();
         },
         child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           controller: scrollController,
           slivers: [
             SliverToBoxAdapter(
@@ -96,7 +129,7 @@ class OverviewPengajuanPage extends HookConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  roleState is Admin ? const CarouselPengajuanCard() : const SizedBox(),
+                  roleState is User ? const SizedBox() : const CarouselPengajuanCard(),
                   const SizedBox(height: 20),
                 ],
               ),

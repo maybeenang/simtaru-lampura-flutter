@@ -1,9 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/form/form_state.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
@@ -25,6 +25,7 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
     final showScrollToTop = useState(false);
     final hasReachedMax = useState(false);
     final pengajuanVerifikasiBerkasState = ref.watch(pengajuanVerifikasiBerkasControllerProvider);
@@ -58,7 +59,7 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
           Navigator.pop(context);
           context.loaderOverlay.show();
           String url = "${Endpoints.baseURL}${Endpoints.updateStatusPengajuan}$pengajuanId";
-          final Dio dio = Dio();
+          // final Dio dio = Dio();
           try {
             await dio.put(
               url,
@@ -66,7 +67,6 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                 "status_id": 3,
               },
             );
-            ref.invalidate(pengajuanVerifikasiBerkasControllerProvider);
             if (context.mounted) {
               context.loaderOverlay.hide();
             }
@@ -76,6 +76,8 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
             }
             return Future.error(e.toString());
           } finally {
+            ref.invalidate(pengajuanVerifikasiBerkasControllerProvider);
+            await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
             if (context.mounted) {
               context.loaderOverlay.hide();
             }
@@ -123,7 +125,7 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
             Navigator.pop(context);
             context.loaderOverlay.show();
             String url = "${Endpoints.baseURL}${Endpoints.updateStatusPengajuan}$pengajuanId";
-            final Dio dio = Dio();
+            // final Dio dio = Dio();
             try {
               await dio.put(
                 url,
@@ -132,10 +134,6 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
                   "alasan_ditolak": inputAlasanDitolakController.text,
                 },
               );
-              ref.invalidate(pengajuanVerifikasiBerkasControllerProvider);
-              ref.invalidate(pengajuanControllerProvider);
-
-              await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
               if (context.mounted) {
                 context.loaderOverlay.hide();
               }
@@ -145,6 +143,9 @@ class AdminVerifikasiBerkasPage extends HookConsumerWidget {
               }
               return Future.error(e.toString());
             } finally {
+              ref.invalidate(pengajuanVerifikasiBerkasControllerProvider);
+
+              await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
               if (context.mounted) {
                 context.loaderOverlay.hide();
               }

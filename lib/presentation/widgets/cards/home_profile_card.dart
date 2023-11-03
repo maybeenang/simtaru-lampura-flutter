@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
-import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user.dart';
-import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
-import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_user_controller.dart';
-import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/user_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/weather/weather_controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,9 +14,7 @@ class HomeProfileCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userState = ref.watch(userControllerProvider);
     final weatherState = ref.watch(weatherProvider);
-    final roleState = ref.watch(roleProvider);
-    final pengajuanState =
-        roleState is Admin ? ref.watch(pengajuanControllerProvider) : ref.watch(pengajuanUserControllerProvider);
+    final pengajuanState = ref.watch(pengajuanProviderProvider);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
@@ -51,8 +46,6 @@ class HomeProfileCard extends HookConsumerWidget {
                       text: userState.when(
                         data: (data) {
                           if (data is UserSuccess) {
-                            // return data.model.name.trimLeft();
-                            // convert to uppercase first letter
                             return data.model.name
                                 .split(" ")
                                 .map((str) => str[0].toUpperCase() + str.substring(1))

@@ -132,6 +132,22 @@ RouteBase get $rootRoute => GoRouteData.$route(
           path: 'admin-tambah-artikel',
           factory: $AdminTambahArtikelRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'admin-edit-artikel',
+          factory: $AdminEditArtikelRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'call-center-profile',
+          factory: $CallCenterProfileRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'admin-surveyor-tambah-catatan',
+          factory: $AdminSurveyorTambahCatatanRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'admin-surveyor-lihat-catatan',
+          factory: $AdminSurveyorLihatCatatanRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -577,6 +593,84 @@ extension $AdminTambahArtikelRouteExtension on AdminTambahArtikelRoute {
 
   String get location => GoRouteData.$location(
         '/admin-tambah-artikel',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminEditArtikelRouteExtension on AdminEditArtikelRoute {
+  static AdminEditArtikelRoute _fromState(GoRouterState state) =>
+      AdminEditArtikelRoute(
+        state.extra as Artikel,
+      );
+
+  String get location => GoRouteData.$location(
+        '/admin-edit-artikel',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
+}
+
+extension $CallCenterProfileRouteExtension on CallCenterProfileRoute {
+  static CallCenterProfileRoute _fromState(GoRouterState state) =>
+      const CallCenterProfileRoute();
+
+  String get location => GoRouteData.$location(
+        '/call-center-profile',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminSurveyorTambahCatatanRouteExtension
+    on AdminSurveyorTambahCatatanRoute {
+  static AdminSurveyorTambahCatatanRoute _fromState(GoRouterState state) =>
+      const AdminSurveyorTambahCatatanRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-surveyor-tambah-catatan',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminSurveyorLihatCatatanRouteExtension
+    on AdminSurveyorLihatCatatanRoute {
+  static AdminSurveyorLihatCatatanRoute _fromState(GoRouterState state) =>
+      const AdminSurveyorLihatCatatanRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin-surveyor-lihat-catatan',
       );
 
   void go(BuildContext context) => context.go(location);

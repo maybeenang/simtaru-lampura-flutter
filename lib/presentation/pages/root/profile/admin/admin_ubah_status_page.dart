@@ -1,11 +1,11 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_action_pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
@@ -26,6 +26,7 @@ class AdminUbahStatusPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dio = ref.watch(dioProvider);
     final inputController = useState<int>(-1);
     final showScrollToTop = useState(false);
     final hasReachedMax = useState(false);
@@ -67,22 +68,20 @@ class AdminUbahStatusPage extends HookConsumerWidget {
           context.loaderOverlay.show();
           try {
             final url = Endpoints.baseURL + Endpoints.updateStatusPengajuan + idPengajuan;
-            final Dio dio = Dio();
+            print("URL" + url.toString());
+            // final Dio dio = Dio();
 
-            await dio.put(
+            final res = await dio.put(
               url,
               data: {
                 "status_id": inputController.value,
               },
-              // options: Options(
-              //   headers: {
-              //     "Accept": "application/json",
-              //     "Authorization": "Bearer ${ref.read(tokenProvider).state}",
-              //   },
-              // ),
             );
 
+            print("RES" + res.toString());
             await ref.refresh(pengajuanControllerProvider.notifier).getPengajuan();
+            // ref.invalidate(pengajuanControllerProvider);
+
             if (context.mounted) {
               context.loaderOverlay.hide();
               Flushbar(
@@ -102,7 +101,11 @@ class AdminUbahStatusPage extends HookConsumerWidget {
                 ),
               ).show(context);
             }
-          } catch (e) {
+          } catch (e, s) {
+            print("SADASDASDASD" + e.toString());
+            print("safasfasfasfa" + s.toString());
+            ref.invalidate(pengajuanControllerProvider);
+
             if (context.mounted) {
               context.loaderOverlay.hide();
               Flushbar(
@@ -156,107 +159,113 @@ class AdminUbahStatusPage extends HookConsumerWidget {
         appBar: AppBar(
           title: const Text("Admin Ubah Status"),
         ),
-        body: CustomScrollView(
-          controller: scrollController,
-          slivers: [
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        color: AppColors.primaryColor,
-                        child: const SizedBox(
-                          width: double.infinity,
-                          height: 25,
+        body: RefreshIndicator(
+          onRefresh: () async {
+            await ref.read(pengajuanControllerProvider.notifier).getPengajuan();
+            // ref.invalidate(pengajuanControllerProvider);
+          },
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: [
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          color: AppColors.primaryColor,
+                          child: const SizedBox(
+                            width: double.infinity,
+                            height: 25,
+                          ),
                         ),
-                      ),
-                      const ButtonSearchPengajuan(),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  const WarningCard(),
-                  const SizedBox(height: 20),
-                ],
+                        const ButtonSearchPengajuan(),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const WarningCard(),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
-            ),
-            pengajuanState.maybeWhen(
-              orElse: () {
-                return SliverList.separated(
-                  itemCount: 5,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 10);
-                  },
-                  itemBuilder: (context, index) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
-                      child: ItemPengajuanLoading(),
-                    );
-                  },
-                );
-              },
-              data: (data) {
-                if (data!.isEmpty) {
-                  return const Center(
-                    child: Text("Tidak ada data"),
+              pengajuanState.maybeWhen(
+                orElse: () {
+                  return SliverList.separated(
+                    itemCount: 5,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 10);
+                    },
+                    itemBuilder: (context, index) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
+                        child: ItemPengajuanLoading(),
+                      );
+                    },
                   );
-                }
-
-                return SliverList.separated(
-                  itemCount: hasReachedMax.value
-                      ? data.length
-                      : data.length > 5
-                          ? data.length + 3
-                          : data.length,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 10);
-                  },
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppDouble.paddingOutside,
-                      ),
-                      child: index >= data.length
-                          ? const ItemPengajuanLoading()
-                          : ItemPengajuanCard(
-                              pengajuan: data[index],
-                              onTap: () {
-                                Future.delayed(
-                                  const Duration(milliseconds: 100),
-                                  () => showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) {
-                                      return BottomSheetCard(
-                                        pengajuan: data[index],
-                                        actions: [
-                                          ButtonActionPengajuan(
-                                            label: "Ubah Status",
-                                            icon: Icons.edit,
-                                            color: AppColors.mapColorStatusChip[2]!,
-                                            onTap: () {
-                                              handleUbahStatus(
-                                                data[index].nama_lengkap!,
-                                                data[index].id.toString(),
-                                                data[index],
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
+                },
+                data: (data) {
+                  if (data!.isEmpty) {
+                    return const Center(
+                      child: Text("Tidak ada data"),
                     );
-                  },
-                );
-              },
-            ),
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 50),
-            )
-          ],
+                  }
+
+                  return SliverList.separated(
+                    itemCount: hasReachedMax.value
+                        ? data.length
+                        : data.length > 5
+                            ? data.length + 3
+                            : data.length,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 10);
+                    },
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppDouble.paddingOutside,
+                        ),
+                        child: index >= data.length
+                            ? const ItemPengajuanLoading()
+                            : ItemPengajuanCard(
+                                pengajuan: data[index],
+                                onTap: () {
+                                  Future.delayed(
+                                    const Duration(milliseconds: 100),
+                                    () => showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        return BottomSheetCard(
+                                          pengajuan: data[index],
+                                          actions: [
+                                            ButtonActionPengajuan(
+                                              label: "Ubah Status",
+                                              icon: Icons.edit,
+                                              color: AppColors.mapColorStatusChip[2]!,
+                                              onTap: () {
+                                                handleUbahStatus(
+                                                  data[index].nama_lengkap!,
+                                                  data[index].id.toString(),
+                                                  data[index],
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                      );
+                    },
+                  );
+                },
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 50),
+              )
+            ],
+          ),
         ),
       ),
     );
