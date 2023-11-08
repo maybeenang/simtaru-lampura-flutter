@@ -41,11 +41,15 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
   }
 
   Future<bool> loadMore() async {
+    print("KONTOOOOOOOOOL ${isLoadMoreUpload} ${isLoadMoreSelesai}");
+
     if (!isLoadMoreUpload) {
       final res = await loadMoreUpload();
       return res;
     } else {
-      return await loadMoreSelesai();
+      final res = await loadMoreSelesai();
+      print("MEMEK ${res} ");
+      return res;
     }
   }
 
@@ -86,6 +90,7 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
   }
 
   Future<bool> loadMoreSelesai() async {
+    print("MEMEK ${pageSelesai}");
     final Dio dio = ref.watch(dioProvider);
     final loadMorePengajuan = await AsyncValue.guard<List<Pengajuan>>(
       () async {
@@ -107,11 +112,9 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
     );
 
     return loadMorePengajuan.maybeWhen(orElse: () {
-      isLoadMoreSelesai = true;
       return true;
     }, data: (value) {
       if (value.isEmpty) {
-        isLoadMoreSelesai = true;
         return true;
       }
       pageSelesai++;
