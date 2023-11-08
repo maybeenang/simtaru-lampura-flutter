@@ -44,11 +44,7 @@ class AuthController extends _$AuthController {
             await _sharedPreferences.remove(_sharedPrefsPasswordKey);
           },
           signedUp: (value) {},
-          error: (error) async {
-            await _sharedPreferences.remove(_sharedPrefsKey);
-            await _sharedPreferences.remove(_sharedPrefsNipKey);
-            await _sharedPreferences.remove(_sharedPrefsPasswordKey);
-          },
+          error: (error) async {},
         );
       },
     );
@@ -130,66 +126,7 @@ class AuthController extends _$AuthController {
         return const Auth.signedOut();
       },
     );
-
-    // if (loginAttemp is AsyncData<Auth>) {
-    //   print("INI MASALAHA");
-
-    //   final accessToken = _sharedPreferences.getString(_sharedPrefsKey);
-    //   return Auth.signedIn(
-    //     nip: nip,
-    //     password: password,
-    //     token: accessToken ?? '',
-    //   );
-    // } else {
-    //   await _sharedPreferences.remove(_sharedPrefsKey);
-    //   return const Auth.signedOut();
-    // }
   }
-
-  // Future<Auth> _loginWithToken(String token) async {
-  //   state = const AsyncValue<Auth>.loading();
-
-  //   final loginAttemp = await AsyncValue.guard<Auth>(
-  //     () async {
-  //       try {
-  //         final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.refresh);
-  //         final Response response = await dio.post(
-  //           uri.toString(),
-  //           options: Options(
-  //             headers: {
-  //               "Authorization": "Bearer $token",
-  //             },
-  //           ),
-  //         );
-  //         final data = response.data;
-  //         final accessToken = data['data']['original']['access_token'];
-  //         await _sharedPreferences.setString(_sharedPrefsKey, accessToken);
-  //         // ignore: avoid_print
-  //         final Auth auth = Auth.signedIn(
-  //           token: accessToken,
-  //         );
-  //         return auth;
-  //       } on DioException catch (e) {
-  //         if (e.response!.statusCode! >= 500) {
-  //           return const Auth.error("Internal Server Error");
-  //         }
-  //         return Auth.error(e.response?.data['message'] ?? 'Error');
-  //       } catch (e) {
-  //         return const Auth.error("Terjadi kesalahan");
-  //       }
-  //     },
-  //   );
-
-  //   if (loginAttemp is AsyncError<Auth>) {
-  //     await _sharedPreferences.remove(_sharedPrefsKey);
-  //     return const Auth.signedOut();
-  //   } else {
-  //     final accessToken = _sharedPreferences.getString(_sharedPrefsKey);
-  //     return Auth.signedIn(
-  //       token: accessToken ?? '',
-  //     );
-  //   }
-  // }
 
   Future<void> login(String nik, String password) async {
     state = const AsyncValue<Auth>.loading();

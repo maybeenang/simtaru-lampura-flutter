@@ -287,7 +287,7 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
                                                     color: AppColors.pengajuandiProses,
                                                     onTap: () {
                                                       context.pop();
-                                                      const AdminSurveyorTambahCatatanRoute().push(context);
+                                                      AdminSurveyorTambahCatatanRoute(data[index]).push(context);
                                                     },
                                                   ),
                                                   const SizedBox(height: 5),
@@ -297,7 +297,7 @@ class AdminUploadScanSuratPage extends HookConsumerWidget {
                                                     color: AppColors.greenColor,
                                                     onTap: () {
                                                       context.pop();
-                                                      const AdminSurveyorLihatCatatanRoute().push(context);
+                                                      AdminSurveyorLihatCatatanRoute(data[index]).push(context);
                                                     },
                                                   ),
                                                 ],

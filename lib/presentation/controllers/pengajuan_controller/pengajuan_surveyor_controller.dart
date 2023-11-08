@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
+import 'package:flutter_map_simtaru/domain/entity/pengajuan/catatan_pengajuan.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -8,7 +9,6 @@ part 'pengajuan_surveyor_controller.g.dart';
 
 @riverpod
 class PengajuanSurveyorController extends _$PengajuanSurveyorController {
-  // final Dio dio = Dio();
   int page = 1;
   int pageSelesai = 1;
   bool isLoadMoreUpload = false;
@@ -43,13 +43,9 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
   Future<bool> loadMore() async {
     if (!isLoadMoreUpload) {
       final res = await loadMoreUpload();
-      if (res) {
-        return await loadMoreSelesai();
-      } else {
-        return false;
-      }
+      return res;
     } else {
-      return true;
+      return await loadMoreSelesai();
     }
   }
 
@@ -148,6 +144,41 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
       state = AsyncValue.data(pengajuan);
 
       return pengajuan;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<bool> tambahCatatanPengajuan(String id, String catatan) async {
+    final Dio dio = ref.watch(dioProvider);
+    try {
+      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.createCatatanPengajuan);
+      await dio.post(
+        uri.toString(),
+        data: {
+          'pengajuan_id': id,
+          'keterangan': catatan,
+        },
+      );
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<List<CatatanPengajuan>> getCatatanPengajuan(String id) async {
+    final Dio dio = ref.watch(dioProvider);
+    try {
+      final Uri uri = Uri.parse(Endpoints.baseURL + Endpoints.getCatatanPengajuan + id);
+      final Response response = await dio.get(
+        uri.toString(),
+      );
+
+      final List<CatatanPengajuan> catatanPengajuan =
+          (response.data['data'] as List).map((e) => CatatanPengajuan.fromJson(e)).toList();
+
+      return catatanPengajuan;
     } catch (e) {
       return [];
     }

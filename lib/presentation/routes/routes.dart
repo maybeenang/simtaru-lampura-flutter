@@ -371,22 +371,32 @@ class AdminEditArtikelRoute extends GoRouteData {
 }
 
 class AdminSurveyorTambahCatatanRoute extends GoRouteData {
-  const AdminSurveyorTambahCatatanRoute();
+  const AdminSurveyorTambahCatatanRoute(this.$extra);
   static const path = 'admin-surveyor-tambah-catatan';
+
+  final Pengajuan $extra;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const AdminSurveyorTambahCatatanPage();
+    return AdminSurveyorTambahCatatanPage(
+      pengajuan: $extra,
+    );
   }
 }
 
 class AdminSurveyorLihatCatatanRoute extends GoRouteData {
-  const AdminSurveyorLihatCatatanRoute();
+  const AdminSurveyorLihatCatatanRoute(
+    this.$extra,
+  );
   static const path = 'admin-surveyor-lihat-catatan';
+
+  final Pengajuan $extra;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const AdminSurveyorLihatCatatanPage();
+    return AdminSurveyorLihatCatatanPage(
+      pengajuan: $extra,
+    );
   }
 }
 

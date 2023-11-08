@@ -1,9 +1,9 @@
 class Endpoints {
-  static String baseURL = "https://www.simtaru-lampura.com/api/v1/";
-  // static String baseURL = "https://raccoon-concrete-simply.ngrok-free.app/api/v1/";
+  // static String baseURL = "https://www.simtaru-lampura.com/api/v1/";
+  static String baseURL = "https://raccoon-concrete-simply.ngrok-free.app/api/v1/";
   // static String baseURL = "https://relieved-cheaply-drum.ngrok-free.app/api/v1/";
-  static String baseURLDownload = "https://www.simtaru-lampura.com";
-  // static String baseURLDownload = "https://raccoon-concrete-simply.ngrok-free.app";
+  // static String baseURLDownload = "https://www.simtaru-lampura.com";
+  static String baseURLDownload = "https://raccoon-concrete-simply.ngrok-free.app";
   // static String baseURLDownload = "https://relieved-cheaply-drum.ngrok-free.app";
   static String peta = "https://www.simtaru-lampura.com/peta";
 
@@ -34,6 +34,8 @@ class Endpoints {
   static String deleteArtikel = "artikel/delete/";
   static String getAllRole = "user/getAllRole";
   static String getAllNotif = "notif/getAll";
+  static String createCatatanPengajuan = "surveyor/create";
+  static String getCatatanPengajuan = "surveyor/view/pengajuan/";
 
   static String convertDownloadUrl(String url) {
     return baseURLDownload + url;
