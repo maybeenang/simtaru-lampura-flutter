@@ -72,6 +72,7 @@ flutter:
   assets:
     - assets/
     - assets/svg/
+    - assets/svg/pengajuan_status/
     - assets/images/
     - assets/json/
 

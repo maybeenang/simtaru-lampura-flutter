@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/index_screen_provider.dart';
 import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
+import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_call_toaction.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/carousel_berita_card.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/carousel_welcome_card.dart';
@@ -76,17 +78,39 @@ class _HomePageState extends ConsumerState<HomePage> {
             const SizedBox(height: 20),
             const SubHeader(labelText: "Informasi"),
             const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              width: double.infinity,
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                children: [
-                  StatusCard(label: "Total Pengajuan"),
-                  StatusCard(label: "Pengajuan Disetujui"),
-                  StatusCard(label: "Pengajuan Diproses"),
-                  StatusCard(label: "Pengajuan Ditolak"),
-                ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.whiteColor,
+                  borderRadius: BorderRadius.circular(AppDouble.borderRadius),
+                  boxShadow: [AppStyles.boxShadowStyle],
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        "Pengajuan",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Wrap(
+                      children: [
+                        StatusCard(label: "Total Pengajuan"),
+                        StatusCard(label: "Pengajuan Disetujui"),
+                        StatusCard(label: "Pengajuan Diproses"),
+                        StatusCard(label: "Pengajuan Ditolak"),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 20),
