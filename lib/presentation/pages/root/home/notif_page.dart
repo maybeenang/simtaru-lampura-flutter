@@ -55,6 +55,15 @@ class NotifPage extends HookConsumerWidget {
                       ),
                     );
                   },
+                  loading: () {
+                    return const Text(
+                      "Loading...",
+                      style: TextStyle(
+                        color: AppColors.blackColor,
+                        fontSize: 14,
+                      ),
+                    );
+                  },
                   data: (data) {
                     if (data!.isEmpty) {
                       return const Text(

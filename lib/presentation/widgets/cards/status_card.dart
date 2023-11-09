@@ -26,7 +26,7 @@ class StatusCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final jumlahPengajuanState = ref.watch(pengajuanJumlahControllerProvider);
 
-    return SizedBox(
+    return Container(
       height: MediaQuery.of(context).size.height / 6,
       width: MediaQuery.of(context).size.width / 2.4,
       child: Column(
@@ -37,6 +37,7 @@ class StatusCard extends HookConsumerWidget {
             iconMapping[label]!,
             height: 40,
             width: 40,
+            fit: BoxFit.fitHeight,
           ),
           const SizedBox(height: 5),
           Text(

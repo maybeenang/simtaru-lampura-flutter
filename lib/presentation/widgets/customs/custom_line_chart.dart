@@ -74,13 +74,23 @@ class CustomLineChart extends StatelessWidget {
                         showTitles: true,
                         reservedSize: 25,
                         getTitlesWidget: (value, meta) {
-                          return Text(
-                            value.toInt().toString(),
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.black,
+                          return SideTitleWidget(
+                            axisSide: meta.axisSide,
+                            child: Text(
+                              value.toInt().toString(),
+                              style: const TextStyle(
+                                fontSize: 10,
+                                color: Colors.black,
+                              ),
                             ),
                           );
+                          // return Text(
+                          //   value.toInt().toString(),
+                          //   style: const TextStyle(
+                          //     fontSize: 12,
+                          //     color: Colors.black,
+                          //   ),
+                          // );
                         },
                       ),
                     ),
@@ -161,6 +171,7 @@ class CustomLineChart extends StatelessWidget {
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 1,
+      fitInside: SideTitleFitInsideData.fromTitleMeta(meta),
       child: text,
     );
   }

@@ -102,6 +102,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ),
                     const SizedBox(height: 10),
                     Wrap(
+                      runAlignment: WrapAlignment.spaceBetween,
                       children: [
                         StatusCard(label: "Total Pengajuan"),
                         StatusCard(label: "Pengajuan Disetujui"),
@@ -113,7 +114,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const CustomBarChart(),
             const SizedBox(height: 10),
             const CustomLineChart(),
