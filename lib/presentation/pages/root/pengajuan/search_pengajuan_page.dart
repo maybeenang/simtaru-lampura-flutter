@@ -23,6 +23,7 @@ class SearchPengajuanPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final dio = ref.watch(dioProvider);
+    final page = useState(1);
     final searchInput = useTextEditingController();
     final roleState = ref.watch(roleProvider);
     final userId = ref.watch(userControllerProvider).maybeWhen(
@@ -38,9 +39,13 @@ class SearchPengajuanPage extends HookConsumerWidget {
 
     final isLoading = useState(false);
 
+    final scrollController = ScrollController();
+
     final searchPengajuanItem = useState([]);
 
     Future searchPengajuan(String input) async {
+      page.value = 1;
+      print("searchPengajuan");
       isLoading.value = true;
       // final Dio dio = Dio();
       if (userId == 0) {
@@ -48,17 +53,17 @@ class SearchPengajuanPage extends HookConsumerWidget {
       }
       String query;
       if (roleState is Admin) {
-        query = "?searchName=$input";
+        query = "?searchName=$input&page=${page.value}";
       } else if (roleState is AdminVerifBerkas) {
-        query = "?searchName=$input&searchStatus=2";
+        query = "?searchName=$input&searchStatus=2&page=${page.value}";
       } else if (roleState is AdminVerifLapangan) {
-        query = "?searchName=$input&searchStatus=3";
+        query = "?searchName=$input&searchStatus=3&page=${page.value}";
       } else if (roleState is AdminUploadScanSurat) {
-        query = "?searchName=$input&searchStatus=11";
+        query = "?searchName=$input&searchStatus=11&page=${page.value}";
       } else if (roleState is Surveyor) {
-        query = "?searchName=$input&searchStatus=12";
+        query = "?searchName=$input&searchStatus=12&page=${page.value}";
       } else {
-        query = "?searchUserId=$userId&searchName=$input";
+        query = "?searchUserId=$userId&searchName=$input&page=${page.value}";
       }
       try {
         final response = await dio.get(
@@ -74,10 +79,57 @@ class SearchPengajuanPage extends HookConsumerWidget {
       }
     }
 
+    Future loadMore(String input) async {
+      print("loadMore");
+      if (userId == 0) {
+        return;
+      }
+      String query;
+      if (roleState is Admin) {
+        query = "?searchName=$input&page=${page.value}";
+      } else if (roleState is AdminVerifBerkas) {
+        query = "?searchName=$input&searchStatus=2&page=${page.value}";
+      } else if (roleState is AdminVerifLapangan) {
+        query = "?searchName=$input&searchStatus=3&page=${page.value}";
+      } else if (roleState is AdminUploadScanSurat) {
+        query = "?searchName=$input&searchStatus=11&page=${page.value}";
+      } else if (roleState is Surveyor) {
+        query = "?searchName=$input&searchStatus=12&page=${page.value}";
+      } else {
+        query = "?searchUserId=$userId&searchName=$input&page=${page.value}";
+      }
+      try {
+        final response = await dio.get(
+          Endpoints.baseURL + Endpoints.seluruhPengajuan + query,
+        );
+
+        if (response.data['data'] == null || response.data['data'].isEmpty) {
+          page.value--;
+          return;
+        }
+
+        final List<Pengajuan> pengajuan = (response.data['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
+        searchPengajuanItem.value = [...searchPengajuanItem.value, ...pengajuan];
+      } catch (e, s) {
+        print(s.toString());
+        return Future.error(e.toString());
+      }
+    }
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+        page.value++;
+        loadMore(
+          searchInput.text,
+        );
+      }
+    });
+
     return CustomSafeArea(
       child: Scaffold(
         backgroundColor: AppColors.bgColor,
         body: SingleChildScrollView(
+          controller: scrollController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

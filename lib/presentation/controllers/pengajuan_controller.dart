@@ -128,4 +128,28 @@ class PengajuanController extends _$PengajuanController {
       return [];
     }
   }
+
+  Future setujuiPengajuan(int pengajuanId) async {
+    final Dio dio = ref.watch(dioProvider);
+    print("DINISADNASIDANSD $pengajuanId");
+
+    String url = "${Endpoints.baseURL}${Endpoints.updateStatusPengajuan}$pengajuanId";
+    // final Dio dio = Dio();
+    try {
+      final res = await dio.put(
+        url,
+        data: {
+          "status_id": 3,
+        },
+      );
+
+      print("DINISADNASIDANSD ${res.data}");
+
+      ref.invalidate(pengajuanControllerProvider);
+
+      return res.data;
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
 }

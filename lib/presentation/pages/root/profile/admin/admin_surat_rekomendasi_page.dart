@@ -156,9 +156,30 @@ class AdminSuratRekomendasiPage extends HookConsumerWidget {
                                                   ButtonActionPengajuan(
                                                     label: "Tambah Catatan",
                                                     icon: Icons.note_add,
+                                                    color: AppColors.pengajuandiProses,
+                                                    onTap: () {
+                                                      context.pop();
+                                                      AdminSurveyorTambahCatatanRoute(data[index]).push(context);
+                                                    },
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  ButtonActionPengajuan(
+                                                    label: "Lihat Catatan",
+                                                    icon: Icons.note,
                                                     color: AppColors.greenColor,
                                                     onTap: () {
                                                       context.pop();
+                                                      AdminSurveyorLihatCatatanRoute(data[index]).push(context);
+                                                    },
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  ButtonActionPengajuan(
+                                                    label: "Lihat Polygon",
+                                                    icon: Icons.map,
+                                                    color: AppColors.greenColor,
+                                                    onTap: () {
+                                                      context.pop();
+                                                      AdminRekamPolygonRoute(data[index]).push(context);
                                                     },
                                                   ),
                                                 ],

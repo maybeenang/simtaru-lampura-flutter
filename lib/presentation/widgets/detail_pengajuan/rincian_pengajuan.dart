@@ -47,7 +47,7 @@ class RincianPengajuan extends ConsumerWidget {
             "Rincian Pengajuan",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
             ),
           ),
           const Divider(
@@ -55,7 +55,7 @@ class RincianPengajuan extends ConsumerWidget {
           ),
           const Text(
             "Status",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Container(
             padding: const EdgeInsets.symmetric(
@@ -89,7 +89,7 @@ class RincianPengajuan extends ConsumerWidget {
           pengajuan.status_id == 1
               ? const Text(
                   "Alasan Ditolak",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.redColor),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: AppColors.redColor),
                 )
               : const SizedBox(),
           pengajuan.status_id == 1
@@ -101,7 +101,7 @@ class RincianPengajuan extends ConsumerWidget {
           const SizedBox(height: 10),
           const Text(
             "Bertindak Atas Nama",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.bertindak_atas_nama.toString(),
@@ -110,7 +110,7 @@ class RincianPengajuan extends ConsumerWidget {
           const SizedBox(height: 10),
           const Text(
             "Penggunaan Tanah Saat Dimohon",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.penggunaan_tanah_saat_dimohon.toString(),
@@ -119,7 +119,7 @@ class RincianPengajuan extends ConsumerWidget {
           const SizedBox(height: 10),
           const Text(
             "Luas Tanah Seluruhnya",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             "${pengajuan.luas_tanah_seluruhnya.toString()} m2",
@@ -128,7 +128,7 @@ class RincianPengajuan extends ConsumerWidget {
           const SizedBox(height: 10),
           const Text(
             "Luas Tanah Yang Dimohon",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             "${pengajuan.luas_tanah_yang_dimohon.toString()} m2",
@@ -137,7 +137,7 @@ class RincianPengajuan extends ConsumerWidget {
           const SizedBox(height: 10),
           const Text(
             "Bukti Penguasaan Tanah",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.bukti_penguasaan_tanah.toString(),

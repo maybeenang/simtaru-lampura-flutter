@@ -28,7 +28,7 @@ class BiodataPemohon extends StatelessWidget {
             "Biodata Pemohon",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
             ),
           ),
           const Divider(
@@ -36,7 +36,7 @@ class BiodataPemohon extends StatelessWidget {
           ),
           const Text(
             "Nama",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.nama_lengkap.toString(),
@@ -45,7 +45,7 @@ class BiodataPemohon extends StatelessWidget {
           const SizedBox(height: 10),
           const Text(
             "No Identitas",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.no_identitas.toString(),
@@ -54,7 +54,7 @@ class BiodataPemohon extends StatelessWidget {
           const SizedBox(height: 10),
           const Text(
             "Alamat",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.alamat.toString(),
@@ -63,7 +63,7 @@ class BiodataPemohon extends StatelessWidget {
           const SizedBox(height: 10),
           const Text(
             "Tempat Tanggal Lahir",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.tempat_tanggal_lahir.toString(),
@@ -72,7 +72,7 @@ class BiodataPemohon extends StatelessWidget {
           const SizedBox(height: 10),
           const Text(
             "Pekerjaan",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.pekerjaan.toString(),
@@ -81,7 +81,7 @@ class BiodataPemohon extends StatelessWidget {
           const SizedBox(height: 10),
           const Text(
             "No HP",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.no_hp.toString(),

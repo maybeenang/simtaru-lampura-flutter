@@ -33,7 +33,9 @@ class Endpoints {
   static String editArtikel = "artikel/edit/";
   static String deleteArtikel = "artikel/delete/";
   static String getAllRole = "user/getAllRole";
-  static String getAllNotif = "notif/getAll";
+  static String getAllNotif = "notif/user/";
+  static String createCatatanPengajuan = "surveyor/create";
+  static String getCatatanPengajuan = "surveyor/view/pengajuan/";
 
   static String convertDownloadUrl(String url) {
     return baseURLDownload + url;

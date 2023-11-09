@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/domain/entity/bar_graph/bar_data.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CustomBarChart extends StatelessWidget {
+class CustomBarChart extends HookConsumerWidget {
   const CustomBarChart({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     BarData data = BarData(
       jan: 32,
       feb: 25,
@@ -53,19 +54,17 @@ class CustomBarChart extends StatelessWidget {
               aspectRatio: 2,
               child: BarChart(
                 BarChartData(
-                  maxY: data.barData
-                      .map((data) => data.y)
-                      .toList()
-                      .reduce((value, element) => value > element ? value : element),
+                  maxY: data.barData.map((data) => data.y).toList().reduce((value, element) {
+                    if (value > element) {
+                      return value;
+                    } else {
+                      return element;
+                    }
+                  }),
                   minY: 0,
                   borderData: FlBorderData(
-                      show: true,
-                      border: const Border(
-                        left: BorderSide.none,
-                        bottom: BorderSide.none,
-                        right: BorderSide.none,
-                        top: BorderSide.none,
-                      )),
+                    show: false,
+                  ),
                   gridData: const FlGridData(show: true, drawVerticalLine: false),
                   alignment: BarChartAlignment.spaceAround,
                   titlesData: FlTitlesData(
@@ -119,7 +118,7 @@ class CustomBarChart extends StatelessWidget {
         textAlign: TextAlign.left,
         style: const TextStyle(
           color: Colors.black,
-          fontSize: 12,
+          fontSize: 10,
         ),
       ),
     );

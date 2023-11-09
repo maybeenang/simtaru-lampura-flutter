@@ -11,10 +11,12 @@ import 'package:flutter_map_line_editor/flutter_map_line_editor.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
+import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/dio/dio_provider.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_surat_rekomendasi_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_upload_scan_surat_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -135,6 +137,8 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
 
   @override
   Widget build(BuildContext context) {
+    final roleState = ref.watch(roleProvider);
+
     final dio = ref.watch(dioProvider);
     return Scaffold(
       appBar: AppBar(
@@ -189,114 +193,116 @@ class _AdminRekamPolygonPageState extends ConsumerState<AdminRekamPolygonPage> {
         ],
       ),
       floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: ExpandableFab(
-        key: _key,
-        openButtonBuilder: RotateFloatingActionButtonBuilder(
-          child: const Icon(Icons.edit),
-          fabSize: ExpandableFabSize.regular,
-          foregroundColor: AppColors.whiteColor,
-          backgroundColor: AppColors.primaryColor,
-          shape: const CircleBorder(),
-        ),
-        closeButtonBuilder: RotateFloatingActionButtonBuilder(
-          child: const Icon(Icons.close),
-          fabSize: ExpandableFabSize.regular,
-          foregroundColor: AppColors.whiteColor,
-          backgroundColor: AppColors.primaryColor,
-          shape: const CircleBorder(),
-        ),
-        distance: 60.0,
-        childrenOffset: const Offset(5, 5),
-        type: ExpandableFabType.up,
-        children: [
-          FloatingActionButton.small(
-            shape: const CircleBorder(),
-            heroTag: null,
-            backgroundColor: AppColors.redColor,
-            onPressed: () {
-              setState(() {
-                polyEditor.points.clear();
-              });
-            },
-            child: const Icon(Icons.delete),
-          ),
-          FloatingActionButton.small(
-            shape: const CircleBorder(),
-            heroTag: null,
-            backgroundColor: AppColors.mapColorStatusChip[2],
-            onPressed: () {
-              setState(() {
-                if (polyEditor.points.isNotEmpty) {
-                  final index = polyEditor.points.length - 1;
-                  polyEditor.remove(index);
-                }
-              });
-            },
-            child: const Icon(Icons.undo),
-          ),
-          FloatingActionButton.small(
-            shape: const CircleBorder(),
-            heroTag: null,
-            backgroundColor: AppColors.greenColor,
-            onPressed: () {
-              // print(widget.pengajuan.titik_polygon);
-              // return;
-              if (polyEditor.points.length < 3) {
-                QuickAlert.show(
-                  context: context,
-                  type: QuickAlertType.error,
-                  title: "Peringatan",
-                  barrierDismissible: false,
-                  text: 'Silahkan pilih minimal 3 titik',
-                  confirmBtnText: "OK",
-                );
-                return;
-              }
-
-              final state = _key.currentState;
-              if (state != null) {
-                debugPrint('isOpen:${state.isOpen}');
-                double getNumber(double input, {int precision = 6}) =>
-                    double.parse('$input'.substring(0, '$input'.indexOf('.') + precision + 1));
-                Map<String, dynamic> geojson = {
-                  "type": "FeatureCollection",
-                  "features": [
-                    {
-                      "type": "Feature",
-                      "properties": {},
-                      "geometry": {
-                        "type": "Polygon",
-                        "coordinates": [
-                          // polyEditor.points.map((e) => [getNumber(e.longitude), getNumber(e.latitude)]).toList()
-                          polyEditor.points.map((e) => [e.longitude, e.latitude]).toList()
-                        ]
+      floatingActionButton: roleState is Surveyor
+          ? null
+          : ExpandableFab(
+              key: _key,
+              openButtonBuilder: RotateFloatingActionButtonBuilder(
+                child: const Icon(Icons.edit),
+                fabSize: ExpandableFabSize.regular,
+                foregroundColor: AppColors.whiteColor,
+                backgroundColor: AppColors.primaryColor,
+                shape: const CircleBorder(),
+              ),
+              closeButtonBuilder: RotateFloatingActionButtonBuilder(
+                child: const Icon(Icons.close),
+                fabSize: ExpandableFabSize.regular,
+                foregroundColor: AppColors.whiteColor,
+                backgroundColor: AppColors.primaryColor,
+                shape: const CircleBorder(),
+              ),
+              distance: 60.0,
+              childrenOffset: const Offset(5, 5),
+              type: ExpandableFabType.up,
+              children: [
+                FloatingActionButton.small(
+                  shape: const CircleBorder(),
+                  heroTag: null,
+                  backgroundColor: AppColors.redColor,
+                  onPressed: () {
+                    setState(() {
+                      polyEditor.points.clear();
+                    });
+                  },
+                  child: const Icon(Icons.delete),
+                ),
+                FloatingActionButton.small(
+                  shape: const CircleBorder(),
+                  heroTag: null,
+                  backgroundColor: AppColors.mapColorStatusChip[2],
+                  onPressed: () {
+                    setState(() {
+                      if (polyEditor.points.isNotEmpty) {
+                        final index = polyEditor.points.length - 1;
+                        polyEditor.remove(index);
                       }
+                    });
+                  },
+                  child: const Icon(Icons.undo),
+                ),
+                FloatingActionButton.small(
+                  shape: const CircleBorder(),
+                  heroTag: null,
+                  backgroundColor: AppColors.greenColor,
+                  onPressed: () {
+                    // print(widget.pengajuan.titik_polygon);
+                    // return;
+                    if (polyEditor.points.length < 3) {
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.error,
+                        title: "Peringatan",
+                        barrierDismissible: false,
+                        text: 'Silahkan pilih minimal 3 titik',
+                        confirmBtnText: "OK",
+                      );
+                      return;
                     }
-                  ]
-                };
 
-                state.toggle();
-                handleSubmit(geojson, dio);
-              }
-            },
-            child: const Icon(Icons.check),
-          ),
-        ],
-        afterOpen: () {
-          setState(() {
-            isEditing = true;
-          });
-        },
-        afterClose: () {
-          setState(() {
-            isEditing = false;
-          });
+                    final state = _key.currentState;
+                    if (state != null) {
+                      debugPrint('isOpen:${state.isOpen}');
+                      double getNumber(double input, {int precision = 6}) =>
+                          double.parse('$input'.substring(0, '$input'.indexOf('.') + precision + 1));
+                      Map<String, dynamic> geojson = {
+                        "type": "FeatureCollection",
+                        "features": [
+                          {
+                            "type": "Feature",
+                            "properties": {},
+                            "geometry": {
+                              "type": "Polygon",
+                              "coordinates": [
+                                // polyEditor.points.map((e) => [getNumber(e.longitude), getNumber(e.latitude)]).toList()
+                                polyEditor.points.map((e) => [e.longitude, e.latitude]).toList()
+                              ]
+                            }
+                          }
+                        ]
+                      };
 
-          if (polyEditor.points.length < 3) {
-            return;
-          }
-        },
-      ),
+                      state.toggle();
+                      handleSubmit(geojson, dio);
+                    }
+                  },
+                  child: const Icon(Icons.check),
+                ),
+              ],
+              afterOpen: () {
+                setState(() {
+                  isEditing = true;
+                });
+              },
+              afterClose: () {
+                setState(() {
+                  isEditing = false;
+                });
+
+                if (polyEditor.points.length < 3) {
+                  return;
+                }
+              },
+            ),
     );
   }
 

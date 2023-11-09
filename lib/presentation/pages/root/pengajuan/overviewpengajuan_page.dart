@@ -10,6 +10,7 @@ import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controlle
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_berkas_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_verifikasi_lapangan_controller.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/buttons/button_search_pengajuan.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/carousel_pengajuan_card.dart';
@@ -176,6 +177,14 @@ class OverviewPengajuanPage extends HookConsumerWidget {
                           ? const ItemPengajuanLoading()
                           : ItemPengajuanCard(
                               pengajuan: data[index],
+                              onTap: () {
+                                Future.delayed(
+                                  const Duration(milliseconds: 300),
+                                  () {
+                                    DetailPengajuanRoute(data[index]).push(context);
+                                  },
+                                );
+                              },
                             ),
                     );
                   },

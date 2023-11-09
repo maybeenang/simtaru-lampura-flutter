@@ -29,7 +29,7 @@ class RencanaPembangunan extends StatelessWidget {
             "Rencana Pembangunan",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
             ),
           ),
           const Divider(
@@ -37,7 +37,7 @@ class RencanaPembangunan extends StatelessWidget {
           ),
           const Text(
             "Letak Tanah",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.letak_tanah.toString(),
@@ -48,7 +48,7 @@ class RencanaPembangunan extends StatelessWidget {
           const SizedBox(height: 10),
           const Text(
             "Rencana Penggunaan Tanah",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.rencana_penggunaan_tanah.toString(),
@@ -57,7 +57,7 @@ class RencanaPembangunan extends StatelessWidget {
           const SizedBox(height: 10),
           const Text(
             "Batas Sebelah Utara",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.batas_sebelah_utara.toString(),
@@ -66,7 +66,7 @@ class RencanaPembangunan extends StatelessWidget {
           const SizedBox(height: 10),
           const Text(
             "Batas Sebelah Timur",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.batas_sebelah_timur.toString(),
@@ -75,7 +75,7 @@ class RencanaPembangunan extends StatelessWidget {
           const SizedBox(height: 10),
           const Text(
             "Batas Sebelah Selatan",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.batas_sebelah_selatan.toString(),
@@ -84,7 +84,7 @@ class RencanaPembangunan extends StatelessWidget {
           const SizedBox(height: 10),
           const Text(
             "Batas Sebelah Barat",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           Text(
             pengajuan.batas_sebelah_barat.toString(),
@@ -95,7 +95,7 @@ class RencanaPembangunan extends StatelessWidget {
             children: [
               const Text(
                 "Titik Koordinat",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
               ),
               TextButton(
                 onPressed: () {

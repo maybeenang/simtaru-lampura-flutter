@@ -12,3 +12,4 @@ final formEditProfileKey = GlobalKey<FormState>();
 final formEditPasswordKey = GlobalKey<FormState>();
 final formTambahArtikelKey = GlobalKey<FormState>();
 final formEditArtikelKey = GlobalKey<FormState>();
+final formTambahCatatanPengajuanKey = GlobalKey<FormState>();
