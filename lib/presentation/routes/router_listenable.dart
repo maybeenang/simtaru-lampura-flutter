@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/auth_controller.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
@@ -33,12 +34,18 @@ class RouterListenable extends _$RouterListenable implements Listenable {
     );
   }
 
-  String? redirect(BuildContext context, GoRouterState state) {
+  Future<String?> redirect(BuildContext context, GoRouterState state) async {
     if (this.state.isLoading || this.state.hasError) return null;
     print(state.uri.toString());
 
+    final connectivityResult = await Connectivity().checkConnectivity();
+
     final isSplash = state.uri.toString() == SplashRoute.path;
     if (isSplash) {
+      if (connectivityResult == ConnectivityResult.vpn || connectivityResult == ConnectivityResult.none) {
+        return SplashRoute.path;
+      }
+
       return _isAuth ? RootRoute.path : OnBoardingRoute.path;
     }
 

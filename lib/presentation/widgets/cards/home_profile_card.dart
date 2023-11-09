@@ -137,6 +137,9 @@ class HomeProfileCard extends HookConsumerWidget {
                     TextSpan(
                       text: weatherState.when(
                         data: (data) {
+                          if (data.isEmpty) {
+                            return "0";
+                          }
                           return "${data['current']['temp_c']}°C";
                         },
                         error: (error, stackTrace) {

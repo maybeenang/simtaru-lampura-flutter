@@ -52,6 +52,7 @@ dependencies:
   flutter_map_geojson: 1.0.3
   webview_flutter: ^4.4.1
   url_launcher: ^6.2.1
+  connectivity_plus: ^5.0.1
 
 dev_dependencies:
   flutter_test:

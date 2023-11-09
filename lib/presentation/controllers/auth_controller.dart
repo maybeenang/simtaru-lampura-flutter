@@ -55,6 +55,8 @@ class AuthController extends _$AuthController {
       state = const AsyncValue<Auth>.loading();
       final nip = _sharedPreferences.getString(_sharedPrefsNipKey);
       final password = _sharedPreferences.getString(_sharedPrefsPasswordKey);
+      // final accessToken = _sharedPreferences.getString(_sharedPrefsKey);
+
       print("nip ${nip.toString()}");
       print("pw ${password.toString()}");
 
