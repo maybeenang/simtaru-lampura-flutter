@@ -172,6 +172,16 @@ class AdminSuratRekomendasiPage extends HookConsumerWidget {
                                                       AdminSurveyorLihatCatatanRoute(data[index]).push(context);
                                                     },
                                                   ),
+                                                  const SizedBox(height: 5),
+                                                  ButtonActionPengajuan(
+                                                    label: "Lihat Polygon",
+                                                    icon: Icons.map,
+                                                    color: AppColors.greenColor,
+                                                    onTap: () {
+                                                      context.pop();
+                                                      AdminRekamPolygonRoute(data[index]).push(context);
+                                                    },
+                                                  ),
                                                 ],
                                         );
                                       },

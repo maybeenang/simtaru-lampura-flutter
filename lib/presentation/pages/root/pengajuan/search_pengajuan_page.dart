@@ -44,6 +44,7 @@ class SearchPengajuanPage extends HookConsumerWidget {
     final searchPengajuanItem = useState([]);
 
     Future searchPengajuan(String input) async {
+      page.value = 1;
       print("searchPengajuan");
       isLoading.value = true;
       // final Dio dio = Dio();
@@ -101,12 +102,16 @@ class SearchPengajuanPage extends HookConsumerWidget {
         final response = await dio.get(
           Endpoints.baseURL + Endpoints.seluruhPengajuan + query,
         );
+
+        if (response.data['data'] == null || response.data['data'].isEmpty) {
+          page.value--;
+          return;
+        }
+
         final List<Pengajuan> pengajuan = (response.data['data'] as List).map((e) => Pengajuan.fromJson(e)).toList();
         searchPengajuanItem.value = [...searchPengajuanItem.value, ...pengajuan];
-        isLoading.value = false;
-      } catch (e) {
-        isLoading.value = false;
-        searchPengajuanItem.value = [];
+      } catch (e, s) {
+        print(s.toString());
         return Future.error(e.toString());
       }
     }

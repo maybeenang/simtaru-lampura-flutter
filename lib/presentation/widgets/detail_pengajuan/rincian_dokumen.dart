@@ -348,13 +348,13 @@ class RincianDokumen extends HookConsumerWidget {
           "Dokumen",
           style: TextStyle(
             fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
         const Divider(),
         const Text(
           "Fotocopy KTP",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
         checkFile(
           context,
@@ -366,14 +366,14 @@ class RincianDokumen extends HookConsumerWidget {
         const SizedBox(height: 10),
         const Text(
           "Fotocopy Sertifikat",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
         checkFile(context, pengajuan.fotocopy_sertifikat.toString(), (roleState is! User && roleState is! Surveyor),
             "Fotocopy Sertifikat", "fotocopy_sertifikat"),
         const SizedBox(height: 10),
         const Text(
           "Fotocopy SPPT PBB",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
         checkFile(
           context,
@@ -385,7 +385,7 @@ class RincianDokumen extends HookConsumerWidget {
         const SizedBox(height: 10),
         const Text(
           "Fotocopy NPWP",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
         checkFile(
           context,
@@ -397,7 +397,7 @@ class RincianDokumen extends HookConsumerWidget {
         const SizedBox(height: 10),
         const Text(
           "Surat Persetujuan Tetangga",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
         checkFile(
           context,
@@ -409,7 +409,7 @@ class RincianDokumen extends HookConsumerWidget {
         const SizedBox(height: 10),
         const Text(
           "Gambar Rencana Pembangunan",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
         pengajuan.gambar_rencana_pembangunan?.isEmpty ?? true
             ? Row(
@@ -485,7 +485,7 @@ class RincianDokumen extends HookConsumerWidget {
         const Text(
           "Fotocopy Akte Pendirian Perusahaan",
           maxLines: 1,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
         checkFile(
           context,
@@ -497,7 +497,7 @@ class RincianDokumen extends HookConsumerWidget {
         const SizedBox(height: 10),
         const Text(
           "Set Lokasi Bangunan",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
         checkFile(
           context,
@@ -509,7 +509,7 @@ class RincianDokumen extends HookConsumerWidget {
         const SizedBox(height: 10),
         const Text(
           "Surat Pernyataan Force Majeur",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
         checkFile(
           context,
@@ -521,7 +521,7 @@ class RincianDokumen extends HookConsumerWidget {
         const SizedBox(height: 10),
         const Text(
           "Proposal",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
         checkFile(
           context,
@@ -541,7 +541,7 @@ class RincianDokumen extends HookConsumerWidget {
                           children: [
                             const Text(
                               "Scan Surat Hasil Rekomendasi",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                             ),
                             checkFile(
                               context,
