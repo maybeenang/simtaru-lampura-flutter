@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_map_simtaru/domain/entity/artikel/artikel.dart';
 import 'package:flutter_map_simtaru/domain/entity/pengajuan/pengajuan.dart';
 import 'package:flutter_map_simtaru/domain/entity/user/user_utils.dart';
+import 'package:flutter_map_simtaru/presentation/pages/forget_password_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/login_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/onboarding_page.dart';
 import 'package:flutter_map_simtaru/presentation/pages/register_page.dart';
@@ -419,6 +420,17 @@ class RegisterRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const RegisterPage();
+  }
+}
+
+@TypedGoRoute<ForgetPasswordRoute>(path: ForgetPasswordRoute.path)
+class ForgetPasswordRoute extends GoRouteData {
+  const ForgetPasswordRoute();
+  static const path = '/forget-password';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const ForgetPasswordPage();
   }
 }
 

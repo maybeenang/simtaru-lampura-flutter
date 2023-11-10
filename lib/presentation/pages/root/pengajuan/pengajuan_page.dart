@@ -145,7 +145,6 @@ class PengajuanPage extends HookConsumerWidget {
           'proposal':
               currInputFileState[9].path == '' ? null : await MultipartFile.fromFile(currInputFileState[9].path),
         });
-        print(formData.fields);
         // final Dio dio = Dio();
         final url = Endpoints.baseURL + Endpoints.tambahPengajuan;
         await dio.post(

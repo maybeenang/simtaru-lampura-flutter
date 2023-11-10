@@ -11,6 +11,7 @@ List<RouteBase> get $appRoutes => [
       $rootRoute,
       $loginRoute,
       $registerRoute,
+      $forgetPasswordRoute,
       $onBoardingRoute,
     ];
 
@@ -723,6 +724,29 @@ extension $RegisterRouteExtension on RegisterRoute {
 
   String get location => GoRouteData.$location(
         '/register',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $forgetPasswordRoute => GoRouteData.$route(
+      path: '/forget-password',
+      factory: $ForgetPasswordRouteExtension._fromState,
+    );
+
+extension $ForgetPasswordRouteExtension on ForgetPasswordRoute {
+  static ForgetPasswordRoute _fromState(GoRouterState state) =>
+      const ForgetPasswordRoute();
+
+  String get location => GoRouteData.$location(
+        '/forget-password',
       );
 
   void go(BuildContext context) => context.go(location);

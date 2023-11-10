@@ -58,6 +58,9 @@ class RouterListenable extends _$RouterListenable implements Listenable {
     final isRegister = state.uri.toString() == RegisterRoute.path;
     if (isRegister) return _isAuth ? RootRoute.path : null;
 
+    final isForgetPassword = state.uri.toString() == ForgetPasswordRoute.path;
+    if (isForgetPassword) return _isAuth ? RootRoute.path : null;
+
     final isRoot = state.uri.toString() == RootRoute.path;
     if (isRoot) return _isAuth ? null : LoginRoute.path;
 
