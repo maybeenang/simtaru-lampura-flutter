@@ -16,8 +16,16 @@ class WelcomeCard extends StatelessWidget {
         color: AppColors.greyColor,
         boxShadow: [AppStyles.boxShadowStyle],
       ),
-      child: Image(
-        image: AssetImage(image),
+      child: FadeInImage.assetNetwork(
+        placeholder: 'assets/images/logosimtaru.png',
+        imageErrorBuilder: (context, error, stackTrace) {
+          return const Image(
+            image: AssetImage('assets/images/logosimtaru.png'),
+            width: double.infinity,
+            fit: BoxFit.cover,
+          );
+        },
+        image: image,
         width: double.infinity,
         fit: BoxFit.cover,
       ),

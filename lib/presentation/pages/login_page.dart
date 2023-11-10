@@ -123,7 +123,9 @@ class LoginPage extends HookConsumerWidget {
                             Container(
                               alignment: Alignment.centerRight,
                               child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    const ForgetPasswordRoute().push(context);
+                                  },
                                   style: AppStyles.textButtonStyle,
                                   child: const Text(
                                     "Lupa Password?",
