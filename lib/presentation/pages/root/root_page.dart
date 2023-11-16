@@ -20,15 +20,15 @@ final controllerNavbarProvider = StateProvider.autoDispose<PersistentTabControll
 });
 
 // ignore: must_be_immutable
-class RootWidget extends ConsumerStatefulWidget {
-  const RootWidget({super.key});
+class RootPage extends ConsumerStatefulWidget {
+  const RootPage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _RootWidgetState createState() => _RootWidgetState();
+  _RootPageState createState() => _RootPageState();
 }
 
-class _RootWidgetState extends ConsumerState<RootWidget> {
+class _RootPageState extends ConsumerState<RootPage> {
   List<Widget> _buildScreen() {
     return [
       const HomePage(),

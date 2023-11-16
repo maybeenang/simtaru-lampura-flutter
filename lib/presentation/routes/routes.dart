@@ -90,7 +90,7 @@ class RootRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const RootWidget();
+    return const RootPage();
   }
 }
 
