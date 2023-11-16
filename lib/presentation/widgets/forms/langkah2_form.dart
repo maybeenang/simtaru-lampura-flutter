@@ -19,7 +19,7 @@ class Langkah2Form extends HookConsumerWidget {
       child: Column(
         children: [
           TextFieldCommon(
-            labelText: "No. Identitas",
+            labelText: "No. Identitas ",
             controller: inputController[5],
             isNik: true,
             keyboardType: TextInputType.number,
