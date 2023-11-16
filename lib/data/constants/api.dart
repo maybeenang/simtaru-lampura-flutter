@@ -1,12 +1,12 @@
 class Endpoints {
-  static String baseURL = "https://www.simtaru-lampura.com/api/v1/";
+  static String baseURL = "https://simtaru.lampungutarakab.go.id/api/v1/";
   // static String baseURL = "https://raccoon-concrete-simply.ngrok-free.app/api/v1/";
   // static String baseURL = "https://relieved-cheaply-drum.ngrok-free.app/api/v1/";
-  static String baseURLDownload = "https://www.simtaru-lampura.com";
+  static String baseURLDownload = "https://simtaru.lampungutarakab.go.id";
   // static String baseURLDownload = "https://raccoon-concrete-simply.ngrok-free.app";
   // static String baseURLDownload = "https://relieved-cheaply-drum.ngrok-free.app";
-  static String peta = "https://www.simtaru-lampura.com/peta";
-  static String forgotPassword = "https://www.simtaru-lampura.com/forgot-password";
+  static String peta = "https://simtaru.lampungutarakab.go.id/peta";
+  static String forgotPassword = "https://simtaru.lampungutarakab.go.id/forgot-password";
 
   static String login = "auth/login";
   static String logout = "auth/logout";
