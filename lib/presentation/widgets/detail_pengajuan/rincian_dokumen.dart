@@ -307,7 +307,7 @@ class RincianDokumen extends HookConsumerWidget {
           final status = DownloadTaskStatus.fromInt(data[1] as int);
           final progress = data[2] as int;
 
-          print("MEMEKKKKKKK $status $progress");
+          // print("MEMEKKKKKKK $status $progress");
 
           if (progress == 100 && status == DownloadTaskStatus.complete) {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -322,6 +322,7 @@ class RincianDokumen extends HookConsumerWidget {
                 duration: Duration(seconds: 5),
               ),
             );
+            FlutterDownloader.open(taskId: taskId);
           }
         },
       );
@@ -329,6 +330,7 @@ class RincianDokumen extends HookConsumerWidget {
       FlutterDownloader.registerCallback(downloadCallback, step: 10);
 
       return () {
+        print("asddsds");
         IsolateNameServer.removePortNameMapping('downloader_send_port');
       };
     }, []);

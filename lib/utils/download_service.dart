@@ -158,6 +158,7 @@ class DownloadService {
     //   return;
     // }
 
+    // ignore: unused_local_variable
     var taskId;
 
     try {
@@ -174,8 +175,6 @@ class DownloadService {
         openFileFromNotification: true, // click on notification to open downloaded file (for Android)
         fileName: fileName2,
       );
-
-      print("KONTOOOLLL $taskId");
 
       context.loaderOverlay.hide();
 
@@ -198,7 +197,6 @@ class DownloadService {
       //   },
       //   url: Endpoints.convertDownloadUrl(url),
       //   onDownloadError: (errorMessage) {
-      //     // print("KONTOL $errorMessage");
       //     context.loaderOverlay.hide();
 
       //     ScaffoldMessenger.of(context).hideCurrentSnackBar();
