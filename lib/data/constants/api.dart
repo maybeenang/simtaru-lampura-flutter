@@ -5,7 +5,7 @@ class Endpoints {
   static String baseURLDownload = "https://simtaru.lampungutarakab.go.id";
   // static String baseURLDownload = "https://raccoon-concrete-simply.ngrok-free.app";
   // static String baseURLDownload = "https://relieved-cheaply-drum.ngrok-free.app";
-  static String peta = "https://simtaru.lampungutarakab.go.id/peta";
+  static String peta = "https://simtaru.lampungutarakab.go.id/maps";
   static String forgotPassword = "https://simtaru.lampungutarakab.go.id/forgot-password";
 
   static String login = "auth/login";
