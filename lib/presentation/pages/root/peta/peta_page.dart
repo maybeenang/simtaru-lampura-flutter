@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 final isLoadingPetaProvider = StateProvider.autoDispose<bool>((ref) => false);
@@ -19,10 +20,28 @@ class _PetaPageState extends ConsumerState<PetaPage> {
   bool isLoading = false;
   bool isError = false;
 
+  late SharedPreferences sharedPreferences;
+
+  late String nip;
+  late String password;
+
+  final sharedPrefsNipKey = 'nip';
+  final sharedPrefsPasswordKey = 'password';
+
+  void getSharedPrefs() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+
+    nip = sharedPreferences.getString(sharedPrefsNipKey) ?? "";
+    password = sharedPreferences.getString(sharedPrefsPasswordKey) ?? "";
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    getSharedPrefs();
+
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..scrollTo(0, 810)
@@ -30,6 +49,32 @@ class _PetaPageState extends ConsumerState<PetaPage> {
       ..setBackgroundColor(AppColors.bgColor)
       ..setNavigationDelegate(
         NavigationDelegate(
+          onUrlChange: (change) {
+            print("change ${change.url}");
+            if (change.url!.contains("maps")) {
+              setState(() {
+                isLoading = true;
+              });
+            } else if (change.url!.contains("login")) {
+              setState(() {
+                isLoading = false;
+              });
+
+              print("nip $nip");
+              print("password $password");
+              _controller.runJavaScript("""
+                document.querySelector("input[id=no_ktp]").value = "${nip.toString()}"
+                document.querySelector("input[id=password]").value = "$password"
+                document.querySelector("button[type=submit]").click()
+                """);
+            } else {
+              setState(() {
+                isLoading = false;
+              });
+
+              _controller.loadRequest(Uri.parse(Endpoints.peta));
+            }
+          },
           onProgress: (progress) {
             print("progress $progress");
             if (progress == 100) {
@@ -43,6 +88,7 @@ class _PetaPageState extends ConsumerState<PetaPage> {
             }
           },
           onWebResourceError: (value) {
+            print("value ${value.description}");
             setState(() {
               isLoading = false;
               isError = true;
