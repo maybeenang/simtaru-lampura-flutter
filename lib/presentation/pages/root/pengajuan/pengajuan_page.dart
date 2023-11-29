@@ -23,6 +23,7 @@ import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah5_form.dar
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah6_form.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/forms/langkah7_form.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/other/show_snackbart.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -208,33 +209,61 @@ class PengajuanPage extends HookConsumerWidget {
       }
     }
 
-    Future<bool> _onWillPop() async {
-      return (await showDialog(
-            context: context,
-            builder: (context) => Theme(
-              data: ThemeData.from(colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor)),
-              child: AlertDialog(
-                shape: const RoundedRectangleBorder(),
-                title: const Text('Apakah anda yakin?'),
-                content: const Text('Semua data yang sudah anda inputkan akan hilang'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    child: const Text('Batal'),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(true),
-                    child: const Text('Ya'),
-                  ),
-                ],
+    void showBackDialog() {
+      showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return Theme(
+            data: ThemeData(
+              fontFamily: "Poppins",
+              colorScheme: const ColorScheme.light(
+                primary: AppColors.primaryColor,
+                secondary: AppColors.whiteColor,
               ),
             ),
-          )) ??
-          false;
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              title: const Text('Apakah anda yakin?'),
+              content: const Text(
+                'Semua data yang anda inputkan akan hilang',
+              ),
+              actions: <Widget>[
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  child: const Text('Batal'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  child: const Text('Ya'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    context.pop();
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      );
     }
 
-    return WillPopScope(
-      onWillPop: _onWillPop,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didPop) {
+        if (didPop) {
+          return;
+        }
+        showBackDialog();
+      },
       child: Scaffold(
         appBar: AppBar(
           elevation: 2,
@@ -249,8 +278,9 @@ class PengajuanPage extends HookConsumerWidget {
         body: Theme(
           data: ThemeData(
             fontFamily: "Poppins",
-            colorScheme: ColorScheme.fromSwatch(
-              primarySwatch: Colors.blue,
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.primaryColor,
+              secondary: AppColors.whiteColor,
             ),
           ),
           child: Stepper(
