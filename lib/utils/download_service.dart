@@ -170,7 +170,6 @@ class DownloadService {
         }, // optional: header send with url (auth token etc)
         savedDir: _localPath,
         allowCellular: true,
-        saveInPublicStorage: true,
         showNotification: true, // show download progress in status bar (for Android)
         openFileFromNotification: true, // click on notification to open downloaded file (for Android)
         fileName: fileName2,

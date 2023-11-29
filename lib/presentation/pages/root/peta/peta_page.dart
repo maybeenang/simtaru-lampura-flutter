@@ -59,9 +59,6 @@ class _PetaPageState extends ConsumerState<PetaPage> {
               setState(() {
                 isLoading = false;
               });
-
-              print("nip $nip");
-              print("password $password");
               _controller.runJavaScript("""
                 document.querySelector("input[id=no_ktp]").value = "${nip.toString()}"
                 document.querySelector("input[id=password]").value = "$password"
@@ -78,8 +75,16 @@ class _PetaPageState extends ConsumerState<PetaPage> {
           onProgress: (progress) {
             print("progress $progress");
             if (progress == 100) {
-              setState(() {
-                isLoading = true;
+              _controller.currentUrl().then((value) {
+                if (value!.contains("maps")) {
+                  setState(() {
+                    isLoading = true;
+                  });
+                } else {
+                  setState(() {
+                    isLoading = false;
+                  });
+                }
               });
             } else {
               setState(() {

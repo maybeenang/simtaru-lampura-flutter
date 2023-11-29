@@ -302,12 +302,12 @@ class RincianDokumen extends HookConsumerWidget {
 
       _port.listen(
         (dynamic data) {
+          print("ini data $data");
+
           // ignore: unused_local_variable
           final taskId = (data as List<dynamic>)[0] as String;
           final status = DownloadTaskStatus.fromInt(data[1] as int);
           final progress = data[2] as int;
-
-          // print("MEMEKKKKKKK $status $progress");
 
           if (progress == 100 && status == DownloadTaskStatus.complete) {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
