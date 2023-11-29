@@ -294,6 +294,7 @@ class RincianDokumen extends HookConsumerWidget {
     useEffect(() {
       // ref.read(pengajuanControllerProvider.notifier).getPengajuanById(pengajuan.id!)
 
+      print("asddsds");
       // ignore: unused_local_variable
       final isSuccess = IsolateNameServer.registerPortWithName(
         _port.sendPort,

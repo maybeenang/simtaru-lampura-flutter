@@ -69,22 +69,19 @@ class _PetaPageState extends ConsumerState<PetaPage> {
                 isLoading = false;
               });
 
-              _controller.loadRequest(Uri.parse(Endpoints.peta));
+              _controller.loadRequest(
+                Uri.parse(Endpoints.peta),
+              );
             }
           },
           onProgress: (progress) {
             print("progress $progress");
             if (progress == 100) {
               _controller.currentUrl().then((value) {
-                if (value!.contains("maps")) {
-                  setState(() {
-                    isLoading = true;
-                  });
-                } else {
-                  setState(() {
-                    isLoading = false;
-                  });
-                }
+                print("value $value");
+                setState(() {
+                  isLoading = true;
+                });
               });
             } else {
               setState(() {
@@ -98,6 +95,31 @@ class _PetaPageState extends ConsumerState<PetaPage> {
               isLoading = false;
               isError = true;
             });
+          },
+          onPageFinished: (url) {
+            print("ini url $url");
+            if (url.contains("maps")) {
+              setState(() {
+                isLoading = true;
+              });
+            } else if (url.contains("login")) {
+              setState(() {
+                isLoading = false;
+              });
+              _controller.runJavaScript("""
+                document.querySelector("input[id=no_ktp]").value = "${nip.toString()}"
+                document.querySelector("input[id=password]").value = "$password"
+                document.querySelector("button[type=submit]").click()
+                """);
+            } else {
+              setState(() {
+                isLoading = false;
+              });
+
+              _controller.loadRequest(
+                Uri.parse(Endpoints.peta),
+              );
+            }
           },
         ),
       );

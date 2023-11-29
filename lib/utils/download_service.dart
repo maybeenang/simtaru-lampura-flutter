@@ -11,6 +11,7 @@ import 'package:flutter_map_simtaru/data/constants/api.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 // import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:path_provider/path_provider.dart';
 
 class DownloadService {
   DownloadService({required this.context, required this.dio, required this.token});
@@ -39,25 +40,29 @@ class DownloadService {
 
   Future<void> downloadFile({required String url}) async {
     final deviceInfo = await DeviceInfoPlugin().androidInfo;
+    print("anjaymabar ${deviceInfo.version.sdkInt}");
 
     if (deviceInfo.version.sdkInt <= 28) {
       final status = await Permission.storage.status;
-      if (!status.isGranted) {
-        await Permission.storage.request();
-      }
 
-      if (!status.isGranted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          snackbar(
-            "Izin akses penyimpanan ditolak",
-            "Coba lagi",
-            () {
-              downloadFile(url: Endpoints.convertDownloadUrl(url));
-            },
-          ),
-        );
+      if (status != PermissionStatus.granted) {
         return;
       }
+
+      final result = await Permission.storage.request();
+
+      if (result != PermissionStatus.granted) {
+        return;
+      }
+
+      // print("anjaymabar $status");
+      // if (!status.isGranted) {
+      //   await Permission.storage.request();
+      // }
+
+      // if (!status.isGranted) {
+      //   return;
+      // }
     }
 
     // if (deviceInfo.version.sdkInt > 32) {
@@ -86,7 +91,8 @@ class DownloadService {
     // }
 
     // check directory is exist
-    String _localPath = Directory("/storage/emulated/0/Download/").path;
+
+    String _localPath = (await getExternalStorageDirectory())!.absolute.path;
     print(_localPath);
 
     if (!await Directory(_localPath).exists()) {
@@ -171,6 +177,7 @@ class DownloadService {
         savedDir: _localPath,
         allowCellular: true,
         showNotification: true, // show download progress in status bar (for Android)
+        requiresStorageNotLow: false,
         openFileFromNotification: true, // click on notification to open downloaded file (for Android)
         fileName: fileName2,
       );
