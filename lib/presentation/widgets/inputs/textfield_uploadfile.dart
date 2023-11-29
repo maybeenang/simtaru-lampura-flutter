@@ -63,7 +63,7 @@ class TextFieldUploadFile extends HookConsumerWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Text(
-                    namaFile.value == '' ? 'Belum ada file yang dipilih' : namaFile.value.toString().split('/').last,
+                    namaFile.value == '' ? 'Belum ada file' : namaFile.value.toString().split('/').last,
                     style: TextStyle(
                       color: namaFile.value == '' ? AppColors.greyColor : AppColors.blackColor,
                       decoration: namaFile.value == '' ? null : TextDecoration.underline,
@@ -80,9 +80,19 @@ class TextFieldUploadFile extends HookConsumerWidget {
                     },
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
-                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                      backgroundColor: MaterialStateProperty.all(
+                        AppColors.primaryColor,
+                      ),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
                     ),
-                    child: const Text("Pilih File"),
+                    child: const Text(
+                      "Pilih File",
+                      style: TextStyle(color: AppColors.whiteColor),
+                    ),
                   )
                 : Row(
                     children: [
