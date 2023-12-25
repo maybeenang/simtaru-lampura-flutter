@@ -1,9 +1,9 @@
 class Endpoints {
   static String baseURL = "https://simtaru.lampungutarakab.go.id/api/v1/";
-  // static String baseURL = "https://raccoon-concrete-simply.ngrok-free.app/api/v1/";
+  // static String baseURL = "https://pleased-sunbird-pumped.ngrok-free.app/api/v1/";
   // static String baseURL = "https://relieved-cheaply-drum.ngrok-free.app/api/v1/";
   static String baseURLDownload = "https://simtaru.lampungutarakab.go.id";
-  // static String baseURLDownload = "https://raccoon-concrete-simply.ngrok-free.app";
+  // static String baseURLDownload = "https://pleased-sunbird-pumped.ngrok-free.app";
   // static String baseURLDownload = "https://relieved-cheaply-drum.ngrok-free.app";
   static String peta = "https://simtaru.lampungutarakab.go.id/maps";
   static String forgotPassword = "https://simtaru.lampungutarakab.go.id/forgot-password";
@@ -42,8 +42,7 @@ class Endpoints {
     return baseURLDownload + url;
   }
 
-  static String weatherEndpoint =
-      "https://api.weatherapi.com/v1/current.json?key=0635e5c87e24430ca0041614220607&q=-4.813390,104.752094";
+  static String weatherEndpoint = "https://api.weatherapi.com/v1/current.json?key=0635e5c87e24430ca0041614220607&q=-4.813390,104.752094";
 
   static String gmapsUrl = "https://www.google.com/maps/search/?api=1&query=";
 }

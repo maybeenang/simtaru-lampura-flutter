@@ -9,13 +9,7 @@ import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controlle
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ButtonProfile extends HookConsumerWidget {
-  const ButtonProfile(
-      {super.key,
-      this.label = "Button",
-      this.icon = Icons.add,
-      this.onTap,
-      this.color = AppColors.blackColor,
-      this.isNotif = false});
+  const ButtonProfile({super.key, this.label = "Button", this.icon = Icons.add, this.onTap, this.color = AppColors.blackColor, this.isNotif = false});
 
   final String label;
   final IconData? icon;
@@ -83,6 +77,16 @@ class ButtonProfile extends HookConsumerWidget {
             children: [
               Icon(icon, color: color),
               const SizedBox(width: 10),
+              // SizedBox(
+              //   width: MediaQuery.of(context).size.width * 0.5,
+              //   child: Text(
+              //     label,
+              //     style: TextStyle(color: color),
+              //     maxLines: 3,
+              //     overflow: TextOverflow.ellipsis,
+              //   ),
+              // ),
+
               Text(label, style: TextStyle(color: color)),
               const Spacer(),
               if (isNotif!)
@@ -94,11 +98,7 @@ class ButtonProfile extends HookConsumerWidget {
                   ),
                   child: Text(
                     label == "Seluruh Pengajuan"
-                        ? jumlahPengajuanState
-                                .maybeWhen(orElse: () => null, data: (value) => value)
-                                ?.Seluruh
-                                .toString() ??
-                            "0"
+                        ? jumlahPengajuanState.maybeWhen(orElse: () => null, data: (value) => value)?.Seluruh.toString() ?? "0"
                         : notif.value?.Total.toString() ?? "0",
                     style: const TextStyle(
                       color: AppColors.whiteColor,
