@@ -144,6 +144,7 @@ class AuthController extends _$AuthController {
               'password': password,
             },
           );
+          print(response);
           final data = response.data;
           final token = data['data']['original']['access_token'];
           await _sharedPreferences.setString(_sharedPrefsKey, token);
@@ -158,6 +159,7 @@ class AuthController extends _$AuthController {
         } on DioException catch (e) {
           return Auth.error(e.response?.data['message'] ?? 'Internal Server Error');
         } catch (e) {
+          print(e);
           return const Auth.error("Terjadi kesalahan");
         }
       },

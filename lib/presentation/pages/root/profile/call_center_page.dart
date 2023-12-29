@@ -28,31 +28,50 @@ class CallCenterPage extends HookConsumerWidget {
                 ),
               ],
             ),
-            child: const Column(
+            child: Column(
               children: [
-                ButtonProfile(
+                const ButtonProfile(
                   label: CallCenter.telp,
                   icon: Icons.phone,
                   // onTap: () {},
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Divider(
                     color: Colors.grey,
                   ),
                 ),
-                ButtonProfile(
-                  label: CallCenter.telp2,
-                  icon: Icons.phone,
-                  // onTap: () {},
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.map,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: const Text(
+                          CallCenter.telp2,
+                          textAlign: TextAlign.start,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Divider(
                     color: Colors.grey,
                   ),
                 ),
-                ButtonProfile(
+                const ButtonProfile(
                   label: CallCenter.email,
                   icon: Icons.email,
                   // onTap: () {},
