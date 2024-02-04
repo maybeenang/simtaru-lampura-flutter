@@ -41,14 +41,11 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
   }
 
   Future<bool> loadMore() async {
-    print("KONTOOOOOOOOOL ${isLoadMoreUpload} ${isLoadMoreSelesai}");
-
     if (!isLoadMoreUpload) {
       final res = await loadMoreUpload();
       return res;
     } else {
       final res = await loadMoreSelesai();
-      print("MEMEK ${res} ");
       return res;
     }
   }
@@ -178,8 +175,7 @@ class PengajuanSurveyorController extends _$PengajuanSurveyorController {
         uri.toString(),
       );
 
-      final List<CatatanPengajuan> catatanPengajuan =
-          (response.data['data'] as List).map((e) => CatatanPengajuan.fromJson(e)).toList();
+      final List<CatatanPengajuan> catatanPengajuan = (response.data['data'] as List).map((e) => CatatanPengajuan.fromJson(e)).toList();
 
       return catatanPengajuan;
     } catch (e) {

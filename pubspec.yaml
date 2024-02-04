@@ -67,6 +67,7 @@ dev_dependencies:
   riverpod_generator:
   flutter_native_splash:
   flutter_launcher_icons: ^0.13.1
+  rename: ^3.0.1
 
 
 flutter:
