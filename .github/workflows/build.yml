@@ -37,9 +37,9 @@ jobs:
                 tag: v0.0.${{github.run_number}}
                 token: ${{secrets.TOKEN}}
             - run: flutter build appbundle
-            - name: Push to Releases
+            - name: Push to Releasess
               uses: ncipollo/release-action@v1
               with: 
                 artifacts: "build/app/outputs/bundle/release/*"
-                tag: v0.0.${{github.run_number}}
+                tag: v0.0.0.${{github.run_number}} 
                 token: ${{secrets.TOKEN}}
