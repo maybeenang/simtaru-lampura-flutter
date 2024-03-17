@@ -91,7 +91,6 @@ class LoginPage extends HookConsumerWidget {
                   child: Column(
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(Images.logo),
                       const SizedBox(height: 50),
                       const Text(
                         "Masuk",

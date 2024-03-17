@@ -45,7 +45,6 @@ class RegisterPage extends HookConsumerWidget {
                 heightFactor: 1.5,
                 child: Column(
                   children: [
-                    Image.asset(Images.logo),
                     const SizedBox(height: 20),
                     const Text(
                       "Daftar",

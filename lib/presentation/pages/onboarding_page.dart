@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
 import 'package:flutter_map_simtaru/data/constants/double.dart';
-import 'package:flutter_map_simtaru/data/constants/image.dart';
 import 'package:flutter_map_simtaru/domain/entity/onboard/onboard.dart';
 import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
@@ -26,26 +25,22 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     OnBoard(
       image: "assets/svg/onboard_1.svg",
       title: "Selamat Datang di Simtaru",
-      description:
-          "Simtaru membawa tata ruang ke ujung jari Anda. Temukan segala yang Anda butuhkan untuk mengelola wilayah dengan bijak.",
+      description: "Simtaru membawa tata ruang ke ujung jari Anda. Temukan segala yang Anda butuhkan untuk mengelola wilayah dengan bijak.",
     ),
     OnBoard(
       image: "assets/svg/onboard_2.svg",
       title: "Pemetaan dan Informasi",
-      description:
-          "Temukan data geospasial terkini, peraturan tata ruang, dan informasi penting lainnya dengan mudah dan cepat.",
+      description: "Temukan data geospasial terkini, peraturan tata ruang, dan informasi penting lainnya dengan mudah dan cepat.",
     ),
     OnBoard(
       image: "assets/svg/onboard_3.svg",
       title: "Rencanakan Masa Depan",
-      description:
-          "Dengan Simtaru, Anda bisa merencanakan masa depan yang berkelanjutan dan efisien untuk wilayah Anda.",
+      description: "Dengan Simtaru, Anda bisa merencanakan masa depan yang berkelanjutan dan efisien untuk wilayah Anda.",
     ),
     OnBoard(
       image: "assets/svg/onboard_4.svg",
       title: "Mari Mulai!",
-      description:
-          "Waktunya untuk memulai perjalanan Anda dengan Simtaru. Kami siap membantu Anda, langkah demi langkah.",
+      description: "Waktunya untuk memulai perjalanan Anda dengan Simtaru. Kami siap membantu Anda, langkah demi langkah.",
     ),
   ];
 
@@ -75,9 +70,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: const SizedBox(
             width: 100,
-            child: Image(
-              image: AssetImage(Images.logo),
-            ),
           ),
         ),
         Expanded(
