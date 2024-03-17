@@ -39,7 +39,7 @@
     <!--#enddocregion android-queries-->
     
     <application
-        android:label="Simtaru Lampura"
+        android:label="Simtaru Lampung Utara Mobile"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
