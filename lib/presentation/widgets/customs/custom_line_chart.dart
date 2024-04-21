@@ -38,10 +38,7 @@ class CustomLineChart extends StatelessWidget {
               aspectRatio: 2,
               child: LineChart(
                 LineChartData(
-                  maxY: lineData.barData
-                      .map((data) => data.y)
-                      .toList()
-                      .reduce((value, element) => value > element ? value : element),
+                  maxY: lineData.barData.map((data) => data.y).toList().reduce((value, element) => value > element ? value : element),
                   minY: 0,
                   borderData: FlBorderData(
                     show: true,
@@ -84,13 +81,6 @@ class CustomLineChart extends StatelessWidget {
                               ),
                             ),
                           );
-                          // return Text(
-                          //   value.toInt().toString(),
-                          //   style: const TextStyle(
-                          //     fontSize: 12,
-                          //     color: Colors.black,
-                          //   ),
-                          // );
                         },
                       ),
                     ),
@@ -140,25 +130,25 @@ class CustomLineChart extends StatelessWidget {
     switch (value.toInt()) {
       case 1:
         text = const Text(
-          '2020',
+          '2021',
           style: textStyle,
         );
         break;
       case 2:
         text = const Text(
-          '2021',
+          '2022',
           style: textStyle,
         );
         break;
       case 3:
         text = const Text(
-          '2022',
+          '2023',
           style: textStyle,
         );
         break;
       case 4:
         text = const Text(
-          '2023',
+          '2024',
           style: textStyle,
         );
         break;

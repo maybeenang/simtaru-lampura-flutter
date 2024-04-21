@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map_simtaru/domain/entity/role/role.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_jumlah_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controller/pengajuan_user_controller.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -25,8 +28,10 @@ class StatusCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final jumlahPengajuanState = ref.watch(pengajuanJumlahControllerProvider);
+    final roleState = ref.watch(roleProvider);
+    final pengajuanUser = ref.watch(pengajuanUserControllerProvider);
 
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height / 6,
       width: MediaQuery.of(context).size.width / 2.4,
       child: Column(
@@ -51,12 +56,57 @@ class StatusCard extends HookConsumerWidget {
             jumlahPengajuanState.when(
               data: (data) {
                 if (label == "Total Pengajuan") {
+                  if (roleState is User) {
+                    return pengajuanUser.when(
+                      data: (data) {
+                        return data.length.toString();
+                      },
+                      loading: () => '0',
+                      error: (e, s) => '0',
+                    );
+                  }
                   return data.Seluruh.toString();
                 } else if (label == "Pengajuan Disetujui") {
+                  if (roleState is User) {
+                    return pengajuanUser.when(
+                      data: (data) {
+                        if (data.isEmpty) {
+                          return '0';
+                        }
+                        return data.where((element) => element.status_id == 12).length.toString();
+                      },
+                      loading: () => '0',
+                      error: (e, s) => '0',
+                    );
+                  }
                   return data.Disetujui.toString();
                 } else if (label == "Pengajuan Diproses") {
+                  if (roleState is User) {
+                    return pengajuanUser.when(
+                      data: (data) {
+                        if (data.isEmpty) {
+                          return '0';
+                        }
+                        return data.where((element) => element.status_id != 1 && element.status_id != 12).length.toString();
+                      },
+                      loading: () => '0',
+                      error: (e, s) => '0',
+                    );
+                  }
                   return data.Diproses.toString();
                 } else if (label == "Pengajuan Ditolak") {
+                  if (roleState is User) {
+                    return pengajuanUser.when(
+                      data: (data) {
+                        if (data.isEmpty) {
+                          return '0';
+                        }
+                        return data.where((element) => element.status_id == 1).length.toString();
+                      },
+                      loading: () => '0',
+                      error: (e, s) => '0',
+                    );
+                  }
                   return data.Ditolak.toString();
                 } else {
                   return '0';
@@ -73,89 +123,5 @@ class StatusCard extends HookConsumerWidget {
         ],
       ),
     );
-
-    // return Container(
-    //   height: MediaQuery.of(context).size.height / 6,
-    //   width: MediaQuery.of(context).size.width / 2.3,
-    //   margin: const EdgeInsets.all(5),
-    //   clipBehavior: Clip.antiAlias,
-    //   decoration: BoxDecoration(
-    //     color: colorMapping[label],
-    //     borderRadius: BorderRadius.circular(AppDouble.borderRadius),
-    //     boxShadow: [
-    //       BoxShadow(
-    //         color: colorMapping[label]!.withOpacity(0.95),
-    //         blurRadius: 12.5,
-    //         offset: const Offset(0, 5),
-    //       ),
-    //     ],
-    //   ),
-    //   child: Material(
-    //     color: Colors.transparent,
-    //     child: InkWell(
-    //       onTap: () {
-    //         ref.read(indexScreenProvider.notifier).onIndexChange(1);
-    //         ref.read(controllerNavbarProvider).index = 1;
-    //       },
-    //       child: Stack(
-    //         children: [
-    //           Align(
-    //             alignment: Alignment.centerRight,
-    //             child: Icon(
-    //               iconMapping[label],
-    //               color: Colors.black.withOpacity(0.05),
-    //               size: 150,
-    //             ),
-    //           ),
-    //           Container(
-    //             padding: const EdgeInsets.all(15),
-    //             width: MediaQuery.of(context).size.width / 2.4,
-    //             child: Column(
-    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               crossAxisAlignment: CrossAxisAlignment.start,
-    //               children: [
-    //                 Text(
-    //                   jumlahPengajuanState.when(
-    //                     data: (data) {
-    //                       if (label == "Total Pengajuan") {
-    //                         return data.Seluruh.toString();
-    //                       } else if (label == "Pengajuan Disetujui") {
-    //                         return data.Disetujui.toString();
-    //                       } else if (label == "Pengajuan Diproses") {
-    //                         return data.Diproses.toString();
-    //                       } else if (label == "Pengajuan Ditolak") {
-    //                         return data.Ditolak.toString();
-    //                       } else {
-    //                         return '0';
-    //                       }
-    //                     },
-    //                     loading: () => '0',
-    //                     error: (e, s) => '0',
-    //                   ),
-    //                   style: const TextStyle(
-    //                     color: AppColors.whiteColor,
-    //                     fontSize: 20,
-    //                     fontWeight: FontWeight.bold,
-    //                   ),
-    //                 ),
-    //                 const SizedBox(height: 10),
-    //                 Text(
-    //                   label,
-    //                   maxLines: 2,
-    //                   overflow: TextOverflow.ellipsis,
-    //                   style: const TextStyle(
-    //                     color: AppColors.whiteColor,
-    //                     fontWeight: FontWeight.w600,
-    //                     fontSize: 14,
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

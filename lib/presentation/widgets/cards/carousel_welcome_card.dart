@@ -19,9 +19,8 @@ class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
   late int _currentCarousel;
 
   final List<Widget> _welcomeCards = const [
-    WelcomeCard(image: Images.welcome2),
-    WelcomeCard(image: Images.welcome3),
     WelcomeCard(image: Images.welcome1),
+    WelcomeCard(image: Images.welcome2),
   ];
 
   @override

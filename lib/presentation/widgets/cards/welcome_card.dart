@@ -17,7 +17,7 @@ class WelcomeCard extends StatelessWidget {
         boxShadow: [AppStyles.boxShadowStyle],
       ),
       child: Image.asset(
-        "assets/images/logosimtaru.png",
+        image,
         width: double.infinity,
         fit: BoxFit.cover,
       ),

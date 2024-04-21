@@ -75,8 +75,8 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             const SizedBox(height: 20),
             const ButtonCallToAction(),
-            const SizedBox(height: 20),
-            const SubHeader(labelText: "Informasi"),
+            const SizedBox(height: 30),
+            const SubHeader(labelText: "Informasi Umum"),
             const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppDouble.paddingOutside),
