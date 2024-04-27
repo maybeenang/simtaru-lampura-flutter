@@ -5,6 +5,9 @@ import 'package:flutter_map_simtaru/presentation/controllers/pengajuan_controlle
 import 'package:flutter_map_simtaru/presentation/controllers/roles/role_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_map_simtaru/presentation/pages/root/root_page.dart';
+import 'package:flutter_map_simtaru/presentation/routes/routes.dart';
+import 'package:flutter_map_simtaru/presentation/controllers/index_screen_provider.dart';
 
 class StatusCard extends HookConsumerWidget {
   StatusCard({super.key, required this.label});
@@ -25,6 +28,11 @@ class StatusCard extends HookConsumerWidget {
     "Pengajuan Ditolak": "assets/svg/pengajuan_status/file-remove-svgrepo-com.svg",
   };
 
+  void onPressedAction(BuildContext context, WidgetRef ref) {
+    ref.read(indexScreenProvider.notifier).onIndexChange(1);
+    ref.read(controllerNavbarProvider).index = 1;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final jumlahPengajuanState = ref.watch(pengajuanJumlahControllerProvider);
@@ -34,93 +42,96 @@ class StatusCard extends HookConsumerWidget {
     return SizedBox(
       height: MediaQuery.of(context).size.height / 6,
       width: MediaQuery.of(context).size.width / 2.4,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            iconMapping[label]!,
-            height: 40,
-            width: 40,
-            fit: BoxFit.fitHeight,
-          ),
-          const SizedBox(height: 5),
-          Text(
-            label,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 12,
+      child: GestureDetector(
+        onTap: () => onPressedAction(context, ref),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              iconMapping[label]!,
+              height: 40,
+              width: 40,
+              fit: BoxFit.fitHeight,
             ),
-          ),
-          Text(
-            jumlahPengajuanState.when(
-              data: (data) {
-                if (label == "Total Pengajuan") {
-                  if (roleState is User) {
-                    return pengajuanUser.when(
-                      data: (data) {
-                        return data.length.toString();
-                      },
-                      loading: () => '0',
-                      error: (e, s) => '0',
-                    );
-                  }
-                  return data.Seluruh.toString();
-                } else if (label == "Pengajuan Disetujui") {
-                  if (roleState is User) {
-                    return pengajuanUser.when(
-                      data: (data) {
-                        if (data.isEmpty) {
-                          return '0';
-                        }
-                        return data.where((element) => element.status_id == 12).length.toString();
-                      },
-                      loading: () => '0',
-                      error: (e, s) => '0',
-                    );
-                  }
-                  return data.Disetujui.toString();
-                } else if (label == "Pengajuan Diproses") {
-                  if (roleState is User) {
-                    return pengajuanUser.when(
-                      data: (data) {
-                        if (data.isEmpty) {
-                          return '0';
-                        }
-                        return data.where((element) => element.status_id != 1 && element.status_id != 12).length.toString();
-                      },
-                      loading: () => '0',
-                      error: (e, s) => '0',
-                    );
-                  }
-                  return data.Diproses.toString();
-                } else if (label == "Pengajuan Ditolak") {
-                  if (roleState is User) {
-                    return pengajuanUser.when(
-                      data: (data) {
-                        if (data.isEmpty) {
-                          return '0';
-                        }
-                        return data.where((element) => element.status_id == 1).length.toString();
-                      },
-                      loading: () => '0',
-                      error: (e, s) => '0',
-                    );
-                  }
-                  return data.Ditolak.toString();
-                } else {
-                  return '0';
-                }
-              },
-              loading: () => '0',
-              error: (e, s) => '0',
+            const SizedBox(height: 5),
+            Text(
+              label,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 12,
+              ),
             ),
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 20,
+            Text(
+              jumlahPengajuanState.when(
+                data: (data) {
+                  if (label == "Total Pengajuan") {
+                    if (roleState is User) {
+                      return pengajuanUser.when(
+                        data: (data) {
+                          return data.length.toString();
+                        },
+                        loading: () => '0',
+                        error: (e, s) => '0',
+                      );
+                    }
+                    return data.Seluruh.toString();
+                  } else if (label == "Pengajuan Disetujui") {
+                    if (roleState is User) {
+                      return pengajuanUser.when(
+                        data: (data) {
+                          if (data.isEmpty) {
+                            return '0';
+                          }
+                          return data.where((element) => element.status_id == 12).length.toString();
+                        },
+                        loading: () => '0',
+                        error: (e, s) => '0',
+                      );
+                    }
+                    return data.Disetujui.toString();
+                  } else if (label == "Pengajuan Diproses") {
+                    if (roleState is User) {
+                      return pengajuanUser.when(
+                        data: (data) {
+                          if (data.isEmpty) {
+                            return '0';
+                          }
+                          return data.where((element) => element.status_id != 1 && element.status_id != 12).length.toString();
+                        },
+                        loading: () => '0',
+                        error: (e, s) => '0',
+                      );
+                    }
+                    return data.Diproses.toString();
+                  } else if (label == "Pengajuan Ditolak") {
+                    if (roleState is User) {
+                      return pengajuanUser.when(
+                        data: (data) {
+                          if (data.isEmpty) {
+                            return '0';
+                          }
+                          return data.where((element) => element.status_id == 1).length.toString();
+                        },
+                        loading: () => '0',
+                        error: (e, s) => '0',
+                      );
+                    }
+                    return data.Ditolak.toString();
+                  } else {
+                    return '0';
+                  }
+                },
+                loading: () => '0',
+                error: (e, s) => '0',
+              ),
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 20,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
