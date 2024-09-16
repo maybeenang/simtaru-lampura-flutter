@@ -1,3 +1,5 @@
+// import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/presentation/controllers/artikel/artikel_controller.dart';
@@ -9,7 +11,7 @@ class CarouselBerita extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final CarouselController buttonCarouselController = CarouselController();
+    // final CarouselController buttonCarouselController = CarouselController();
 
     final artikelState = ref.watch(artikelControllerProvider);
 
@@ -28,7 +30,7 @@ class CarouselBerita extends HookConsumerWidget {
               artikel: data[index],
             );
           },
-          carouselController: buttonCarouselController,
+          // carouselController: ,
           options: CarouselOptions(
             viewportFraction: 0.95,
             enableInfiniteScroll: false,

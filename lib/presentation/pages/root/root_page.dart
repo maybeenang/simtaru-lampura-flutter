@@ -12,7 +12,8 @@ import 'package:flutter_map_simtaru/presentation/pages/root/profile/profil_page.
 import 'package:flutter_map_simtaru/presentation/styles/styles.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/customs/custom_safe_area.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+// import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 // final PersistentTabController _controllerNavbar = PersistentTabController();
 final controllerNavbarProvider = StateProvider.autoDispose<PersistentTabController>((ref) {
@@ -110,19 +111,19 @@ class _RootPageState extends ConsumerState<RootPage> {
               AppStyles.boxShadowStyle,
             ],
           ),
-          popAllScreensOnTapOfSelectedTab: true,
-          popActionScreens: PopActionScreensType.all,
-          itemAnimationProperties: const ItemAnimationProperties(
-            // Navigation Bar's items animation properties.
-            duration: Duration(milliseconds: 200),
-            curve: Curves.ease,
-          ),
-          screenTransitionAnimation: const ScreenTransitionAnimation(
-            // Screen transition animation on change of selected tab.
-            animateTabTransition: true,
-            curve: Curves.ease,
-            duration: Duration(milliseconds: 200),
-          ),
+          // popAllScreensOnTapOfSelectedTab: true,
+          // popActionScreens: PopActionScreensType.all,
+          // itemAnimationProperties: const ItemAnimationProperties(
+          //   // Navigation Bar's items animation properties.
+          //   duration: Duration(milliseconds: 200),
+          //   curve: Curves.ease,
+          // ),
+          // screenTransitionAnimation: const ScreenTransitionAnimation(
+          //   // Screen transition animation on change of selected tab.
+          //   animateTabTransition: true,
+          //   curve: Curves.ease,
+          //   duration: Duration(milliseconds: 200),
+          // ),
           navBarStyle: NavBarStyle.style15,
           items: _navBarsItems(currIndex),
           screens: _buildScreen(),

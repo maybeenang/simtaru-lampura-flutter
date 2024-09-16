@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/data/constants/colors.dart';
+// import 'package:carousel_slider/carousel_slider.dart' as carousel;
 import 'package:flutter_map_simtaru/data/constants/double.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/welcome_card.dart';
 import 'package:flutter_map_simtaru/data/constants/image.dart';
@@ -14,7 +15,7 @@ class CaroueselWelcomeCard extends StatefulWidget {
 }
 
 class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
-  final CarouselController buttonCarouselController = CarouselController();
+  // final carousel.CarouselController buttonCarouselController = carousel.CarouselController();
 
   late int _currentCarousel;
 
@@ -51,7 +52,7 @@ class _CaroueselWelcomeCardState extends State<CaroueselWelcomeCard> {
         children: [
           CarouselSlider(
             items: _welcomeCards,
-            carouselController: buttonCarouselController,
+            // carouselController: buttonCarouselController,
             options: CarouselOptions(
               height: 200,
               viewportFraction: 1,

@@ -16,6 +16,7 @@ class AuthController extends _$AuthController {
   static const _sharedPrefsKey = 'token';
   static const _sharedPrefsNipKey = 'nip';
   static const _sharedPrefsPasswordKey = 'password';
+
   final Dio dio = Dio();
 
   @override
@@ -98,10 +99,13 @@ class AuthController extends _$AuthController {
           return auth;
         } on DioException catch (e) {
           if (e.response?.statusCode == 500) {
+            print("ABC $e");
+
             return const Auth.error("Internal Server Error");
           }
           return Auth.error(e.response?.data['message'] ?? 'Error');
         } catch (e) {
+          print("ABF $e");
           return const Auth.error("Terjadi kesalahan");
         }
       },
@@ -144,7 +148,7 @@ class AuthController extends _$AuthController {
               'password': password,
             },
           );
-          print(response);
+          print("LANGS $response");
           final data = response.data;
           final token = data['data']['original']['access_token'];
           await _sharedPreferences.setString(_sharedPrefsKey, token);
@@ -156,10 +160,12 @@ class AuthController extends _$AuthController {
             token: token,
           );
           return auth;
-        } on DioException catch (e) {
+        } on DioException catch (e, stackTrace) {
+          print("LANGS $e");
+          print("LANGS $stackTrace");
           return Auth.error(e.response?.data['message'] ?? 'Internal Server Error');
         } catch (e) {
-          print(e);
+          print("BCA $e");
           return const Auth.error("Terjadi kesalahan");
         }
       },

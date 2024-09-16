@@ -1,3 +1,4 @@
+// import 'package:carousel_slider/carousel_slider.dart' as carousel;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_simtaru/presentation/widgets/cards/status_pengajuan_card.dart';
@@ -10,7 +11,7 @@ class CarouselPengajuanCard extends StatefulWidget {
 }
 
 class _CarouselPengajuanCardState extends State<CarouselPengajuanCard> {
-  final CarouselController buttonCarouselController = CarouselController();
+  // final carousel.CarouselController buttonCarouselController = carousel.CarouselController();
 
   final List<Widget> welcomeCards = [
     StatusPengajuanCard(label: "Total Pengajuan"),
@@ -25,7 +26,7 @@ class _CarouselPengajuanCardState extends State<CarouselPengajuanCard> {
       children: [
         CarouselSlider(
           items: welcomeCards,
-          carouselController: buttonCarouselController,
+          // carouselController: buttonCarouselController,
           options: CarouselOptions(
             height: 150,
             viewportFraction: 0.95,
